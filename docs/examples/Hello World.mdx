@@ -117,7 +117,7 @@ export const scriptTestnetAddr = new Address(
 export default contract;
 ```
 
-Let's focus only on the contract for now;
+Let's focus on the contract function for now;
 
 this contract expects a `MyDatum`, a `MyRedeemer` and finally a `PScriptContext` to validate a transaction.
 
@@ -168,7 +168,7 @@ console.log(
 );
 ```
 
-the index just imports `script` from `src/contract.ts` adn prints it out in the json form.
+the index.ts file just imports `script` from `src/contract.ts` and prints it out in the json form.
 
 if we go back to `src/contract.ts` we see that the script is obtained using the following steps:
 
