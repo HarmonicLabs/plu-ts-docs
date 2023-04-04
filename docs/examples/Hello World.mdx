@@ -62,7 +62,7 @@ _et voilà_ we are ready to start!
 
 ### Template overview
 
-If we now navigate to `src/contract.ts` we see we have a very simple validator already!
+If we now navigate to `src/contract.ts` we see we have a very simple validator already! Note that in Cardano, smart contracts are often called 'validators' as they serve a simple function of deciding whether or not a requested transaction is allowed to happen. The construction of what that transaction is (e.g. that Bob should pay Alice 5 Ada) is performed outside of the contract (aka 'off-chain'). We will see this later, but for now know that the term 'contract' and 'validator' can be used interechangebly. 
 
 ```ts title="src/contract.ts"
 import { Address, bool, compile, makeValidator, PaymentCredentials, pBool, pfn, Script, ScriptType, V2 } from "@harmoniclabs/plu-ts";
