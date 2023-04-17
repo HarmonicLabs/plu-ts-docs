@@ -114,7 +114,12 @@ const config = {
           },
           {
             href: 'https://github.com/HarmonicLabs/plu-ts',
-            label: 'GitHub',
+            label: 'GitHub ⭐',
+            position: 'right',
+          },
+          {
+            href: 'https://github.com/sponsors/HarmonicLabs',
+            label: 'Sponsor ❤️',
             position: 'right',
           },
           {

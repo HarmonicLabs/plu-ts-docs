@@ -12,7 +12,6 @@ let's do a step forward and see if we can come up with a sligthly more complex c
 
 The final result can be found at [`HarmonicLabs/vesting-pluts`](https://github.com/HarmonicLabs/vesting-pluts)
 
-
 ## Project set up
 
 We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template:
@@ -140,6 +139,204 @@ The contract should succeed if the following two conditions are met:
 
 - the transaction is signed by the `PPubKeyHash` defined in the UTxO datum;
 - the transaction lower bound is `Finite` and greather than the datum `deadline` field;
+
+But first lets get familiar with the starter template.
+
+### Template overview
+
+If we now navigate to `src/contract.ts` we see we have a very simple validator already!
+
+```ts title="src/contract.ts"
+import { Address, bool, compile, makeValidator, PaymentCredentials, pBool, pfn, Script, ScriptType, V2 } from "@harmoniclabs/plu-ts";
+import MyDatum from "./MyDatum";
+import MyRedeemer from "./MyRedeemer";
+
+
+// highlight-start
+export const contract = pfn([
+    MyDatum.type,
+    MyRedeemer.type,
+    V2.PScriptContext.type
+],  bool)
+(( datum, redeemer, ctx ) =>
+    // always suceeds
+    pBool( true )
+);
+// highlight-end
+
+
+///////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------- //
+// ------------------------- utilities ------------------------- //
+// ------------------------------------------------------------- //
+///////////////////////////////////////////////////////////////////
+
+export const untypedValidator = makeValidator( contract );
+
+export const compiledContract = compile( untypedValidator );
+
+export const script = new Script(
+    ScriptType.PlutusV2,
+    compiledContract
+);
+
+export const scriptMainnetAddr = new Address(
+    "mainnet",
+    new PaymentCredentials(
+        "script",
+        script.hash
+    )
+);
+
+export const scriptTestnetAddr = new Address(
+    "testnet",
+    new PaymentCredentials(
+        "script",
+        script.hash.clone()
+    )
+);
+
+export default contract;
+```
+
+Let's focus only on the contract for now;
+
+this contract expects a `MyDatum`, a `MyRedeemer` and finally a `PScriptContext` to validate a transaction.
+
+All of the three above are just [`Struct`s](../onchain/Values/Structs/definition)
+
+`MyDatum` and `MyRedeemer` are types defined by us respectively in `src/MyDatum/index.ts` and `src/MyRedeemer/index.ts`
+
+```ts title="src/MyDatum/index.ts"
+import { int, pstruct } from "@harmoniclabs/plu-ts";
+
+// modify the Datum as you prefer
+const MyDatum = pstruct({
+    Num: {
+        number: int
+    },
+    NoDatum: {}
+});
+
+export default MyDatum;
+```
+
+```ts title="src/MyRedeemer/index.ts"
+import { pstruct } from "@harmoniclabs/plu-ts";
+
+// modify the Redeemer as you prefer
+const MyRedeemer = pstruct({
+    Option1: {},
+    Option2: {}
+});
+
+export default MyRedeemer;
+```
+
+whereas `PScriptContex` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
+
+finally, the contract is used in `src/index.ts` which is our entry point.
+
+```ts title="src/index.ts"
+import { script } from "./contract";
+
+console.log("validator compiled succesfully! 🎉\n");
+console.log(
+    JSON.stringify(
+        script.toJson(),
+        undefined,
+        2
+    )
+);
+```
+
+the index just imports `script` from `src/contract.ts` adn prints it out in the json form.
+
+if we go back to `src/contract.ts` we see that the script is obtained using the following steps:
+
+1) adapting the validator to the standard using [`makeValidator`](../onchain/API/utilities/makeValidator)
+
+```ts title="src/contract.ts"
+/* ... */
+
+// highlight-start
+export const untypedValidator = makeValidator( contract );
+// highlight-end
+
+export const compiledContract = compile( untypedValidator );
+
+export const script = new Script(
+    ScriptType.PlutusV2,
+    compiledContract
+);
+
+/* ... */
+```
+
+2) compiling the validator with [`compile`](../onchain/API/utilities/compile)
+
+```ts title="src/contract.ts"
+/* ... */
+
+export const untypedValidator = makeValidator( contract );
+
+// highlight-start
+export const compiledContract = compile( untypedValidator );
+// highlight-end
+
+export const script = new Script(
+    ScriptType.PlutusV2,
+    compiledContract
+);
+
+/* ... */
+```
+3) wrapping it in a `Script` that can be used offchain
+
+```ts title="src/contract.ts"
+/* ... */
+
+export const untypedValidator = makeValidator( contract );
+
+export const compiledContract = compile( untypedValidator );
+
+// highlight-start
+export const script = new Script(
+    ScriptType.PlutusV2,
+    compiledContract
+);
+// highlight-end
+
+/* ... */
+```
+
+that is all we need for now.
+
+### run the template
+
+If we did every step of above correctly we should be able to run
+```bash
+npm run start
+```
+
+and the output should look like:
+```
+validator compiled succesfully! 🎉
+
+{
+  "type": "PlutusScriptV2",
+  "description": "",
+  "cborHex": "56550100002225333573466644494400c0080045261601"
+}
+```
+
+Well congratulations 🥳!
+
+this is your first compiled smart contract 🎉!
+
+But we won't stop here for sure!
+
+Let's personalize this smart contract.
 
 ### `VestingDatum`
 
