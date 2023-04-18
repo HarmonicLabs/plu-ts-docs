@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 In this example prject we'll write our first smart contract and interact with it using the [CIP-0030](https://cips.cardano.org/cips/cip30/) standard.
 
-The final verision of this project is aviable [here](../nope) and you can test it out in the [live demo](https://hello-pluts.harmoniclabs.tech/).
+The final verision of this project is aviable [here](https://github.com/michele-nuzzi/hello-pluts-react-final) and you can test it out in the [live demo](https://hello-pluts.harmoniclabs.tech/).
 
 ## Pre-requisites
 
@@ -506,11 +506,13 @@ const helloPluts = pfn([
 ],  bool)
 (( owner, message, ctx ) => {
 
+    // highlight-start
     const isBeingPolite = message.eq("Hello plu-ts");
 
     const signedByOwner = ctx.tx.signatories.some( owner.eqTerm );
 
     return isBeingPolite.and( signedByOwner );
+    // highlight-end
 });
 
 /* ... */
@@ -634,9 +636,17 @@ if( utxo === undefined )
 }
 ```
 
-### return the transaciton
+### build and return the transaciton
 
-and with all this informations we can finally build our transaciton.
+and with all this we have:
+
+- an user utxo to use as input
+- the `scriptTestnetAddr` (imported from `contracts/helloPluts.ts`) which is the script address to use in the output
+- the user public key hash that we'll use as output datum
+
+Which is all we need for our transaciton;
+
+so we can build it using the `txBuilder` we have:
 
 ```ts
 txBuilder.buildSync({
