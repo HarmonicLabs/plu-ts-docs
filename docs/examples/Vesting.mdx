@@ -40,7 +40,9 @@ this gives us a simple project structure:
 
 ## Add dependencies
 
-As always remember to run `npm install` to add `plu-ts` as dependency.
+Just like the [Hello plu-ts](./Hello%20World) example; this project already comes with plu-ts as dependecy;
+all we need to do to then is to run
+
 ```
 npm install
 ```
@@ -133,16 +135,9 @@ rm -rf ~/tmp2
 :::
 
 
-## The contract
-
-The contract should succeed if the following two conditions are met:
-
-- the transaction is signed by the `PPubKeyHash` defined in the UTxO datum;
-- the transaction lower bound is `Finite` and greather than the datum `deadline` field;
-
-But first lets get familiar with the starter template.
-
 ### Template overview
+
+Before we dive in let's get familiar with the starter template.
 
 If we now navigate to `src/contract.ts` we see we have a very simple validator already!
 
@@ -337,6 +332,13 @@ this is your first compiled smart contract 🎉!
 But we won't stop here for sure!
 
 Let's personalize this smart contract.
+
+## The contract
+
+The contract should succeed if the following two conditions are met:
+
+- the transaction is signed by the `PPubKeyHash` defined in the UTxO datum;
+- the transaction lower bound is `Finite` and greather than the datum `deadline` field;
 
 ### `VestingDatum`
 
@@ -1091,18 +1093,9 @@ async function claimVesting()
 
     const utxo = utxos[0];
 
-    const pkh = privateKey.derivePublicKey().hash;
+    const pkh = cli.utils.readPublicKey("./testnet/payment2.vkey").hash;
 }
 ```
-
-:::tip `privateKey.derivePublicKey()`
-
-This is the only new thing in the snipped above.
-
-We could have read the public key form the saved file but once we have a `PrivateKey` it is always possible to get the corresponding `PublicKey`
-(of course the opposit is not true)
-
-:::
 
 :::info use the beneficiary keys!
 
@@ -1228,7 +1221,7 @@ async function claimVesting()
 
     const utxo = utxos[0];
 
-    const pkh = privateKey.derivePublicKey().hash;
+    const pkh = cli.utils.readPublicKey("./testnet/payment2.vkey").hash;
 
     let tx = await cli.transaction.build({
         inputs: [
