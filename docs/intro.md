@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Built with ❤️ by [Harmonic Laboratories](https://www.harmoniclabs.tech/)
 
-This documentation is for `plu-ts` v0.2.0^, if you are using a previous version check for changes in the [changelog](https://github.com/HarmonicLabs/plu-ts/blob/main/CHANGELOG.md).
+This documentation is for `plu-ts` v0.7.0^, if you are using a previous version it is suggested to install the latest verision, feel free to ask for help in the [Harmonic Labs' discord server](https://discord.gg/CGKNcG7ade)
 
 ## Introduction
 
@@ -26,27 +26,6 @@ see [Getting Started](./Getting%20Started) to begin your jurney in plu-ts
 `plu-ts` was designed with the following goals in mind, in order of importance:
 
 - Smart Contract efficiency
-- reduced script size
 - developer experience
+- reduced script size
 - readability
-
-## Roadmap
-
-- v0.1.* :
-    - [x] key syntax to build `plu-ts` expressions
-    - [x] compilation of smart contracts to valid UPLC
-    - [x] standard API data structures (`PScriptContext`, etc... ) for PlutusV1 and PlutusV2 contracts
-    - [x] standard library
-    - [x] Terms with utility methods to simplify the developer experience ( `TermInt`, `TermBool`, etc... )
-- v0.2.* :
-    - [x] `plu-ts/offchain`
-      - [x] ledger types implementaiton
-      - [x] `TxBuilder` API
-- v0.3.* :
-    - [ ] onchain optimizations
-        - [x] introduction of an IR
-        - [ ] static AST analysis
-    - [ ] improved developer experience
-        - [ ] deprecate `extract` in favor of plain dot notaion
-        - [ ]  deprecate `plet( value ).in( myVar => {...} )`
-            - in favor of `const myVar = plet( value )` 
