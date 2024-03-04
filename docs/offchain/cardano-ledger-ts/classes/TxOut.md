@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxOut
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxOut
 
 # Class: TxOut
 
 ## Implements
 
-- [`ITxOut`](../interfaces/ITxOut.md)
+- [`ITxOut`](../interfaces/ITxOut)
 - `ToCbor`
-- `Cloneable`\<[`TxOut`](TxOut.md)\>
+- `Cloneable`\<[`TxOut`](TxOut)\>
 - `ToData`
 - `ToJson`
 
@@ -18,15 +18,15 @@
 
 ### new TxOut(txOutput)
 
-> **new TxOut**(`txOutput`): [`TxOut`](TxOut.md)
+> **new TxOut**(`txOutput`): [`TxOut`](TxOut)
 
 #### Parameters
 
-• **txOutput**: [`ITxOut`](../interfaces/ITxOut.md)
+• **txOutput**: [`ITxOut`](../interfaces/ITxOut)
 
 #### Returns
 
-[`TxOut`](TxOut.md)
+[`TxOut`](TxOut)
 
 #### Source
 
@@ -36,11 +36,11 @@
 
 ### address
 
-> **`readonly`** **address**: [`Address`](Address.md)
+> **`readonly`** **address**: [`Address`](Address)
 
 #### Implementation of
 
-[`ITxOut`](../interfaces/ITxOut.md).[`address`](../interfaces/ITxOut.md#address)
+[`ITxOut`](../interfaces/ITxOut).[`address`](../interfaces/ITxOut#address)
 
 #### Source
 
@@ -50,11 +50,11 @@
 
 ### datum?
 
-> **`optional`** **`readonly`** **datum**: `Data` \| [`Hash32`](Hash32.md)
+> **`optional`** **`readonly`** **datum**: `Data` \| [`Hash32`](Hash32)
 
 #### Implementation of
 
-[`ITxOut`](../interfaces/ITxOut.md).[`datum`](../interfaces/ITxOut.md#datum)
+[`ITxOut`](../interfaces/ITxOut).[`datum`](../interfaces/ITxOut#datum)
 
 #### Source
 
@@ -64,11 +64,11 @@
 
 ### refScript?
 
-> **`optional`** **`readonly`** **refScript**: [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+> **`optional`** **`readonly`** **refScript**: [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Implementation of
 
-[`ITxOut`](../interfaces/ITxOut.md).[`refScript`](../interfaces/ITxOut.md#refscript)
+[`ITxOut`](../interfaces/ITxOut).[`refScript`](../interfaces/ITxOut#refscript)
 
 #### Source
 
@@ -78,11 +78,11 @@
 
 ### value
 
-> **`readonly`** **value**: [`Value`](Value.md)
+> **`readonly`** **value**: [`Value`](Value)
 
 #### Implementation of
 
-[`ITxOut`](../interfaces/ITxOut.md).[`value`](../interfaces/ITxOut.md#value)
+[`ITxOut`](../interfaces/ITxOut).[`value`](../interfaces/ITxOut#value)
 
 #### Source
 
@@ -92,11 +92,11 @@
 
 ### fake
 
-> **`get`** **`static`** **fake**(): [`TxOut`](TxOut.md)
+> **`get`** **`static`** **fake**(): [`TxOut`](TxOut)
 
 #### Returns
 
-[`TxOut`](TxOut.md)
+[`TxOut`](TxOut)
 
 #### Source
 
@@ -106,11 +106,11 @@
 
 ### clone()
 
-> **clone**(): [`TxOut`](TxOut.md)
+> **clone**(): [`TxOut`](TxOut)
 
 #### Returns
 
-[`TxOut`](TxOut.md)
+[`TxOut`](TxOut)
 
 #### Implementation of
 
@@ -198,11 +198,11 @@
 
 ##### refScript
 
-> **refScript**: `undefined` \| [`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`
+> **refScript**: `undefined` \| [`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
 
 ##### value
 
-> **value**: [`ValueJson`](../type-aliases/ValueJson.md)
+> **value**: [`ValueJson`](../type-aliases/ValueJson)
 
 #### Implementation of
 
@@ -216,7 +216,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxOut`](TxOut.md)
+> **`static`** **fromCbor**(`cStr`): [`TxOut`](TxOut)
 
 #### Parameters
 
@@ -224,7 +224,7 @@
 
 #### Returns
 
-[`TxOut`](TxOut.md)
+[`TxOut`](TxOut)
 
 #### Source
 
@@ -234,7 +234,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxOut`](TxOut.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxOut`](TxOut)
 
 #### Parameters
 
@@ -242,7 +242,7 @@
 
 #### Returns
 
-[`TxOut`](TxOut.md)
+[`TxOut`](TxOut)
 
 #### Source
 

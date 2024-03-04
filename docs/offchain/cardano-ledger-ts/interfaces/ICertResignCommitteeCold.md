@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ICertResignCommitteeCold
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ICertResignCommitteeCold
 
 # Interface: ICertResignCommitteeCold
 
@@ -20,7 +20,7 @@
 
 ### coldCredential
 
-> **coldCredential**: [`Credential`](../classes/Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **coldCredential**: [`Credential`](../classes/Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Source
 

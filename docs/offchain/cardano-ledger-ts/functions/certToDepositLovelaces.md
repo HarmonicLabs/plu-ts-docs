@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / certToDepositLovelaces
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / certToDepositLovelaces
 
 # Function: certToDepositLovelaces()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **cert**: [`ICert`](../interfaces/ICert.md)
+• **cert**: [`ICert`](../interfaces/ICert)
 
 ## Returns
 

@@ -1,28 +1,28 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / PoolParams
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / PoolParams
 
 # Class: PoolParams
 
 ## Implements
 
-- [`ITypedPoolParams`](../interfaces/ITypedPoolParams.md)
+- [`ITypedPoolParams`](../interfaces/ITypedPoolParams)
 
 ## Constructors
 
 ### new PoolParams(params)
 
-> **new PoolParams**(`params`): [`PoolParams`](PoolParams.md)
+> **new PoolParams**(`params`): [`PoolParams`](PoolParams)
 
 #### Parameters
 
-• **params**: [`IPoolParams`](../interfaces/IPoolParams.md)
+• **params**: [`IPoolParams`](../interfaces/IPoolParams)
 
 #### Returns
 
-[`PoolParams`](PoolParams.md)
+[`PoolParams`](PoolParams)
 
 #### Source
 
@@ -36,7 +36,7 @@
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`cost`](../interfaces/ITypedPoolParams.md#cost)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`cost`](../interfaces/ITypedPoolParams#cost)
 
 #### Source
 
@@ -50,7 +50,7 @@
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`margin`](../interfaces/ITypedPoolParams.md#margin)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`margin`](../interfaces/ITypedPoolParams#margin)
 
 #### Source
 
@@ -60,11 +60,11 @@
 
 ### metadata?
 
-> **`optional`** **`readonly`** **metadata**: [`ITypedPoolParamsMetadata`](../interfaces/ITypedPoolParamsMetadata.md)
+> **`optional`** **`readonly`** **metadata**: [`ITypedPoolParamsMetadata`](../interfaces/ITypedPoolParamsMetadata)
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`metadata`](../interfaces/ITypedPoolParams.md#metadata)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`metadata`](../interfaces/ITypedPoolParams#metadata)
 
 #### Source
 
@@ -74,11 +74,11 @@
 
 ### operator
 
-> **`readonly`** **operator**: [`PoolKeyHash`](PoolKeyHash.md)
+> **`readonly`** **operator**: [`PoolKeyHash`](PoolKeyHash)
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`operator`](../interfaces/ITypedPoolParams.md#operator)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`operator`](../interfaces/ITypedPoolParams#operator)
 
 #### Source
 
@@ -88,11 +88,11 @@
 
 ### owners
 
-> **`readonly`** **owners**: [`PubKeyHash`](PubKeyHash.md)[]
+> **`readonly`** **owners**: [`PubKeyHash`](PubKeyHash)[]
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`owners`](../interfaces/ITypedPoolParams.md#owners)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`owners`](../interfaces/ITypedPoolParams#owners)
 
 #### Source
 
@@ -106,7 +106,7 @@
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`pledge`](../interfaces/ITypedPoolParams.md#pledge)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`pledge`](../interfaces/ITypedPoolParams#pledge)
 
 #### Source
 
@@ -116,11 +116,11 @@
 
 ### relays
 
-> **`readonly`** **relays**: [`PoolRelay`](../type-aliases/PoolRelay.md)[]
+> **`readonly`** **relays**: [`PoolRelay`](../type-aliases/PoolRelay)[]
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`relays`](../interfaces/ITypedPoolParams.md#relays)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`relays`](../interfaces/ITypedPoolParams#relays)
 
 #### Source
 
@@ -130,11 +130,11 @@
 
 ### rewardAccount
 
-> **`readonly`** **rewardAccount**: [`Hash28`](Hash28.md)
+> **`readonly`** **rewardAccount**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`rewardAccount`](../interfaces/ITypedPoolParams.md#rewardaccount)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`rewardAccount`](../interfaces/ITypedPoolParams#rewardaccount)
 
 #### Source
 
@@ -144,11 +144,11 @@
 
 ### vrfKeyHash
 
-> **`readonly`** **vrfKeyHash**: [`VRFKeyHash`](VRFKeyHash.md)
+> **`readonly`** **vrfKeyHash**: [`VRFKeyHash`](VRFKeyHash)
 
 #### Implementation of
 
-[`ITypedPoolParams`](../interfaces/ITypedPoolParams.md).[`vrfKeyHash`](../interfaces/ITypedPoolParams.md#vrfkeyhash)
+[`ITypedPoolParams`](../interfaces/ITypedPoolParams).[`vrfKeyHash`](../interfaces/ITypedPoolParams#vrfkeyhash)
 
 #### Source
 
@@ -222,7 +222,7 @@
 
 ### fromCborObjArray()
 
-> **`static`** **fromCborObjArray**(`__namedParameters`): [`PoolParams`](PoolParams.md)
+> **`static`** **fromCborObjArray**(`__namedParameters`): [`PoolParams`](PoolParams)
 
 #### Parameters
 
@@ -230,7 +230,7 @@
 
 #### Returns
 
-[`PoolParams`](PoolParams.md)
+[`PoolParams`](PoolParams)
 
 #### Source
 

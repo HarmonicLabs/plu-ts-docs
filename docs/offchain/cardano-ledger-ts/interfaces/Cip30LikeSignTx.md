@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Cip30LikeSignTx
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Cip30LikeSignTx
 
 # Interface: Cip30LikeSignTx
 

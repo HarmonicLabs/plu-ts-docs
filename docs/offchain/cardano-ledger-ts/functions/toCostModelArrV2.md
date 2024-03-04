@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / toCostModelArrV2
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / toCostModelArrV2
 
 # Function: toCostModelArrV2()
 
-> **toCostModelArrV2**(`v2`): [`CostModelPlutusV2Array`](../type-aliases/CostModelPlutusV2Array.md)
+> **toCostModelArrV2**(`v2`): [`CostModelPlutusV2Array`](../type-aliases/CostModelPlutusV2Array)
 
 ## Parameters
 
-• **v2**: [`AnyV2CostModel`](../type-aliases/AnyV2CostModel.md)
+• **v2**: [`AnyV2CostModel`](../type-aliases/AnyV2CostModel)
 
 ## Returns
 
-[`CostModelPlutusV2Array`](../type-aliases/CostModelPlutusV2Array.md)
+[`CostModelPlutusV2Array`](../type-aliases/CostModelPlutusV2Array)
 
 ## Source
 

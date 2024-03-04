@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ValueJson
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ValueJson
 
 # Type alias: ValueJson
 
@@ -10,7 +10,7 @@
 
 ## Index signature
 
- \[`policy_hex`: `string`\]: [`AssetJson`](AssetJson.md)
+ \[`policy_hex`: `string`\]: [`AssetJson`](AssetJson)
 
 ## Source
 

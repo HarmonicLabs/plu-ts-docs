@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / costModelsFromCbor
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / costModelsFromCbor
 
 # Function: costModelsFromCbor()
 
-> **costModelsFromCbor**(`cStr`): [`CostModels`](../interfaces/CostModels.md)
+> **costModelsFromCbor**(`cStr`): [`CostModels`](../interfaces/CostModels)
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 ## Returns
 
-[`CostModels`](../interfaces/CostModels.md)
+[`CostModels`](../interfaces/CostModels)
 
 ## Source
 

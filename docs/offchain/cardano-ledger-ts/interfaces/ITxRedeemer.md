@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxRedeemer
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxRedeemer
 
 # Interface: ITxRedeemer
 
@@ -40,7 +40,7 @@
 
 ### tag
 
-> **tag**: [`TxRedeemerTag`](../enumerations/TxRedeemerTag.md)
+> **tag**: [`TxRedeemerTag`](../enumerations/TxRedeemerTag)
 
 #### Source
 

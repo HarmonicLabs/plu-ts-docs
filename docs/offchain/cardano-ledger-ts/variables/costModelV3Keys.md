@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / costModelV3Keys
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / costModelV3Keys
 
 # Variable: costModelV3Keys
 
-> **`const`** **costModelV3Keys**: keyof [`CostModelPlutusV3`](../interfaces/CostModelPlutusV3.md)[]
+> **`const`** **costModelV3Keys**: keyof [`CostModelPlutusV3`](../interfaces/CostModelPlutusV3)[]
 
 ## Source
 

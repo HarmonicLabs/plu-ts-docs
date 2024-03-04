@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / LegacyPPUpdateProposal
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / LegacyPPUpdateProposal
 
 # Type alias: LegacyPPUpdateProposal
 
-> **LegacyPPUpdateProposal**: [[`LegacyPPUpdateMap`](LegacyPPUpdateMap.md), [`Epoch`](Epoch.md)]
+> **LegacyPPUpdateProposal**: [[`LegacyPPUpdateMap`](LegacyPPUpdateMap), [`Epoch`](Epoch)]
 
 ## Source
 

@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Address
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Address
 
 # Class: Address
 
@@ -17,21 +17,21 @@ shelley specification in cardano-ledger; page 113
 
 ### new Address(network, paymentCreds, stakeCreds, type)
 
-> **new Address**(`network`, `paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address.md)
+> **new Address**(`network`, `paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address)
 
 #### Parameters
 
-• **network**: [`NetworkT`](../type-aliases/NetworkT.md)
+• **network**: [`NetworkT`](../type-aliases/NetworkT)
 
-• **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+• **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
-• **stakeCreds?**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+• **stakeCreds?**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
-• **type?**: [`AddressType`](../type-aliases/AddressType.md)
+• **type?**: [`AddressType`](../type-aliases/AddressType)
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -41,7 +41,7 @@ shelley specification in cardano-ledger; page 113
 
 ### network
 
-> **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT.md)
+> **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT)
 
 #### Source
 
@@ -51,7 +51,7 @@ shelley specification in cardano-ledger; page 113
 
 ### paymentCreds
 
-> **`readonly`** **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Source
 
@@ -61,7 +61,7 @@ shelley specification in cardano-ledger; page 113
 
 ### stakeCreds?
 
-> **`optional`** **`readonly`** **stakeCreds**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+> **`optional`** **`readonly`** **stakeCreds**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
 #### Source
 
@@ -71,7 +71,7 @@ shelley specification in cardano-ledger; page 113
 
 ### type
 
-> **`readonly`** **type**: [`AddressType`](../type-aliases/AddressType.md)
+> **`readonly`** **type**: [`AddressType`](../type-aliases/AddressType)
 
 #### Source
 
@@ -81,11 +81,11 @@ shelley specification in cardano-ledger; page 113
 
 ### fake
 
-> **`get`** **`static`** **fake**(): [`Address`](Address.md)
+> **`get`** **`static`** **fake**(): [`Address`](Address)
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -95,11 +95,11 @@ shelley specification in cardano-ledger; page 113
 
 ### clone()
 
-> **clone**(): [`Address`](Address.md)
+> **clone**(): [`Address`](Address)
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -219,7 +219,7 @@ shelley specification in cardano-ledger; page 113
 
 ### fromBuffer()
 
-> **`static`** **fromBuffer**(`buff`): [`Address`](Address.md)
+> **`static`** **fromBuffer**(`buff`): [`Address`](Address)
 
 #### Parameters
 
@@ -227,7 +227,7 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -237,7 +237,7 @@ shelley specification in cardano-ledger; page 113
 
 ### fromBytes()
 
-> **`static`** **fromBytes**(`bs`): [`Address`](Address.md)
+> **`static`** **fromBytes**(`bs`): [`Address`](Address)
 
 #### Parameters
 
@@ -245,7 +245,7 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -255,7 +255,7 @@ shelley specification in cardano-ledger; page 113
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cbor`): [`Address`](Address.md)
+> **`static`** **fromCbor**(`cbor`): [`Address`](Address)
 
 #### Parameters
 
@@ -263,7 +263,7 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -273,7 +273,7 @@ shelley specification in cardano-ledger; page 113
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`buff`): [`Address`](Address.md)
+> **`static`** **fromCborObj**(`buff`): [`Address`](Address)
 
 #### Parameters
 
@@ -281,7 +281,7 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -291,7 +291,7 @@ shelley specification in cardano-ledger; page 113
 
 ### fromString()
 
-> **`static`** **fromString**(`addr`): [`Address`](Address.md)
+> **`static`** **fromString**(`addr`): [`Address`](Address)
 
 #### Parameters
 
@@ -299,7 +299,7 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -309,19 +309,19 @@ shelley specification in cardano-ledger; page 113
 
 ### mainnet()
 
-> **`static`** **mainnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address.md)
+> **`static`** **mainnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address)
 
 #### Parameters
 
-• **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+• **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
-• **stakeCreds?**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+• **stakeCreds?**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
-• **type?**: [`AddressType`](../type-aliases/AddressType.md)
+• **type?**: [`AddressType`](../type-aliases/AddressType)
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 
@@ -331,19 +331,19 @@ shelley specification in cardano-ledger; page 113
 
 ### testnet()
 
-> **`static`** **testnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address.md)
+> **`static`** **testnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address)
 
 #### Parameters
 
-• **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+• **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
-• **stakeCreds?**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+• **stakeCreds?**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
-• **type?**: [`AddressType`](../type-aliases/AddressType.md)
+• **type?**: [`AddressType`](../type-aliases/AddressType)
 
 #### Returns
 
-[`Address`](Address.md)
+[`Address`](Address)
 
 #### Source
 

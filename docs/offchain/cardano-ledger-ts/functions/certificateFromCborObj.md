@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / certificateFromCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / certificateFromCborObj
 
 # Function: certificateFromCborObj()
 
-> **certificateFromCborObj**(`cbor`): [`Certificate`](../type-aliases/Certificate.md)
+> **certificateFromCborObj**(`cbor`): [`Certificate`](../type-aliases/Certificate)
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 ## Returns
 
-[`Certificate`](../type-aliases/Certificate.md)
+[`Certificate`](../type-aliases/Certificate)
 
 ## Source
 

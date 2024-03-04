@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxRedeemerTagStr
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxRedeemerTagStr
 
 # Type alias: TxRedeemerTagStr\<Tag\>
 
-> **TxRedeemerTagStr**\<`Tag`\>: `Tag` extends [`Spend`](../enumerations/TxRedeemerTag.md#spend) ? `"Spend"` : `Tag` extends [`Mint`](../enumerations/TxRedeemerTag.md#mint) ? `"Mint"` : `Tag` extends [`Cert`](../enumerations/TxRedeemerTag.md#cert) ? `"Cert"` : `Tag` extends [`Withdraw`](../enumerations/TxRedeemerTag.md#withdraw) ? `"Withdraw"` : `Tag` extends [`Voting`](../enumerations/TxRedeemerTag.md#voting) ? `"Voting"` : `Tag` extends [`Proposing`](../enumerations/TxRedeemerTag.md#proposing) ? `"Proposing"` : `never`
+> **TxRedeemerTagStr**\<`Tag`\>: `Tag` extends [`Spend`](../enumerations/TxRedeemerTag#spend) ? `"Spend"` : `Tag` extends [`Mint`](../enumerations/TxRedeemerTag#mint) ? `"Mint"` : `Tag` extends [`Cert`](../enumerations/TxRedeemerTag#cert) ? `"Cert"` : `Tag` extends [`Withdraw`](../enumerations/TxRedeemerTag#withdraw) ? `"Withdraw"` : `Tag` extends [`Voting`](../enumerations/TxRedeemerTag#voting) ? `"Voting"` : `Tag` extends [`Proposing`](../enumerations/TxRedeemerTag#proposing) ? `"Proposing"` : `never`
 
 ## Type parameters
 
-• **Tag** extends [`TxRedeemerTag`](../enumerations/TxRedeemerTag.md)
+• **Tag** extends [`TxRedeemerTag`](../enumerations/TxRedeemerTag)
 
 ## Source
 

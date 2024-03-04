@@ -1,32 +1,32 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Signature
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Signature
 
 # Class: Signature
 
 ## Extends
 
-- [`Hash`](Hash.md)
+- [`Hash`](Hash)
 
 ## Constructors
 
 ### new Signature(bs)
 
-> **new Signature**(`bs`): [`Signature`](Signature.md)
+> **new Signature**(`bs`): [`Signature`](Signature)
 
 #### Parameters
 
-• **bs**: `string` \| `Uint8Array` \| [`Signature`](Signature.md)
+• **bs**: `string` \| `Uint8Array` \| [`Signature`](Signature)
 
 #### Returns
 
-[`Signature`](Signature.md)
+[`Signature`](Signature)
 
 #### Overrides
 
-[`Hash`](Hash.md).[`constructor`](Hash.md#constructors)
+[`Hash`](Hash).[`constructor`](Hash#constructors)
 
 #### Source
 
@@ -100,15 +100,15 @@ use `toString()` instead
 
 ### clone()
 
-> **clone**(): [`Signature`](Signature.md)
+> **clone**(): [`Signature`](Signature)
 
 #### Returns
 
-[`Signature`](Signature.md)
+[`Signature`](Signature)
 
 #### Overrides
 
-[`Hash`](Hash.md).[`clone`](Hash.md#clone)
+[`Hash`](Hash).[`clone`](Hash#clone)
 
 #### Source
 
@@ -126,7 +126,7 @@ use `toString()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toBuffer`](Hash.md#tobuffer)
+[`Hash`](Hash).[`toBuffer`](Hash#tobuffer)
 
 #### Source
 
@@ -144,7 +144,7 @@ use `toString()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toBytes`](Hash.md#tobytes)
+[`Hash`](Hash).[`toBytes`](Hash#tobytes)
 
 #### Deprecated
 
@@ -166,7 +166,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toCbor`](Hash.md#tocbor)
+[`Hash`](Hash).[`toCbor`](Hash#tocbor)
 
 #### Source
 
@@ -184,7 +184,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toCborObj`](Hash.md#tocborobj)
+[`Hash`](Hash).[`toCborObj`](Hash#tocborobj)
 
 #### Source
 
@@ -202,7 +202,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toData`](Hash.md#todata)
+[`Hash`](Hash).[`toData`](Hash#todata)
 
 #### Source
 
@@ -220,7 +220,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toString`](Hash.md#tostring)
+[`Hash`](Hash).[`toString`](Hash#tostring)
 
 #### Source
 
@@ -244,7 +244,7 @@ use `toBuffer()` instead
 
 ### fromAscii()
 
-> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash.md)
+> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -252,11 +252,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`fromAscii`](Hash.md#fromascii)
+[`Hash`](Hash).[`fromAscii`](Hash#fromascii)
 
 #### Source
 
@@ -266,7 +266,7 @@ use `toBuffer()` instead
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Signature`](Signature.md)
+> **`static`** **fromCbor**(`cStr`): [`Signature`](Signature)
 
 #### Parameters
 
@@ -274,11 +274,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Signature`](Signature.md)
+[`Signature`](Signature)
 
 #### Overrides
 
-[`Hash`](Hash.md).[`fromCbor`](Hash.md#fromcbor)
+[`Hash`](Hash).[`fromCbor`](Hash#fromcbor)
 
 #### Source
 
@@ -288,7 +288,7 @@ use `toBuffer()` instead
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Signature`](Signature.md)
+> **`static`** **fromCborObj**(`cObj`): [`Signature`](Signature)
 
 #### Parameters
 
@@ -296,11 +296,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Signature`](Signature.md)
+[`Signature`](Signature)
 
 #### Overrides
 
-[`Hash`](Hash.md).[`fromCborObj`](Hash.md#fromcborobj)
+[`Hash`](Hash).[`fromCborObj`](Hash#fromcborobj)
 
 #### Source
 
@@ -322,7 +322,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`isStrictInstance`](Hash.md#isstrictinstance)
+[`Hash`](Hash).[`isStrictInstance`](Hash#isstrictinstance)
 
 #### Source
 
@@ -344,7 +344,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`isValidHexValue`](Hash.md#isvalidhexvalue)
+[`Hash`](Hash).[`isValidHexValue`](Hash#isvalidhexvalue)
 
 #### Source
 
@@ -358,7 +358,7 @@ use `toBuffer()` instead
 
 #### Parameters
 
-• **bStr**: [`Hash`](Hash.md)
+• **bStr**: [`Hash`](Hash)
 
 #### Returns
 
@@ -366,7 +366,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash`](Hash.md).[`toAscii`](Hash.md#toascii)
+[`Hash`](Hash).[`toAscii`](Hash#toascii)
 
 #### Source
 

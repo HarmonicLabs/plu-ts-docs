@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxWithdrawals
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxWithdrawals
 
 # Class: TxWithdrawals
 
@@ -15,17 +15,17 @@
 
 ### new TxWithdrawals(map, network)
 
-> **new TxWithdrawals**(`map`, `network`): [`TxWithdrawals`](TxWithdrawals.md)
+> **new TxWithdrawals**(`map`, `network`): [`TxWithdrawals`](TxWithdrawals)
 
 #### Parameters
 
-• **map**: [`ITxWithdrawals`](../type-aliases/ITxWithdrawals.md)
+• **map**: [`ITxWithdrawals`](../type-aliases/ITxWithdrawals)
 
-• **network**: [`NetworkT`](../type-aliases/NetworkT.md)= `"mainnet"`
+• **network**: [`NetworkT`](../type-aliases/NetworkT)= `"mainnet"`
 
 #### Returns
 
-[`TxWithdrawals`](TxWithdrawals.md)
+[`TxWithdrawals`](TxWithdrawals)
 
 #### Source
 
@@ -35,7 +35,7 @@
 
 ### map
 
-> **`readonly`** **map**: [`TxWithdrawalsMapBigInt`](../type-aliases/TxWithdrawalsMapBigInt.md)
+> **`readonly`** **map**: [`TxWithdrawalsMapBigInt`](../type-aliases/TxWithdrawalsMapBigInt)
 
 #### Source
 
@@ -117,11 +117,11 @@
 
 ### toTotalWitdrawn()
 
-> **toTotalWitdrawn**(): [`Value`](Value.md)
+> **toTotalWitdrawn**(): [`Value`](Value)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -131,7 +131,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxWithdrawals`](TxWithdrawals.md)
+> **`static`** **fromCbor**(`cStr`): [`TxWithdrawals`](TxWithdrawals)
 
 #### Parameters
 
@@ -139,7 +139,7 @@
 
 #### Returns
 
-[`TxWithdrawals`](TxWithdrawals.md)
+[`TxWithdrawals`](TxWithdrawals)
 
 #### Source
 
@@ -149,7 +149,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxWithdrawals`](TxWithdrawals.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxWithdrawals`](TxWithdrawals)
 
 #### Parameters
 
@@ -157,7 +157,7 @@
 
 #### Returns
 
-[`TxWithdrawals`](TxWithdrawals.md)
+[`TxWithdrawals`](TxWithdrawals)
 
 #### Source
 
@@ -167,7 +167,7 @@
 
 ### fromJson()
 
-> **`static`** **fromJson**(`json`): [`TxWithdrawals`](TxWithdrawals.md)
+> **`static`** **fromJson**(`json`): [`TxWithdrawals`](TxWithdrawals)
 
 #### Parameters
 
@@ -175,7 +175,7 @@
 
 #### Returns
 
-[`TxWithdrawals`](TxWithdrawals.md)
+[`TxWithdrawals`](TxWithdrawals)
 
 #### Source
 

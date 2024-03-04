@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxWithdrawalsEntry
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxWithdrawalsEntry
 
 # Type alias: ITxWithdrawalsEntry
 
@@ -12,11 +12,11 @@
 
 ### amount
 
-> **amount**: [`Coin`](Coin.md)
+> **amount**: [`Coin`](Coin)
 
 ### rewardAccount
 
-> **rewardAccount**: [`CanBeHash28`](CanBeHash28.md) \| [`StakeAddress`](../classes/StakeAddress.md)
+> **rewardAccount**: [`CanBeHash28`](CanBeHash28) \| [`StakeAddress`](../classes/StakeAddress)
 
 ## Source
 

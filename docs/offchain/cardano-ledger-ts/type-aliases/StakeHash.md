@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / StakeHash
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / StakeHash
 
 # Type alias: StakeHash\<T\>
 
-> **StakeHash**\<`T`\>: `T` extends `"stakeKey"` ? [`StakeKeyHash`](../classes/StakeKeyHash.md) : `T` extends `"script"` ? [`StakeValidatorHash`](../classes/StakeValidatorHash.md) : `T` extends `"pointer"` ? [`CanBeUInteger`, `CanBeUInteger`, `CanBeUInteger`] : `never`
+> **StakeHash**\<`T`\>: `T` extends `"stakeKey"` ? [`StakeKeyHash`](../classes/StakeKeyHash) : `T` extends `"script"` ? [`StakeValidatorHash`](../classes/StakeValidatorHash) : `T` extends `"pointer"` ? [`CanBeUInteger`, `CanBeUInteger`, `CanBeUInteger`] : `never`
 
 ## Type parameters
 
-• **T** extends [`StakeCredentialsType`](StakeCredentialsType.md)
+• **T** extends [`StakeCredentialsType`](StakeCredentialsType)
 
 ## Source
 

@@ -1,22 +1,22 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / subIValues
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / subIValues
 
 # Function: subIValues()
 
-> **subIValues**(`a`, `b`): [`IValue`](../type-aliases/IValue.md)
+> **subIValues**(`a`, `b`): [`IValue`](../type-aliases/IValue)
 
 ## Parameters
 
-• **a**: [`IValue`](../type-aliases/IValue.md)
+• **a**: [`IValue`](../type-aliases/IValue)
 
-• **b**: [`IValue`](../type-aliases/IValue.md)
+• **b**: [`IValue`](../type-aliases/IValue)
 
 ## Returns
 
-[`IValue`](../type-aliases/IValue.md)
+[`IValue`](../type-aliases/IValue)
 
 ## Source
 

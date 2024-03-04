@@ -1,32 +1,32 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / StakeAddress
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / StakeAddress
 
 # Class: StakeAddress\<T\>
 
 ## Type parameters
 
-• **T** extends [`StakeAddressType`](../type-aliases/StakeAddressType.md) = [`StakeAddressType`](../type-aliases/StakeAddressType.md)
+• **T** extends [`StakeAddressType`](../type-aliases/StakeAddressType) = [`StakeAddressType`](../type-aliases/StakeAddressType)
 
 ## Constructors
 
 ### new StakeAddress(network, credentials, type)
 
-> **new StakeAddress**\<`T`\>(`network`, `credentials`, `type`?): [`StakeAddress`](StakeAddress.md)\<`T`\>
+> **new StakeAddress**\<`T`\>(`network`, `credentials`, `type`?): [`StakeAddress`](StakeAddress)\<`T`\>
 
 #### Parameters
 
-• **network**: [`NetworkT`](../type-aliases/NetworkT.md)
+• **network**: [`NetworkT`](../type-aliases/NetworkT)
 
-• **credentials**: [`Hash28`](Hash28.md)
+• **credentials**: [`Hash28`](Hash28)
 
 • **type?**: `T`
 
 #### Returns
 
-[`StakeAddress`](StakeAddress.md)\<`T`\>
+[`StakeAddress`](StakeAddress)\<`T`\>
 
 #### Source
 
@@ -36,7 +36,7 @@
 
 ### credentials
 
-> **`readonly`** **credentials**: [`StakeAddressCredentials`](../type-aliases/StakeAddressCredentials.md)\<`T`\>
+> **`readonly`** **credentials**: [`StakeAddressCredentials`](../type-aliases/StakeAddressCredentials)\<`T`\>
 
 #### Source
 
@@ -46,7 +46,7 @@
 
 ### network
 
-> **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT.md)
+> **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT)
 
 #### Source
 
@@ -66,11 +66,11 @@
 
 ### clone()
 
-> **clone**(): [`StakeAddress`](StakeAddress.md)\<`T`\>
+> **clone**(): [`StakeAddress`](StakeAddress)\<`T`\>
 
 #### Returns
 
-[`StakeAddress`](StakeAddress.md)\<`T`\>
+[`StakeAddress`](StakeAddress)\<`T`\>
 
 #### Source
 
@@ -94,11 +94,11 @@
 
 ### toCredential()
 
-> **toCredential**(): [`Credential`](Credential.md)\<`CredentialType`\>
+> **toCredential**(): [`Credential`](Credential)\<`CredentialType`\>
 
 #### Returns
 
-[`Credential`](Credential.md)\<`CredentialType`\>
+[`Credential`](Credential)\<`CredentialType`\>
 
 #### Source
 
@@ -108,11 +108,11 @@
 
 ### toStakeCredentials()
 
-> **toStakeCredentials**(): [`StakeCredentials`](StakeCredentials.md)\<`T`\>
+> **toStakeCredentials**(): [`StakeCredentials`](StakeCredentials)\<`T`\>
 
 #### Returns
 
-[`StakeCredentials`](StakeCredentials.md)\<`T`\>
+[`StakeCredentials`](StakeCredentials)\<`T`\>
 
 #### Source
 
@@ -122,11 +122,11 @@
 
 ### toString()
 
-> **toString**(): [`StakeAddressBech32`](../type-aliases/StakeAddressBech32.md)
+> **toString**(): [`StakeAddressBech32`](../type-aliases/StakeAddressBech32)
 
 #### Returns
 
-[`StakeAddressBech32`](../type-aliases/StakeAddressBech32.md)
+[`StakeAddressBech32`](../type-aliases/StakeAddressBech32)
 
 #### Source
 
@@ -136,19 +136,19 @@
 
 ### fromBytes()
 
-> **`static`** **fromBytes**(`bs`, `netwok`, `type`): [`StakeAddress`](StakeAddress.md)\<[`StakeAddressType`](../type-aliases/StakeAddressType.md)\>
+> **`static`** **fromBytes**(`bs`, `netwok`, `type`): [`StakeAddress`](StakeAddress)\<[`StakeAddressType`](../type-aliases/StakeAddressType)\>
 
 #### Parameters
 
 • **bs**: `string` \| `Uint8Array` \| `byte`[]
 
-• **netwok**: [`NetworkT`](../type-aliases/NetworkT.md)= `"mainnet"`
+• **netwok**: [`NetworkT`](../type-aliases/NetworkT)= `"mainnet"`
 
-• **type**: [`StakeAddressType`](../type-aliases/StakeAddressType.md)= `"stakeKey"`
+• **type**: [`StakeAddressType`](../type-aliases/StakeAddressType)= `"stakeKey"`
 
 #### Returns
 
-[`StakeAddress`](StakeAddress.md)\<[`StakeAddressType`](../type-aliases/StakeAddressType.md)\>
+[`StakeAddress`](StakeAddress)\<[`StakeAddressType`](../type-aliases/StakeAddressType)\>
 
 #### Source
 
@@ -160,7 +160,7 @@
 
 #### fromString(str)
 
-> **`static`** **fromString**(`str`): [`StakeAddress`](StakeAddress.md)\<[`StakeAddressType`](../type-aliases/StakeAddressType.md)\>
+> **`static`** **fromString**(`str`): [`StakeAddress`](StakeAddress)\<[`StakeAddressType`](../type-aliases/StakeAddressType)\>
 
 ##### Parameters
 
@@ -168,7 +168,7 @@
 
 ##### Returns
 
-[`StakeAddress`](StakeAddress.md)\<[`StakeAddressType`](../type-aliases/StakeAddressType.md)\>
+[`StakeAddress`](StakeAddress)\<[`StakeAddressType`](../type-aliases/StakeAddressType)\>
 
 ##### Source
 
@@ -176,11 +176,11 @@
 
 #### fromString(str, type)
 
-> **`static`** **fromString**\<`T`\>(`str`, `type`): [`StakeAddress`](StakeAddress.md)\<`T`\>
+> **`static`** **fromString**\<`T`\>(`str`, `type`): [`StakeAddress`](StakeAddress)\<`T`\>
 
 ##### Type parameters
 
-• **T** extends [`StakeAddressType`](../type-aliases/StakeAddressType.md) = [`StakeAddressType`](../type-aliases/StakeAddressType.md)
+• **T** extends [`StakeAddressType`](../type-aliases/StakeAddressType) = [`StakeAddressType`](../type-aliases/StakeAddressType)
 
 ##### Parameters
 
@@ -190,7 +190,7 @@
 
 ##### Returns
 
-[`StakeAddress`](StakeAddress.md)\<`T`\>
+[`StakeAddress`](StakeAddress)\<`T`\>
 
 ##### Source
 

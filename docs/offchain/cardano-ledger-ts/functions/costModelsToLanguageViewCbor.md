@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / costModelsToLanguageViewCbor
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / costModelsToLanguageViewCbor
 
 # Function: costModelsToLanguageViewCbor()
 
@@ -10,9 +10,9 @@
 
 ## Parameters
 
-• **costmdls**: [`CostModels`](../interfaces/CostModels.md)
+• **costmdls**: [`CostModels`](../interfaces/CostModels)
 
-• **opts**: [`CostModelsToLanguageViewCborOpts`](../interfaces/CostModelsToLanguageViewCborOpts.md)
+• **opts**: [`CostModelsToLanguageViewCborOpts`](../interfaces/CostModelsToLanguageViewCborOpts)
 
 ## Returns
 

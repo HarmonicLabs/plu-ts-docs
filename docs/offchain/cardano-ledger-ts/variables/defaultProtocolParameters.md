@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / defaultProtocolParameters
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / defaultProtocolParameters
 
 # Variable: defaultProtocolParameters
 
-> **`const`** **defaultProtocolParameters**: [`ProtocolParameters`](../interfaces/ProtocolParameters.md)
+> **`const`** **defaultProtocolParameters**: [`ProtocolParameters`](../interfaces/ProtocolParameters)
 
 ## Source
 

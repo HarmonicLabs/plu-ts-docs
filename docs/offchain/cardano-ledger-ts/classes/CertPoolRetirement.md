@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertPoolRetirement
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertPoolRetirement
 
 # Class: CertPoolRetirement
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement)
 
 ## Constructors
 
 ### new CertPoolRetirement(__namedParameters)
 
-> **new CertPoolRetirement**(`__namedParameters`): [`CertPoolRetirement`](CertPoolRetirement.md)
+> **new CertPoolRetirement**(`__namedParameters`): [`CertPoolRetirement`](CertPoolRetirement)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md)
+• **\_\_namedParameters**: [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement)
 
 #### Returns
 
-[`CertPoolRetirement`](CertPoolRetirement.md)
+[`CertPoolRetirement`](CertPoolRetirement)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`PoolRetirement`](../enumerations/CertificateType.md#poolretirement)
+> **`readonly`** **certType**: [`PoolRetirement`](../enumerations/CertificateType#poolretirement)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -51,7 +51,7 @@
 
 #### Implementation of
 
-[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md).[`epoch`](../interfaces/ICertPoolRetirement.md#epoch)
+[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement).[`epoch`](../interfaces/ICertPoolRetirement#epoch)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### poolHash
 
-> **`readonly`** **poolHash**: [`Hash28`](Hash28.md)
+> **`readonly`** **poolHash**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md).[`poolHash`](../interfaces/ICertPoolRetirement.md#poolhash)
+[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement).[`poolHash`](../interfaces/ICertPoolRetirement#poolhash)
 
 #### Source
 
@@ -75,15 +75,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -147,7 +147,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertPoolRetirement`](CertPoolRetirement.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertPoolRetirement`](CertPoolRetirement)
 
 #### Parameters
 
@@ -155,7 +155,7 @@
 
 #### Returns
 
-[`CertPoolRetirement`](CertPoolRetirement.md)
+[`CertPoolRetirement`](CertPoolRetirement)
 
 #### Source
 

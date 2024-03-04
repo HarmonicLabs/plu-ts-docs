@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertUpdateDrep
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertUpdateDrep
 
 # Class: CertUpdateDrep
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep)
 
 ## Constructors
 
 ### new CertUpdateDrep(__namedParameters)
 
-> **new CertUpdateDrep**(`__namedParameters`): [`CertUpdateDrep`](CertUpdateDrep.md)
+> **new CertUpdateDrep**(`__namedParameters`): [`CertUpdateDrep`](CertUpdateDrep)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md)
+• **\_\_namedParameters**: [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep)
 
 #### Returns
 
-[`CertUpdateDrep`](CertUpdateDrep.md)
+[`CertUpdateDrep`](CertUpdateDrep)
 
 #### Source
 
@@ -37,7 +37,7 @@
 
 #### Implementation of
 
-[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md).[`anchor`](../interfaces/ICertUpdateDrep.md#anchor)
+[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep).[`anchor`](../interfaces/ICertUpdateDrep#anchor)
 
 #### Source
 
@@ -47,11 +47,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`UpdateDrep`](../enumerations/CertificateType.md#updatedrep)
+> **`readonly`** **certType**: [`UpdateDrep`](../enumerations/CertificateType#updatedrep)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### drepCredential
 
-> **`readonly`** **drepCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **drepCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md).[`drepCredential`](../interfaces/ICertUpdateDrep.md#drepcredential)
+[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep).[`drepCredential`](../interfaces/ICertUpdateDrep#drepcredential)
 
 #### Source
 
@@ -75,15 +75,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -155,7 +155,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertUpdateDrep`](CertUpdateDrep.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertUpdateDrep`](CertUpdateDrep)
 
 #### Parameters
 
@@ -163,7 +163,7 @@
 
 #### Returns
 
-[`CertUpdateDrep`](CertUpdateDrep.md)
+[`CertUpdateDrep`](CertUpdateDrep)
 
 #### Source
 

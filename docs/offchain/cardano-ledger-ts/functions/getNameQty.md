@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / getNameQty
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / getNameQty
 
 # Function: getNameQty()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **assets**: `undefined` \| [`IValueAssets`](../type-aliases/IValueAssets.md)
+• **assets**: `undefined` \| [`IValueAssets`](../type-aliases/IValueAssets)
 
 • **searchName**: `Uint8Array`
 

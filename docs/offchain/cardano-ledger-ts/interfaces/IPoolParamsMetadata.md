@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IPoolParamsMetadata
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IPoolParamsMetadata
 
 # Interface: IPoolParamsMetadata
 
@@ -10,7 +10,7 @@
 
 ### hash
 
-> **hash**: [`CanBeHash32`](../type-aliases/CanBeHash32.md)
+> **hash**: [`CanBeHash32`](../type-aliases/CanBeHash32)
 
 #### Source
 

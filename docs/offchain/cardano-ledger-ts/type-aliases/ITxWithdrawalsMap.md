@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxWithdrawalsMap
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxWithdrawalsMap
 
 # Type alias: ITxWithdrawalsMap
 
-> **ITxWithdrawalsMap**: [`ITxWithdrawalsEntry`](ITxWithdrawalsEntry.md)[]
+> **ITxWithdrawalsMap**: [`ITxWithdrawalsEntry`](ITxWithdrawalsEntry)[]
 
 ## Source
 

@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Tx
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Tx
 
 # Class: Tx
 
 ## Implements
 
-- [`ITx`](../interfaces/ITx.md)
+- [`ITx`](../interfaces/ITx)
 - `ToCbor`
 - `ToJson`
 
@@ -16,15 +16,15 @@
 
 ### new Tx(tx)
 
-> **new Tx**(`tx`): [`Tx`](Tx.md)
+> **new Tx**(`tx`): [`Tx`](Tx)
 
 #### Parameters
 
-• **tx**: [`ITx`](../interfaces/ITx.md)
+• **tx**: [`ITx`](../interfaces/ITx)
 
 #### Returns
 
-[`Tx`](Tx.md)
+[`Tx`](Tx)
 
 #### Source
 
@@ -45,7 +45,7 @@ when signature is provided by a third party (example CIP30 wallet)
 
 #### Parameters
 
-• **vkeyWit**: [`VKeyWitness`](VKeyWitness.md)
+• **vkeyWit**: [`VKeyWitness`](VKeyWitness)
 
 #### Returns
 
@@ -59,11 +59,11 @@ when signature is provided by a third party (example CIP30 wallet)
 
 ### auxiliaryData?
 
-> **`optional`** **`readonly`** **auxiliaryData**: `null` \| [`AuxiliaryData`](AuxiliaryData.md)
+> **`optional`** **`readonly`** **auxiliaryData**: `null` \| [`AuxiliaryData`](AuxiliaryData)
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx.md).[`auxiliaryData`](../interfaces/ITx.md#auxiliarydata)
+[`ITx`](../interfaces/ITx).[`auxiliaryData`](../interfaces/ITx#auxiliarydata)
 
 #### Source
 
@@ -73,11 +73,11 @@ when signature is provided by a third party (example CIP30 wallet)
 
 ### body
 
-> **`readonly`** **body**: [`TxBody`](TxBody.md)
+> **`readonly`** **body**: [`TxBody`](TxBody)
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx.md).[`body`](../interfaces/ITx.md#body)
+[`ITx`](../interfaces/ITx).[`body`](../interfaces/ITx#body)
 
 #### Source
 
@@ -87,7 +87,7 @@ when signature is provided by a third party (example CIP30 wallet)
 
 ### hash
 
-> **`readonly`** **hash**: [`Hash32`](Hash32.md)
+> **`readonly`** **hash**: [`Hash32`](Hash32)
 
 getter
 
@@ -113,7 +113,7 @@ getter
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx.md).[`isScriptValid`](../interfaces/ITx.md#isscriptvalid)
+[`ITx`](../interfaces/ITx).[`isScriptValid`](../interfaces/ITx#isscriptvalid)
 
 #### Source
 
@@ -131,7 +131,7 @@ otherwise nothing happens (the signature is not added)
 
 #### Parameters
 
-• **signer**: [`PrivateKey`](PrivateKey.md)
+• **signer**: [`PrivateKey`](PrivateKey)
 
 #### Returns
 
@@ -153,7 +153,7 @@ that follows the [CIP-0030 standard]
 
 #### Parameters
 
-• **cip30wallet**: [`Cip30LikeSignTx`](../interfaces/Cip30LikeSignTx.md)
+• **cip30wallet**: [`Cip30LikeSignTx`](../interfaces/Cip30LikeSignTx)
 
 #### Returns
 
@@ -167,11 +167,11 @@ that follows the [CIP-0030 standard]
 
 ### witnesses
 
-> **`readonly`** **witnesses**: [`TxWitnessSet`](TxWitnessSet.md)
+> **`readonly`** **witnesses**: [`TxWitnessSet`](TxWitnessSet)
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx.md).[`witnesses`](../interfaces/ITx.md#witnesses)
+[`ITx`](../interfaces/ITx).[`witnesses`](../interfaces/ITx#witnesses)
 
 #### Source
 
@@ -257,11 +257,11 @@ that follows the [CIP-0030 standard]
 
 ##### body.mint
 
-> **mint**: `undefined` \| [`ValueJson`](../type-aliases/ValueJson.md)
+> **mint**: `undefined` \| [`ValueJson`](../type-aliases/ValueJson)
 
 ##### body.network
 
-> **network**: `undefined` \| [`NetworkT`](../type-aliases/NetworkT.md)
+> **network**: `undefined` \| [`NetworkT`](../type-aliases/NetworkT)
 
 ##### body.outputs
 
@@ -317,19 +317,19 @@ that follows the [CIP-0030 standard]
 
 ##### witnesses.nativeScripts
 
-> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### witnesses.plutusV1Scripts
 
-> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### witnesses.plutusV2Scripts
 
-> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### witnesses.plutusV3Scripts
 
-> **plutusV3Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV3Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### witnesses.redeemers
 
@@ -351,7 +351,7 @@ that follows the [CIP-0030 standard]
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Tx`](Tx.md)
+> **`static`** **fromCbor**(`cStr`): [`Tx`](Tx)
 
 #### Parameters
 
@@ -359,7 +359,7 @@ that follows the [CIP-0030 standard]
 
 #### Returns
 
-[`Tx`](Tx.md)
+[`Tx`](Tx)
 
 #### Source
 
@@ -369,7 +369,7 @@ that follows the [CIP-0030 standard]
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Tx`](Tx.md)
+> **`static`** **fromCborObj**(`cObj`): [`Tx`](Tx)
 
 #### Parameters
 
@@ -377,7 +377,7 @@ that follows the [CIP-0030 standard]
 
 #### Returns
 
-[`Tx`](Tx.md)
+[`Tx`](Tx)
 
 #### Source
 

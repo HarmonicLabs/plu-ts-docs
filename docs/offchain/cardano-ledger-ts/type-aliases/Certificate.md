@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Certificate
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Certificate
 
 # Type alias: Certificate
 
-> **Certificate**: [`CertStakeRegistration`](../classes/CertStakeRegistration.md) \| [`CertStakeDeRegistration`](../classes/CertStakeDeRegistration.md) \| [`CertStakeDelegation`](../classes/CertStakeDelegation.md) \| [`CertPoolRegistration`](../classes/CertPoolRegistration.md) \| [`CertPoolRetirement`](../classes/CertPoolRetirement.md) \| [`CertGenesisKeyDelegation`](../classes/CertGenesisKeyDelegation.md) \| [`MoveInstantRewardsCert`](../classes/MoveInstantRewardsCert.md) \| [`CertRegistrationDeposit`](../classes/CertRegistrationDeposit.md) \| [`CertUnRegistrationDeposit`](../classes/CertUnRegistrationDeposit.md) \| [`CertVoteDeleg`](../classes/CertVoteDeleg.md) \| [`CertStakeVoteDeleg`](../classes/CertStakeVoteDeleg.md) \| [`CertVoteRegistrationDeleg`](../classes/CertVoteRegistrationDeleg.md) \| [`CertStakeVoteRegistrationDeleg`](../classes/CertStakeVoteRegistrationDeleg.md) \| [`CertAuthCommitteeHot`](../classes/CertAuthCommitteeHot.md) \| [`CertResignCommitteeCold`](../classes/CertResignCommitteeCold.md) \| [`CertRegistrationDrep`](../classes/CertRegistrationDrep.md) \| [`CertUnRegistrationDrep`](../classes/CertUnRegistrationDrep.md) \| [`CertUpdateDrep`](../classes/CertUpdateDrep.md)
+> **Certificate**: [`CertStakeRegistration`](../classes/CertStakeRegistration) \| [`CertStakeDeRegistration`](../classes/CertStakeDeRegistration) \| [`CertStakeDelegation`](../classes/CertStakeDelegation) \| [`CertPoolRegistration`](../classes/CertPoolRegistration) \| [`CertPoolRetirement`](../classes/CertPoolRetirement) \| [`CertGenesisKeyDelegation`](../classes/CertGenesisKeyDelegation) \| [`MoveInstantRewardsCert`](../classes/MoveInstantRewardsCert) \| [`CertRegistrationDeposit`](../classes/CertRegistrationDeposit) \| [`CertUnRegistrationDeposit`](../classes/CertUnRegistrationDeposit) \| [`CertVoteDeleg`](../classes/CertVoteDeleg) \| [`CertStakeVoteDeleg`](../classes/CertStakeVoteDeleg) \| [`CertVoteRegistrationDeleg`](../classes/CertVoteRegistrationDeleg) \| [`CertStakeVoteRegistrationDeleg`](../classes/CertStakeVoteRegistrationDeleg) \| [`CertAuthCommitteeHot`](../classes/CertAuthCommitteeHot) \| [`CertResignCommitteeCold`](../classes/CertResignCommitteeCold) \| [`CertRegistrationDrep`](../classes/CertRegistrationDrep) \| [`CertUnRegistrationDrep`](../classes/CertUnRegistrationDrep) \| [`CertUpdateDrep`](../classes/CertUpdateDrep)
 
 ## Source
 

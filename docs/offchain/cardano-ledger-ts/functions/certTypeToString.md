@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / certTypeToString
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / certTypeToString
 
 # Function: certTypeToString()
 
-> **certTypeToString**\<`CertT`\>(`certT`): [`CertTypeToStr`](../type-aliases/CertTypeToStr.md)\<`CertT`\>
+> **certTypeToString**\<`CertT`\>(`certT`): [`CertTypeToStr`](../type-aliases/CertTypeToStr)\<`CertT`\>
 
 ## Type parameters
 
-• **CertT** extends [`CertificateType`](../enumerations/CertificateType.md)
+• **CertT** extends [`CertificateType`](../enumerations/CertificateType)
 
 ## Parameters
 
@@ -18,7 +18,7 @@
 
 ## Returns
 
-[`CertTypeToStr`](../type-aliases/CertTypeToStr.md)\<`CertT`\>
+[`CertTypeToStr`](../type-aliases/CertTypeToStr)\<`CertT`\>
 
 ## Source
 

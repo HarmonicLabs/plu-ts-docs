@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertStakeVoteDeleg
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertStakeVoteDeleg
 
 # Class: CertStakeVoteDeleg
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg)
 
 ## Constructors
 
 ### new CertStakeVoteDeleg(__namedParameters)
 
-> **new CertStakeVoteDeleg**(`__namedParameters`): [`CertStakeVoteDeleg`](CertStakeVoteDeleg.md)
+> **new CertStakeVoteDeleg**(`__namedParameters`): [`CertStakeVoteDeleg`](CertStakeVoteDeleg)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg.md)
+• **\_\_namedParameters**: [`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg)
 
 #### Returns
 
-[`CertStakeVoteDeleg`](CertStakeVoteDeleg.md)
+[`CertStakeVoteDeleg`](CertStakeVoteDeleg)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`StakeVoteDeleg`](../enumerations/CertificateType.md#stakevotedeleg)
+> **`readonly`** **certType**: [`StakeVoteDeleg`](../enumerations/CertificateType#stakevotedeleg)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -51,7 +51,7 @@
 
 #### Implementation of
 
-[`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg.md).[`drep`](../interfaces/ICertStakeVoteDeleg.md#drep)
+[`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg).[`drep`](../interfaces/ICertStakeVoteDeleg#drep)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### poolKeyHash
 
-> **`readonly`** **poolKeyHash**: [`Hash28`](Hash28.md)
+> **`readonly`** **poolKeyHash**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg.md).[`poolKeyHash`](../interfaces/ICertStakeVoteDeleg.md#poolkeyhash)
+[`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg).[`poolKeyHash`](../interfaces/ICertStakeVoteDeleg#poolkeyhash)
 
 #### Source
 
@@ -75,11 +75,11 @@
 
 ### stakeCredential
 
-> **`readonly`** **stakeCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **stakeCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg.md).[`stakeCredential`](../interfaces/ICertStakeVoteDeleg.md#stakecredential)
+[`ICertStakeVoteDeleg`](../interfaces/ICertStakeVoteDeleg).[`stakeCredential`](../interfaces/ICertStakeVoteDeleg#stakecredential)
 
 #### Source
 
@@ -89,15 +89,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -177,7 +177,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertStakeVoteDeleg`](CertStakeVoteDeleg.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertStakeVoteDeleg`](CertStakeVoteDeleg)
 
 #### Parameters
 
@@ -185,7 +185,7 @@
 
 #### Returns
 
-[`CertStakeVoteDeleg`](CertStakeVoteDeleg.md)
+[`CertStakeVoteDeleg`](CertStakeVoteDeleg)
 
 #### Source
 

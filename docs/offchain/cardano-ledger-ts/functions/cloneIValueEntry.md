@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / cloneIValueEntry
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / cloneIValueEntry
 
 # Function: cloneIValueEntry()
 
@@ -10,7 +10,7 @@
 
 ## Type parameters
 
-• **Entry** extends [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry.md) \| [`IValueAdaEntry`](../type-aliases/IValueAdaEntry.md)
+• **Entry** extends [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry) \| [`IValueAdaEntry`](../type-aliases/IValueAdaEntry)
 
 ## Parameters
 

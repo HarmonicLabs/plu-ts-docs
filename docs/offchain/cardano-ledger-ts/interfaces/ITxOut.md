@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxOut
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxOut
 
 # Interface: ITxOut
 
@@ -10,7 +10,7 @@
 
 ### address
 
-> **address**: \`addr1${string}\` \| \`addr_test1${string}\` \| [`Address`](../classes/Address.md)
+> **address**: \`addr1${string}\` \| \`addr_test1${string}\` \| [`Address`](../classes/Address)
 
 #### Source
 
@@ -20,7 +20,7 @@
 
 ### datum?
 
-> **`optional`** **datum**: `Data` \| [`Hash32`](../classes/Hash32.md)
+> **`optional`** **datum**: `Data` \| [`Hash32`](../classes/Hash32)
 
 #### Source
 
@@ -30,7 +30,7 @@
 
 ### refScript?
 
-> **`optional`** **refScript**: [`Script`](../classes/Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+> **`optional`** **refScript**: [`Script`](../classes/Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### value
 
-> **value**: [`IValue`](../type-aliases/IValue.md) \| [`Value`](../classes/Value.md)
+> **value**: [`IValue`](../type-aliases/IValue) \| [`Value`](../classes/Value)
 
 #### Source
 

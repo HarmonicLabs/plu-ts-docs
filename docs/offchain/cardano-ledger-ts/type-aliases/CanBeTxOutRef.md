@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CanBeTxOutRef
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CanBeTxOutRef
 
 # Type alias: CanBeTxOutRef
 
-> **CanBeTxOutRef**: [`ITxOutRef`](../interfaces/ITxOutRef.md) \| [`IUTxO`](../interfaces/IUTxO.md) \| [`TxOutRefStr`](TxOutRefStr.md)
+> **CanBeTxOutRef**: [`ITxOutRef`](../interfaces/ITxOutRef) \| [`IUTxO`](../interfaces/IUTxO) \| [`TxOutRefStr`](TxOutRefStr)
 
 ## Source
 

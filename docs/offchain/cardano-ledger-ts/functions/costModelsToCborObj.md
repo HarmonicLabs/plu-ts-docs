@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / costModelsToCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / costModelsToCborObj
 
 # Function: costModelsToCborObj()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **costmdls**: [`CostModels`](../interfaces/CostModels.md)
+• **costmdls**: [`CostModels`](../interfaces/CostModels)
 
 ## Returns
 

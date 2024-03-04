@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ScriptSignature
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ScriptSignature
 
 # Interface: ScriptSignature
 
@@ -10,7 +10,7 @@
 
 ### keyHash
 
-> **keyHash**: `string` \| [`Hash28`](../classes/Hash28.md)
+> **keyHash**: `string` \| [`Hash28`](../classes/Hash28)
 
 #### Source
 

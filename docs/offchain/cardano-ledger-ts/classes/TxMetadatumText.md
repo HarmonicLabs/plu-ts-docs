@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxMetadatumText
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxMetadatumText
 
 # Class: TxMetadatumText
 
@@ -15,7 +15,7 @@
 
 ### new TxMetadatumText(text)
 
-> **new TxMetadatumText**(`text`): [`TxMetadatumText`](TxMetadatumText.md)
+> **new TxMetadatumText**(`text`): [`TxMetadatumText`](TxMetadatumText)
 
 #### Parameters
 
@@ -23,7 +23,7 @@
 
 #### Returns
 
-[`TxMetadatumText`](TxMetadatumText.md)
+[`TxMetadatumText`](TxMetadatumText)
 
 #### Source
 

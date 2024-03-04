@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / getAllRequiredSigners
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / getAllRequiredSigners
 
 # Function: getAllRequiredSigners()
 
-> **getAllRequiredSigners**(`body`): [`Hash28`](../classes/Hash28.md)[]
+> **getAllRequiredSigners**(`body`): [`Hash28`](../classes/Hash28)[]
 
 signers needed are:
  - required to spend an utxo
@@ -16,11 +16,11 @@ signers needed are:
 
 ## Parameters
 
-• **body**: `Readonly`\<[`TxBody`](../classes/TxBody.md)\>
+• **body**: `Readonly`\<[`TxBody`](../classes/TxBody)\>
 
 ## Returns
 
-[`Hash28`](../classes/Hash28.md)[]
+[`Hash28`](../classes/Hash28)[]
 
 ## Source
 

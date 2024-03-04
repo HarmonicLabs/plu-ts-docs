@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITypedPoolParamsMetadata
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITypedPoolParamsMetadata
 
 # Interface: ITypedPoolParamsMetadata
 
@@ -10,7 +10,7 @@
 
 ### hash
 
-> **hash**: [`Hash32`](../classes/Hash32.md)
+> **hash**: [`Hash32`](../classes/Hash32)
 
 #### Source
 

@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ProtocolParameters
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ProtocolParameters
 
 # Interface: ProtocolParameters
 
@@ -30,7 +30,7 @@
 
 ### costModels
 
-> **costModels**: [`CostModels`](CostModels.md)
+> **costModels**: [`CostModels`](CostModels)
 
 #### Source
 

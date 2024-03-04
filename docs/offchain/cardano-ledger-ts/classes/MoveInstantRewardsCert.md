@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / MoveInstantRewardsCert
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / MoveInstantRewardsCert
 
 # Class: ~~MoveInstantRewardsCert~~
 
@@ -12,21 +12,21 @@
 
 - `ToCbor`
 - `ToJson`
-- [`ICert`](../interfaces/ICert.md)
+- [`ICert`](../interfaces/ICert)
 
 ## Constructors
 
 ### new MoveInstantRewardsCert(__namedParameters)
 
-> **new MoveInstantRewardsCert**(`__namedParameters`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
+> **new MoveInstantRewardsCert**(`__namedParameters`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`IMoveInstantRewardsCert`](../interfaces/IMoveInstantRewardsCert.md)
+• **\_\_namedParameters**: [`IMoveInstantRewardsCert`](../interfaces/IMoveInstantRewardsCert)
 
 #### Returns
 
-[`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
+[`MoveInstantRewardsCert`](MoveInstantRewardsCert)
 
 #### Source
 
@@ -36,11 +36,11 @@
 
 ### ~~certType~~
 
-> **`readonly`** **certType**: [`MoveInstantRewards`](../enumerations/CertificateType.md#moveinstantrewards)
+> **`readonly`** **certType**: [`MoveInstantRewards`](../enumerations/CertificateType#moveinstantrewards)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -50,7 +50,7 @@
 
 ### ~~destination~~
 
-> **`readonly`** **destination**: `CanBeUInteger` \| [`RewardsMap`](../type-aliases/RewardsMap.md)
+> **`readonly`** **destination**: `CanBeUInteger` \| [`RewardsMap`](../type-aliases/RewardsMap)
 
 If the second field is a map, funds are moved to stake credentials,
 otherwise the funds are given to the other accounting pot
@@ -64,7 +64,7 @@ otherwise the funds are given to the other accounting pot
 
 ### ~~source~~
 
-> **`readonly`** **source**: [`InstantRewardsSource`](../enumerations/InstantRewardsSource.md)
+> **`readonly`** **source**: [`InstantRewardsSource`](../enumerations/InstantRewardsSource)
 
 #### Source
 
@@ -74,15 +74,15 @@ otherwise the funds are given to the other accounting pot
 
 ### ~~getRequiredSigners()~~
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -158,7 +158,7 @@ otherwise the funds are given to the other accounting pot
 
 ### ~~fromCborObj()~~
 
-> **`static`** **fromCborObj**(`cObj`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
+> **`static`** **fromCborObj**(`cObj`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert)
 
 #### Parameters
 
@@ -166,7 +166,7 @@ otherwise the funds are given to the other accounting pot
 
 #### Returns
 
-[`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
+[`MoveInstantRewardsCert`](MoveInstantRewardsCert)
 
 #### Source
 

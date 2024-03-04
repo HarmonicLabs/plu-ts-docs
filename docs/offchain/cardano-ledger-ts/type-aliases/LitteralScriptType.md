@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / LitteralScriptType
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / LitteralScriptType
 
 # Type alias: LitteralScriptType
 
-> **LitteralScriptType**: [`ScriptType`](../enumerations/ScriptType.md) \| `"NativeScript"` \| `"PlutusScriptV1"` \| `"PlutusScriptV2"` \| `"PlutusScriptV3"`
+> **LitteralScriptType**: [`ScriptType`](../enumerations/ScriptType) \| `"NativeScript"` \| `"PlutusScriptV1"` \| `"PlutusScriptV2"` \| `"PlutusScriptV3"`
 
 ## Source
 

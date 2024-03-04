@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxMetadata
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxMetadata
 
 # Type alias: ITxMetadata
 
@@ -10,7 +10,7 @@
 
 ## Index signature
 
- \[`metadatum_label`: `number` \| `string`\]: [`TxMetadatum`](TxMetadatum.md)
+ \[`metadatum_label`: `number` \| `string`\]: [`TxMetadatum`](TxMetadatum)
 
 ## Source
 

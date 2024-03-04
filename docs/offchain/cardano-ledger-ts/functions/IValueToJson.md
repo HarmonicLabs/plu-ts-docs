@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IValueToJson
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IValueToJson
 
 # Function: IValueToJson()
 
-> **IValueToJson**(`iVal`): [`ValueJson`](../type-aliases/ValueJson.md)
+> **IValueToJson**(`iVal`): [`ValueJson`](../type-aliases/ValueJson)
 
 ## Parameters
 
-• **iVal**: [`IValue`](../type-aliases/IValue.md)
+• **iVal**: [`IValue`](../type-aliases/IValue)
 
 ## Returns
 
-[`ValueJson`](../type-aliases/ValueJson.md)
+[`ValueJson`](../type-aliases/ValueJson)
 
 ## Source
 

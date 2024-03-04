@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / costModelV1ToFakeV3
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / costModelV1ToFakeV3
 
 # Function: costModelV1ToFakeV3()
 
-> **costModelV1ToFakeV3**(`costmdlsV1`): [`CostModelPlutusV3`](../interfaces/CostModelPlutusV3.md)
+> **costModelV1ToFakeV3**(`costmdlsV1`): [`CostModelPlutusV3`](../interfaces/CostModelPlutusV3)
 
 ## Parameters
 
-• **costmdlsV1**: [`AnyV1CostModel`](../type-aliases/AnyV1CostModel.md)
+• **costmdlsV1**: [`AnyV1CostModel`](../type-aliases/AnyV1CostModel)
 
 ## Returns
 
-[`CostModelPlutusV3`](../interfaces/CostModelPlutusV3.md)
+[`CostModelPlutusV3`](../interfaces/CostModelPlutusV3)
 
 ## Source
 

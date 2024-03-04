@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxBody
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxBody
 
 # Interface: ITxBody
 
@@ -10,7 +10,7 @@
 
 ### auxDataHash?
 
-> **`optional`** **auxDataHash**: [`AuxiliaryDataHash`](../classes/AuxiliaryDataHash.md)
+> **`optional`** **auxDataHash**: [`AuxiliaryDataHash`](../classes/AuxiliaryDataHash)
 
 #### Source
 
@@ -20,7 +20,7 @@
 
 ### certs?
 
-> **`optional`** **certs**: [`Certificate`](../type-aliases/Certificate.md)[]
+> **`optional`** **certs**: [`Certificate`](../type-aliases/Certificate)[]
 
 #### Source
 
@@ -30,7 +30,7 @@
 
 ### collateralInputs?
 
-> **`optional`** **collateralInputs**: [`UTxO`](../classes/UTxO.md)[]
+> **`optional`** **collateralInputs**: [`UTxO`](../classes/UTxO)[]
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### collateralReturn?
 
-> **`optional`** **collateralReturn**: [`TxOut`](../classes/TxOut.md)
+> **`optional`** **collateralReturn**: [`TxOut`](../classes/TxOut)
 
 #### Source
 
@@ -80,7 +80,7 @@
 
 ### inputs
 
-> **inputs**: [[`UTxO`](../classes/UTxO.md), `...UTxO[]`]
+> **inputs**: [[`UTxO`](../classes/UTxO), `...UTxO[]`]
 
 #### Source
 
@@ -90,7 +90,7 @@
 
 ### mint?
 
-> **`optional`** **mint**: [`Value`](../classes/Value.md)
+> **`optional`** **mint**: [`Value`](../classes/Value)
 
 #### Source
 
@@ -100,7 +100,7 @@
 
 ### network?
 
-> **`optional`** **network**: [`NetworkT`](../type-aliases/NetworkT.md)
+> **`optional`** **network**: [`NetworkT`](../type-aliases/NetworkT)
 
 #### Source
 
@@ -110,7 +110,7 @@
 
 ### outputs
 
-> **outputs**: [`TxOut`](../classes/TxOut.md)[]
+> **outputs**: [`TxOut`](../classes/TxOut)[]
 
 #### Source
 
@@ -130,7 +130,7 @@
 
 ### protocolUpdate?
 
-> **`optional`** **protocolUpdate**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal.md)
+> **`optional`** **protocolUpdate**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal)
 
 #### Source
 
@@ -140,7 +140,7 @@
 
 ### refInputs?
 
-> **`optional`** **refInputs**: [`UTxO`](../classes/UTxO.md)[]
+> **`optional`** **refInputs**: [`UTxO`](../classes/UTxO)[]
 
 #### Source
 
@@ -150,7 +150,7 @@
 
 ### requiredSigners?
 
-> **`optional`** **requiredSigners**: [`PubKeyHash`](../classes/PubKeyHash.md)[]
+> **`optional`** **requiredSigners**: [`PubKeyHash`](../classes/PubKeyHash)[]
 
 #### Source
 
@@ -160,7 +160,7 @@
 
 ### scriptDataHash?
 
-> **`optional`** **scriptDataHash**: [`ScriptDataHash`](../classes/ScriptDataHash.md)
+> **`optional`** **scriptDataHash**: [`ScriptDataHash`](../classes/ScriptDataHash)
 
 #### Source
 
@@ -210,7 +210,7 @@
 
 ### withdrawals?
 
-> **`optional`** **withdrawals**: [`ITxWithdrawals`](../type-aliases/ITxWithdrawals.md) \| [`TxWithdrawals`](../classes/TxWithdrawals.md)
+> **`optional`** **withdrawals**: [`ITxWithdrawals`](../type-aliases/ITxWithdrawals) \| [`TxWithdrawals`](../classes/TxWithdrawals)
 
 #### Source
 

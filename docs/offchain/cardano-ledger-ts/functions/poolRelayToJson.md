@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / poolRelayToJson
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / poolRelayToJson
 
 # Function: poolRelayToJson()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **relay**: [`PoolRelay`](../type-aliases/PoolRelay.md)
+• **relay**: [`PoolRelay`](../type-aliases/PoolRelay)
 
 ## Returns
 

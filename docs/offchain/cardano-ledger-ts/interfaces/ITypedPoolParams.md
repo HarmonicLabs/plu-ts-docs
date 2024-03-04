@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITypedPoolParams
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITypedPoolParams
 
 # Interface: ITypedPoolParams
 
@@ -30,7 +30,7 @@
 
 ### metadata?
 
-> **`optional`** **metadata**: [`ITypedPoolParamsMetadata`](ITypedPoolParamsMetadata.md)
+> **`optional`** **metadata**: [`ITypedPoolParamsMetadata`](ITypedPoolParamsMetadata)
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### operator
 
-> **operator**: [`PoolKeyHash`](../classes/PoolKeyHash.md)
+> **operator**: [`PoolKeyHash`](../classes/PoolKeyHash)
 
 #### Source
 
@@ -50,7 +50,7 @@
 
 ### owners
 
-> **owners**: [`PubKeyHash`](../classes/PubKeyHash.md)[]
+> **owners**: [`PubKeyHash`](../classes/PubKeyHash)[]
 
 #### Source
 
@@ -70,7 +70,7 @@
 
 ### relays
 
-> **relays**: [`PoolRelay`](../type-aliases/PoolRelay.md)[]
+> **relays**: [`PoolRelay`](../type-aliases/PoolRelay)[]
 
 #### Source
 
@@ -80,7 +80,7 @@
 
 ### rewardAccount
 
-> **rewardAccount**: [`Hash28`](../classes/Hash28.md)
+> **rewardAccount**: [`Hash28`](../classes/Hash28)
 
 #### Source
 
@@ -90,7 +90,7 @@
 
 ### vrfKeyHash
 
-> **vrfKeyHash**: [`VRFKeyHash`](../classes/VRFKeyHash.md)
+> **vrfKeyHash**: [`VRFKeyHash`](../classes/VRFKeyHash)
 
 #### Source
 

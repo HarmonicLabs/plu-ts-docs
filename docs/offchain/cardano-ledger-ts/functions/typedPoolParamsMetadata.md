@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / typedPoolParamsMetadata
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / typedPoolParamsMetadata
 
 # Function: typedPoolParamsMetadata()
 
-> **typedPoolParamsMetadata**(`__namedParameters`): [`ITypedPoolParamsMetadata`](../interfaces/ITypedPoolParamsMetadata.md)
+> **typedPoolParamsMetadata**(`__namedParameters`): [`ITypedPoolParamsMetadata`](../interfaces/ITypedPoolParamsMetadata)
 
 ## Parameters
 
-• **\_\_namedParameters**: [`IPoolParamsMetadata`](../interfaces/IPoolParamsMetadata.md)
+• **\_\_namedParameters**: [`IPoolParamsMetadata`](../interfaces/IPoolParamsMetadata)
 
 ## Returns
 
-[`ITypedPoolParamsMetadata`](../interfaces/ITypedPoolParamsMetadata.md)
+[`ITypedPoolParamsMetadata`](../interfaces/ITypedPoolParamsMetadata)
 
 ## Source
 

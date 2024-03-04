@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / isCostModelsV1
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / isCostModelsV1
 
 # Function: isCostModelsV1()
 

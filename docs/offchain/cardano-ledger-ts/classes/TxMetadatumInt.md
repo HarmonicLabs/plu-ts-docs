@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxMetadatumInt
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxMetadatumInt
 
 # Class: TxMetadatumInt
 
@@ -15,7 +15,7 @@
 
 ### new TxMetadatumInt(n)
 
-> **new TxMetadatumInt**(`n`): [`TxMetadatumInt`](TxMetadatumInt.md)
+> **new TxMetadatumInt**(`n`): [`TxMetadatumInt`](TxMetadatumInt)
 
 #### Parameters
 
@@ -23,7 +23,7 @@
 
 #### Returns
 
-[`TxMetadatumInt`](TxMetadatumInt.md)
+[`TxMetadatumInt`](TxMetadatumInt)
 
 #### Source
 

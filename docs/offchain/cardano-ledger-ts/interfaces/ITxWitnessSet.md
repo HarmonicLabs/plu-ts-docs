@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxWitnessSet
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxWitnessSet
 
 # Interface: ITxWitnessSet
 
@@ -10,7 +10,7 @@
 
 ### bootstrapWitnesses?
 
-> **`optional`** **bootstrapWitnesses**: [`BootstrapWitness`](../classes/BootstrapWitness.md)[]
+> **`optional`** **bootstrapWitnesses**: [`BootstrapWitness`](../classes/BootstrapWitness)[]
 
 #### Source
 
@@ -30,7 +30,7 @@
 
 ### nativeScripts?
 
-> **`optional`** **nativeScripts**: [`Script`](../classes/Script.md)\<[`NativeScript`](../enumerations/ScriptType.md#nativescript)\>[]
+> **`optional`** **nativeScripts**: [`Script`](../classes/Script)\<[`NativeScript`](../enumerations/ScriptType#nativescript)\>[]
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### plutusV1Scripts?
 
-> **`optional`** **plutusV1Scripts**: [`Script`](../classes/Script.md)\<[`PlutusV1`](../enumerations/ScriptType.md#plutusv1)\>[]
+> **`optional`** **plutusV1Scripts**: [`Script`](../classes/Script)\<[`PlutusV1`](../enumerations/ScriptType#plutusv1)\>[]
 
 #### Source
 
@@ -50,7 +50,7 @@
 
 ### plutusV2Scripts?
 
-> **`optional`** **plutusV2Scripts**: [`Script`](../classes/Script.md)\<[`PlutusV2`](../enumerations/ScriptType.md#plutusv2)\>[]
+> **`optional`** **plutusV2Scripts**: [`Script`](../classes/Script)\<[`PlutusV2`](../enumerations/ScriptType#plutusv2)\>[]
 
 #### Source
 
@@ -60,7 +60,7 @@
 
 ### plutusV3Scripts?
 
-> **`optional`** **plutusV3Scripts**: [`Script`](../classes/Script.md)\<[`PlutusV3`](../enumerations/ScriptType.md#plutusv3)\>[]
+> **`optional`** **plutusV3Scripts**: [`Script`](../classes/Script)\<[`PlutusV3`](../enumerations/ScriptType#plutusv3)\>[]
 
 #### Source
 
@@ -70,7 +70,7 @@
 
 ### redeemers?
 
-> **`optional`** **redeemers**: [`TxRedeemer`](../classes/TxRedeemer.md)[]
+> **`optional`** **redeemers**: [`TxRedeemer`](../classes/TxRedeemer)[]
 
 #### Source
 
@@ -80,7 +80,7 @@
 
 ### vkeyWitnesses?
 
-> **`optional`** **vkeyWitnesses**: [`VKeyWitness`](../classes/VKeyWitness.md)[]
+> **`optional`** **vkeyWitnesses**: [`VKeyWitness`](../classes/VKeyWitness)[]
 
 #### Source
 

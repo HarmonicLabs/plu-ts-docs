@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertResignCommitteeCold
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertResignCommitteeCold
 
 # Class: CertResignCommitteeCold
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold)
 
 ## Constructors
 
 ### new CertResignCommitteeCold(__namedParameters)
 
-> **new CertResignCommitteeCold**(`__namedParameters`): [`CertResignCommitteeCold`](CertResignCommitteeCold.md)
+> **new CertResignCommitteeCold**(`__namedParameters`): [`CertResignCommitteeCold`](CertResignCommitteeCold)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md)
+• **\_\_namedParameters**: [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold)
 
 #### Returns
 
-[`CertResignCommitteeCold`](CertResignCommitteeCold.md)
+[`CertResignCommitteeCold`](CertResignCommitteeCold)
 
 #### Source
 
@@ -37,7 +37,7 @@
 
 #### Implementation of
 
-[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md).[`anchor`](../interfaces/ICertResignCommitteeCold.md#anchor)
+[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold).[`anchor`](../interfaces/ICertResignCommitteeCold#anchor)
 
 #### Source
 
@@ -47,11 +47,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`ResignCommitteeCold`](../enumerations/CertificateType.md#resigncommitteecold)
+> **`readonly`** **certType**: [`ResignCommitteeCold`](../enumerations/CertificateType#resigncommitteecold)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### coldCredential
 
-> **`readonly`** **coldCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **coldCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md).[`coldCredential`](../interfaces/ICertResignCommitteeCold.md#coldcredential)
+[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold).[`coldCredential`](../interfaces/ICertResignCommitteeCold#coldcredential)
 
 #### Source
 
@@ -75,15 +75,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -155,7 +155,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertResignCommitteeCold`](CertResignCommitteeCold.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertResignCommitteeCold`](CertResignCommitteeCold)
 
 #### Parameters
 
@@ -163,7 +163,7 @@
 
 #### Returns
 
-[`CertResignCommitteeCold`](CertResignCommitteeCold.md)
+[`CertResignCommitteeCold`](CertResignCommitteeCold)
 
 #### Source
 

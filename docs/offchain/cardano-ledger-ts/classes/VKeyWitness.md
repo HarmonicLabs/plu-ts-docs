@@ -1,32 +1,32 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / VKeyWitness
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / VKeyWitness
 
 # Class: VKeyWitness
 
 ## Implements
 
 - `ToCbor`
-- `Cloneable`\<[`VKeyWitness`](VKeyWitness.md)\>
+- `Cloneable`\<[`VKeyWitness`](VKeyWitness)\>
 - `ToJson`
 
 ## Constructors
 
 ### new VKeyWitness(vkey, signature)
 
-> **new VKeyWitness**(`vkey`, `signature`): [`VKeyWitness`](VKeyWitness.md)
+> **new VKeyWitness**(`vkey`, `signature`): [`VKeyWitness`](VKeyWitness)
 
 #### Parameters
 
-• **vkey**: [`Hash32`](Hash32.md)
+• **vkey**: [`Hash32`](Hash32)
 
-• **signature**: [`Signature`](Signature.md)
+• **signature**: [`Signature`](Signature)
 
 #### Returns
 
-[`VKeyWitness`](VKeyWitness.md)
+[`VKeyWitness`](VKeyWitness)
 
 #### Source
 
@@ -36,7 +36,7 @@
 
 ### signature
 
-> **`readonly`** **signature**: [`Signature`](Signature.md)
+> **`readonly`** **signature**: [`Signature`](Signature)
 
 #### Source
 
@@ -46,7 +46,7 @@
 
 ### vkey
 
-> **`readonly`** **vkey**: [`VKey`](VKey.md)
+> **`readonly`** **vkey**: [`VKey`](VKey)
 
 #### Source
 
@@ -56,11 +56,11 @@
 
 ### clone()
 
-> **clone**(): [`VKeyWitness`](VKeyWitness.md)
+> **clone**(): [`VKeyWitness`](VKeyWitness)
 
 #### Returns
 
-[`VKeyWitness`](VKeyWitness.md)
+[`VKeyWitness`](VKeyWitness)
 
 #### Implementation of
 
@@ -136,7 +136,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`VKeyWitness`](VKeyWitness.md)
+> **`static`** **fromCbor**(`cStr`): [`VKeyWitness`](VKeyWitness)
 
 #### Parameters
 
@@ -144,7 +144,7 @@
 
 #### Returns
 
-[`VKeyWitness`](VKeyWitness.md)
+[`VKeyWitness`](VKeyWitness)
 
 #### Source
 
@@ -154,7 +154,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`VKeyWitness`](VKeyWitness.md)
+> **`static`** **fromCborObj**(`cObj`): [`VKeyWitness`](VKeyWitness)
 
 #### Parameters
 
@@ -162,7 +162,7 @@
 
 #### Returns
 
-[`VKeyWitness`](VKeyWitness.md)
+[`VKeyWitness`](VKeyWitness)
 
 #### Source
 

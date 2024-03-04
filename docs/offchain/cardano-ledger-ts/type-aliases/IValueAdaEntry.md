@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IValueAdaEntry
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IValueAdaEntry
 
 # Type alias: IValueAdaEntry
 
@@ -12,7 +12,7 @@
 
 ### assets
 
-> **assets**: [[`IValueAsset`](IValueAsset.md)]
+> **assets**: [[`IValueAsset`](IValueAsset)]
 
 ### policy
 

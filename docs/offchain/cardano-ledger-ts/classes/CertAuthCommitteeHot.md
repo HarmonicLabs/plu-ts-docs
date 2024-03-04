@@ -1,15 +1,15 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertAuthCommitteeHot
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertAuthCommitteeHot
 
 # Class: CertAuthCommitteeHot
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot)
 - `ToCbor`
 - `ToJson`
 
@@ -17,15 +17,15 @@
 
 ### new CertAuthCommitteeHot(__namedParameters)
 
-> **new CertAuthCommitteeHot**(`__namedParameters`): [`CertAuthCommitteeHot`](CertAuthCommitteeHot.md)
+> **new CertAuthCommitteeHot**(`__namedParameters`): [`CertAuthCommitteeHot`](CertAuthCommitteeHot)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot.md)
+• **\_\_namedParameters**: [`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot)
 
 #### Returns
 
-[`CertAuthCommitteeHot`](CertAuthCommitteeHot.md)
+[`CertAuthCommitteeHot`](CertAuthCommitteeHot)
 
 #### Source
 
@@ -35,11 +35,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`AuthCommitteeHot`](../enumerations/CertificateType.md#authcommitteehot)
+> **`readonly`** **certType**: [`AuthCommitteeHot`](../enumerations/CertificateType#authcommitteehot)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -49,11 +49,11 @@
 
 ### coldCredential
 
-> **`readonly`** **coldCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **coldCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot.md).[`coldCredential`](../interfaces/ICertAuthCommitteeHot.md#coldcredential)
+[`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot).[`coldCredential`](../interfaces/ICertAuthCommitteeHot#coldcredential)
 
 #### Source
 
@@ -63,11 +63,11 @@
 
 ### hotCredential
 
-> **`readonly`** **hotCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **hotCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot.md).[`hotCredential`](../interfaces/ICertAuthCommitteeHot.md#hotcredential)
+[`ICertAuthCommitteeHot`](../interfaces/ICertAuthCommitteeHot).[`hotCredential`](../interfaces/ICertAuthCommitteeHot#hotcredential)
 
 #### Source
 
@@ -77,15 +77,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -177,7 +177,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertAuthCommitteeHot`](CertAuthCommitteeHot.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertAuthCommitteeHot`](CertAuthCommitteeHot)
 
 #### Parameters
 
@@ -185,7 +185,7 @@
 
 #### Returns
 
-[`CertAuthCommitteeHot`](CertAuthCommitteeHot.md)
+[`CertAuthCommitteeHot`](CertAuthCommitteeHot)
 
 #### Source
 

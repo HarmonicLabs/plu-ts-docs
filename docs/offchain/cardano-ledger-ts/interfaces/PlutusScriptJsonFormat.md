@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / PlutusScriptJsonFormat
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / PlutusScriptJsonFormat
 
 # Interface: PlutusScriptJsonFormat\<T\>
 
 ## Type parameters
 
-• **T** extends [`PlutusScriptType`](../type-aliases/PlutusScriptType.md) = [`PlutusScriptType`](../type-aliases/PlutusScriptType.md)
+• **T** extends [`PlutusScriptType`](../type-aliases/PlutusScriptType) = [`PlutusScriptType`](../type-aliases/PlutusScriptType)
 
 ## Properties
 

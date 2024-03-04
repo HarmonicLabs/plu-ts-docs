@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertPoolRegistration
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertPoolRegistration
 
 # Class: CertPoolRegistration
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertPoolRegistration`](../interfaces/ICertPoolRegistration.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertPoolRegistration`](../interfaces/ICertPoolRegistration)
 
 ## Constructors
 
 ### new CertPoolRegistration(__namedParameters)
 
-> **new CertPoolRegistration**(`__namedParameters`): [`CertPoolRegistration`](CertPoolRegistration.md)
+> **new CertPoolRegistration**(`__namedParameters`): [`CertPoolRegistration`](CertPoolRegistration)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertPoolRegistration`](../interfaces/ICertPoolRegistration.md)
+• **\_\_namedParameters**: [`ICertPoolRegistration`](../interfaces/ICertPoolRegistration)
 
 #### Returns
 
-[`CertPoolRegistration`](CertPoolRegistration.md)
+[`CertPoolRegistration`](CertPoolRegistration)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`PoolRegistration`](../enumerations/CertificateType.md#poolregistration)
+> **`readonly`** **certType**: [`PoolRegistration`](../enumerations/CertificateType#poolregistration)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -47,11 +47,11 @@
 
 ### poolParams
 
-> **`readonly`** **poolParams**: [`PoolParams`](PoolParams.md)
+> **`readonly`** **poolParams**: [`PoolParams`](PoolParams)
 
 #### Implementation of
 
-[`ICertPoolRegistration`](../interfaces/ICertPoolRegistration.md).[`poolParams`](../interfaces/ICertPoolRegistration.md#poolparams)
+[`ICertPoolRegistration`](../interfaces/ICertPoolRegistration).[`poolParams`](../interfaces/ICertPoolRegistration#poolparams)
 
 #### Source
 
@@ -61,15 +61,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -165,7 +165,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertPoolRegistration`](CertPoolRegistration.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertPoolRegistration`](CertPoolRegistration)
 
 #### Parameters
 
@@ -173,7 +173,7 @@
 
 #### Returns
 
-[`CertPoolRegistration`](CertPoolRegistration.md)
+[`CertPoolRegistration`](CertPoolRegistration)
 
 #### Source
 

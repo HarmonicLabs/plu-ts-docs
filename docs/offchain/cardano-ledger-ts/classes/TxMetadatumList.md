@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxMetadatumList
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxMetadatumList
 
 # Class: TxMetadatumList
 
@@ -15,15 +15,15 @@
 
 ### new TxMetadatumList(map)
 
-> **new TxMetadatumList**(`map`): [`TxMetadatumList`](TxMetadatumList.md)
+> **new TxMetadatumList**(`map`): [`TxMetadatumList`](TxMetadatumList)
 
 #### Parameters
 
-• **map**: [`TxMetadatum`](../type-aliases/TxMetadatum.md)[]
+• **map**: [`TxMetadatum`](../type-aliases/TxMetadatum)[]
 
 #### Returns
 
-[`TxMetadatumList`](TxMetadatumList.md)
+[`TxMetadatumList`](TxMetadatumList)
 
 #### Source
 
@@ -33,7 +33,7 @@
 
 ### list
 
-> **`readonly`** **list**: [`TxMetadatum`](../type-aliases/TxMetadatum.md)[]
+> **`readonly`** **list**: [`TxMetadatum`](../type-aliases/TxMetadatum)[]
 
 #### Source
 

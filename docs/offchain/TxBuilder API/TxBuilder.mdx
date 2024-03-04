@@ -6,57 +6,82 @@ sidebar_position: 0
 
 `plu-ts/offchain` exposes the `TxBuilder` class.
 
-## Why?
+## How to use
 
 Its purpose is to allow you to build transactions more easly.
 
-You could infact build transactions by calling the `Tx` constructor.
+You could infact build transactions by calling the [`Tx`](../cardano-ledger-ts/classes/Tx) constructor.
 
 However that requires a profound understanding of the structure of a Cardano transaction.
 
 for this reason we have the `TxBuilder`.
 
-You can get your `TxBuilder` instance by specifying the network to operate in (`"mainnet" | "testnet"`) and its protocol paramters (that you'll need to query)
+You can get your `TxBuilder` by passing the [`ProtocolParameters`](../cardano-ledger-ts/interfaces/ProtocolParameters) (that you'll need to query)
+needed for the network you are building transactions for.
 
+constructor definiton:
 ```ts
-const txBuilder = new TxBuilder(
-    "mainnet",
-    await fetch("https://some-api.com/get-my-protocol-params")
+constructor(
+    protocolParamters: Readonly<ProtocolParameters>,
+    genesisInfos?: GenesisInfos
 )
 ```
 
-## What does it do?
-
-once you have your tx builder you can use it to build (and validate transactions).
-
-it has 2 main methods: `build` and `buildSync`.
-
-As for now `build` is really just wrapping `buildSync` in a `Promise`;
-but in a future version it will be able to offload eventual smart contracts validation to a [`Worker`](https://developer.mozilla.org/en-US/docs/Web/API/Worker).
-
-The `buildSync` interface is:
+example:
 ```ts
- buildSync({
-        inputs,
-        changeAddress,
-        outputs,
-        readonlyRefInputs,
-        requiredSigners,
-        collaterals,
-        collateralReturn,
-        mints,
-        invalidBefore,
-        invalidAfter,
-        certificates,
-        withdrawals,
-        metadata,
-        protocolUpdateProposal
-    }: ITxBuildArgs,
-    {
-        onScriptInvalid,
-        onScriptResult
-    }: ITxBuildOptions = {}
-): Tx
+type MyFavoriteServiceResponse = any
+
+// you'll need to adapt the protocol parameters
+// to the expected interface
+function adaptServiceProtocolParams(
+    response: MyFavoriteServiceResponse
+): ProtocolParameters
+{
+    /* do your magic */
+}
+
+const txBuilder = new TxBuilder(
+    adaptServiceProtocolParams(
+        await fetch("my-favorite-service.com/api/protocol-parameters")
+    )
+);
 ```
 
-and it is inspired by `cardano-cli`.
+## Methods
+
+once you have your tx builder you can use all the following methods.
+
+- [`buildSync`](./buildSync)
+- [`runWithProvider`](./runWithProvider)
+- [`keepRelevant`](./keepRelevant)
+- [`calcLinearFee`](./calcLinearFee)
+- [`getMinimumOutputLovelaces`](./getMinimumOutputLovelaces)
+- [`setGenesisInfos`](./setGenesisInfos)
+- [`slotToPOSIX`](./slotToPOSIX)
+- [`posixToSlot`](./posixToSlot)
+- [`overrideTxRedeemers`](./overrideTxRedeemers)
+
+## `buildSync` or `runWithProvider`
+
+once you have a `TxBuilder` instance there are 2 ways to build a transaction:
+
+1) using [`buildSync`](./buildSync)
+2) getting a [`TxBuilderRunner`](../TxBuilderRunner%20API/TxBuilderRunner) by passing a
+[`Provider`](../TxBuilderRunner%20API/providers#provider) to the [`runWithProvider`](./runWithProvider) method
+
+### Pro and Cons
+
+The [`buildSync`](./buildSync) method gives you full controll,
+you need to query the resolved utxos for the inputs,
+as well any other information required for transaction validation.
+
+Once you provide the data as specified in by [`ITxBuildArgs`](./buildSync#itxbuildargs)
+the `TxBuilder` instance will syncronously build and validate your transaction.
+
+If you don't want to take care of querying the data, you can pass a [`Provider`](../TxBuilderRunner%20API/providers#provider)
+to the [`runWithProvider`](./runWithProvider) method,
+to get a [`TxBuilderRunner`](../TxBuilderRunner%20API/TxBuilderRunner) instance.
+
+The runner has many method that abstract the [`buildSync`](./buildSync) interface,
+so that you can describe your transaction an a much higher level,
+and if some that is missing it will be queried asynchronously using the [`Provider`](../TxBuilderRunner%20API/providers#provider) that was passed.

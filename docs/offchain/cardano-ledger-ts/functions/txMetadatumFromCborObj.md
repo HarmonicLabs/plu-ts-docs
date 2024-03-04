@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / txMetadatumFromCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / txMetadatumFromCborObj
 
 # Function: txMetadatumFromCborObj()
 
-> **txMetadatumFromCborObj**(`cObj`): [`TxMetadatum`](../type-aliases/TxMetadatum.md)
+> **txMetadatumFromCborObj**(`cObj`): [`TxMetadatum`](../type-aliases/TxMetadatum)
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 ## Returns
 
-[`TxMetadatum`](../type-aliases/TxMetadatum.md)
+[`TxMetadatum`](../type-aliases/TxMetadatum)
 
 ## Source
 

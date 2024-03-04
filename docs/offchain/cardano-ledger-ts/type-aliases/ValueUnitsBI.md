@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ValueUnitsBI
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ValueUnitsBI
 
 # Type alias: ValueUnitsBI
 
-> **ValueUnitsBI**: [`ValueUnitEntryBI`](ValueUnitEntryBI.md)[]
+> **ValueUnitsBI**: [`ValueUnitEntryBI`](ValueUnitEntryBI)[]
 
 ## Source
 

@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertStakeDeRegistration
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertStakeDeRegistration
 
 # Class: CertStakeDeRegistration
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertStakeDeRegistration`](../interfaces/ICertStakeDeRegistration.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertStakeDeRegistration`](../interfaces/ICertStakeDeRegistration)
 
 ## Constructors
 
 ### new CertStakeDeRegistration(__namedParameters)
 
-> **new CertStakeDeRegistration**(`__namedParameters`): [`CertStakeDeRegistration`](CertStakeDeRegistration.md)
+> **new CertStakeDeRegistration**(`__namedParameters`): [`CertStakeDeRegistration`](CertStakeDeRegistration)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertStakeDeRegistration`](../interfaces/ICertStakeDeRegistration.md)
+• **\_\_namedParameters**: [`ICertStakeDeRegistration`](../interfaces/ICertStakeDeRegistration)
 
 #### Returns
 
-[`CertStakeDeRegistration`](CertStakeDeRegistration.md)
+[`CertStakeDeRegistration`](CertStakeDeRegistration)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`StakeDeRegistration`](../enumerations/CertificateType.md#stakederegistration)
+> **`readonly`** **certType**: [`StakeDeRegistration`](../enumerations/CertificateType#stakederegistration)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -47,11 +47,11 @@
 
 ### stakeCredential
 
-> **`readonly`** **stakeCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **stakeCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertStakeDeRegistration`](../interfaces/ICertStakeDeRegistration.md).[`stakeCredential`](../interfaces/ICertStakeDeRegistration.md#stakecredential)
+[`ICertStakeDeRegistration`](../interfaces/ICertStakeDeRegistration).[`stakeCredential`](../interfaces/ICertStakeDeRegistration#stakecredential)
 
 #### Source
 
@@ -61,15 +61,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -137,7 +137,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertStakeDeRegistration`](CertStakeDeRegistration.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertStakeDeRegistration`](CertStakeDeRegistration)
 
 #### Parameters
 
@@ -145,7 +145,7 @@
 
 #### Returns
 
-[`CertStakeDeRegistration`](CertStakeDeRegistration.md)
+[`CertStakeDeRegistration`](CertStakeDeRegistration)
 
 #### Source
 

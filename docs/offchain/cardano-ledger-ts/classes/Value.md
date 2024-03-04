@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Value
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Value
 
 # Class: Value
 
@@ -15,15 +15,15 @@
 
 ### new Value(map)
 
-> **new Value**(`map`): [`Value`](Value.md)
+> **new Value**(`map`): [`Value`](Value)
 
 #### Parameters
 
-• **map**: [`IValue`](../type-aliases/IValue.md)
+• **map**: [`IValue`](../type-aliases/IValue)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -43,7 +43,7 @@
 
 ### map
 
-> **`readonly`** **map**: [`IValue`](../type-aliases/IValue.md)
+> **`readonly`** **map**: [`IValue`](../type-aliases/IValue)
 
 #### Source
 
@@ -53,11 +53,11 @@
 
 ### zero
 
-> **`get`** **`static`** **zero**(): [`Value`](Value.md)
+> **`get`** **`static`** **zero**(): [`Value`](Value)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -75,7 +75,7 @@
 
 > ##### assets
 >
-> > **assets**: [`IValueAssets`](../type-aliases/IValueAssets.md)
+> > **assets**: [`IValueAssets`](../type-aliases/IValueAssets)
 >
 > ##### policy
 >
@@ -90,11 +90,11 @@
 
 ### clone()
 
-> **clone**(): [`Value`](Value.md)
+> **clone**(): [`Value`](Value)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -108,7 +108,7 @@
 
 #### Parameters
 
-• **policy**: `string` \| `Uint8Array` \| [`Hash28`](Hash28.md)
+• **policy**: `string` \| `Uint8Array` \| [`Hash28`](Hash28)
 
 • **assetName**: `Uint8Array`
 
@@ -178,11 +178,11 @@
 
 ### toJson()
 
-> **toJson**(): [`ValueJson`](../type-aliases/ValueJson.md)
+> **toJson**(): [`ValueJson`](../type-aliases/ValueJson)
 
 #### Returns
 
-[`ValueJson`](../type-aliases/ValueJson.md)
+[`ValueJson`](../type-aliases/ValueJson)
 
 #### Source
 
@@ -212,11 +212,11 @@ cardano-cli format
 
 ### toUnits()
 
-> **toUnits**(): [`ValueUnitsBI`](../type-aliases/ValueUnitsBI.md)
+> **toUnits**(): [`ValueUnitsBI`](../type-aliases/ValueUnitsBI)
 
 #### Returns
 
-[`ValueUnitsBI`](../type-aliases/ValueUnitsBI.md)
+[`ValueUnitsBI`](../type-aliases/ValueUnitsBI)
 
 #### Source
 
@@ -226,17 +226,17 @@ cardano-cli format
 
 ### add()
 
-> **`static`** **add**(`a`, `b`): [`Value`](Value.md)
+> **`static`** **add**(`a`, `b`): [`Value`](Value)
 
 #### Parameters
 
-• **a**: [`Value`](Value.md)
+• **a**: [`Value`](Value)
 
-• **b**: [`Value`](Value.md)
+• **b**: [`Value`](Value)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -246,7 +246,7 @@ cardano-cli format
 
 ### assetEntry()
 
-> **`static`** **assetEntry**(`name`, `qty`): [`IValueAsset`](../type-aliases/IValueAsset.md)
+> **`static`** **assetEntry**(`name`, `qty`): [`IValueAsset`](../type-aliases/IValueAsset)
 
 #### Parameters
 
@@ -256,7 +256,7 @@ cardano-cli format
 
 #### Returns
 
-[`IValueAsset`](../type-aliases/IValueAsset.md)
+[`IValueAsset`](../type-aliases/IValueAsset)
 
 #### Source
 
@@ -266,17 +266,17 @@ cardano-cli format
 
 ### entry()
 
-> **`static`** **entry**(`policy`, `assets`): [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry.md)
+> **`static`** **entry**(`policy`, `assets`): [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
 
 #### Parameters
 
-• **policy**: [`Hash28`](Hash28.md)
+• **policy**: [`Hash28`](Hash28)
 
-• **assets**: [`IValueAssets`](../type-aliases/IValueAssets.md)
+• **assets**: [`IValueAssets`](../type-aliases/IValueAssets)
 
 #### Returns
 
-[`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry.md)
+[`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
 
 #### Source
 
@@ -286,7 +286,7 @@ cardano-cli format
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Value`](Value.md)
+> **`static`** **fromCbor**(`cStr`): [`Value`](Value)
 
 #### Parameters
 
@@ -294,7 +294,7 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -304,7 +304,7 @@ cardano-cli format
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Value`](Value.md)
+> **`static`** **fromCborObj**(`cObj`): [`Value`](Value)
 
 #### Parameters
 
@@ -312,7 +312,7 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -322,15 +322,15 @@ cardano-cli format
 
 ### fromUnits()
 
-> **`static`** **fromUnits**(`units`): [`Value`](Value.md)
+> **`static`** **fromUnits**(`units`): [`Value`](Value)
 
 #### Parameters
 
-• **units**: [`ValueUnits`](../type-aliases/ValueUnits.md)
+• **units**: [`ValueUnits`](../type-aliases/ValueUnits)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -344,7 +344,7 @@ cardano-cli format
 
 #### Parameters
 
-• **v**: [`Value`](Value.md)
+• **v**: [`Value`](Value)
 
 #### Returns
 
@@ -362,7 +362,7 @@ cardano-cli format
 
 #### Parameters
 
-• **v**: [`Value`](Value.md)
+• **v**: [`Value`](Value)
 
 #### Returns
 
@@ -380,7 +380,7 @@ cardano-cli format
 
 #### Parameters
 
-• **v**: [`Value`](Value.md)
+• **v**: [`Value`](Value)
 
 #### Returns
 
@@ -394,7 +394,7 @@ cardano-cli format
 
 ### lovelaceEntry()
 
-> **`static`** **lovelaceEntry**(`n`): [`IValueAdaEntry`](../type-aliases/IValueAdaEntry.md)
+> **`static`** **lovelaceEntry**(`n`): [`IValueAdaEntry`](../type-aliases/IValueAdaEntry)
 
 #### Parameters
 
@@ -402,7 +402,7 @@ cardano-cli format
 
 #### Returns
 
-[`IValueAdaEntry`](../type-aliases/IValueAdaEntry.md)
+[`IValueAdaEntry`](../type-aliases/IValueAdaEntry)
 
 #### Source
 
@@ -412,7 +412,7 @@ cardano-cli format
 
 ### lovelaces()
 
-> **`static`** **lovelaces**(`n`): [`Value`](Value.md)
+> **`static`** **lovelaces**(`n`): [`Value`](Value)
 
 #### Parameters
 
@@ -420,7 +420,7 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -430,11 +430,11 @@ cardano-cli format
 
 ### singleAsset()
 
-> **`static`** **singleAsset**(`policy`, `name`, `qty`): [`Value`](Value.md)
+> **`static`** **singleAsset**(`policy`, `name`, `qty`): [`Value`](Value)
 
 #### Parameters
 
-• **policy**: [`Hash28`](Hash28.md)
+• **policy**: [`Hash28`](Hash28)
 
 • **name**: `Uint8Array`
 
@@ -442,7 +442,7 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 
@@ -452,11 +452,11 @@ cardano-cli format
 
 ### singleAssetEntry()
 
-> **`static`** **singleAssetEntry**(`policy`, `name`, `qty`): [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry.md)
+> **`static`** **singleAssetEntry**(`policy`, `name`, `qty`): [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
 
 #### Parameters
 
-• **policy**: [`Hash28`](Hash28.md)
+• **policy**: [`Hash28`](Hash28)
 
 • **name**: `Uint8Array`
 
@@ -464,7 +464,7 @@ cardano-cli format
 
 #### Returns
 
-[`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry.md)
+[`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
 
 #### Source
 
@@ -474,17 +474,17 @@ cardano-cli format
 
 ### sub()
 
-> **`static`** **sub**(`a`, `b`): [`Value`](Value.md)
+> **`static`** **sub**(`a`, `b`): [`Value`](Value)
 
 #### Parameters
 
-• **a**: [`Value`](Value.md)
+• **a**: [`Value`](Value)
 
-• **b**: [`Value`](Value.md)
+• **b**: [`Value`](Value)
 
 #### Returns
 
-[`Value`](Value.md)
+[`Value`](Value)
 
 #### Source
 

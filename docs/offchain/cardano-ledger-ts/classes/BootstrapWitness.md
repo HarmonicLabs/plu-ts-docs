@@ -1,36 +1,36 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / BootstrapWitness
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / BootstrapWitness
 
 # Class: BootstrapWitness
 
 ## Implements
 
 - `ToCbor`
-- `Cloneable`\<[`BootstrapWitness`](BootstrapWitness.md)\>
+- `Cloneable`\<[`BootstrapWitness`](BootstrapWitness)\>
 - `ToJson`
 
 ## Constructors
 
 ### new BootstrapWitness(pubKey, signature, chainCode, attributes)
 
-> **new BootstrapWitness**(`pubKey`, `signature`, `chainCode`, `attributes`): [`BootstrapWitness`](BootstrapWitness.md)
+> **new BootstrapWitness**(`pubKey`, `signature`, `chainCode`, `attributes`): [`BootstrapWitness`](BootstrapWitness)
 
 #### Parameters
 
-• **pubKey**: [`Hash32`](Hash32.md)
+• **pubKey**: [`Hash32`](Hash32)
 
-• **signature**: [`Signature`](Signature.md)
+• **signature**: [`Signature`](Signature)
 
-• **chainCode**: [`Hash32`](Hash32.md)
+• **chainCode**: [`Hash32`](Hash32)
 
 • **attributes**: `Uint8Array`
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness.md)
+[`BootstrapWitness`](BootstrapWitness)
 
 #### Source
 
@@ -50,7 +50,7 @@
 
 ### chainCode
 
-> **`readonly`** **chainCode**: [`Hash32`](Hash32.md)
+> **`readonly`** **chainCode**: [`Hash32`](Hash32)
 
 #### Source
 
@@ -60,7 +60,7 @@
 
 ### pubKey
 
-> **`readonly`** **pubKey**: [`VKey`](VKey.md)
+> **`readonly`** **pubKey**: [`VKey`](VKey)
 
 #### Source
 
@@ -70,7 +70,7 @@
 
 ### signature
 
-> **`readonly`** **signature**: [`Signature`](Signature.md)
+> **`readonly`** **signature**: [`Signature`](Signature)
 
 #### Source
 
@@ -80,11 +80,11 @@
 
 ### clone()
 
-> **clone**(): [`BootstrapWitness`](BootstrapWitness.md)
+> **clone**(): [`BootstrapWitness`](BootstrapWitness)
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness.md)
+[`BootstrapWitness`](BootstrapWitness)
 
 #### Implementation of
 
@@ -168,7 +168,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`BootstrapWitness`](BootstrapWitness.md)
+> **`static`** **fromCbor**(`cStr`): [`BootstrapWitness`](BootstrapWitness)
 
 #### Parameters
 
@@ -176,7 +176,7 @@
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness.md)
+[`BootstrapWitness`](BootstrapWitness)
 
 #### Source
 
@@ -186,7 +186,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`BootstrapWitness`](BootstrapWitness.md)
+> **`static`** **fromCborObj**(`cObj`): [`BootstrapWitness`](BootstrapWitness)
 
 #### Parameters
 
@@ -194,7 +194,7 @@
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness.md)
+[`BootstrapWitness`](BootstrapWitness)
 
 #### Source
 

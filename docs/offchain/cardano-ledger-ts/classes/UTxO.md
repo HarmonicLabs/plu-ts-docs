@@ -1,36 +1,36 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / UTxO
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / UTxO
 
 # Class: UTxO
 
 ## Extended by
 
-- [`TxIn`](TxIn.md)
+- [`TxIn`](TxIn)
 
 ## Implements
 
-- [`IUTxO`](../interfaces/IUTxO.md)
+- [`IUTxO`](../interfaces/IUTxO)
 - `ToData`
 - `ToJson`
 - `ToCbor`
-- `Cloneable`\<[`UTxO`](UTxO.md)\>
+- `Cloneable`\<[`UTxO`](UTxO)\>
 
 ## Constructors
 
 ### new UTxO(utxo)
 
-> **new UTxO**(`utxo`): [`UTxO`](UTxO.md)
+> **new UTxO**(`utxo`): [`UTxO`](UTxO)
 
 #### Parameters
 
-• **utxo**: [`IUTxO`](../interfaces/IUTxO.md)
+• **utxo**: [`IUTxO`](../interfaces/IUTxO)
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Source
 
@@ -40,11 +40,11 @@
 
 ### resolved
 
-> **`readonly`** **resolved**: [`TxOut`](TxOut.md)
+> **`readonly`** **resolved**: [`TxOut`](TxOut)
 
 #### Implementation of
 
-[`IUTxO`](../interfaces/IUTxO.md).[`resolved`](../interfaces/IUTxO.md#resolved)
+[`IUTxO`](../interfaces/IUTxO).[`resolved`](../interfaces/IUTxO#resolved)
 
 #### Source
 
@@ -54,11 +54,11 @@
 
 ### utxoRef
 
-> **`readonly`** **utxoRef**: [`TxOutRef`](TxOutRef.md)
+> **`readonly`** **utxoRef**: [`TxOutRef`](TxOutRef)
 
 #### Implementation of
 
-[`IUTxO`](../interfaces/IUTxO.md).[`utxoRef`](../interfaces/IUTxO.md#utxoref)
+[`IUTxO`](../interfaces/IUTxO).[`utxoRef`](../interfaces/IUTxO#utxoref)
 
 #### Source
 
@@ -68,11 +68,11 @@
 
 ### clone()
 
-> **clone**(): [`UTxO`](UTxO.md)
+> **clone**(): [`UTxO`](UTxO)
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Implementation of
 
@@ -156,7 +156,7 @@
 
 ##### resolved.address
 
-> **address**: \`addr1${string}\` \| \`addr_test1${string}\`
+> **address**: string
 
 ##### resolved.datum
 
@@ -164,15 +164,15 @@
 
 ##### resolved.refScript
 
-> **refScript**: `undefined` \| [`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`
+> **refScript**: `undefined` \| [`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
 
 ##### resolved.value
 
-> **value**: [`ValueJson`](../type-aliases/ValueJson.md)
+> **value**: [`ValueJson`](../type-aliases/ValueJson)
 
 ##### utxoRef
 
-> **utxoRef**: [`UTxORefJson`](../type-aliases/UTxORefJson.md)
+> **utxoRef**: [`UTxORefJson`](../type-aliases/UTxORefJson)
 
 #### Implementation of
 
@@ -186,7 +186,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`UTxO`](UTxO.md)
+> **`static`** **fromCbor**(`cStr`): [`UTxO`](UTxO)
 
 #### Parameters
 
@@ -194,7 +194,7 @@
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Source
 
@@ -204,7 +204,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`UTxO`](UTxO.md)
+> **`static`** **fromCborObj**(`cObj`): [`UTxO`](UTxO)
 
 #### Parameters
 
@@ -212,7 +212,7 @@
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Source
 

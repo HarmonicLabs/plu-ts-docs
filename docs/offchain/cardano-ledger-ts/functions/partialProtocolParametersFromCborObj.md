@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / partialProtocolParametersFromCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / partialProtocolParametersFromCborObj
 
 # Function: partialProtocolParametersFromCborObj()
 
-> **partialProtocolParametersFromCborObj**(`cObj`): `Partial`\<[`ProtocolParameters`](../interfaces/ProtocolParameters.md)\>
+> **partialProtocolParametersFromCborObj**(`cObj`): `Partial`\<[`ProtocolParameters`](../interfaces/ProtocolParameters)\>
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 ## Returns
 
-`Partial`\<[`ProtocolParameters`](../interfaces/ProtocolParameters.md)\>
+`Partial`\<[`ProtocolParameters`](../interfaces/ProtocolParameters)\>
 
 ## Source
 

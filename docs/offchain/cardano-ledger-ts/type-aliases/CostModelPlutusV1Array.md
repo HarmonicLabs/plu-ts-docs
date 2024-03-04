@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CostModelPlutusV1Array
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CostModelPlutusV1Array
 
 # Type alias: CostModelPlutusV1Array
 

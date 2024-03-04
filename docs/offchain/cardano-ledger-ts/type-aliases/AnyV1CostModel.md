@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / AnyV1CostModel
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / AnyV1CostModel
 
 # Type alias: AnyV1CostModel
 
-> **AnyV1CostModel**: [`CostModelPlutusV1`](../interfaces/CostModelPlutusV1.md) \| [`CostModelPlutusV1Array`](CostModelPlutusV1Array.md)
+> **AnyV1CostModel**: [`CostModelPlutusV1`](../interfaces/CostModelPlutusV1) \| [`CostModelPlutusV1Array`](CostModelPlutusV1Array)
 
 ## Source
 

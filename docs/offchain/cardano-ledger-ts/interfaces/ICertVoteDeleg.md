@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ICertVoteDeleg
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ICertVoteDeleg
 
 # Interface: ICertVoteDeleg
 
@@ -20,7 +20,7 @@
 
 ### stakeCredential
 
-> **stakeCredential**: [`Credential`](../classes/Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **stakeCredential**: [`Credential`](../classes/Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Source
 

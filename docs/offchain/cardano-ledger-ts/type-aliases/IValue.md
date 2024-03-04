@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IValue
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IValue
 
 # Type alias: IValue
 
-> **IValue**: ([`IValuePolicyEntry`](IValuePolicyEntry.md) \| [`IValueAdaEntry`](IValueAdaEntry.md))[]
+> **IValue**: ([`IValuePolicyEntry`](IValuePolicyEntry) \| [`IValueAdaEntry`](IValueAdaEntry))[]
 
 ## Source
 

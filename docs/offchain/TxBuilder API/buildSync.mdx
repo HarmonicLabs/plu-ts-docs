@@ -1,0 +1,304 @@
+---
+title: buildSync
+sidebar_position: 1
+---
+
+## `ITxBuildArgs`
+
+```ts
+interface ITxBuildArgs {
+    inputs: [ ITxBuildInput, ...ITxBuildInput[] ], // TxBuildInput[] with length >= 1
+    change?: ChangeInfos;
+    changeAddress?: Address | AddressStr,
+    outputs?: ITxBuildOutput[],
+    readonlyRefInputs?: UTxO[],
+    requiredSigners?: PubKeyHash[],
+    collaterals?: UTxO[],
+    collateralReturn?: ITxBuildOutput,
+    mints?: ITxBuildMint[],
+    invalidBefore?: CanBeUInteger,
+    invalidAfter?: CanBeUInteger,
+    certificates?: ITxBuildCert[],
+    withdrawals?: ITxBuildWithdrawal[],
+    metadata?: TxMetadata,
+}
+```
+
+`ITxBuildArgs` is the interface that is used by `txBuilder.buildSync` to understand how to build a `Tx`.
+
+The reuired arguments are [`inputs`](#inputs)
+and either a [`change`](#change) output
+or only a [`changeAddress`](#changeaddress)
+needed for automatic fee calculation.
+
+all the remaining fields are optional.
+
+:::info optional `outputs`
+
+the `outputs` is optional too
+
+if no `outputs` are specified all the input value is sent back to `change.address`
+(or `changeAddress` if no `change` is specified);
+
+:::
+
+### `inputs`
+
+type: `ITxBuildInput[]`
+
+a single input is described using `ITxBuildInput`
+```ts
+interface ITxBuildInput {
+    utxo: UTxO,
+    referenceScriptV2?: {
+        refUtxo: UTxO,
+        datum: CanBeData | "inline",
+        redeemer: CanBeData,
+    }
+    inputScript?: {
+        script: Script,
+        datum: CanBeData | "inline",
+        redeemer: CanBeData
+    }
+}
+```
+
+#### `utxo`
+
+required field
+
+expects an instance of [`UTxO`](../cardano-ledger-ts/classes/UTxO)
+
+if the utxo belongs to a contract,
+
+the contract source must be passed either using [`referenceScriptV2`](#referencescriptv2)
+using a reference [`UTxO`](../cardano-ledger-ts/classes/UTxO) as per [CIP-0033](https://cips.cardano.org/cip/CIP-33/);
+or using a inline witness script using [`inputScript`](#inputscript)
+
+#### `referenceScriptV2`
+
+optional
+
+- `refUtxo`: instance of [`UTxO`](../cardano-ledger-ts/classes/UTxO);
+the utxo to be included as reference input;
+`refUtxo.resolved.refScript` must be present and the hash of the contract must match the contract that locks [`utxo`](#utxo)
+
+- `datum`: instance of [`Data`](../plutus-data/type-aliases/Data`)
+or the litteral string `"inline"` if the [`utxo`](#utxo) field has an inline datum attached
+(ie. utxo.resolved.datum is instance of [`Data`](../plutus-data/type-aliases/Data`))
+
+- `redeemer`: instance of [`Data`](../plutus-data/type-aliases/Data`)
+
+#### `inputScript`
+
+optional
+
+- `script`: instance of [`Script`](../cardano-ledger-ts/classes/Script);
+script to be included in the [`witnesss` field](../cardano-ledger-ts/classes/Tx#witnesses) of the resulting [`Tx`](../cardano-ledger-ts/classes/Tx);
+the hash of the contract must match the contract that locks [`utxo`](#utxo)
+
+- `datum`: instance of [`Data`](../plutus-data/type-aliases/Data`)
+or the litteral string `"inline"` if the [`utxo`](#utxo) field has an inline datum attached
+(ie. `utxo.resolved.datum` is instance of [`Data`](../plutus-data/type-aliases/Data`))
+
+- `redeemer`: instance of [`Data`](../plutus-data/type-aliases/Data`)
+
+### `changeAddress`
+
+describes where to send the excessive input value.
+
+expects an instance of `Address` or a bech32 encoded address (starting with `"addr1"` or `"addr_test1"` if in testnet);
+
+will add an output to the specified address (in the **last** position in tx outputs ordering).
+
+### `change`
+
+```ts
+interface ChangeInfos {
+    address: Address | AddressStr,
+    datum?: Hash32 | CanBeData
+    refScript?: Script
+}
+```
+
+like [`changeAddress`](#changeaddress) describes where to send the excessive input value.
+
+unlike [`changeAddress`](#changeaddress) allows you do add a datum in case the address belongs to a plutus script, or even a reference script.
+
+### `outputs`
+
+type: `ITxBuildOutput[]`
+
+an output is described using `ITxBuildOutput`
+```ts
+interface ITxBuildOutput {
+    address: Address,
+    value: Value,
+    datum?: Hash32 | CanBeData
+    refScript?: Script
+}
+```
+it requires an [`Address`](../cardano-ledger-ts/classes/Address) and a [`Value`](../cardano-ledger-ts/classes/Value);
+
+the address can be constructed from the bech32 string using the static method [`Address.fromString`](../cardano-ledger-ts/classes/Address#fromstring)
+
+optionally a `datum` which can be either
+an [`Hash32`](../cardano-ledger-ts/classes/Hash32),
+anything [`Data`](../plutus-data/type-aliases/Data`)-like,
+or `undefined`
+
+if `undefined` no datum is attached.
+if instance of [`Hash32`](../cardano-ledger-ts/classes/Hash32) the hash is attached in Plutus V1 style
+if anything [`Data`](../plutus-data/type-aliases/Data`)-like an **inline** datum is attached
+([CIP-0032](https://github.com/cardano-foundation/CIPs/tree/master/CIP-0032))
+
+and the optional `refScript`
+
+if `undefined` no script is attached.
+if instance of `Script`, the script is attached as reference script to the resulting `UTxO`
+([CIP-0033](https://github.com/cardano-foundation/CIPs/tree/master/CIP-0033))
+
+### `readonlyRefInputs`
+
+```ts
+UTxO[]
+```
+
+an array of [`UTxO`](../cardano-ledger-ts/classes/UTxO)
+to be included as reference inputs.
+([CIP-0031](https://github.com/cardano-foundation/CIPs/tree/master/CIP-0031))
+
+### `requiredSigners`
+
+```ts
+PubKeyHash[]
+```
+
+set of signers required by the transaction.
+
+this field is the one esposed in the `ScriptContext` of a smart contract
+
+
+### `collaterals`
+
+```ts
+UTxO[]
+```
+
+an array of [`UTxO`](../cardano-ledger-ts/classes/UTxO)
+to be included as collateral inputs;
+
+required if the transaction includes plutus scripts.
+
+### `collateralReturn`
+
+```ts
+ITxBuildOutput[]
+```
+
+outputs specifying the return value from `collaterals`.
+
+see [`outputs`](#outputs) for the definition of `ITxBuildOutput`
+
+### `mints`
+
+type:
+```ts
+ITxBuildMint[]
+```
+
+where `ITxBuildMint` is defined as:
+```ts
+interface ITxBuildMint {
+    value: Value
+    script: {
+        inline: Script
+        policyId: Hash28
+        redeemer: CanBeData
+    } | {
+        ref: UTxO
+        policyId: Hash28
+        redeemer: CanBeData
+    }
+}
+```
+
+- `value`: instance of [`Value`](../cardano-ledger-ts/classes/Value) with a **single entry**;
+the static method [`Value.singleAsset`](../cardano-ledger-ts/Value#singleasset) can be used to create the value to be minted
+(or burned if negative quantity)
+- `script`: the minting policy source, can be either inlined (in the witness set) or passed via reference script
+based on how it is passed:
+    - if the `ref` property is present, the value must be an instance of [`UTxO`](../cardano-ledger-ts/classes/UTxO)
+    with `refScript` present and matching the policy id specified in `value`
+    - if the `inline` property is present, the value must be an instance of [`Script`](../cardano-ledger-ts/classes/Script);
+    the hash of the script must match the policy id of the speicified minted `value`
+    - `policyId`: instance of `Hash28` (mathcing the one of the minted `value`)
+    - `redeemer`: [`Data`](../plutus-data/type-aliases/Data`) to be passed as argument to a plutus minting policy
+
+### `invalidBefore`
+
+type: `number | bigint`
+
+the slot number after wich the transaction can be submited.
+
+### `invalidAfter`
+
+type: `number | bigint`
+
+the slot number after wich the transaction is rejected.
+
+### `certificates`
+
+```ts
+interface ITxBuildCert {
+    cert: AnyCertificate
+    script?: {
+        inline: Script
+        redeemer: CanBeData
+    } | {
+        ref: UTxO
+        redeemer: CanBeData
+    }
+}
+```
+
+array of certificates to include in the transaction and respective (optional) stake validator scripts
+
+### `withdrawals`
+
+```ts
+interface ITxBuildWithdrawal {
+    withdrawal: {
+        rewardAccount: Hash28 | StakeAddress,
+        amount: Coin
+    },
+    script?: {
+        inline: Script
+        redeemer: CanBeData
+    } | {
+        ref: UTxO
+        redeemer: CanBeData
+    }
+}
+```
+
+array of withdrawals to include in the transaction and respective (optional) stake validator scripts
+
+### `metadata`
+
+```ts
+type ITxMetadata = {
+    [metadatum_label: number | string]: TxMetadatum 
+}
+
+class TxMetadata
+{
+    constructor(metadata: ITxMetadata)
+    {
+        // ...
+    }
+}
+```
+
+any metadata to  include in the transaction
+

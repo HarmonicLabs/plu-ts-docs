@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxBody
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxBody
 
 # Class: TxBody
 
 ## Implements
 
-- [`ITxBody`](../interfaces/ITxBody.md)
+- [`ITxBody`](../interfaces/ITxBody)
 - `ToCbor`
 - `ToJson`
 
@@ -16,17 +16,17 @@
 
 ### new TxBody(body)
 
-> **new TxBody**(`body`): [`TxBody`](TxBody.md)
+> **new TxBody**(`body`): [`TxBody`](TxBody)
 
 #### Parameters
 
-• **body**: [`ITxBody`](../interfaces/ITxBody.md)
+• **body**: [`ITxBody`](../interfaces/ITxBody)
 
 object describing the transaction
 
 #### Returns
 
-[`TxBody`](TxBody.md)
+[`TxBody`](TxBody)
 
 #### Throws
 
@@ -41,11 +41,11 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 ### auxDataHash?
 
-> **`optional`** **`readonly`** **auxDataHash**: [`AuxiliaryDataHash`](AuxiliaryDataHash.md)
+> **`optional`** **`readonly`** **auxDataHash**: [`AuxiliaryDataHash`](AuxiliaryDataHash)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`auxDataHash`](../interfaces/ITxBody.md#auxdatahash)
+[`ITxBody`](../interfaces/ITxBody).[`auxDataHash`](../interfaces/ITxBody#auxdatahash)
 
 #### Source
 
@@ -55,11 +55,11 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 ### certs?
 
-> **`optional`** **`readonly`** **certs**: [`Certificate`](../type-aliases/Certificate.md)[]
+> **`optional`** **`readonly`** **certs**: [`Certificate`](../type-aliases/Certificate)[]
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`certs`](../interfaces/ITxBody.md#certs)
+[`ITxBody`](../interfaces/ITxBody).[`certs`](../interfaces/ITxBody#certs)
 
 #### Source
 
@@ -69,11 +69,11 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 ### collateralInputs?
 
-> **`optional`** **`readonly`** **collateralInputs**: [`UTxO`](UTxO.md)[]
+> **`optional`** **`readonly`** **collateralInputs**: [`UTxO`](UTxO)[]
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`collateralInputs`](../interfaces/ITxBody.md#collateralinputs)
+[`ITxBody`](../interfaces/ITxBody).[`collateralInputs`](../interfaces/ITxBody#collateralinputs)
 
 #### Source
 
@@ -83,11 +83,11 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 ### collateralReturn?
 
-> **`optional`** **`readonly`** **collateralReturn**: [`TxOut`](TxOut.md)
+> **`optional`** **`readonly`** **collateralReturn**: [`TxOut`](TxOut)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`collateralReturn`](../interfaces/ITxBody.md#collateralreturn)
+[`ITxBody`](../interfaces/ITxBody).[`collateralReturn`](../interfaces/ITxBody#collateralreturn)
 
 #### Source
 
@@ -101,7 +101,7 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`currentTreasuryValue`](../interfaces/ITxBody.md#currenttreasuryvalue)
+[`ITxBody`](../interfaces/ITxBody).[`currentTreasuryValue`](../interfaces/ITxBody#currenttreasuryvalue)
 
 #### Source
 
@@ -115,7 +115,7 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`donation`](../interfaces/ITxBody.md#donation)
+[`ITxBody`](../interfaces/ITxBody).[`donation`](../interfaces/ITxBody#donation)
 
 #### Source
 
@@ -129,7 +129,7 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`fee`](../interfaces/ITxBody.md#fee)
+[`ITxBody`](../interfaces/ITxBody).[`fee`](../interfaces/ITxBody#fee)
 
 #### Source
 
@@ -139,7 +139,7 @@ only if the the `body` parameter does not respect the `ITxBody` interface
 
 ### hash
 
-> **`readonly`** **hash**: [`Hash32`](Hash32.md)
+> **`readonly`** **hash**: [`Hash32`](Hash32)
 
 getter
 
@@ -151,11 +151,11 @@ getter
 
 ### inputs
 
-> **`readonly`** **inputs**: [[`UTxO`](UTxO.md), `...UTxO[]`]
+> **`readonly`** **inputs**: [[`UTxO`](UTxO), `...UTxO[]`]
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`inputs`](../interfaces/ITxBody.md#inputs)
+[`ITxBody`](../interfaces/ITxBody).[`inputs`](../interfaces/ITxBody#inputs)
 
 #### Source
 
@@ -165,11 +165,11 @@ getter
 
 ### mint?
 
-> **`optional`** **`readonly`** **mint**: [`Value`](Value.md)
+> **`optional`** **`readonly`** **mint**: [`Value`](Value)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`mint`](../interfaces/ITxBody.md#mint)
+[`ITxBody`](../interfaces/ITxBody).[`mint`](../interfaces/ITxBody#mint)
 
 #### Source
 
@@ -179,11 +179,11 @@ getter
 
 ### network?
 
-> **`optional`** **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT.md)
+> **`optional`** **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`network`](../interfaces/ITxBody.md#network)
+[`ITxBody`](../interfaces/ITxBody).[`network`](../interfaces/ITxBody#network)
 
 #### Source
 
@@ -193,11 +193,11 @@ getter
 
 ### outputs
 
-> **`readonly`** **outputs**: [`TxOut`](TxOut.md)[]
+> **`readonly`** **outputs**: [`TxOut`](TxOut)[]
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`outputs`](../interfaces/ITxBody.md#outputs)
+[`ITxBody`](../interfaces/ITxBody).[`outputs`](../interfaces/ITxBody#outputs)
 
 #### Source
 
@@ -211,7 +211,7 @@ getter
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`proposalProcedures`](../interfaces/ITxBody.md#proposalprocedures)
+[`ITxBody`](../interfaces/ITxBody).[`proposalProcedures`](../interfaces/ITxBody#proposalprocedures)
 
 #### Source
 
@@ -221,11 +221,11 @@ getter
 
 ### protocolUpdate?
 
-> **`optional`** **`readonly`** **protocolUpdate**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal.md)
+> **`optional`** **`readonly`** **protocolUpdate**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`protocolUpdate`](../interfaces/ITxBody.md#protocolupdate)
+[`ITxBody`](../interfaces/ITxBody).[`protocolUpdate`](../interfaces/ITxBody#protocolupdate)
 
 #### Source
 
@@ -235,11 +235,11 @@ getter
 
 ### refInputs?
 
-> **`optional`** **`readonly`** **refInputs**: [`UTxO`](UTxO.md)[]
+> **`optional`** **`readonly`** **refInputs**: [`UTxO`](UTxO)[]
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`refInputs`](../interfaces/ITxBody.md#refinputs)
+[`ITxBody`](../interfaces/ITxBody).[`refInputs`](../interfaces/ITxBody#refinputs)
 
 #### Source
 
@@ -249,11 +249,11 @@ getter
 
 ### requiredSigners?
 
-> **`optional`** **`readonly`** **requiredSigners**: [`PubKeyHash`](PubKeyHash.md)[]
+> **`optional`** **`readonly`** **requiredSigners**: [`PubKeyHash`](PubKeyHash)[]
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`requiredSigners`](../interfaces/ITxBody.md#requiredsigners)
+[`ITxBody`](../interfaces/ITxBody).[`requiredSigners`](../interfaces/ITxBody#requiredsigners)
 
 #### Source
 
@@ -263,11 +263,11 @@ getter
 
 ### scriptDataHash?
 
-> **`optional`** **`readonly`** **scriptDataHash**: [`ScriptDataHash`](ScriptDataHash.md)
+> **`optional`** **`readonly`** **scriptDataHash**: [`ScriptDataHash`](ScriptDataHash)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`scriptDataHash`](../interfaces/ITxBody.md#scriptdatahash)
+[`ITxBody`](../interfaces/ITxBody).[`scriptDataHash`](../interfaces/ITxBody#scriptdatahash)
 
 #### Source
 
@@ -281,7 +281,7 @@ getter
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`totCollateral`](../interfaces/ITxBody.md#totcollateral)
+[`ITxBody`](../interfaces/ITxBody).[`totCollateral`](../interfaces/ITxBody#totcollateral)
 
 #### Source
 
@@ -295,7 +295,7 @@ getter
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`ttl`](../interfaces/ITxBody.md#ttl)
+[`ITxBody`](../interfaces/ITxBody).[`ttl`](../interfaces/ITxBody#ttl)
 
 #### Source
 
@@ -309,7 +309,7 @@ getter
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`validityIntervalStart`](../interfaces/ITxBody.md#validityintervalstart)
+[`ITxBody`](../interfaces/ITxBody).[`validityIntervalStart`](../interfaces/ITxBody#validityintervalstart)
 
 #### Source
 
@@ -323,7 +323,7 @@ getter
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`votingProcedures`](../interfaces/ITxBody.md#votingprocedures)
+[`ITxBody`](../interfaces/ITxBody).[`votingProcedures`](../interfaces/ITxBody#votingprocedures)
 
 #### Source
 
@@ -333,11 +333,11 @@ getter
 
 ### withdrawals?
 
-> **`optional`** **`readonly`** **withdrawals**: [`TxWithdrawals`](TxWithdrawals.md)
+> **`optional`** **`readonly`** **withdrawals**: [`TxWithdrawals`](TxWithdrawals)
 
 #### Implementation of
 
-[`ITxBody`](../interfaces/ITxBody.md).[`withdrawals`](../interfaces/ITxBody.md#withdrawals)
+[`ITxBody`](../interfaces/ITxBody).[`withdrawals`](../interfaces/ITxBody#withdrawals)
 
 #### Source
 
@@ -415,11 +415,11 @@ getter
 
 ##### mint
 
-> **mint**: `undefined` \| [`ValueJson`](../type-aliases/ValueJson.md)
+> **mint**: `undefined` \| [`ValueJson`](../type-aliases/ValueJson)
 
 ##### network
 
-> **network**: `undefined` \| [`NetworkT`](../type-aliases/NetworkT.md)
+> **network**: `undefined` \| [`NetworkT`](../type-aliases/NetworkT)
 
 ##### outputs
 
@@ -469,7 +469,7 @@ getter
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxBody`](TxBody.md)
+> **`static`** **fromCbor**(`cStr`): [`TxBody`](TxBody)
 
 #### Parameters
 
@@ -477,7 +477,7 @@ getter
 
 #### Returns
 
-[`TxBody`](TxBody.md)
+[`TxBody`](TxBody)
 
 #### Source
 
@@ -487,7 +487,7 @@ getter
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxBody`](TxBody.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxBody`](TxBody)
 
 #### Parameters
 
@@ -495,7 +495,7 @@ getter
 
 #### Returns
 
-[`TxBody`](TxBody.md)
+[`TxBody`](TxBody)
 
 #### Source
 
@@ -512,7 +512,7 @@ inputs + withdrawals + refund + mints === outputs + burns + deposit + fee
 
 #### Parameters
 
-• **tx**: [`TxBody`](TxBody.md)
+• **tx**: [`TxBody`](TxBody)
 
 #### Returns
 

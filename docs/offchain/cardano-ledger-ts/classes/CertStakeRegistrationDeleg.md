@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertStakeRegistrationDeleg
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertStakeRegistrationDeleg
 
 # Class: CertStakeRegistrationDeleg
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg)
 
 ## Constructors
 
 ### new CertStakeRegistrationDeleg(__namedParameters)
 
-> **new CertStakeRegistrationDeleg**(`__namedParameters`): [`CertStakeRegistrationDeleg`](CertStakeRegistrationDeleg.md)
+> **new CertStakeRegistrationDeleg**(`__namedParameters`): [`CertStakeRegistrationDeleg`](CertStakeRegistrationDeleg)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg.md)
+• **\_\_namedParameters**: [`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg)
 
 #### Returns
 
-[`CertStakeRegistrationDeleg`](CertStakeRegistrationDeleg.md)
+[`CertStakeRegistrationDeleg`](CertStakeRegistrationDeleg)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`StakeRegistrationDeleg`](../enumerations/CertificateType.md#stakeregistrationdeleg)
+> **`readonly`** **certType**: [`StakeRegistrationDeleg`](../enumerations/CertificateType#stakeregistrationdeleg)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -51,7 +51,7 @@
 
 #### Implementation of
 
-[`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg.md).[`coin`](../interfaces/ICertStakeRegistrationDeleg.md#coin)
+[`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg).[`coin`](../interfaces/ICertStakeRegistrationDeleg#coin)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### poolKeyHash
 
-> **`readonly`** **poolKeyHash**: [`Hash28`](Hash28.md)
+> **`readonly`** **poolKeyHash**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg.md).[`poolKeyHash`](../interfaces/ICertStakeRegistrationDeleg.md#poolkeyhash)
+[`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg).[`poolKeyHash`](../interfaces/ICertStakeRegistrationDeleg#poolkeyhash)
 
 #### Source
 
@@ -75,11 +75,11 @@
 
 ### stakeCredential
 
-> **`readonly`** **stakeCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **stakeCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg.md).[`stakeCredential`](../interfaces/ICertStakeRegistrationDeleg.md#stakecredential)
+[`ICertStakeRegistrationDeleg`](../interfaces/ICertStakeRegistrationDeleg).[`stakeCredential`](../interfaces/ICertStakeRegistrationDeleg#stakecredential)
 
 #### Source
 
@@ -89,15 +89,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 

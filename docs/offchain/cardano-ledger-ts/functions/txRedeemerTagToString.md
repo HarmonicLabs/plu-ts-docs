@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / txRedeemerTagToString
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / txRedeemerTagToString
 
 # Function: txRedeemerTagToString()
 
-> **txRedeemerTagToString**\<`Tag`\>(`tag`): [`TxRedeemerTagStr`](../type-aliases/TxRedeemerTagStr.md)\<`Tag`\>
+> **txRedeemerTagToString**\<`Tag`\>(`tag`): [`TxRedeemerTagStr`](../type-aliases/TxRedeemerTagStr)\<`Tag`\>
 
 ## Type parameters
 
-• **Tag** extends [`TxRedeemerTag`](../enumerations/TxRedeemerTag.md)
+• **Tag** extends [`TxRedeemerTag`](../enumerations/TxRedeemerTag)
 
 ## Parameters
 
@@ -18,7 +18,7 @@
 
 ## Returns
 
-[`TxRedeemerTagStr`](../type-aliases/TxRedeemerTagStr.md)\<`Tag`\>
+[`TxRedeemerTagStr`](../type-aliases/TxRedeemerTagStr)\<`Tag`\>
 
 ## Source
 

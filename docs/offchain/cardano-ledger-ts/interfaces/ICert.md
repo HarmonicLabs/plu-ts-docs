@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ICert
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ICert
 
 # Interface: ICert
 
@@ -10,7 +10,7 @@
 
 ### certType
 
-> **certType**: [`CertificateType`](../enumerations/CertificateType.md)
+> **certType**: [`CertificateType`](../enumerations/CertificateType)
 
 #### Source
 
@@ -20,11 +20,11 @@
 
 ### getRequiredSigners
 
-> **getRequiredSigners**: () => [`Hash28`](../classes/Hash28.md)[]
+> **getRequiredSigners**: () => [`Hash28`](../classes/Hash28)[]
 
 #### Returns
 
-[`Hash28`](../classes/Hash28.md)[]
+[`Hash28`](../classes/Hash28)[]
 
 #### Source
 

@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / RewardSourceToStr
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / RewardSourceToStr
 
 # Type alias: RewardSourceToStr\<S\>
 
-> **RewardSourceToStr**\<`S`\>: `S` extends [`Reserves`](../enumerations/InstantRewardsSource.md#reserves) ? `"Reserves"` : `S` extends [`Treasurery`](../enumerations/InstantRewardsSource.md#treasurery) ? `"Treasurery"` : `never`
+> **RewardSourceToStr**\<`S`\>: `S` extends [`Reserves`](../enumerations/InstantRewardsSource#reserves) ? `"Reserves"` : `S` extends [`Treasurery`](../enumerations/InstantRewardsSource#treasurery) ? `"Treasurery"` : `never`
 
 ## Type parameters
 
-• **S** extends [`InstantRewardsSource`](../enumerations/InstantRewardsSource.md)
+• **S** extends [`InstantRewardsSource`](../enumerations/InstantRewardsSource)
 
 ## Source
 

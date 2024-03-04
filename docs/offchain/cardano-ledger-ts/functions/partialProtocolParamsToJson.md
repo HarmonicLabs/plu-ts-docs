@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / partialProtocolParamsToJson
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / partialProtocolParamsToJson
 
 # Function: partialProtocolParamsToJson()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **pp**: `Partial`\<[`ProtocolParameters`](../interfaces/ProtocolParameters.md)\>
+• **pp**: `Partial`\<[`ProtocolParameters`](../interfaces/ProtocolParameters)\>
 
 ## Returns
 

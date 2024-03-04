@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxMetadatumMapEntry
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxMetadatumMapEntry
 
 # Type alias: TxMetadatumMapEntry
 
@@ -12,11 +12,11 @@
 
 ### k
 
-> **k**: [`TxMetadatum`](TxMetadatum.md)
+> **k**: [`TxMetadatum`](TxMetadatum)
 
 ### v
 
-> **v**: [`TxMetadatum`](TxMetadatum.md)
+> **v**: [`TxMetadatum`](TxMetadatum)
 
 ## Source
 

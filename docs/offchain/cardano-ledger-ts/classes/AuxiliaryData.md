@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / AuxiliaryData
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / AuxiliaryData
 
 # Class: AuxiliaryData
 
 ## Implements
 
-- [`IAuxiliaryData`](../interfaces/IAuxiliaryData.md)
+- [`IAuxiliaryData`](../interfaces/IAuxiliaryData)
 - `ToCbor`
 - `ToJson`
 
@@ -16,15 +16,15 @@
 
 ### new AuxiliaryData(auxData)
 
-> **new AuxiliaryData**(`auxData`): [`AuxiliaryData`](AuxiliaryData.md)
+> **new AuxiliaryData**(`auxData`): [`AuxiliaryData`](AuxiliaryData)
 
 #### Parameters
 
-• **auxData**: [`IAuxiliaryData`](../interfaces/IAuxiliaryData.md)
+• **auxData**: [`IAuxiliaryData`](../interfaces/IAuxiliaryData)
 
 #### Returns
 
-[`AuxiliaryData`](AuxiliaryData.md)
+[`AuxiliaryData`](AuxiliaryData)
 
 #### Source
 
@@ -34,7 +34,7 @@
 
 ### hash
 
-> **`readonly`** **hash**: [`AuxiliaryDataHash`](AuxiliaryDataHash.md)
+> **`readonly`** **hash**: [`AuxiliaryDataHash`](AuxiliaryDataHash)
 
 #### Source
 
@@ -44,11 +44,11 @@
 
 ### metadata?
 
-> **`optional`** **`readonly`** **metadata**: [`TxMetadata`](TxMetadata.md)
+> **`optional`** **`readonly`** **metadata**: [`TxMetadata`](TxMetadata)
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`metadata`](../interfaces/IAuxiliaryData.md#metadata)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`metadata`](../interfaces/IAuxiliaryData#metadata)
 
 #### Source
 
@@ -58,11 +58,11 @@
 
 ### nativeScripts?
 
-> **`optional`** **`readonly`** **nativeScripts**: [`Script`](Script.md)\<[`NativeScript`](../enumerations/ScriptType.md#nativescript)\>[]
+> **`optional`** **`readonly`** **nativeScripts**: [`Script`](Script)\<[`NativeScript`](../enumerations/ScriptType#nativescript)\>[]
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`nativeScripts`](../interfaces/IAuxiliaryData.md#nativescripts)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`nativeScripts`](../interfaces/IAuxiliaryData#nativescripts)
 
 #### Source
 
@@ -72,11 +72,11 @@
 
 ### plutusV1Scripts?
 
-> **`optional`** **`readonly`** **plutusV1Scripts**: [`Script`](Script.md)\<[`PlutusV1`](../enumerations/ScriptType.md#plutusv1)\>[]
+> **`optional`** **`readonly`** **plutusV1Scripts**: [`Script`](Script)\<[`PlutusV1`](../enumerations/ScriptType#plutusv1)\>[]
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`plutusV1Scripts`](../interfaces/IAuxiliaryData.md#plutusv1scripts)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`plutusV1Scripts`](../interfaces/IAuxiliaryData#plutusv1scripts)
 
 #### Source
 
@@ -86,11 +86,11 @@
 
 ### plutusV2Scripts?
 
-> **`optional`** **`readonly`** **plutusV2Scripts**: [`Script`](Script.md)\<[`PlutusV2`](../enumerations/ScriptType.md#plutusv2)\>[]
+> **`optional`** **`readonly`** **plutusV2Scripts**: [`Script`](Script)\<[`PlutusV2`](../enumerations/ScriptType#plutusv2)\>[]
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`plutusV2Scripts`](../interfaces/IAuxiliaryData.md#plutusv2scripts)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`plutusV2Scripts`](../interfaces/IAuxiliaryData#plutusv2scripts)
 
 #### Source
 
@@ -148,15 +148,15 @@
 
 ##### nativeScripts
 
-> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### plutusV1Scripts
 
-> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### plutusV2Scripts
 
-> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 #### Implementation of
 
@@ -170,7 +170,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`AuxiliaryData`](AuxiliaryData.md)
+> **`static`** **fromCbor**(`cStr`): [`AuxiliaryData`](AuxiliaryData)
 
 #### Parameters
 
@@ -178,7 +178,7 @@
 
 #### Returns
 
-[`AuxiliaryData`](AuxiliaryData.md)
+[`AuxiliaryData`](AuxiliaryData)
 
 #### Source
 
@@ -188,7 +188,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`AuxiliaryData`](AuxiliaryData.md)
+> **`static`** **fromCborObj**(`cObj`): [`AuxiliaryData`](AuxiliaryData)
 
 #### Parameters
 
@@ -196,7 +196,7 @@
 
 #### Returns
 
-[`AuxiliaryData`](AuxiliaryData.md)
+[`AuxiliaryData`](AuxiliaryData)
 
 #### Source
 

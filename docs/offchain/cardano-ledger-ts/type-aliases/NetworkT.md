@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / NetworkT
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / NetworkT
 
 # Type alias: NetworkT
 
-> **NetworkT**: [`Network`](../enumerations/Network.md) \| `"mainnet"` \| `"testnet"`
+> **NetworkT**: [`Network`](../enumerations/Network) \| `"mainnet"` \| `"testnet"`
 
 ## Source
 

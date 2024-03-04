@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / rewardSourceToStr
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / rewardSourceToStr
 
 # Function: rewardSourceToStr()
 
-> **rewardSourceToStr**\<`S`\>(`source`): [`RewardSourceToStr`](../type-aliases/RewardSourceToStr.md)\<`S`\>
+> **rewardSourceToStr**\<`S`\>(`source`): [`RewardSourceToStr`](../type-aliases/RewardSourceToStr)\<`S`\>
 
 ## Type parameters
 
-• **S** extends [`InstantRewardsSource`](../enumerations/InstantRewardsSource.md)
+• **S** extends [`InstantRewardsSource`](../enumerations/InstantRewardsSource)
 
 ## Parameters
 
@@ -18,7 +18,7 @@
 
 ## Returns
 
-[`RewardSourceToStr`](../type-aliases/RewardSourceToStr.md)\<`S`\>
+[`RewardSourceToStr`](../type-aliases/RewardSourceToStr)\<`S`\>
 
 ## Source
 

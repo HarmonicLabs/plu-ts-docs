@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITx
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITx
 
 # Interface: ITx
 
@@ -10,7 +10,7 @@
 
 ### auxiliaryData?
 
-> **`optional`** **auxiliaryData**: `null` \| [`AuxiliaryData`](../classes/AuxiliaryData.md)
+> **`optional`** **auxiliaryData**: `null` \| [`AuxiliaryData`](../classes/AuxiliaryData)
 
 #### Source
 
@@ -20,7 +20,7 @@
 
 ### body
 
-> **body**: [`ITxBody`](ITxBody.md)
+> **body**: [`ITxBody`](ITxBody)
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### witnesses
 
-> **witnesses**: [`ITxWitnessSet`](ITxWitnessSet.md)
+> **witnesses**: [`ITxWitnessSet`](ITxWitnessSet)
 
 #### Source
 

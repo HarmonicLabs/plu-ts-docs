@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ICertGenesisKeyDelegation
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ICertGenesisKeyDelegation
 
 # Interface: ~~ICertGenesisKeyDelegation~~
 
@@ -12,7 +12,7 @@
 
 ### ~~genesisDelegateHash~~
 
-> **genesisDelegateHash**: [`CanBeHash28`](../type-aliases/CanBeHash28.md)
+> **genesisDelegateHash**: [`CanBeHash28`](../type-aliases/CanBeHash28)
 
 #### Source
 
@@ -22,7 +22,7 @@
 
 ### ~~genesisHash~~
 
-> **genesisHash**: [`CanBeHash28`](../type-aliases/CanBeHash28.md)
+> **genesisHash**: [`CanBeHash28`](../type-aliases/CanBeHash28)
 
 #### Source
 
@@ -32,7 +32,7 @@
 
 ### ~~vrfKeyHash~~
 
-> **vrfKeyHash**: [`CanBeHash32`](../type-aliases/CanBeHash32.md)
+> **vrfKeyHash**: [`CanBeHash32`](../type-aliases/CanBeHash32)
 
 #### Source
 

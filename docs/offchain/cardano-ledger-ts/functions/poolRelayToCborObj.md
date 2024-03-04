@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / poolRelayToCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / poolRelayToCborObj
 
 # Function: poolRelayToCborObj()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **poolRelay**: [`PoolRelay`](../type-aliases/PoolRelay.md)
+• **poolRelay**: [`PoolRelay`](../type-aliases/PoolRelay)
 
 ## Returns
 

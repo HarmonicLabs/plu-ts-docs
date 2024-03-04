@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertStakeDelegation
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertStakeDelegation
 
 # Class: CertStakeDelegation
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertStakeDelegation`](../interfaces/ICertStakeDelegation.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertStakeDelegation`](../interfaces/ICertStakeDelegation)
 
 ## Constructors
 
 ### new CertStakeDelegation(__namedParameters)
 
-> **new CertStakeDelegation**(`__namedParameters`): [`CertStakeDelegation`](CertStakeDelegation.md)
+> **new CertStakeDelegation**(`__namedParameters`): [`CertStakeDelegation`](CertStakeDelegation)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertStakeDelegation`](../interfaces/ICertStakeDelegation.md)
+• **\_\_namedParameters**: [`ICertStakeDelegation`](../interfaces/ICertStakeDelegation)
 
 #### Returns
 
-[`CertStakeDelegation`](CertStakeDelegation.md)
+[`CertStakeDelegation`](CertStakeDelegation)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`StakeDelegation`](../enumerations/CertificateType.md#stakedelegation)
+> **`readonly`** **certType**: [`StakeDelegation`](../enumerations/CertificateType#stakedelegation)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -47,11 +47,11 @@
 
 ### poolKeyHash
 
-> **`readonly`** **poolKeyHash**: [`Hash28`](Hash28.md)
+> **`readonly`** **poolKeyHash**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ICertStakeDelegation`](../interfaces/ICertStakeDelegation.md).[`poolKeyHash`](../interfaces/ICertStakeDelegation.md#poolkeyhash)
+[`ICertStakeDelegation`](../interfaces/ICertStakeDelegation).[`poolKeyHash`](../interfaces/ICertStakeDelegation#poolkeyhash)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### stakeCredential
 
-> **`readonly`** **stakeCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **stakeCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertStakeDelegation`](../interfaces/ICertStakeDelegation.md).[`stakeCredential`](../interfaces/ICertStakeDelegation.md#stakecredential)
+[`ICertStakeDelegation`](../interfaces/ICertStakeDelegation).[`stakeCredential`](../interfaces/ICertStakeDelegation#stakecredential)
 
 #### Source
 
@@ -75,15 +75,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -155,7 +155,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertStakeDelegation`](CertStakeDelegation.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertStakeDelegation`](CertStakeDelegation)
 
 #### Parameters
 
@@ -163,7 +163,7 @@
 
 #### Returns
 
-[`CertStakeDelegation`](CertStakeDelegation.md)
+[`CertStakeDelegation`](CertStakeDelegation)
 
 #### Source
 

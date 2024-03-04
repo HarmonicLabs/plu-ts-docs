@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertUnRegistrationDeposit
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertUnRegistrationDeposit
 
 # Class: CertUnRegistrationDeposit
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit)
 
 ## Constructors
 
 ### new CertUnRegistrationDeposit(__namedParameters)
 
-> **new CertUnRegistrationDeposit**(`__namedParameters`): [`CertUnRegistrationDeposit`](CertUnRegistrationDeposit.md)
+> **new CertUnRegistrationDeposit**(`__namedParameters`): [`CertUnRegistrationDeposit`](CertUnRegistrationDeposit)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit.md)
+• **\_\_namedParameters**: [`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit)
 
 #### Returns
 
-[`CertUnRegistrationDeposit`](CertUnRegistrationDeposit.md)
+[`CertUnRegistrationDeposit`](CertUnRegistrationDeposit)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`UnRegistrationDeposit`](../enumerations/CertificateType.md#unregistrationdeposit)
+> **`readonly`** **certType**: [`UnRegistrationDeposit`](../enumerations/CertificateType#unregistrationdeposit)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -51,7 +51,7 @@
 
 #### Implementation of
 
-[`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit.md).[`deposit`](../interfaces/ICertUnRegistrationDeposit.md#deposit)
+[`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit).[`deposit`](../interfaces/ICertUnRegistrationDeposit#deposit)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### stakeCredential
 
-> **`readonly`** **stakeCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **stakeCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit.md).[`stakeCredential`](../interfaces/ICertUnRegistrationDeposit.md#stakecredential)
+[`ICertUnRegistrationDeposit`](../interfaces/ICertUnRegistrationDeposit).[`stakeCredential`](../interfaces/ICertUnRegistrationDeposit#stakecredential)
 
 #### Source
 
@@ -75,15 +75,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -155,7 +155,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertUnRegistrationDeposit`](CertUnRegistrationDeposit.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertUnRegistrationDeposit`](CertUnRegistrationDeposit)
 
 #### Parameters
 
@@ -163,7 +163,7 @@
 
 #### Returns
 
-[`CertUnRegistrationDeposit`](CertUnRegistrationDeposit.md)
+[`CertUnRegistrationDeposit`](CertUnRegistrationDeposit)
 
 #### Source
 

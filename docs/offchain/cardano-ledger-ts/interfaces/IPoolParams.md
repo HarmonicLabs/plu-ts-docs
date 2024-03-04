@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IPoolParams
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IPoolParams
 
 # Interface: IPoolParams
 
@@ -30,7 +30,7 @@
 
 ### metadata?
 
-> **`optional`** **metadata**: [`IPoolParamsMetadata`](IPoolParamsMetadata.md)
+> **`optional`** **metadata**: [`IPoolParamsMetadata`](IPoolParamsMetadata)
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### operator
 
-> **operator**: [`CanBeHash28`](../type-aliases/CanBeHash28.md)
+> **operator**: [`CanBeHash28`](../type-aliases/CanBeHash28)
 
 #### Source
 
@@ -50,7 +50,7 @@
 
 ### owners
 
-> **owners**: [`CanBeHash28`](../type-aliases/CanBeHash28.md)[]
+> **owners**: [`CanBeHash28`](../type-aliases/CanBeHash28)[]
 
 #### Source
 
@@ -70,7 +70,7 @@
 
 ### relays
 
-> **relays**: [`PoolRelay`](../type-aliases/PoolRelay.md)[]
+> **relays**: [`PoolRelay`](../type-aliases/PoolRelay)[]
 
 #### Source
 
@@ -80,7 +80,7 @@
 
 ### rewardAccount
 
-> **rewardAccount**: [`CanBeHash28`](../type-aliases/CanBeHash28.md)
+> **rewardAccount**: [`CanBeHash28`](../type-aliases/CanBeHash28)
 
 #### Source
 
@@ -90,7 +90,7 @@
 
 ### vrfKeyHash
 
-> **vrfKeyHash**: [`CanBeHash32`](../type-aliases/CanBeHash32.md)
+> **vrfKeyHash**: [`CanBeHash32`](../type-aliases/CanBeHash32)
 
 #### Source
 

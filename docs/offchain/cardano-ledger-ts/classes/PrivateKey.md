@@ -1,34 +1,34 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / PrivateKey
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / PrivateKey
 
 # Class: PrivateKey
 
 ## Extends
 
-- [`Hash32`](Hash32.md)
+- [`Hash32`](Hash32)
 
 ## Constructors
 
 ### new PrivateKey(bs, className)
 
-> **new PrivateKey**(`bs`, `className`): [`PrivateKey`](PrivateKey.md)
+> **new PrivateKey**(`bs`, `className`): [`PrivateKey`](PrivateKey)
 
 #### Parameters
 
-• **bs**: `string` \| `Uint8Array` \| [`Hash32`](Hash32.md)
+• **bs**: `string` \| `Uint8Array` \| [`Hash32`](Hash32)
 
 • **className**: `string`= `"Hash32"`
 
 #### Returns
 
-[`PrivateKey`](PrivateKey.md)
+[`PrivateKey`](PrivateKey)
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`constructor`](Hash32.md#constructors)
+[`Hash32`](Hash32).[`constructor`](Hash32#constructors)
 
 #### Source
 
@@ -102,15 +102,15 @@ use `toString()` instead
 
 ### clone()
 
-> **clone**(): [`Hash`](Hash.md)
+> **clone**(): [`Hash`](Hash)
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`clone`](Hash32.md#clone)
+[`Hash32`](Hash32).[`clone`](Hash32#clone)
 
 #### Source
 
@@ -120,11 +120,11 @@ use `toString()` instead
 
 ### derivePublicKey()
 
-> **derivePublicKey**(): [`PublicKey`](PublicKey.md)
+> **derivePublicKey**(): [`PublicKey`](PublicKey)
 
 #### Returns
 
-[`PublicKey`](PublicKey.md)
+[`PublicKey`](PublicKey)
 
 #### Source
 
@@ -142,7 +142,7 @@ use `toString()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toBuffer`](Hash32.md#tobuffer)
+[`Hash32`](Hash32).[`toBuffer`](Hash32#tobuffer)
 
 #### Source
 
@@ -160,7 +160,7 @@ use `toString()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toBytes`](Hash32.md#tobytes)
+[`Hash32`](Hash32).[`toBytes`](Hash32#tobytes)
 
 #### Deprecated
 
@@ -182,7 +182,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toCbor`](Hash32.md#tocbor)
+[`Hash32`](Hash32).[`toCbor`](Hash32#tocbor)
 
 #### Source
 
@@ -200,7 +200,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toCborObj`](Hash32.md#tocborobj)
+[`Hash32`](Hash32).[`toCborObj`](Hash32#tocborobj)
 
 #### Source
 
@@ -218,7 +218,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toData`](Hash32.md#todata)
+[`Hash32`](Hash32).[`toData`](Hash32#todata)
 
 #### Source
 
@@ -236,7 +236,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toString`](Hash32.md#tostring)
+[`Hash32`](Hash32).[`toString`](Hash32#tostring)
 
 #### Source
 
@@ -246,7 +246,7 @@ use `toBuffer()` instead
 
 ### fromAscii()
 
-> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash.md)
+> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -254,11 +254,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`fromAscii`](Hash32.md#fromascii)
+[`Hash32`](Hash32).[`fromAscii`](Hash32#fromascii)
 
 #### Source
 
@@ -268,7 +268,7 @@ use `toBuffer()` instead
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`PrivateKey`](PrivateKey.md)
+> **`static`** **fromCbor**(`cStr`): [`PrivateKey`](PrivateKey)
 
 #### Parameters
 
@@ -276,11 +276,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`PrivateKey`](PrivateKey.md)
+[`PrivateKey`](PrivateKey)
 
 #### Overrides
 
-[`Hash32`](Hash32.md).[`fromCbor`](Hash32.md#fromcbor)
+[`Hash32`](Hash32).[`fromCbor`](Hash32#fromcbor)
 
 #### Source
 
@@ -290,7 +290,7 @@ use `toBuffer()` instead
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`PrivateKey`](PrivateKey.md)
+> **`static`** **fromCborObj**(`cObj`): [`PrivateKey`](PrivateKey)
 
 #### Parameters
 
@@ -298,11 +298,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`PrivateKey`](PrivateKey.md)
+[`PrivateKey`](PrivateKey)
 
 #### Overrides
 
-[`Hash32`](Hash32.md).[`fromCborObj`](Hash32.md#fromcborobj)
+[`Hash32`](Hash32).[`fromCborObj`](Hash32#fromcborobj)
 
 #### Source
 
@@ -324,7 +324,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`isStrictInstance`](Hash32.md#isstrictinstance)
+[`Hash32`](Hash32).[`isStrictInstance`](Hash32#isstrictinstance)
 
 #### Source
 
@@ -346,7 +346,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`isValidHexValue`](Hash32.md#isvalidhexvalue)
+[`Hash32`](Hash32).[`isValidHexValue`](Hash32#isvalidhexvalue)
 
 #### Source
 
@@ -360,7 +360,7 @@ use `toBuffer()` instead
 
 #### Parameters
 
-• **bStr**: [`Hash`](Hash.md)
+• **bStr**: [`Hash`](Hash)
 
 #### Returns
 
@@ -368,7 +368,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash32`](Hash32.md).[`toAscii`](Hash32.md#toascii)
+[`Hash32`](Hash32).[`toAscii`](Hash32#toascii)
 
 #### Source
 

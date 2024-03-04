@@ -1,32 +1,32 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxIn
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxIn
 
 # Class: TxIn
 
 ## Extends
 
-- [`UTxO`](UTxO.md)
+- [`UTxO`](UTxO)
 
 ## Constructors
 
 ### new TxIn(utxo)
 
-> **new TxIn**(`utxo`): [`TxIn`](TxIn.md)
+> **new TxIn**(`utxo`): [`TxIn`](TxIn)
 
 #### Parameters
 
-• **utxo**: [`IUTxO`](../interfaces/IUTxO.md)
+• **utxo**: [`IUTxO`](../interfaces/IUTxO)
 
 #### Returns
 
-[`TxIn`](TxIn.md)
+[`TxIn`](TxIn)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`constructor`](UTxO.md#constructors)
+[`UTxO`](UTxO).[`constructor`](UTxO#constructors)
 
 #### Source
 
@@ -36,11 +36,11 @@
 
 ### resolved
 
-> **`readonly`** **resolved**: [`TxOut`](TxOut.md)
+> **`readonly`** **resolved**: [`TxOut`](TxOut)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`resolved`](UTxO.md#resolved)
+[`UTxO`](UTxO).[`resolved`](UTxO#resolved)
 
 #### Source
 
@@ -50,11 +50,11 @@
 
 ### utxoRef
 
-> **`readonly`** **utxoRef**: [`TxOutRef`](TxOutRef.md)
+> **`readonly`** **utxoRef**: [`TxOutRef`](TxOutRef)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`utxoRef`](UTxO.md#utxoref)
+[`UTxO`](UTxO).[`utxoRef`](UTxO#utxoref)
 
 #### Source
 
@@ -64,15 +64,15 @@
 
 ### clone()
 
-> **clone**(): [`UTxO`](UTxO.md)
+> **clone**(): [`UTxO`](UTxO)
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`clone`](UTxO.md#clone)
+[`UTxO`](UTxO).[`clone`](UTxO#clone)
 
 #### Source
 
@@ -90,7 +90,7 @@
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`toCbor`](UTxO.md#tocbor)
+[`UTxO`](UTxO).[`toCbor`](UTxO#tocbor)
 
 #### Source
 
@@ -108,7 +108,7 @@
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`toCborObj`](UTxO.md#tocborobj)
+[`UTxO`](UTxO).[`toCborObj`](UTxO#tocborobj)
 
 #### Source
 
@@ -130,7 +130,7 @@
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`toData`](UTxO.md#todata)
+[`UTxO`](UTxO).[`toData`](UTxO#todata)
 
 #### Source
 
@@ -160,19 +160,19 @@
 
 ##### resolved.refScript
 
-> **refScript**: `undefined` \| [`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`
+> **refScript**: `undefined` \| [`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
 
 ##### resolved.value
 
-> **value**: [`ValueJson`](../type-aliases/ValueJson.md)
+> **value**: [`ValueJson`](../type-aliases/ValueJson)
 
 ##### utxoRef
 
-> **utxoRef**: [`UTxORefJson`](../type-aliases/UTxORefJson.md)
+> **utxoRef**: [`UTxORefJson`](../type-aliases/UTxORefJson)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`toJson`](UTxO.md#tojson)
+[`UTxO`](UTxO).[`toJson`](UTxO#tojson)
 
 #### Source
 
@@ -182,7 +182,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`UTxO`](UTxO.md)
+> **`static`** **fromCbor**(`cStr`): [`UTxO`](UTxO)
 
 #### Parameters
 
@@ -190,11 +190,11 @@
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`fromCbor`](UTxO.md#fromcbor)
+[`UTxO`](UTxO).[`fromCbor`](UTxO#fromcbor)
 
 #### Source
 
@@ -204,7 +204,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`UTxO`](UTxO.md)
+> **`static`** **fromCborObj**(`cObj`): [`UTxO`](UTxO)
 
 #### Parameters
 
@@ -212,11 +212,11 @@
 
 #### Returns
 
-[`UTxO`](UTxO.md)
+[`UTxO`](UTxO)
 
 #### Inherited from
 
-[`UTxO`](UTxO.md).[`fromCborObj`](UTxO.md#fromcborobj)
+[`UTxO`](UTxO).[`fromCborObj`](UTxO#fromcborobj)
 
 #### Source
 

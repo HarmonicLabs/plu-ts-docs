@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Hash
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Hash
 
 # Class: Hash
 
 ## Extended by
 
-- [`Hash28`](Hash28.md)
-- [`Hash32`](Hash32.md)
-- [`Signature`](Signature.md)
+- [`Hash28`](Hash28)
+- [`Hash32`](Hash32)
+- [`Signature`](Signature)
 
 ## Implements
 
-- `Cloneable`\<[`Hash`](Hash.md)\>
+- `Cloneable`\<[`Hash`](Hash)\>
 - `ToCbor`
 - `ToData`
 
@@ -22,7 +22,7 @@
 
 ### new Hash(bs)
 
-> **new Hash**(`bs`): [`Hash`](Hash.md)
+> **new Hash**(`bs`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -30,7 +30,7 @@
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Source
 
@@ -104,11 +104,11 @@ use `toString()` instead
 
 ### clone()
 
-> **clone**(): [`Hash`](Hash.md)
+> **clone**(): [`Hash`](Hash)
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Implementation of
 
@@ -222,7 +222,7 @@ use `toBuffer()` instead
 
 ### fromAscii()
 
-> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash.md)
+> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -230,7 +230,7 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Source
 
@@ -240,7 +240,7 @@ use `toBuffer()` instead
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Hash`](Hash.md)
+> **`static`** **fromCbor**(`cStr`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -248,7 +248,7 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Source
 
@@ -258,7 +258,7 @@ use `toBuffer()` instead
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Hash`](Hash.md)
+> **`static`** **fromCborObj**(`cObj`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -266,7 +266,7 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Source
 
@@ -316,7 +316,7 @@ use `toBuffer()` instead
 
 #### Parameters
 
-• **bStr**: [`Hash`](Hash.md)
+• **bStr**: [`Hash`](Hash)
 
 #### Returns
 

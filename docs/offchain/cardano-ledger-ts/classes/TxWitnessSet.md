@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxWitnessSet
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxWitnessSet
 
 # Class: TxWitnessSet
 
 ## Implements
 
-- [`ITxWitnessSet`](../interfaces/ITxWitnessSet.md)
+- [`ITxWitnessSet`](../interfaces/ITxWitnessSet)
 - `ToCbor`
 - `ToJson`
 
@@ -16,17 +16,17 @@
 
 ### new TxWitnessSet(witnesses, allRequiredSigners)
 
-> **new TxWitnessSet**(`witnesses`, `allRequiredSigners`): [`TxWitnessSet`](TxWitnessSet.md)
+> **new TxWitnessSet**(`witnesses`, `allRequiredSigners`): [`TxWitnessSet`](TxWitnessSet)
 
 #### Parameters
 
-• **witnesses**: [`ITxWitnessSet`](../interfaces/ITxWitnessSet.md)
+• **witnesses**: [`ITxWitnessSet`](../interfaces/ITxWitnessSet)
 
-• **allRequiredSigners**: `undefined` \| [`Hash28`](Hash28.md)[]= `undefined`
+• **allRequiredSigners**: `undefined` \| [`Hash28`](Hash28)[]= `undefined`
 
 #### Returns
 
-[`TxWitnessSet`](TxWitnessSet.md)
+[`TxWitnessSet`](TxWitnessSet)
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 #### Parameters
 
-• **vkeyWit**: [`VKeyWitness`](VKeyWitness.md)
+• **vkeyWit**: [`VKeyWitness`](VKeyWitness)
 
 #### Returns
 
@@ -54,11 +54,11 @@
 
 ### bootstrapWitnesses?
 
-> **`optional`** **`readonly`** **bootstrapWitnesses**: [`BootstrapWitness`](BootstrapWitness.md)[]
+> **`optional`** **`readonly`** **bootstrapWitnesses**: [`BootstrapWitness`](BootstrapWitness)[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`bootstrapWitnesses`](../interfaces/ITxWitnessSet.md#bootstrapwitnesses)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`bootstrapWitnesses`](../interfaces/ITxWitnessSet#bootstrapwitnesses)
 
 #### Source
 
@@ -72,7 +72,7 @@
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`datums`](../interfaces/ITxWitnessSet.md#datums)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`datums`](../interfaces/ITxWitnessSet#datums)
 
 #### Source
 
@@ -92,11 +92,11 @@
 
 ### nativeScripts?
 
-> **`optional`** **`readonly`** **nativeScripts**: [`Script`](Script.md)\<[`NativeScript`](../enumerations/ScriptType.md#nativescript)\>[]
+> **`optional`** **`readonly`** **nativeScripts**: [`Script`](Script)\<[`NativeScript`](../enumerations/ScriptType#nativescript)\>[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`nativeScripts`](../interfaces/ITxWitnessSet.md#nativescripts)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`nativeScripts`](../interfaces/ITxWitnessSet#nativescripts)
 
 #### Source
 
@@ -106,11 +106,11 @@
 
 ### plutusV1Scripts?
 
-> **`optional`** **`readonly`** **plutusV1Scripts**: [`Script`](Script.md)\<[`PlutusV1`](../enumerations/ScriptType.md#plutusv1)\>[]
+> **`optional`** **`readonly`** **plutusV1Scripts**: [`Script`](Script)\<[`PlutusV1`](../enumerations/ScriptType#plutusv1)\>[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`plutusV1Scripts`](../interfaces/ITxWitnessSet.md#plutusv1scripts)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`plutusV1Scripts`](../interfaces/ITxWitnessSet#plutusv1scripts)
 
 #### Source
 
@@ -120,11 +120,11 @@
 
 ### plutusV2Scripts?
 
-> **`optional`** **`readonly`** **plutusV2Scripts**: [`Script`](Script.md)\<[`PlutusV2`](../enumerations/ScriptType.md#plutusv2)\>[]
+> **`optional`** **`readonly`** **plutusV2Scripts**: [`Script`](Script)\<[`PlutusV2`](../enumerations/ScriptType#plutusv2)\>[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`plutusV2Scripts`](../interfaces/ITxWitnessSet.md#plutusv2scripts)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`plutusV2Scripts`](../interfaces/ITxWitnessSet#plutusv2scripts)
 
 #### Source
 
@@ -134,11 +134,11 @@
 
 ### plutusV3Scripts?
 
-> **`optional`** **`readonly`** **plutusV3Scripts**: [`Script`](Script.md)\<[`PlutusV3`](../enumerations/ScriptType.md#plutusv3)\>[]
+> **`optional`** **`readonly`** **plutusV3Scripts**: [`Script`](Script)\<[`PlutusV3`](../enumerations/ScriptType#plutusv3)\>[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`plutusV3Scripts`](../interfaces/ITxWitnessSet.md#plutusv3scripts)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`plutusV3Scripts`](../interfaces/ITxWitnessSet#plutusv3scripts)
 
 #### Source
 
@@ -148,11 +148,11 @@
 
 ### redeemers?
 
-> **`optional`** **`readonly`** **redeemers**: [`TxRedeemer`](TxRedeemer.md)[]
+> **`optional`** **`readonly`** **redeemers**: [`TxRedeemer`](TxRedeemer)[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`redeemers`](../interfaces/ITxWitnessSet.md#redeemers)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`redeemers`](../interfaces/ITxWitnessSet#redeemers)
 
 #### Source
 
@@ -162,11 +162,11 @@
 
 ### vkeyWitnesses?
 
-> **`optional`** **`readonly`** **vkeyWitnesses**: [`VKeyWitness`](VKeyWitness.md)[]
+> **`optional`** **`readonly`** **vkeyWitnesses**: [`VKeyWitness`](VKeyWitness)[]
 
 #### Implementation of
 
-[`ITxWitnessSet`](../interfaces/ITxWitnessSet.md).[`vkeyWitnesses`](../interfaces/ITxWitnessSet.md#vkeywitnesses)
+[`ITxWitnessSet`](../interfaces/ITxWitnessSet).[`vkeyWitnesses`](../interfaces/ITxWitnessSet#vkeywitnesses)
 
 #### Source
 
@@ -228,19 +228,19 @@
 
 ##### nativeScripts
 
-> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### plutusV1Scripts
 
-> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### plutusV2Scripts
 
-> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### plutusV3Scripts
 
-> **plutusV3Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`)[]
+> **plutusV3Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
 
 ##### redeemers
 
@@ -262,7 +262,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxWitnessSet`](TxWitnessSet.md)
+> **`static`** **fromCbor**(`cStr`): [`TxWitnessSet`](TxWitnessSet)
 
 #### Parameters
 
@@ -270,7 +270,7 @@
 
 #### Returns
 
-[`TxWitnessSet`](TxWitnessSet.md)
+[`TxWitnessSet`](TxWitnessSet)
 
 #### Source
 
@@ -280,7 +280,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxWitnessSet`](TxWitnessSet.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxWitnessSet`](TxWitnessSet)
 
 #### Parameters
 
@@ -288,7 +288,7 @@
 
 #### Returns
 
-[`TxWitnessSet`](TxWitnessSet.md)
+[`TxWitnessSet`](TxWitnessSet)
 
 #### Source
 

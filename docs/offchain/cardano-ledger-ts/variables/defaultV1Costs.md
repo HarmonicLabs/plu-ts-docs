@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / defaultV1Costs
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / defaultV1Costs
 
 # Variable: defaultV1Costs
 
-> **`const`** **defaultV1Costs**: [`CostModelPlutusV1`](../interfaces/CostModelPlutusV1.md)
+> **`const`** **defaultV1Costs**: [`CostModelPlutusV1`](../interfaces/CostModelPlutusV1)
 
 ## Source
 

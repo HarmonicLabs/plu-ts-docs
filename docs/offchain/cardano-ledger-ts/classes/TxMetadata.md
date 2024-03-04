@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxMetadata
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxMetadata
 
 # Class: TxMetadata
 
@@ -15,15 +15,15 @@
 
 ### new TxMetadata(metadata)
 
-> **new TxMetadata**(`metadata`): [`TxMetadata`](TxMetadata.md)
+> **new TxMetadata**(`metadata`): [`TxMetadata`](TxMetadata)
 
 #### Parameters
 
-• **metadata**: [`ITxMetadata`](../type-aliases/ITxMetadata.md)
+• **metadata**: [`ITxMetadata`](../type-aliases/ITxMetadata)
 
 #### Returns
 
-[`TxMetadata`](TxMetadata.md)
+[`TxMetadata`](TxMetadata)
 
 #### Source
 
@@ -97,7 +97,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxMetadata`](TxMetadata.md)
+> **`static`** **fromCbor**(`cStr`): [`TxMetadata`](TxMetadata)
 
 #### Parameters
 
@@ -105,7 +105,7 @@
 
 #### Returns
 
-[`TxMetadata`](TxMetadata.md)
+[`TxMetadata`](TxMetadata)
 
 #### Source
 
@@ -115,7 +115,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxMetadata`](TxMetadata.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxMetadata`](TxMetadata)
 
 #### Parameters
 
@@ -123,7 +123,7 @@
 
 #### Returns
 
-[`TxMetadata`](TxMetadata.md)
+[`TxMetadata`](TxMetadata)
 
 #### Source
 

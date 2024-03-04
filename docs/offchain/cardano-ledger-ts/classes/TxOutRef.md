@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxOutRef
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxOutRef
 
 # Class: TxOutRef
 
 ## Implements
 
-- [`ITxOutRef`](../interfaces/ITxOutRef.md)
+- [`ITxOutRef`](../interfaces/ITxOutRef)
 - `ToData`
 - `ToCbor`
 - `ToJson`
@@ -17,15 +17,15 @@
 
 ### new TxOutRef(__namedParameters)
 
-> **new TxOutRef**(`__namedParameters`): [`TxOutRef`](TxOutRef.md)
+> **new TxOutRef**(`__namedParameters`): [`TxOutRef`](TxOutRef)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ITxOutRef`](../interfaces/ITxOutRef.md)
+• **\_\_namedParameters**: [`ITxOutRef`](../interfaces/ITxOutRef)
 
 #### Returns
 
-[`TxOutRef`](TxOutRef.md)
+[`TxOutRef`](TxOutRef)
 
 #### Source
 
@@ -35,11 +35,11 @@
 
 ### id
 
-> **`readonly`** **id**: [`Hash32`](Hash32.md)
+> **`readonly`** **id**: [`Hash32`](Hash32)
 
 #### Implementation of
 
-[`ITxOutRef`](../interfaces/ITxOutRef.md).[`id`](../interfaces/ITxOutRef.md#id)
+[`ITxOutRef`](../interfaces/ITxOutRef).[`id`](../interfaces/ITxOutRef#id)
 
 #### Source
 
@@ -53,7 +53,7 @@
 
 #### Implementation of
 
-[`ITxOutRef`](../interfaces/ITxOutRef.md).[`index`](../interfaces/ITxOutRef.md#index)
+[`ITxOutRef`](../interfaces/ITxOutRef).[`index`](../interfaces/ITxOutRef#index)
 
 #### Source
 
@@ -63,11 +63,11 @@
 
 ### fake
 
-> **`get`** **`static`** **fake**(): [`TxOutRef`](TxOutRef.md)
+> **`get`** **`static`** **fake**(): [`TxOutRef`](TxOutRef)
 
 #### Returns
 
-[`TxOutRef`](TxOutRef.md)
+[`TxOutRef`](TxOutRef)
 
 #### Source
 
@@ -131,11 +131,11 @@
 
 ### toJson()
 
-> **toJson**(): [`UTxORefJson`](../type-aliases/UTxORefJson.md)
+> **toJson**(): [`UTxORefJson`](../type-aliases/UTxORefJson)
 
 #### Returns
 
-[`UTxORefJson`](../type-aliases/UTxORefJson.md)
+[`UTxORefJson`](../type-aliases/UTxORefJson)
 
 #### Implementation of
 
@@ -163,7 +163,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxOutRef`](TxOutRef.md)
+> **`static`** **fromCbor**(`cStr`): [`TxOutRef`](TxOutRef)
 
 #### Parameters
 
@@ -171,7 +171,7 @@
 
 #### Returns
 
-[`TxOutRef`](TxOutRef.md)
+[`TxOutRef`](TxOutRef)
 
 #### Source
 
@@ -181,7 +181,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxOutRef`](TxOutRef.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxOutRef`](TxOutRef)
 
 #### Parameters
 
@@ -189,7 +189,7 @@
 
 #### Returns
 
-[`TxOutRef`](TxOutRef.md)
+[`TxOutRef`](TxOutRef)
 
 #### Source
 

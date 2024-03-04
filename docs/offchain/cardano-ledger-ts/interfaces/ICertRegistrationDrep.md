@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ICertRegistrationDrep
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ICertRegistrationDrep
 
 # Interface: ICertRegistrationDrep
 
@@ -30,7 +30,7 @@
 
 ### drepCredential
 
-> **drepCredential**: [`Credential`](../classes/Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **drepCredential**: [`Credential`](../classes/Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Source
 

@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IMoveInstantRewardsCert
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IMoveInstantRewardsCert
 
 # Interface: IMoveInstantRewardsCert
 
@@ -10,7 +10,7 @@
 
 ### destination
 
-> **destination**: `CanBeUInteger` \| [`RewardsMap`](../type-aliases/RewardsMap.md)
+> **destination**: `CanBeUInteger` \| [`RewardsMap`](../type-aliases/RewardsMap)
 
 #### Source
 
@@ -20,7 +20,7 @@
 
 ### source
 
-> **source**: [`InstantRewardsSource`](../enumerations/InstantRewardsSource.md)
+> **source**: [`InstantRewardsSource`](../enumerations/InstantRewardsSource)
 
 #### Source
 

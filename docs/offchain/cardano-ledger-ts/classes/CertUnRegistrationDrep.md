@@ -1,29 +1,29 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertUnRegistrationDrep
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertUnRegistrationDrep
 
 # Class: CertUnRegistrationDrep
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep)
 
 ## Constructors
 
 ### new CertUnRegistrationDrep(__namedParameters)
 
-> **new CertUnRegistrationDrep**(`__namedParameters`): [`CertUnRegistrationDrep`](CertUnRegistrationDrep.md)
+> **new CertUnRegistrationDrep**(`__namedParameters`): [`CertUnRegistrationDrep`](CertUnRegistrationDrep)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep.md)
+• **\_\_namedParameters**: [`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep)
 
 #### Returns
 
-[`CertUnRegistrationDrep`](CertUnRegistrationDrep.md)
+[`CertUnRegistrationDrep`](CertUnRegistrationDrep)
 
 #### Source
 
@@ -33,11 +33,11 @@
 
 ### certType
 
-> **`readonly`** **certType**: [`UnRegistrationDrep`](../enumerations/CertificateType.md#unregistrationdrep)
+> **`readonly`** **certType**: [`UnRegistrationDrep`](../enumerations/CertificateType#unregistrationdrep)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -51,7 +51,7 @@
 
 #### Implementation of
 
-[`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep.md).[`coin`](../interfaces/ICertUnRegistrationDrep.md#coin)
+[`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep).[`coin`](../interfaces/ICertUnRegistrationDrep#coin)
 
 #### Source
 
@@ -61,11 +61,11 @@
 
 ### drepCredential
 
-> **`readonly`** **drepCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`readonly`** **drepCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Implementation of
 
-[`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep.md).[`drepCredential`](../interfaces/ICertUnRegistrationDrep.md#drepcredential)
+[`ICertUnRegistrationDrep`](../interfaces/ICertUnRegistrationDrep).[`drepCredential`](../interfaces/ICertUnRegistrationDrep#drepcredential)
 
 #### Source
 
@@ -75,15 +75,15 @@
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -155,7 +155,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertUnRegistrationDrep`](CertUnRegistrationDrep.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertUnRegistrationDrep`](CertUnRegistrationDrep)
 
 #### Parameters
 
@@ -163,7 +163,7 @@
 
 #### Returns
 
-[`CertUnRegistrationDrep`](CertUnRegistrationDrep.md)
+[`CertUnRegistrationDrep`](CertUnRegistrationDrep)
 
 #### Source
 

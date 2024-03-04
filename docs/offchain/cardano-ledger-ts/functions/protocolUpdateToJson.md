@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / protocolUpdateToJson
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / protocolUpdateToJson
 
 # Function: protocolUpdateToJson()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **pUp**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal.md)
+• **pUp**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal)
 
 ## Returns
 

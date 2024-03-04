@@ -1,34 +1,34 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / PoolKeyHash
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / PoolKeyHash
 
 # Class: PoolKeyHash
 
 ## Extends
 
-- [`Hash28`](Hash28.md)
+- [`Hash28`](Hash28)
 
 ## Constructors
 
 ### new PoolKeyHash(bs, className)
 
-> **new PoolKeyHash**(`bs`, `className`): [`PoolKeyHash`](PoolKeyHash.md)
+> **new PoolKeyHash**(`bs`, `className`): [`PoolKeyHash`](PoolKeyHash)
 
 #### Parameters
 
-• **bs**: [`CanBeHash28`](../type-aliases/CanBeHash28.md)
+• **bs**: [`CanBeHash28`](../type-aliases/CanBeHash28)
 
 • **className**: `string`= `"Hash28"`
 
 #### Returns
 
-[`PoolKeyHash`](PoolKeyHash.md)
+[`PoolKeyHash`](PoolKeyHash)
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`constructor`](Hash28.md#constructors)
+[`Hash28`](Hash28).[`constructor`](Hash28#constructors)
 
 #### Source
 
@@ -102,15 +102,15 @@ use `toString()` instead
 
 ### clone()
 
-> **clone**(): [`Hash28`](Hash28.md)
+> **clone**(): [`Hash28`](Hash28)
 
 #### Returns
 
-[`Hash28`](Hash28.md)
+[`Hash28`](Hash28)
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`clone`](Hash28.md#clone)
+[`Hash28`](Hash28).[`clone`](Hash28#clone)
 
 #### Source
 
@@ -128,7 +128,7 @@ use `toString()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toBuffer`](Hash28.md#tobuffer)
+[`Hash28`](Hash28).[`toBuffer`](Hash28#tobuffer)
 
 #### Source
 
@@ -146,7 +146,7 @@ use `toString()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toBytes`](Hash28.md#tobytes)
+[`Hash28`](Hash28).[`toBytes`](Hash28#tobytes)
 
 #### Deprecated
 
@@ -168,7 +168,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toCbor`](Hash28.md#tocbor)
+[`Hash28`](Hash28).[`toCbor`](Hash28#tocbor)
 
 #### Source
 
@@ -186,7 +186,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toCborObj`](Hash28.md#tocborobj)
+[`Hash28`](Hash28).[`toCborObj`](Hash28#tocborobj)
 
 #### Source
 
@@ -204,7 +204,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toData`](Hash28.md#todata)
+[`Hash28`](Hash28).[`toData`](Hash28#todata)
 
 #### Source
 
@@ -222,7 +222,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toString`](Hash28.md#tostring)
+[`Hash28`](Hash28).[`toString`](Hash28#tostring)
 
 #### Source
 
@@ -240,7 +240,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`valueOf`](Hash28.md#valueof)
+[`Hash28`](Hash28).[`valueOf`](Hash28#valueof)
 
 #### Source
 
@@ -250,7 +250,7 @@ use `toBuffer()` instead
 
 ### fromAscii()
 
-> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash.md)
+> **`static`** **fromAscii**(`asciiStr`): [`Hash`](Hash)
 
 #### Parameters
 
@@ -258,11 +258,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash`](Hash.md)
+[`Hash`](Hash)
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`fromAscii`](Hash28.md#fromascii)
+[`Hash28`](Hash28).[`fromAscii`](Hash28#fromascii)
 
 #### Source
 
@@ -272,7 +272,7 @@ use `toBuffer()` instead
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Hash28`](Hash28.md)
+> **`static`** **fromCbor**(`cStr`): [`Hash28`](Hash28)
 
 #### Parameters
 
@@ -280,11 +280,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash28`](Hash28.md)
+[`Hash28`](Hash28)
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`fromCbor`](Hash28.md#fromcbor)
+[`Hash28`](Hash28).[`fromCbor`](Hash28#fromcbor)
 
 #### Source
 
@@ -294,7 +294,7 @@ use `toBuffer()` instead
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Hash28`](Hash28.md)
+> **`static`** **fromCborObj**(`cObj`): [`Hash28`](Hash28)
 
 #### Parameters
 
@@ -302,11 +302,11 @@ use `toBuffer()` instead
 
 #### Returns
 
-[`Hash28`](Hash28.md)
+[`Hash28`](Hash28)
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`fromCborObj`](Hash28.md#fromcborobj)
+[`Hash28`](Hash28).[`fromCborObj`](Hash28#fromcborobj)
 
 #### Source
 
@@ -328,7 +328,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`isStrictInstance`](Hash28.md#isstrictinstance)
+[`Hash28`](Hash28).[`isStrictInstance`](Hash28#isstrictinstance)
 
 #### Source
 
@@ -350,7 +350,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`isValidHexValue`](Hash28.md#isvalidhexvalue)
+[`Hash28`](Hash28).[`isValidHexValue`](Hash28#isvalidhexvalue)
 
 #### Source
 
@@ -364,7 +364,7 @@ use `toBuffer()` instead
 
 #### Parameters
 
-• **bStr**: [`Hash`](Hash.md)
+• **bStr**: [`Hash`](Hash)
 
 #### Returns
 
@@ -372,7 +372,7 @@ use `toBuffer()` instead
 
 #### Inherited from
 
-[`Hash28`](Hash28.md).[`toAscii`](Hash28.md#toascii)
+[`Hash28`](Hash28).[`toAscii`](Hash28#toascii)
 
 #### Source
 

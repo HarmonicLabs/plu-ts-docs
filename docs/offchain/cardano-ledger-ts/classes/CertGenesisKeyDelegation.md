@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CertGenesisKeyDelegation
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertGenesisKeyDelegation
 
 # Class: ~~CertGenesisKeyDelegation~~
 
@@ -10,22 +10,22 @@
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert.md)
-- [`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation.md)
+- [`ICert`](../interfaces/ICert)
+- [`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation)
 
 ## Constructors
 
 ### new CertGenesisKeyDelegation(__namedParameters)
 
-> **new CertGenesisKeyDelegation**(`__namedParameters`): [`CertGenesisKeyDelegation`](CertGenesisKeyDelegation.md)
+> **new CertGenesisKeyDelegation**(`__namedParameters`): [`CertGenesisKeyDelegation`](CertGenesisKeyDelegation)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation.md)
+• **\_\_namedParameters**: [`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation)
 
 #### Returns
 
-[`CertGenesisKeyDelegation`](CertGenesisKeyDelegation.md)
+[`CertGenesisKeyDelegation`](CertGenesisKeyDelegation)
 
 #### Source
 
@@ -35,11 +35,11 @@
 
 ### ~~certType~~
 
-> **`readonly`** **certType**: [`GenesisKeyDelegation`](../enumerations/CertificateType.md#genesiskeydelegation)
+> **`readonly`** **certType**: [`GenesisKeyDelegation`](../enumerations/CertificateType#genesiskeydelegation)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
+[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
 
 #### Source
 
@@ -49,11 +49,11 @@
 
 ### ~~genesisDelegateHash~~
 
-> **`readonly`** **genesisDelegateHash**: [`Hash28`](Hash28.md)
+> **`readonly`** **genesisDelegateHash**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation.md).[`genesisDelegateHash`](../interfaces/ICertGenesisKeyDelegation.md#genesisdelegatehash)
+[`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation).[`genesisDelegateHash`](../interfaces/ICertGenesisKeyDelegation#genesisdelegatehash)
 
 #### Source
 
@@ -63,11 +63,11 @@
 
 ### ~~genesisHash~~
 
-> **`readonly`** **genesisHash**: [`Hash28`](Hash28.md)
+> **`readonly`** **genesisHash**: [`Hash28`](Hash28)
 
 #### Implementation of
 
-[`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation.md).[`genesisHash`](../interfaces/ICertGenesisKeyDelegation.md#genesishash)
+[`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation).[`genesisHash`](../interfaces/ICertGenesisKeyDelegation#genesishash)
 
 #### Source
 
@@ -77,11 +77,11 @@
 
 ### ~~vrfKeyHash~~
 
-> **`readonly`** **vrfKeyHash**: [`Hash32`](Hash32.md)
+> **`readonly`** **vrfKeyHash**: [`Hash32`](Hash32)
 
 #### Implementation of
 
-[`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation.md).[`vrfKeyHash`](../interfaces/ICertGenesisKeyDelegation.md#vrfkeyhash)
+[`ICertGenesisKeyDelegation`](../interfaces/ICertGenesisKeyDelegation).[`vrfKeyHash`](../interfaces/ICertGenesisKeyDelegation#vrfkeyhash)
 
 #### Source
 
@@ -91,15 +91,15 @@
 
 ### ~~getRequiredSigners()~~
 
-> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28)[]
 
 #### Returns
 
-[`Hash28`](Hash28.md)[]
+[`Hash28`](Hash28)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
+[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
 
 #### Source
 
@@ -167,7 +167,7 @@
 
 ### ~~fromCborObj()~~
 
-> **`static`** **fromCborObj**(`cbor`): [`CertGenesisKeyDelegation`](CertGenesisKeyDelegation.md)
+> **`static`** **fromCborObj**(`cbor`): [`CertGenesisKeyDelegation`](CertGenesisKeyDelegation)
 
 #### Parameters
 
@@ -175,7 +175,7 @@
 
 #### Returns
 
-[`CertGenesisKeyDelegation`](CertGenesisKeyDelegation.md)
+[`CertGenesisKeyDelegation`](CertGenesisKeyDelegation)
 
 #### Source
 

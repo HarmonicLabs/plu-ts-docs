@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / StakeAddressBech32
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / StakeAddressBech32
 
 # Type alias: StakeAddressBech32
 

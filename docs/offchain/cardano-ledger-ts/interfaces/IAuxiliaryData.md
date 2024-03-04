@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IAuxiliaryData
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IAuxiliaryData
 
 # Interface: IAuxiliaryData
 
@@ -10,7 +10,7 @@
 
 ### metadata?
 
-> **`optional`** **metadata**: [`TxMetadata`](../classes/TxMetadata.md)
+> **`optional`** **metadata**: [`TxMetadata`](../classes/TxMetadata)
 
 #### Source
 
@@ -20,7 +20,7 @@
 
 ### nativeScripts?
 
-> **`optional`** **nativeScripts**: ([`NativeScript`](../type-aliases/NativeScript.md) \| [`Script`](../classes/Script.md)\<[`NativeScript`](../enumerations/ScriptType.md#nativescript)\>)[]
+> **`optional`** **nativeScripts**: ([`NativeScript`](../type-aliases/NativeScript) \| [`Script`](../classes/Script)\<[`NativeScript`](../enumerations/ScriptType#nativescript)\>)[]
 
 #### Source
 
@@ -30,7 +30,7 @@
 
 ### plutusV1Scripts?
 
-> **`optional`** **plutusV1Scripts**: ([`Script`](../classes/Script.md)\<[`PlutusV1`](../enumerations/ScriptType.md#plutusv1)\> \| [`PlutusScriptJsonFormat`](PlutusScriptJsonFormat.md)\<[`PlutusV1`](../enumerations/ScriptType.md#plutusv1) \| `"PlutusScriptV1"`\>)[]
+> **`optional`** **plutusV1Scripts**: ([`Script`](../classes/Script)\<[`PlutusV1`](../enumerations/ScriptType#plutusv1)\> \| [`PlutusScriptJsonFormat`](PlutusScriptJsonFormat)\<[`PlutusV1`](../enumerations/ScriptType#plutusv1) \| `"PlutusScriptV1"`\>)[]
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### plutusV2Scripts?
 
-> **`optional`** **plutusV2Scripts**: ([`Script`](../classes/Script.md)\<[`PlutusV2`](../enumerations/ScriptType.md#plutusv2)\> \| [`PlutusScriptJsonFormat`](PlutusScriptJsonFormat.md)\<[`PlutusV2`](../enumerations/ScriptType.md#plutusv2) \| `"PlutusScriptV2"`\>)[]
+> **`optional`** **plutusV2Scripts**: ([`Script`](../classes/Script)\<[`PlutusV2`](../enumerations/ScriptType#plutusv2)\> \| [`PlutusScriptJsonFormat`](PlutusScriptJsonFormat)\<[`PlutusV2`](../enumerations/ScriptType#plutusv2) \| `"PlutusScriptV2"`\>)[]
 
 #### Source
 

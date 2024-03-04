@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / StakeCredentials
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / StakeCredentials
 
 # Class: StakeCredentials\<T\>
 
 ## Type parameters
 
-• **T** extends [`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md) = [`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)
+• **T** extends [`StakeCredentialsType`](../type-aliases/StakeCredentialsType) = [`StakeCredentialsType`](../type-aliases/StakeCredentialsType)
 
 ## Implements
 
@@ -19,17 +19,17 @@
 
 ### new StakeCredentials(type, hash)
 
-> **new StakeCredentials**\<`T`\>(`type`, `hash`): [`StakeCredentials`](StakeCredentials.md)\<`T`\>
+> **new StakeCredentials**\<`T`\>(`type`, `hash`): [`StakeCredentials`](StakeCredentials)\<`T`\>
 
 #### Parameters
 
 • **type**: `T`
 
-• **hash**: [`StakeHash`](../type-aliases/StakeHash.md)\<`T`\>
+• **hash**: [`StakeHash`](../type-aliases/StakeHash)\<`T`\>
 
 #### Returns
 
-[`StakeCredentials`](StakeCredentials.md)\<`T`\>
+[`StakeCredentials`](StakeCredentials)\<`T`\>
 
 #### Source
 
@@ -39,7 +39,7 @@
 
 ### hash
 
-> **`readonly`** **hash**: [`StakeHash`](../type-aliases/StakeHash.md)\<`T`\>
+> **`readonly`** **hash**: [`StakeHash`](../type-aliases/StakeHash)\<`T`\>
 
 #### Source
 
@@ -59,11 +59,11 @@
 
 ### clone()
 
-> **clone**(): [`StakeCredentials`](StakeCredentials.md)\<`T`\>
+> **clone**(): [`StakeCredentials`](StakeCredentials)\<`T`\>
 
 #### Returns
 
-[`StakeCredentials`](StakeCredentials.md)\<`T`\>
+[`StakeCredentials`](StakeCredentials)\<`T`\>
 
 #### Source
 
@@ -141,7 +141,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cObj`): [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+> **`static`** **fromCbor**(`cObj`): [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
 #### Parameters
 
@@ -149,7 +149,7 @@
 
 #### Returns
 
-[`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+[`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
 #### Source
 
@@ -159,7 +159,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+> **`static`** **fromCborObj**(`cObj`): [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
 #### Parameters
 
@@ -167,7 +167,7 @@
 
 #### Returns
 
-[`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
+[`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
 
 #### Source
 

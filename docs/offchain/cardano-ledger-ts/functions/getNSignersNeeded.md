@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / getNSignersNeeded
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / getNSignersNeeded
 
 # Function: getNSignersNeeded()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **body**: `Readonly`\<[`TxBody`](../classes/TxBody.md)\>
+• **body**: `Readonly`\<[`TxBody`](../classes/TxBody)\>
 
 ## Returns
 

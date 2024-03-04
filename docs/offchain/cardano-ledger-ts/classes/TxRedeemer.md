@@ -1,31 +1,31 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / TxRedeemer
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxRedeemer
 
 # Class: TxRedeemer
 
 ## Implements
 
-- [`ITxRedeemer`](../interfaces/ITxRedeemer.md)
+- [`ITxRedeemer`](../interfaces/ITxRedeemer)
 - `ToCbor`
-- `Cloneable`\<[`TxRedeemer`](TxRedeemer.md)\>
+- `Cloneable`\<[`TxRedeemer`](TxRedeemer)\>
 - `ToJson`
 
 ## Constructors
 
 ### new TxRedeemer(redeemer)
 
-> **new TxRedeemer**(`redeemer`): [`TxRedeemer`](TxRedeemer.md)
+> **new TxRedeemer**(`redeemer`): [`TxRedeemer`](TxRedeemer)
 
 #### Parameters
 
-• **redeemer**: [`ITxRedeemer`](../interfaces/ITxRedeemer.md)
+• **redeemer**: [`ITxRedeemer`](../interfaces/ITxRedeemer)
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer.md)
+[`TxRedeemer`](TxRedeemer)
 
 #### Source
 
@@ -41,7 +41,7 @@ the actual value of the redeemer
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`data`](../interfaces/ITxRedeemer.md#data)
+[`ITxRedeemer`](../interfaces/ITxRedeemer).[`data`](../interfaces/ITxRedeemer#data)
 
 #### Source
 
@@ -55,7 +55,7 @@ the actual value of the redeemer
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`execUnits`](../interfaces/ITxRedeemer.md#execunits)
+[`ITxRedeemer`](../interfaces/ITxRedeemer).[`execUnits`](../interfaces/ITxRedeemer#execunits)
 
 #### Source
 
@@ -71,7 +71,7 @@ index of the input the redeemer corresponds to
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`index`](../interfaces/ITxRedeemer.md#index)
+[`ITxRedeemer`](../interfaces/ITxRedeemer).[`index`](../interfaces/ITxRedeemer#index)
 
 #### Source
 
@@ -81,11 +81,11 @@ index of the input the redeemer corresponds to
 
 ### tag
 
-> **`readonly`** **tag**: [`TxRedeemerTag`](../enumerations/TxRedeemerTag.md)
+> **`readonly`** **tag**: [`TxRedeemerTag`](../enumerations/TxRedeemerTag)
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`tag`](../interfaces/ITxRedeemer.md#tag)
+[`ITxRedeemer`](../interfaces/ITxRedeemer).[`tag`](../interfaces/ITxRedeemer#tag)
 
 #### Source
 
@@ -95,11 +95,11 @@ index of the input the redeemer corresponds to
 
 ### clone()
 
-> **clone**(): [`TxRedeemer`](TxRedeemer.md)
+> **clone**(): [`TxRedeemer`](TxRedeemer)
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer.md)
+[`TxRedeemer`](TxRedeemer)
 
 #### Implementation of
 
@@ -205,7 +205,7 @@ index of the input the redeemer corresponds to
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxRedeemer`](TxRedeemer.md)
+> **`static`** **fromCbor**(`cStr`): [`TxRedeemer`](TxRedeemer)
 
 #### Parameters
 
@@ -213,7 +213,7 @@ index of the input the redeemer corresponds to
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer.md)
+[`TxRedeemer`](TxRedeemer)
 
 #### Source
 
@@ -223,7 +223,7 @@ index of the input the redeemer corresponds to
 
 ### fromCborMapEntry()
 
-> **`static`** **fromCborMapEntry**(`entry`): [`TxRedeemer`](TxRedeemer.md)
+> **`static`** **fromCborMapEntry**(`entry`): [`TxRedeemer`](TxRedeemer)
 
 #### Parameters
 
@@ -231,7 +231,7 @@ index of the input the redeemer corresponds to
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer.md)
+[`TxRedeemer`](TxRedeemer)
 
 #### Source
 
@@ -241,7 +241,7 @@ index of the input the redeemer corresponds to
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxRedeemer`](TxRedeemer.md)
+> **`static`** **fromCborObj**(`cObj`): [`TxRedeemer`](TxRedeemer)
 
 #### Parameters
 
@@ -249,7 +249,7 @@ index of the input the redeemer corresponds to
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer.md)
+[`TxRedeemer`](TxRedeemer)
 
 #### Source
 

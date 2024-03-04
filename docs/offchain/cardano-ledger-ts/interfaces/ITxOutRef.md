@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxOutRef
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxOutRef
 
 # Interface: ITxOutRef
 
@@ -10,7 +10,7 @@
 
 ### id
 
-> **id**: `string` \| [`Hash32`](../classes/Hash32.md)
+> **id**: `string` \| [`Hash32`](../classes/Hash32)
 
 #### Source
 

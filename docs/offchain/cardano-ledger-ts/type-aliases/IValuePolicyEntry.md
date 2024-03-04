@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IValuePolicyEntry
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IValuePolicyEntry
 
 # Type alias: IValuePolicyEntry
 
@@ -12,11 +12,11 @@
 
 ### assets
 
-> **assets**: [`IValueAssets`](IValueAssets.md)
+> **assets**: [`IValueAssets`](IValueAssets)
 
 ### policy
 
-> **policy**: [`Hash28`](../classes/Hash28.md)
+> **policy**: [`Hash28`](../classes/Hash28)
 
 ## Source
 

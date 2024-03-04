@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Script
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Script
 
 # Class: Script\<T\>
 
 ## Type parameters
 
-• **T** extends [`LitteralScriptType`](../type-aliases/LitteralScriptType.md) = [`LitteralScriptType`](../type-aliases/LitteralScriptType.md)
+• **T** extends [`LitteralScriptType`](../type-aliases/LitteralScriptType) = [`LitteralScriptType`](../type-aliases/LitteralScriptType)
 
 ## Implements
 
@@ -18,17 +18,17 @@
 
 ### new Script(scriptType, bytes)
 
-> **new Script**\<`T`\>(`scriptType`, `bytes`): [`Script`](Script.md)\<`T`\>
+> **new Script**\<`T`\>(`scriptType`, `bytes`): [`Script`](Script)\<`T`\>
 
 #### Parameters
 
 • **scriptType**: `T`
 
-• **bytes**: `Uint8Array` \| `T` extends [`NativeScript`](../enumerations/ScriptType.md#nativescript) ? [`NativeScript`](../type-aliases/NativeScript.md) : [`PlutusScriptJsonFormat`](../interfaces/PlutusScriptJsonFormat.md)\<[`PlutusScriptType`](../type-aliases/PlutusScriptType.md)\>
+• **bytes**: `Uint8Array` \| `T` extends [`NativeScript`](../enumerations/ScriptType#nativescript) ? [`NativeScript`](../type-aliases/NativeScript) : [`PlutusScriptJsonFormat`](../interfaces/PlutusScriptJsonFormat)\<[`PlutusScriptType`](../type-aliases/PlutusScriptType)\>
 
 #### Returns
 
-[`Script`](Script.md)\<`T`\>
+[`Script`](Script)\<`T`\>
 
 #### Source
 
@@ -48,7 +48,7 @@
 
 ### cbor
 
-> **`readonly`** **cbor**: `T` extends [`NativeScript`](../enumerations/ScriptType.md#nativescript) ? `never` : `CborString`
+> **`readonly`** **cbor**: `T` extends [`NativeScript`](../enumerations/ScriptType#nativescript) ? `never` : `CborString`
 
 format expected by `cardano-cli`
 
@@ -62,7 +62,7 @@ for standard ledger format (as defined in CDDL) use `toCbor` method
 
 ### hash
 
-> **`readonly`** **hash**: [`Hash28`](Hash28.md)
+> **`readonly`** **hash**: [`Hash28`](Hash28)
 
 #### Source
 
@@ -82,11 +82,11 @@ for standard ledger format (as defined in CDDL) use `toCbor` method
 
 ### clone()
 
-> **clone**(): [`Script`](Script.md)\<`T`\>
+> **clone**(): [`Script`](Script)\<`T`\>
 
 #### Returns
 
-[`Script`](Script.md)\<`T`\>
+[`Script`](Script)\<`T`\>
 
 #### Source
 
@@ -136,11 +136,11 @@ format specified in the ledger CDDL
 
 ### toJson()
 
-> **toJson**(): [`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`
+> **toJson**(): [`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
 
 #### Returns
 
-[`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `Object`
+[`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
 
 #### Source
 
@@ -150,17 +150,17 @@ format specified in the ledger CDDL
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cbor`, `defType`): [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+> **`static`** **fromCbor**(`cbor`, `defType`): [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Parameters
 
 • **cbor**: `CanBeCborString`
 
-• **defType**: [`ScriptType`](../enumerations/ScriptType.md)= `ScriptType.PlutusV2`
+• **defType**: [`ScriptType`](../enumerations/ScriptType)= `ScriptType.PlutusV2`
 
 #### Returns
 
-[`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+[`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Source
 
@@ -170,17 +170,17 @@ format specified in the ledger CDDL
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`, `defType`): [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+> **`static`** **fromCborObj**(`cObj`, `defType`): [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Parameters
 
 • **cObj**: `CborObj`
 
-• **defType**: [`ScriptType`](../enumerations/ScriptType.md)= `ScriptType.PlutusV2`
+• **defType**: [`ScriptType`](../enumerations/ScriptType)= `ScriptType.PlutusV2`
 
 #### Returns
 
-[`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+[`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Source
 
@@ -190,7 +190,7 @@ format specified in the ledger CDDL
 
 ### fromJson()
 
-> **`static`** **fromJson**(`json`): [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+> **`static`** **fromJson**(`json`): [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Parameters
 
@@ -198,7 +198,7 @@ format specified in the ledger CDDL
 
 #### Returns
 
-[`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
+[`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
 
 #### Source
 

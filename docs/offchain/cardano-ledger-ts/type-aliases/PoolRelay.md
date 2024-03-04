@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / PoolRelay
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / PoolRelay
 
 # Type alias: PoolRelay
 
-> **PoolRelay**: [`IpPoolRelay`](IpPoolRelay.md) \| [`DnsPoolRelay`](../interfaces/DnsPoolRelay.md) \| [`MultiHostPoolRelay`](../interfaces/MultiHostPoolRelay.md)
+> **PoolRelay**: [`IpPoolRelay`](IpPoolRelay) \| [`DnsPoolRelay`](../interfaces/DnsPoolRelay) \| [`MultiHostPoolRelay`](../interfaces/MultiHostPoolRelay)
 
 ## Source
 

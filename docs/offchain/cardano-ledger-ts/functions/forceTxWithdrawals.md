@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / forceTxWithdrawals
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / forceTxWithdrawals
 
 # Function: forceTxWithdrawals()
 
-> **forceTxWithdrawals**(`stuff`): [`TxWithdrawals`](../classes/TxWithdrawals.md)
+> **forceTxWithdrawals**(`stuff`): [`TxWithdrawals`](../classes/TxWithdrawals)
 
 ## Parameters
 
-• **stuff**: [`ITxWithdrawals`](../type-aliases/ITxWithdrawals.md) \| [`TxWithdrawals`](../classes/TxWithdrawals.md)
+• **stuff**: [`ITxWithdrawals`](../type-aliases/ITxWithdrawals) \| [`TxWithdrawals`](../classes/TxWithdrawals)
 
 ## Returns
 
-[`TxWithdrawals`](../classes/TxWithdrawals.md)
+[`TxWithdrawals`](../classes/TxWithdrawals)
 
 ## Source
 

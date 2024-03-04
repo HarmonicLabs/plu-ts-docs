@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / CanBeHash28
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / CanBeHash28
 
 # Type alias: CanBeHash28
 
-> **CanBeHash28**: `string` \| `Uint8Array` \| [`Hash28`](../classes/Hash28.md)
+> **CanBeHash28**: `string` \| `Uint8Array` \| [`Hash28`](../classes/Hash28)
 
 ## Source
 

@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / IUTxO
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / IUTxO
 
 # Interface: IUTxO
 
@@ -10,7 +10,7 @@
 
 ### resolved
 
-> **resolved**: [`ITxOut`](ITxOut.md)
+> **resolved**: [`ITxOut`](ITxOut)
 
 #### Source
 
@@ -20,7 +20,7 @@
 
 ### utxoRef
 
-> **utxoRef**: [`ITxOutRef`](ITxOutRef.md)
+> **utxoRef**: [`ITxOutRef`](ITxOutRef)
 
 #### Source
 

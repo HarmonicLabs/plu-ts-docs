@@ -1,12 +1,12 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / nativeScriptFromCbor
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / nativeScriptFromCbor
 
 # Function: nativeScriptFromCbor()
 
-> **nativeScriptFromCbor**(`cbor`): [`NativeScript`](../type-aliases/NativeScript.md)
+> **nativeScriptFromCbor**(`cbor`): [`NativeScript`](../type-aliases/NativeScript)
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 ## Returns
 
-[`NativeScript`](../type-aliases/NativeScript.md)
+[`NativeScript`](../type-aliases/NativeScript)
 
 ## Source
 

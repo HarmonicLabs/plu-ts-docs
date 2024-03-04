@@ -1,20 +1,20 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ITxOutRefToStr
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ITxOutRefToStr
 
 # Function: ITxOutRefToStr()
 
-> **ITxOutRefToStr**(`iRef`): [`TxOutRefStr`](../type-aliases/TxOutRefStr.md)
+> **ITxOutRefToStr**(`iRef`): [`TxOutRefStr`](../type-aliases/TxOutRefStr)
 
 ## Parameters
 
-• **iRef**: [`ITxOutRef`](../interfaces/ITxOutRef.md)
+• **iRef**: [`ITxOutRef`](../interfaces/ITxOutRef)
 
 ## Returns
 
-[`TxOutRefStr`](../type-aliases/TxOutRefStr.md)
+[`TxOutRefStr`](../type-aliases/TxOutRefStr)
 
 ## Source
 

@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / ScriptAtLeast
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / ScriptAtLeast
 
 # Interface: ScriptAtLeast
 
@@ -20,7 +20,7 @@
 
 ### scripts
 
-> **scripts**: [`NativeScript`](../type-aliases/NativeScript.md)[]
+> **scripts**: [`NativeScript`](../type-aliases/NativeScript)[]
 
 #### Source
 

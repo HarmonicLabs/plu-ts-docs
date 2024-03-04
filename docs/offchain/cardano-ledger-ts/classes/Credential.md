@@ -1,36 +1,36 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / Credential
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / Credential
 
 # Class: Credential\<T\>
 
 ## Type parameters
 
-• **T** extends [`CredentialType`](../enumerations/CredentialType.md) = [`CredentialType`](../enumerations/CredentialType.md)
+• **T** extends [`CredentialType`](../enumerations/CredentialType) = [`CredentialType`](../enumerations/CredentialType)
 
 ## Implements
 
 - `ToCbor`
 - `ToData`
-- `Cloneable`\<[`Credential`](Credential.md)\<`T`\>\>
+- `Cloneable`\<[`Credential`](Credential)\<`T`\>\>
 
 ## Constructors
 
 ### new Credential(type, hash)
 
-> **new Credential**\<`T`\>(`type`, `hash`): [`Credential`](Credential.md)\<`T`\>
+> **new Credential**\<`T`\>(`type`, `hash`): [`Credential`](Credential)\<`T`\>
 
 #### Parameters
 
 • **type**: `T`
 
-• **hash**: [`Hash28`](Hash28.md)
+• **hash**: [`Hash28`](Hash28)
 
 #### Returns
 
-[`Credential`](Credential.md)\<`T`\>
+[`Credential`](Credential)\<`T`\>
 
 #### Source
 
@@ -40,7 +40,7 @@
 
 ### hash
 
-> **`readonly`** **hash**: `T` extends [`KeyHash`](../enumerations/CredentialType.md#keyhash) ? [`PubKeyHash`](PubKeyHash.md) : [`ValidatorHash`](ValidatorHash.md)
+> **`readonly`** **hash**: `T` extends [`KeyHash`](../enumerations/CredentialType#keyhash) ? [`PubKeyHash`](PubKeyHash) : [`ValidatorHash`](ValidatorHash)
 
 #### Source
 
@@ -60,11 +60,11 @@
 
 ### fake
 
-> **`get`** **`static`** **fake**(): [`Credential`](Credential.md)\<[`KeyHash`](../enumerations/CredentialType.md#keyhash)\>
+> **`get`** **`static`** **fake**(): [`Credential`](Credential)\<[`KeyHash`](../enumerations/CredentialType#keyhash)\>
 
 #### Returns
 
-[`Credential`](Credential.md)\<[`KeyHash`](../enumerations/CredentialType.md#keyhash)\>
+[`Credential`](Credential)\<[`KeyHash`](../enumerations/CredentialType#keyhash)\>
 
 #### Source
 
@@ -74,11 +74,11 @@
 
 ### clone()
 
-> **clone**(): [`Credential`](Credential.md)\<`T`\>
+> **clone**(): [`Credential`](Credential)\<`T`\>
 
 #### Returns
 
-[`Credential`](Credential.md)\<`T`\>
+[`Credential`](Credential)\<`T`\>
 
 #### Implementation of
 
@@ -168,7 +168,7 @@
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`static`** **fromCbor**(`cStr`): [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Parameters
 
@@ -176,7 +176,7 @@
 
 #### Returns
 
-[`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+[`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Source
 
@@ -186,7 +186,7 @@
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+> **`static`** **fromCborObj**(`cObj`): [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Parameters
 
@@ -194,7 +194,7 @@
 
 #### Returns
 
-[`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
+[`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
 
 #### Source
 
@@ -204,15 +204,15 @@
 
 ### keyHash()
 
-> **`static`** **keyHash**(`hash`): [`Credential`](Credential.md)\<[`KeyHash`](../enumerations/CredentialType.md#keyhash)\>
+> **`static`** **keyHash**(`hash`): [`Credential`](Credential)\<[`KeyHash`](../enumerations/CredentialType#keyhash)\>
 
 #### Parameters
 
-• **hash**: `string` \| `Uint8Array` \| [`Hash28`](Hash28.md)
+• **hash**: `string` \| `Uint8Array` \| [`Hash28`](Hash28)
 
 #### Returns
 
-[`Credential`](Credential.md)\<[`KeyHash`](../enumerations/CredentialType.md#keyhash)\>
+[`Credential`](Credential)\<[`KeyHash`](../enumerations/CredentialType#keyhash)\>
 
 #### Source
 
@@ -222,15 +222,15 @@
 
 ### ~~pubKey()~~
 
-> **`static`** **pubKey**(`hash`): [`Credential`](Credential.md)\<[`KeyHash`](../enumerations/CredentialType.md#keyhash)\>
+> **`static`** **pubKey**(`hash`): [`Credential`](Credential)\<[`KeyHash`](../enumerations/CredentialType#keyhash)\>
 
 #### Parameters
 
-• **hash**: `string` \| `Uint8Array` \| [`Hash28`](Hash28.md)
+• **hash**: `string` \| `Uint8Array` \| [`Hash28`](Hash28)
 
 #### Returns
 
-[`Credential`](Credential.md)\<[`KeyHash`](../enumerations/CredentialType.md#keyhash)\>
+[`Credential`](Credential)\<[`KeyHash`](../enumerations/CredentialType#keyhash)\>
 
 #### Deprecated
 
@@ -244,15 +244,15 @@ use `keyHash` instead
 
 ### script()
 
-> **`static`** **script**(`hash`): [`Credential`](Credential.md)\<[`Script`](../enumerations/CredentialType.md#script)\>
+> **`static`** **script**(`hash`): [`Credential`](Credential)\<[`Script`](../enumerations/CredentialType#script)\>
 
 #### Parameters
 
-• **hash**: `string` \| `Uint8Array` \| [`Hash28`](Hash28.md)
+• **hash**: `string` \| `Uint8Array` \| [`Hash28`](Hash28)
 
 #### Returns
 
-[`Credential`](Credential.md)\<[`Script`](../enumerations/CredentialType.md#script)\>
+[`Credential`](Credential)\<[`Script`](../enumerations/CredentialType#script)\>
 
 #### Source
 

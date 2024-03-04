@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / LegacyPPUpdateMapToCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / LegacyPPUpdateMapToCborObj
 
 # Function: LegacyPPUpdateMapToCborObj()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **ppUpdate**: [`LegacyPPUpdateMap`](../type-aliases/LegacyPPUpdateMap.md)
+• **ppUpdate**: [`LegacyPPUpdateMap`](../type-aliases/LegacyPPUpdateMap)
 
 ## Returns
 

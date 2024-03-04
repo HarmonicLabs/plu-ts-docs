@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction.md) \| [API](../globals.md)
+**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction.md) / LegacyPPUpdateProposalToCborObj
+[@harmoniclabs/cardano-ledger-ts](../Introduction) / LegacyPPUpdateProposalToCborObj
 
 # Function: LegacyPPUpdateProposalToCborObj()
 
@@ -10,7 +10,7 @@
 
 ## Parameters
 
-• **protocolUpdate**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal.md)
+• **protocolUpdate**: [`LegacyPPUpdateProposal`](../type-aliases/LegacyPPUpdateProposal)
 
 ## Returns
 
