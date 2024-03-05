@@ -149,11 +149,11 @@
 
 ### toString()
 
-> **toString**(): \`${string}#${number}\`
+> **toString**(): `` `${string}#${number}` ``
 
 #### Returns
 
-\`${string}#${number}\`
+`` `${string}#${number}` ``
 
 #### Source
 

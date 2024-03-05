@@ -10,7 +10,7 @@
 
 ### address
 
-> **address**: \`addr1${string}\` \| \`addr_test1${string}\` \| [`Address`](../classes/Address)
+> **address**: `` `addr1${string}` `` | `` `addr_test1${string}` `` | [`Address`](../classes/Address)
 
 #### Source
 

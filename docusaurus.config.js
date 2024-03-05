@@ -132,19 +132,19 @@ const config = {
             items: [
               {
                 label: 'Intro',
-                to: '/docs',
+                to: '/',
               },
               {
                 label: 'examples',
-                to: '/docs/category/examples',
+                to: '/category/examples',
               },
               {
                 label: 'onchain',
-                to: '/docs/category/onchain',
+                to: '/category/onchain',
               },
               {
                 label: 'offchain',
-                to: '/docs/category/offchain',
+                to: '/category/offchain',
               },
             ],
           },

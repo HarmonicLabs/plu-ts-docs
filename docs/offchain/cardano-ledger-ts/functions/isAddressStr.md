@@ -6,7 +6,7 @@
 
 # Function: isAddressStr()
 
-> **isAddressStr**(`stuff`): stuff is \`addr1${string}\` | \`addr_test1${string}\`
+> **isAddressStr**(`stuff`): stuff is `` `addr1${string}` | `addr_test1${string}` ``
 
 ## Parameters
 
@@ -14,7 +14,7 @@
 
 ## Returns
 
-stuff is \`addr1${string}\` | \`addr_test1${string}\`
+stuff is `` `addr1${string}` | `addr_test1${string}` ``
 
 ## Source
 

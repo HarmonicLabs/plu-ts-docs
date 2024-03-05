@@ -152,7 +152,7 @@
 
 ##### resolved.address
 
-> **address**: \`addr1${string}\` \| \`addr_test1${string}\`
+> **address**: `` `addr1${string}` | `addr_test1${string}` ``
 
 ##### resolved.datum
 
