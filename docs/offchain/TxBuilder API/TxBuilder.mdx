@@ -1,4 +1,5 @@
 ---
+title: TxBuilder
 sidebar_position: 0
 ---
 
@@ -67,7 +68,7 @@ once you have a `TxBuilder` instance there are 2 ways to build a transaction:
 
 1) using [`buildSync`](./buildSync)
 2) getting a [`TxBuilderRunner`](../TxBuilderRunner%20API/TxBuilderRunner) by passing a
-[`Provider`](../TxBuilderRunner%20API/providers#provider) to the [`runWithProvider`](./runWithProvider) method
+[`Partial<IProvider>`](../TxBuilderRunner%20API/IProvider#iprovider) to the [`runWithProvider`](./runWithProvider) method
 
 ### Pro and Cons
 
@@ -78,10 +79,10 @@ as well any other information required for transaction validation.
 Once you provide the data as specified in by [`ITxBuildArgs`](./buildSync#itxbuildargs)
 the `TxBuilder` instance will syncronously build and validate your transaction.
 
-If you don't want to take care of querying the data, you can pass a [`Provider`](../TxBuilderRunner%20API/providers#provider)
+If you don't want to take care of querying the data, you can pass a [`Provider`](../TxBuilderRunner%20API/IProvider#iprovider)
 to the [`runWithProvider`](./runWithProvider) method,
 to get a [`TxBuilderRunner`](../TxBuilderRunner%20API/TxBuilderRunner) instance.
 
 The runner has many method that abstract the [`buildSync`](./buildSync) interface,
 so that you can describe your transaction an a much higher level,
-and if some that is missing it will be queried asynchronously using the [`Provider`](../TxBuilderRunner%20API/providers#provider) that was passed.
+and if some that is missing it will be queried asynchronously using the [`Provider`](../TxBuilderRunner%20API/IProvider#iprovider) that was passed.

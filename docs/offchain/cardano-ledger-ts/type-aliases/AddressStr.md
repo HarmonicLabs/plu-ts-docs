@@ -6,7 +6,7 @@
 
 # Type alias: AddressStr
 
-> **AddressStr**: \`${"addr1" | "addr_test1"}${string}\`
+> **AddressStr**: `` `${"addr1"|"addr_test1"}${string}` ``
 
 ## Source
 

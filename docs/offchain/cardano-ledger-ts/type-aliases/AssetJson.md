@@ -10,7 +10,7 @@
 
 ## Index signature
 
- \[`name_hex`: `string`\]: \`${number}\`
+ \[`name_hex`: `string`\]: `` `${number}` ``
 
 ## Source
 

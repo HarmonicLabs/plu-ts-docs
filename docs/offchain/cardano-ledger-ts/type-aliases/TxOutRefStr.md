@@ -6,7 +6,7 @@
 
 # Type alias: TxOutRefStr
 
-> **TxOutRefStr**: \`${string}#${number}\`
+> **TxOutRefStr**: `` `${string}#${number}` ``
 
 ## Source
 

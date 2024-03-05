@@ -1,0 +1,21 @@
+---
+title: setCollateralAmount
+sidebar_position: 11
+---
+
+# `setCollateralAmount`
+
+```ts
+readonly setCollateralAmount!: ( lovelaces: number | bigint ) => TxBuilderRunner
+```
+
+- `lovelaces`: `number` | `bigint`
+
+Sets the collateral amount for a transaction.
+
+If [`setCollateral`](./setCollateral) is not used, but the transaction needs collateral due to the presence of a plutus script,
+the [`TxBuilderRunner`](./TxBuilderRunner) instance will try to use one of the normal inputs as collateral.
+
+In case this happens, it is possible to limit the amount of the collateral using this method.
+
+returns a reference to the same [`TxBuilderRunner`](./TxBuilderRunner).

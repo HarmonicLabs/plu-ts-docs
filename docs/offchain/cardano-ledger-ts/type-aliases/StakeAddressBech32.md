@@ -6,7 +6,7 @@
 
 # Type alias: StakeAddressBech32
 
-> **StakeAddressBech32**: \`stake1${string}\` \| \`stake_test1${string}\`
+> **StakeAddressBech32**: `` `stake1${string}` `` | `` `stake_test1${string}` ``
 
 ## Source
 
