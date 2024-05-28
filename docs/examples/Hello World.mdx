@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 In this example project we'll write our first smart contract and interact with it using the [CIP-0030](https://cips.cardano.org/cips/cip30/) standard.
 
-The final verision of this project is aviable [here](https://github.com/michele-nuzzi/hello-pluts-react-final) and you can test it out in the [live demo](https://hello-pluts.harmoniclabs.tech/).
+The final verision of this project is available [here](https://github.com/michele-nuzzi/hello-pluts-react-final) and you can test it out in the [live demo](https://hello-pluts.harmoniclabs.tech/).
 
 :::note old version of this example project
 
@@ -27,10 +27,10 @@ All we need to build a dApp is:
 - Some way to submit transactions.
 - React + [`MeshSDK`](https://meshjs.dev/)
 
-Infact, `plu-ts` allows you to write the smart contract and create transactions.
+In fact, `plu-ts` allows you to write the smart contract and create transactions.
 
-To submit the transaction we will use [`koios-pluts`](../tools/koios-pluts), a wrapper on top of the [koios](https://www.koios.rest/) API that uses `plu-ts` offchain types;
-but we'll think about that later.
+To submit the transaction we will use [`blockfrost-pluts`](../tools/blockfrost-pluts), a wrapper on top of the [Blockfrost](https://blockfrost.io/) API that uses `plu-ts` offchain types;
+but we'll talk about that later.
 
 So for now our pre-requisites add up to:
 
@@ -40,14 +40,14 @@ So for now our pre-requisites add up to:
 
 ## Project set up
 
-using `git` we clone the initial `hello-pluts-react` project form [github](https://github.com/HarmonicLabs/hello-pluts-react):
+Using `git` we clone the initial `hello-pluts-react` project form [github](https://github.com/HarmonicLabs/hello-pluts-react):
 ```bash
 git clone https://github.com/HarmonicLabs/hello-pluts-react.git
 cd hello-pluts-react
 git remote remove origin
 ```
 
-this gives us the following project structure:
+This gives us the following project structure:
 ```
 ./hello-pluts-react
 ├── contracts
@@ -56,13 +56,12 @@ this gives us the following project structure:
 ├── next-env.d.ts
 ├── package.json
 ├── package-lock.json
-├── Introduction
 ├── src
 │   ├── components
 │   │   └── ConnectionHandler.tsx
 │   ├── offchain
 │   │   ├── getTxBuilder.ts
-│   │   ├── koios.ts
+│   │   ├── blockfrost.ts
 │   │   ├── lockTx.ts
 │   │   ├── mesh-utils.ts
 │   │   └── unlockTx.ts
@@ -70,10 +69,9 @@ this gives us the following project structure:
 │   │   ├── _app.tsx
 │   │   ├── _document.tsx
 │   │   └── index.tsx
-│   ├── styles
-│   │   ├── globals.css
-│   │   └── Home.module.css
-│   └── middleware.ts
+│   └── styles
+│       ├── globals.css
+│       └── Home.module.css
 └── tsconfig.json
 ```
 
@@ -84,8 +82,8 @@ The most important ones are:
 ```json title="package.json"
 "dependencies": {
     "@harmoniclabs/plu-ts": "^0.7.0",
-    "@harmoniclabs/koios-pluts": "^0.1.5",
     "@harmoniclabs/uint8array-utils": "^1.0.0",
+    "@harmoniclabs/blockfrost-pluts": "^0.1.11",
     "@meshsdk/core": "^1.5.2",
     "@meshsdk/react": "^1.1.7",
     /* other deps */
@@ -110,14 +108,13 @@ The `contracts` only file is the `helloPluts.ts` one; which for now contains onl
 import { Address, PPubKeyHash, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeValidator, pfn, data, pBool } from "@harmoniclabs/plu-ts";
 
 const helloPluts = pfn([
-    data,
-    data,
-    PScriptContext.type
+  data,
+  data,
+  PScriptContext.type
 ], bool)
-(( datum, redeemer, ctx ) => {
-
-    // locks funds forever
-    return pBool( false );
+((datum, redeemer, ctx) => {
+  // locks funds forever
+  return pBool( false );
 });
 
 ///////////////////////////////////////////////////////////////////
@@ -126,18 +123,18 @@ const helloPluts = pfn([
 // ------------------------------------------------------------- //
 ///////////////////////////////////////////////////////////////////
 
-export const untypedValidator = makeValidator( helloPluts );
+export const untypedValidator = makeValidator(helloPluts);
 
-export const compiledContract = compile( untypedValidator );
+export const compiledContract = compile(untypedValidator);
 
 export const script = new Script(
-    "PlutusScriptV2",
-    compiledContract
+  "PlutusScriptV2",
+  compiledContract
 );
 
 export const scriptTestnetAddr = new Address(
-    "testnet",
-    PaymentCredentials.script( script.hash )
+  "testnet",
+  PaymentCredentials.script(script.hash)
 );
 ```
 
@@ -148,55 +145,47 @@ The other two files we'll work with are `src/offchain/lockTx.ts` and `src/offcha
 Both very similar:
 
 ```ts title="src/offchain/lockTx.ts"
-import { BrowserWallet } from "@meshsdk/core";
-import getTxBuilder from "./getTxBuilder";
-import { scriptTestnetAddr } from "../../contracts/helloPluts";
 import { Value, DataB, Address, Tx } from "@harmoniclabs/plu-ts";
+import { BrowserWallet } from "@meshsdk/core";
+import { scriptTestnetAddr } from "../../contracts/helloPluts";
 import { toPlutsUtxo } from "./mesh-utils";
+import getTxBuilder from "./getTxBuilder";
+import Blockfrost from "./blockfrost";
 
-async function getLockTx( wallet: BrowserWallet ): Promise<Tx>
-{
-    throw "'lockTx' logic not implemented";
+async function getLockTx( wallet: BrowserWallet ): Promise<Tx> {
+  throw new Error("'lockTx' logic not implemented");
 }
 
-export async function lockTx( wallet: BrowserWallet): Promise<string>
-{
-    const unsingedTx = await getLockTx( wallet );
-    const txStr = await wallet.signTx(unsingedTx.toCbor().toString());
-
-    const response = await fetch('/koios/tx/submit', {method: 'POST', body: JSON.stringify({txStr})});
-    const data = await response.json();
-
-    return data.tx;
+export async function lockTx( wallet: BrowserWallet): Promise<string> {
+  const unsingedTx = await getLockTx(wallet);
+  const txStr = await wallet.signTx(unsingedTx.toCbor().toString());
+  return await Blockfrost.submitTx(txStr);
 }
+
 ```
 
 ```ts title="src/offchain/unlockTx.ts"
-import { BrowserWallet } from "@meshsdk/core";
-import getTxBuilder from "./getTxBuilder";
-import { Address, isData, DataB, Tx, UTxO } from "@harmoniclabs/plu-ts";
-import { script, scriptTestnetAddr } from "../../contracts/helloPluts";
+import { Address, isData, DataB, Tx } from "@harmoniclabs/plu-ts";
 import { fromAscii, uint8ArrayEq } from "@harmoniclabs/uint8array-utils";
+import { BrowserWallet } from "@meshsdk/core";
+import { script, scriptTestnetAddr } from "../../contracts/helloPluts";
 import { toPlutsUtxo } from "./mesh-utils";
+import getTxBuilder from "./getTxBuilder";
+import Blockfrost from "./blockfrost";
 
-async function getUnlockTx( wallet: BrowserWallet ): Promise<Tx>
-{
-    throw "'unlockTx' logic not implemented";   
+async function getUnlockTx( wallet: BrowserWallet ): Promise<Tx> {
+  throw new Error("'unlockTx' logic not implemented");   
 }
 
-export async function unlockTx( wallet: BrowserWallet ): Promise<string>
-{
-    const unsingedTx = await getUnlockTx( wallet );
+export async function unlockTx( wallet: BrowserWallet ): Promise<string> {
+  const unsingedTx = await getUnlockTx(wallet);
 
-    const txStr = await wallet.signTx(
-        unsingedTx.toCbor().toString(),
-        true // partial sign because we have smart contracts in the transaction
-    );
+  const txStr = await wallet.signTx(
+    unsingedTx.toCbor().toString(),
+    true // partial sign because we have smart contracts in the transaction
+  );
 
-    const response = await fetch('/koios/tx/submit', {method: 'POST', body: JSON.stringify({txStr})});
-    const data = await response.json();
-
-    return data.tx;
+  return await Blockfrost.submitTx(txStr);
 }
 ```
 
@@ -207,7 +196,8 @@ This will be done using the plu-ts [`TxBuilder`](../offchain/TxBuilder%20API/TxB
 The code to get a `TxBuilder` instance is already defined in the `src/offchain/getTxBuilder.ts`
 
 ```ts title="src/offchain/getTxBuilder.ts"
-import { TxBuilder, defaultProtocolParameters } from "@harmoniclabs/plu-ts";
+import { TxBuilder } from "@harmoniclabs/plu-ts";
+import Blockfrost from "./blockfrost";
 
 /**
  * we don't want to do too many API call if we already have our `txBuilder`
@@ -216,54 +206,38 @@ import { TxBuilder, defaultProtocolParameters } from "@harmoniclabs/plu-ts";
 **/
 let _cachedTxBuilder: TxBuilder | undefined = undefined
 
-export default async function getTxBuilder(): Promise<TxBuilder>
-{
-    if(!( _cachedTxBuilder instanceof TxBuilder ))
-    {
-        const response = await fetch('/koios/epoch/protocol-params');
-        const pp = await response.json();
-        
-        try {
-            // just in kase koios returns protocol paramters that don't look good
-            _cachedTxBuilder = new TxBuilder(pp);
-        }
-        catch {
-            // if that happens then use the default protocol paramters
-            // !!! IMPORTANT !!! use only as fallback;
-            // parameters might (and will) change from the real world
-            _cachedTxBuilder = new TxBuilder(defaultProtocolParameters);
-        }
-    }
-
-    return _cachedTxBuilder;
+export default async function getTxBuilder(): Promise<TxBuilder> {
+  if (!(_cachedTxBuilder instanceof TxBuilder)) {
+    const parameters = await Blockfrost.epochsLatestParameters();
+    _cachedTxBuilder = new TxBuilder(parameters);
+  }
+  return _cachedTxBuilder;
 }
 ```
 
 Constructing a `TxBuilder` requires us to pass the protocol parameters of the chain we are operating in.
 
-:::caution why the `try{ ... }catch{ ... }` here?
+To get the protocol parameters we are using a `Blockfrost` object; this is exported from the `src/offchain/blockfrost.ts` file
 
-If the protocol parameters passed are not correct (for any reason); the TxBuilder constructor throws.
+```ts title="src/offchain/blockfrost.ts"
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 
-In that case we can use the `defaultProtocolParameters` exported by `plu-ts`, which are always valid.
+const provider = new BlockfrostPluts({
+  projectId: "YOUR API KEY HERE", // see: https://blockfrost.io
+});
 
-However (as the comment above explains) these parameters might not reflect reality so should be used with caution.
+export default provider;
+```
+
+:::caution Add your Blockfrost Project ID
+
+In order to use the Blockfrost API you need you need to log in to [blockfrost.io](https://blockfrost.io/), create your project and retrieve the API token.
 
 :::
 
-To get the protocol parameters we are using a `koios` object; this is exported from the `src/offchain/koios.ts` file
+The file is really simple, and this is because we are using the [`blockfrost-pluts`](../tools/blockfrost-pluts) package.
 
-```ts title="src/offchain/koios.ts"
-import { KoiosProvider } from "@harmoniclabs/koios-pluts"
-
-export const koios = new KoiosProvider("preprod");
-
-export default koios;
-```
-
-The file is really simple, and this is because we are using the [`koios-pluts`](../tools/koios-pluts) package.
-
-Here we construct a `KoiosProvider` instance that will do the koios REST API calls for us.
+Here we construct a `Blockfrost` instance that will do the Blockfrost REST API calls for us.
 
 Then there is the website.
 
@@ -273,92 +247,73 @@ This is a very simple [Next.js](https://nextjs.org/) project, of which the only 
 import { Button, useToast } from "@chakra-ui/react";
 import { useNetwork, useWallet } from "@meshsdk/react";
 
-import style from "../styles/Home.module.css";
-import ConnectionHandler from "../components/ConnectionHandler";
-import { lockTx } from "../offchain/lockTx";
-import { unlockTx } from "../offchain/unlockTx";
+import style from "@/styles/Home.module.css";
+import ConnectionHandler from "@/components/ConnectionHandler";
+import { lockTx } from "@/offchain/lockTx";
+import { unlockTx } from "@/offchain/unlockTx";
 
-export default function Home()
-{
-    const { wallet, connected } = useWallet();
-    const network = useNetwork();
-    const toast = useToast();
+export default function Home() {
+  const { wallet, connected } = useWallet();
+  const network = useNetwork();
+  const toast = useToast();
 
-    if( typeof network === "number" && network !== 0 )
-    {
-        return (
-            <div className={[
-                style.pageContainer,
-                "center-child-flex-even"
-            ].join(" ")}
-            >
-                <b style={{
-                    margin: "auto 10vw"
-                }}>
-                    Make sure to set your wallet in testnet mode;<br/>
-                    We are playing with founds here!
-                </b>
-                <Button
-                onClick={() => window.location.reload()}
-                style={{
-                    margin: "auto 10vw"
-                }}
-                >Refresh page</Button>
-            </div>
-        )
-    }
-
-    function onLock()
-    {
-        lockTx( wallet )
-        // lock transaction created successfully
-        .then( txHash => toast({
-            title: `lock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
-            status: "success"
-        }))
-        // lock transaction failed
-        .catch( e => {
-            toast({
-                title: `something went wrong`,
-                status: "error"
-            });
-            console.error( e )
-        });
-    }
-
-    function onUnlock()
-    {
-        unlockTx( wallet )
-        // unlock transaction created successfully
-        .then( txHash => toast({
-            title: `unlock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
-            status: "success"
-        }))
-        // unlock transaction failed
-        .catch( e => {
-            toast({
-                title: `something went wrong`,
-                status: "error"
-            });
-            console.error( e )
-        });
-    }
-
+  if (typeof network === "number" && network !== 0) {
     return (
-        <div className={[
-            style.pageContainer,
-            "center-child-flex-even"
-        ].join(" ")} >
-            <ConnectionHandler />
-            {
-                connected &&
-                <>
-                <Button onClick={onLock} >Lock 10 tADA</Button>
-                <Button onClick={onUnlock} >Unlock</Button>
-                </>
-            }
-        </div>
+      <div className={[style.pageContainer, "center-child-flex-even"].join(" ")}>
+        <b style={{margin: "auto 10vw"}}>
+          Make sure to set your wallet in testnet mode;<br/>
+          We are playing with founds here!
+        </b>
+        <Button onClick={() => window.location.reload()} style={{margin: "auto 10vw"}}>Refresh page</Button>
+      </div>
     )
+  }
+
+  const onLock = () => {
+    lockTx(wallet)
+      // lock transaction created successfully
+      .then(txHash => toast({
+        title: `lock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
+        status: "success"
+      }))
+      // lock transaction failed
+      .catch(e => {
+        toast({
+          title: "something went wrong",
+          status: "error"
+        });
+        console.error(e);
+      });
+  }
+
+  const onUnlock = () => {
+    unlockTx(wallet)
+      // unlock transaction created successfully
+      .then(txHash => toast({
+        title: `unlock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
+        status: "success"
+      }))
+      // unlock transaction failed
+      .catch(e => {
+        toast({
+          title: "something went wrong",
+          status: "error"
+        });
+        console.error(e);
+      });
+  }
+
+  return (
+    <div className={[style.pageContainer, "center-child-flex-even"].join(" ")}>
+      <ConnectionHandler />
+      { connected && (
+        <>
+          <Button onClick={onLock}>Lock 10 tADA</Button>
+          <Button onClick={onUnlock}>Unlock</Button>
+        </>
+      )}
+    </div>
+  );
 }
 ```
 
@@ -381,7 +336,6 @@ npm run dev
 
 This will output something like the following
 ```
-
 > hello-pluts-react@0.1.0 dev
 > next dev
 
@@ -425,18 +379,17 @@ So in `src/contract.ts` we'll change the first `data` to [`PPubKeyHash`](../onch
 /* imports */
 
 const helloPluts = pfn([
-    // highlight-next-line
-    PPubKeyHash.type,
-    data,
-    PScriptContext.type
+  // highlight-next-line
+  PPubKeyHash.type,
+  data,
+  PScriptContext.type
 ], bool)
 // highlight-next-line
 //  datum -> owner
 // highlight-next-line
-(( owner, redeemer, ctx ) => {
-
-    // locks funds forever
-    return pBool( false );
+((owner, redeemer, ctx) => {
+  // locks funds forever
+  return pBool( false );
 });
 
 /* ... */
@@ -444,7 +397,7 @@ const helloPluts = pfn([
 
 ### Send messages to the contracts
 
-The second condtion requires us to send some message to the contract.
+The second condition requires us to send some message to the contract.
 
 This is done thanks to the redeemer (or the second argument of a validator).
 
@@ -462,18 +415,17 @@ So we'll change the second `data` to the primitive type `bs`.
 /* imports */
 
 const helloPluts = pfn([
-    PPubKeyHash.type,
-    // highlight-next-line
-    bs,
-    PScriptContext.type
+  PPubKeyHash.type,
+  // highlight-next-line
+  bs,
+  PScriptContext.type
 ], bool)
 // highlight-next-line
 //  redeemer -> message
 // highlight-next-line
-(( owner, message, ctx ) => {
-
-    // locks funds forever
-    return pBool( false );
+((owner, message, ctx) => {
+  // locks funds forever
+  return pBool( false );
 });
 
 /* ... */
@@ -503,7 +455,7 @@ ctx.tx.signatories;
 Since this is a list of all the required signatories we chan use all the [`TermList`](../onchain/stdlib/TermList) methods;
 of which [`some`](../onchain/stdlib/TermList#some) allows us to check that **at leat one** element of the list respects a given property:
 ```ts
-const signedByOwner = ctx.tx.signatories.some( owner.eq );
+const signedByOwner = ctx.tx.signatories.some(owner.eq);
 ```
 
 And finally, we put all together
@@ -512,19 +464,16 @@ And finally, we put all together
 import { Address, PPubKeyHash, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeValidator, pfn } from "@harmoniclabs/plu-ts";
 
 const helloPluts = pfn([
-    PPubKeyHash.type,
-    bs,
-    PScriptContext.type
-],  bool)
-(( owner, message, ctx ) => {
-
-    // highlight-start
-    const isBeingPolite = message.eq("Hello plu-ts");
-
-    const signedByOwner = ctx.tx.signatories.some( owner.eq );
-
-    return isBeingPolite.and( signedByOwner );
-    // highlight-end
+  PPubKeyHash.type,
+  bs,
+  PScriptContext.type
+], bool)
+((owner, message, ctx) => {
+  // highlight-start
+  const isBeingPolite = message.eq("Hello plu-ts");
+  const signedByOwner = ctx.tx.signatories.some(owner.eq);
+  return isBeingPolite.and(signedByOwner);
+  // highlight-end
 });
 
 /* ... */
@@ -552,9 +501,8 @@ otherwise the transaction is invalid)
 
 So far what we have is this:
 ```ts title="src/offchain/lockTx.ts"
-async function getLockTx( wallet: BrowserWallet ): Promise<Tx>
-{
-    throw "'lockTx' logic not implemented";
+async function getLockTx(wallet: BrowserWallet): Promise<Tx> {
+  throw new Error("'lockTx' logic not implemented");
 }
 ```
 
@@ -572,7 +520,7 @@ That expresion returns a string which is a cardano address in bech32 format (`"a
 A string isn't really that useful, so we'll use that to build a plu-ts `Address` instance:
 ```ts
 const myAddr = Address.fromString(
-    await wallet.getChangeAddress()
+  await wallet.getChangeAddress()
 );
 ```
 
@@ -603,11 +551,10 @@ For this reason we can `map` `toPlutsUtxo` (defined in `src/offchain/mesh-utils.
 so that `myUTxOs` is defined as:
 
 ```ts
-myUTxOs = (await wallet.getUtxos()).map( toPlutsUtxo );
+const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
 
-if( myUTxOs.length === 0 )
-{
-    throw new Error("have you requested funds from the faucet?")
+if (myUTxOs.length === 0) {
+  throw new Error("have you requested founds from the faucet?");
 }
 ```
 
@@ -640,11 +587,10 @@ With this transaction we want to send 10 ADA to the contract.
 So we search between the utxos we already have for one that has a little more than that (so that we can cover the transaction fees).
 
 ```ts
-const utxo = myUTxOs.find( u => u.resolved.value.lovelaces > 15_000_000 );
+const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
 
-if( utxo === undefined )
-{
-    throw "not enough ada";
+if (utxo === undefined) {
+  throw new Error("not enough ada");
 }
 ```
 
@@ -662,68 +608,61 @@ So we can build it using the `txBuilder` we have:
 
 ```ts
 txBuilder.buildSync({
-    inputs: [{ utxo }],
-    outputs: [
-        { // output holding the funds that we'll spend later
-            address: scriptTestnetAddr,
-            // 10M lovelaces === 10 ADA
-            value: Value.lovelaces( 10_000_000 ),
-            // remeber to include a datum
-            datum: new DataB(
-                // remember we set the datum to be the public key hash?
-                // we can extract it from the address as follows
-                myAddr.paymentCreds.hash.toBuffer()
-            )
-        }
-    ],
-    // send everything left back to us
-    changeAddress: myAddr
+  inputs: [{ utxo }],
+  outputs: [{ // output holding the founds that we'll spend later
+    address: scriptTestnetAddr,
+    // 10M lovelaces === 10 ADA
+    value: Value.lovelaces(10_000_000),
+    // remeber to include a datum
+    datum: new DataB(
+      // remember we set the datum to be the public key hash?
+      // we can extract it from the address as follows
+      myAddr.paymentCreds.hash.toBuffer()
+    )
+  }],
+  // send everything left back to us
+  changeAddress: myAddr
 });
 ```
 
 So that the final `getLockTx` function should look like this:
 
 ```ts title="src/offchain/lockTx.ts"
-async function getLockTx( wallet: BrowserWallet ): Promise<Tx>
-{
-    // creates an address form the bech32 form
-    const myAddr = Address.fromString(
-        await wallet.getChangeAddress()
-    );
+async function getLockTx( wallet: BrowserWallet ): Promise<Tx> {
+  // creates an address form the bech32 form
+  const myAddr = Address.fromString(
+    await wallet.getChangeAddress()
+  );
 
-    const txBuilder = await getTxBuilder();
-    const myUTxOs = (await wallet.getUtxos()).map( toPlutsUtxo );
+  const txBuilder = await getTxBuilder();
+  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
 
-    if( myUTxOs.length === 0 )
-    {
-        throw new Error("have you requested funds from the faucet?")
-    }
+  if (myUTxOs.length === 0) {
+    throw new Error("have you requested founds from the faucet?");
+  }
 
-    const utxo = myUTxOs.find( u => u.resolved.value.lovelaces > 15_000_000 );
+  const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
 
-    if( utxo === undefined )
-    {
-        throw "not enough ada";
-    }
+  if (utxo === undefined) {
+    throw new Error("not enough ada");
+  }
 
-    return txBuilder.buildSync({
-        inputs: [{ utxo }],
-        outputs: [
-            { // output holding the funds that we'll spend later
-                address: scriptTestnetAddr,
-                // 10M lovelaces === 10 ADA
-                value: Value.lovelaces( 10_000_000 ),
-                // remeber to include a datum
-                datum: new DataB(
-                    // remember we set the datum to be the public key hash?
-                    // we can extract it from the address as follows
-                    myAddr.paymentCreds.hash.toBuffer()
-                )
-            }
-        ],
-        // send everything left back to us
-        changeAddress: myAddr
-    });
+  return txBuilder.buildSync({
+    inputs: [{ utxo }],
+    outputs: [{ // output holding the founds that we'll spend later
+      address: scriptTestnetAddr,
+      // 10M lovelaces === 10 ADA
+      value: Value.lovelaces(10_000_000),
+      // remeber to include a datum
+      datum: new DataB(
+        // remember we set the datum to be the public key hash?
+        // we can extract it from the address as follows
+        myAddr.paymentCreds.hash.toBuffer()
+      )
+    }],
+    // send everything left back to us
+    changeAddress: myAddr
+  });
 }
 ```
 
@@ -759,9 +698,8 @@ So now we are going to do exactly that, we are going to spend some (our) smart c
 The starting point is similar to before.
 
 ```ts title="src/offchain/getUnlockTx.ts"
-async function getUnlockTx( wallet: BrowserWallet ): Promise<Tx>
-{
-    throw "'unlockTx' logic not implemented";   
+async function getUnlockTx(wallet: BrowserWallet): Promise<Tx> {
+  throw new Error("'unlockTx' logic not implemented");   
 }
 ```
 
@@ -773,7 +711,7 @@ The steps are the same:
 
 ```ts
 const txBuilder = await getTxBuilder();
-const myUTxOs = (await wallet.getUtxos()).map( toPlutsUtxo );
+const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
 ```
 
 ### `myAddrs` and `myAddr`
@@ -793,7 +731,7 @@ Just like before the method returns strings; so we'll need to call `Address.from
 This way we can get all the wallet addresses as follows:
 
 ```ts
-const myAddrs = (await wallet.getUsedAddresses()).map( Address.fromString );
+const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
 ```
 
 From these we'll decide which one will be used in the next step.
@@ -808,9 +746,9 @@ let myAddr!: Address;
 
 Script utxos are a bit trickier... scripts don't have wallets!
 
-So to retrieve the script's utxos we'll rely on koios; the code to query them is:
+So to retrieve the script's utxos we'll rely on Blockfrost; the code to query them is:
 ```ts
-await koios.address.utxos( scriptTestnetAddr )
+await Blockfrost.addressUtxos(scriptTestnetAddr)
 ```
 
 Where `scriptTestnetAddr` is imported from `contracts/helloPluts.ts`.
@@ -820,34 +758,28 @@ But a script might (and will) have multiple utxos... how do we know which one is
 For that we'll search between them using the following function
 
 ```ts
-const utxoToSpend = (await koios.address.utxos( scriptTestnetAddr ))
-.find( utxo => {
-    const datum = utxo.resolved.datum;
+const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo => {
+  const datum = utxo.resolved.datum;
 
-    if(
-        // datum is inline
-        isData( datum ) &&
-        // and is only bytes
-        datum instanceof DataB
-    )
-    {
-        const pkh = datum.bytes.toBuffer();
+  // datum is inline and is only bytes
+  if (isData( datum ) && datum instanceof DataB) {
+    const pkh = datum.bytes.toBuffer();
 
-        // search if it corresponds to one of my public keys
-        const myPkhIdx = myAddrs.findIndex(
-            addr => uint8ArrayEq( pkh, addr.paymentCreds.hash.toBuffer() )
-        );
+    // search if it corresponds to one of my public keys
+    const myPkhIdx = myAddrs.findIndex(
+      addr => uint8ArrayEq( pkh, addr.paymentCreds.hash.toBuffer() )
+    );
 
-        // not a pkh of mine; not an utxo I can unlock
-        if( myPkhIdx < 0 ) return false;
+    // not a pkh of mine; not an utxo I can unlock
+    if( myPkhIdx < 0 ) return false;
 
-        // else found my locked utxo
-        myAddr = myAddrs[ myPkhIdx ];
+    // else found my locked utxo
+    myAddr = myAddrs[ myPkhIdx ];
 
-        return true;
-    }
+    return true;
+  }
 
-    return false;
+  return false;
 });
 ```
 
@@ -870,22 +802,20 @@ Now that we have everything we need; we can build the unlocking transaction:
 
 ```ts
 txBuilder.buildSync({
-    inputs: [
-        {
-            utxo: utxoToSpend as any,
-            // we must include the utxo that holds our script
-            inputScript: {
-                script,
-                datum: "inline", // the datum is present already on `utxoToSpend`
-                redeemer: new DataB( fromAscii("Hello plu-ts") ) // be polite
-            }
-        }
-    ],
-    requiredSigners: [ myAddr.paymentCreds.hash ],
-    // make sure to include collateral when using contracts
-    collaterals: [ myUTxOs[0] ],
-    // send everything back to us
-    changeAddress: myAddr
+  inputs: [{
+    utxo: utxoToSpend as any,
+    // we must include the utxo that holds our script
+    inputScript: {
+      script,
+      datum: "inline", // the datum is present already on `utxoToSpend`
+      redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
+    }
+  }],
+  requiredSigners: [ myAddr.paymentCreds.hash ],
+  // make sure to include collateral when using contracts
+  collaterals: [ myUTxOs[0] ],
+  // send everything back to us
+  changeAddress: myAddr
 });
 ```
 
@@ -897,9 +827,9 @@ This is done trough the `inputScript` option:
 
 ```ts
 inputScript: {
-    script,
-    datum: "inline", // the datum is present already on `utxoToSpend`
-    redeemer: new DataB( fromAscii("Hello plu-ts") ) // be polite
+  script,
+  datum: "inline", // the datum is present already on `utxoToSpend`
+  redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
 }
 ```
 
@@ -929,76 +859,65 @@ So our final `getUnlockTx` function looks like this.
 
 
 ```ts title="src/offchain/getUnlockTx.ts"
-async function getUnlockTx( wallet: BrowserWallet ): Promise<Tx>
-{
-    const myAddrs = (await wallet.getUsedAddresses()).map( Address.fromString );
-    
-    const txBuilder = await getTxBuilder();
-    const myUTxOs = (await wallet.getUtxos()).map( toPlutsUtxo );
+async function getUnlockTx(wallet: BrowserWallet): Promise<Tx> {
+  const txBuilder = await getTxBuilder();
+  const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
+  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
 
-    /**
-     * Wallets migh have multiple addresses;
-     * 
-     * to understand which one we previously used to lock founds
-     * we'll get the address based on the utxo that keeps one of ours
-     * public key hash as datum
-    **/
-    let myAddr!: Address;
+  /**
+   * Wallets migh have multiple addresses;
+   * 
+   * to understand which one we previously used to lock founds
+   * we'll get the address based on the utxo that keeps one of ours
+   * public key hash as datum
+  **/
+  let myAddr!: Address;
 
-    // only the onses with valid datum
-    const utxoToSpend = (await koios.address.utxos( scriptTestnetAddr ))
-    .find( utxo => {
-        const datum = utxo.resolved.datum;
+  // only the onses with valid datum
+  const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo => {
+    const datum = utxo.resolved.datum;
 
-        if(
-            // datum is inline
-            isData( datum ) &&
-            // and is only bytes
-            datum instanceof DataB
-        )
-        {
-            const pkh = datum.bytes.toBuffer();
+    // datum is inline and is only bytes
+    if (isData( datum ) && datum instanceof DataB) {
+      const pkh = datum.bytes.toBuffer();
 
-            // search if it corresponds to one of my public keys
-            const myPkhIdx = myAddrs.findIndex(
-                addr => uint8ArrayEq( pkh, addr.paymentCreds.hash.toBuffer() )
-            );
+      // search if it corresponds to one of my public keys
+      const myPkhIdx = myAddrs.findIndex(
+        addr => uint8ArrayEq( pkh, addr.paymentCreds.hash.toBuffer() )
+      );
 
-            // not a pkh of mine; not an utxo I can unlock
-            if( myPkhIdx < 0 ) return false;
+      // not a pkh of mine; not an utxo I can unlock
+      if( myPkhIdx < 0 ) return false;
 
-            // else found my locked utxo
-            myAddr = myAddrs[ myPkhIdx ];
+      // else found my locked utxo
+      myAddr = myAddrs[ myPkhIdx ];
 
-            return true;
-        }
-
-        return false;
-    });
-
-    if( utxoToSpend === undefined )
-    {
-        throw "uopsie, are you sure your tx had enough time to get to the blockchain?"
+      return true;
     }
 
-    return txBuilder.buildSync({
-        inputs: [
-            {
-                utxo: utxoToSpend as any,
-                // we must include the utxo that holds our script
-                inputScript: {
-                    script,
-                    datum: "inline", // the datum is present already on `utxoToSpend`
-                    redeemer: new DataB( fromAscii("Hello plu-ts") ) // be polite
-                }
-            }
-        ],
-        requiredSigners: [ myAddr.paymentCreds.hash ],
-        // make sure to include collateral when using contracts
-        collaterals: [ myUTxOs[0] ],
-        // send everything back to us
-        changeAddress: myAddr
-    });
+    return false;
+  });
+
+  if (utxoToSpend === undefined) {
+    throw new Error("uopsie, are you sure your tx had enough time to get to the blockchain?");
+  }
+
+  return txBuilder.buildSync({
+    inputs: [{
+      utxo: utxoToSpend as any,
+      // we must include the utxo that holds our script
+      inputScript: {
+        script,
+        datum: "inline", // the datum is present already on `utxoToSpend`
+        redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
+      }
+    }],
+    requiredSigners: [ myAddr.paymentCreds.hash ],
+    // make sure to include collateral when using contracts
+    collaterals: [ myUTxOs[0] ],
+    // send everything back to us
+    changeAddress: myAddr
+  });
 }
 ```
 
