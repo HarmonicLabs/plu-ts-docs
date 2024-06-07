@@ -61,7 +61,6 @@ This gives us the following project structure:
 │   │   └── ConnectionHandler.tsx
 │   ├── offchain
 │   │   ├── getTxBuilder.ts
-│   │   ├── blockfrost.ts
 │   │   ├── lockTx.ts
 │   │   ├── mesh-utils.ts
 │   │   └── unlockTx.ts
@@ -146,39 +145,40 @@ Both very similar:
 
 ```ts title="src/offchain/lockTx.ts"
 import { Value, DataB, Address, Tx } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 import { BrowserWallet } from "@meshsdk/core";
 import { scriptTestnetAddr } from "../../contracts/helloPluts";
 import { toPlutsUtxo } from "./mesh-utils";
 import getTxBuilder from "./getTxBuilder";
-import Blockfrost from "./blockfrost";
 
-async function getLockTx( wallet: BrowserWallet ): Promise<Tx> {
+async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
   throw new Error("'lockTx' logic not implemented");
 }
 
-export async function lockTx( wallet: BrowserWallet): Promise<string> {
-  const unsingedTx = await getLockTx(wallet);
+export async function lockTx(wallet: BrowserWallet, projectId: string): Promise<string> {
+  const Blockfrost = new BlockfrostPluts({ projectId });
+  const unsingedTx = await getLockTx(wallet, Blockfrost);
   const txStr = await wallet.signTx(unsingedTx.toCbor().toString());
   return await Blockfrost.submitTx(txStr);
 }
-
 ```
 
 ```ts title="src/offchain/unlockTx.ts"
 import { Address, isData, DataB, Tx } from "@harmoniclabs/plu-ts";
 import { fromAscii, uint8ArrayEq } from "@harmoniclabs/uint8array-utils";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 import { BrowserWallet } from "@meshsdk/core";
 import { script, scriptTestnetAddr } from "../../contracts/helloPluts";
 import { toPlutsUtxo } from "./mesh-utils";
 import getTxBuilder from "./getTxBuilder";
-import Blockfrost from "./blockfrost";
 
-async function getUnlockTx( wallet: BrowserWallet ): Promise<Tx> {
+async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
   throw new Error("'unlockTx' logic not implemented");   
 }
 
-export async function unlockTx( wallet: BrowserWallet ): Promise<string> {
-  const unsingedTx = await getUnlockTx(wallet);
+export async function unlockTx(wallet: BrowserWallet, projectId: string): Promise<string> {
+  const Blockfrost = new BlockfrostPluts({ projectId });
+  const unsingedTx = await getUnlockTx(wallet, Blockfrost);
 
   const txStr = await wallet.signTx(
     unsingedTx.toCbor().toString(),
@@ -197,7 +197,7 @@ The code to get a `TxBuilder` instance is already defined in the `src/offchain/g
 
 ```ts title="src/offchain/getTxBuilder.ts"
 import { TxBuilder } from "@harmoniclabs/plu-ts";
-import Blockfrost from "./blockfrost";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 
 /**
  * we don't want to do too many API call if we already have our `txBuilder`
@@ -206,7 +206,7 @@ import Blockfrost from "./blockfrost";
 **/
 let _cachedTxBuilder: TxBuilder | undefined = undefined
 
-export default async function getTxBuilder(): Promise<TxBuilder> {
+export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise<TxBuilder> {
   if (!(_cachedTxBuilder instanceof TxBuilder)) {
     const parameters = await Blockfrost.epochsLatestParameters();
     _cachedTxBuilder = new TxBuilder(parameters);
@@ -217,34 +217,15 @@ export default async function getTxBuilder(): Promise<TxBuilder> {
 
 Constructing a `TxBuilder` requires us to pass the protocol parameters of the chain we are operating in.
 
-To get the protocol parameters we are using a `Blockfrost` object; this is exported from the `src/offchain/blockfrost.ts` file
-
-```ts title="src/offchain/blockfrost.ts"
-import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
-
-const provider = new BlockfrostPluts({
-  projectId: "YOUR API KEY HERE", // see: https://blockfrost.io
-});
-
-export default provider;
-```
-
-:::caution Add your Blockfrost Project ID
-
-In order to use the Blockfrost API you need you need to log in to [blockfrost.io](https://blockfrost.io/), create your project and retrieve the API token.
-
-:::
-
-The file is really simple, and this is because we are using the [`blockfrost-pluts`](../tools/blockfrost-pluts) package.
-
-Here we construct a `Blockfrost` instance that will do the Blockfrost REST API calls for us.
+To get the protocol parameters we are using a `Blockfrost` object.
 
 Then there is the website.
 
 This is a very simple [Next.js](https://nextjs.org/) project, of which the only page is in `src/pages/index.tsx`
 
 ```tsx title="src/pages/index.tsx"
-import { Button, useToast } from "@chakra-ui/react";
+import { useState } from "react";
+import { Container, Box, Text, Button, Input, useToast } from "@chakra-ui/react";
 import { useNetwork, useWallet } from "@meshsdk/react";
 
 import style from "@/styles/Home.module.css";
@@ -253,24 +234,26 @@ import { lockTx } from "@/offchain/lockTx";
 import { unlockTx } from "@/offchain/unlockTx";
 
 export default function Home() {
-  const { wallet, connected } = useWallet();
+  const [blockfrostApiKey, setBlockfrostApiKey] = useState<string>('');
+  const {wallet, connected} = useWallet();
   const network = useNetwork();
   const toast = useToast();
 
   if (typeof network === "number" && network !== 0) {
     return (
-      <div className={[style.pageContainer, "center-child-flex-even"].join(" ")}>
-        <b style={{margin: "auto 10vw"}}>
-          Make sure to set your wallet in testnet mode;<br/>
-          We are playing with founds here!
-        </b>
-        <Button onClick={() => window.location.reload()} style={{margin: "auto 10vw"}}>Refresh page</Button>
+      <div className={style.root}>
+        <Container maxW="container.sm" py={12} centerContent>
+          <Box bg="white" w="100%" p={8}>
+            <Text fontSize="xl" mb={6}>Make sure to set your wallet in testnet mode;<br/>We are playing with founds here!</Text>
+            <Button size="lg" colorScheme="blue" onClick={() => window.location.reload()}>Refresh page</Button>
+          </Box>
+        </Container>
       </div>
     )
   }
 
   const onLock = () => {
-    lockTx(wallet)
+    lockTx(wallet, blockfrostApiKey)
       // lock transaction created successfully
       .then(txHash => toast({
         title: `lock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
@@ -287,7 +270,7 @@ export default function Home() {
   }
 
   const onUnlock = () => {
-    unlockTx(wallet)
+    unlockTx(wallet, blockfrostApiKey)
       // unlock transaction created successfully
       .then(txHash => toast({
         title: `unlock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
@@ -304,14 +287,31 @@ export default function Home() {
   }
 
   return (
-    <div className={[style.pageContainer, "center-child-flex-even"].join(" ")}>
-      <ConnectionHandler />
-      { connected && (
-        <>
-          <Button onClick={onLock}>Lock 10 tADA</Button>
-          <Button onClick={onUnlock}>Unlock</Button>
-        </>
-      )}
+    <div className={style.root}>
+      <Container maxW="container.sm" py={12} centerContent>
+        <Box bg="white" w="100%" p={4} mb={4}>
+          <Text fontSize="md" mb={4}>
+            In order to run this example you need to provide a Blockfrost API Key<br />
+            More info on <a href="https://blockfrost.io/" target="_blank" style={{color:'#0BC5EA'}}>blockfrost.io</a>
+          </Text>
+          <Input
+            variant='filled'
+            placeholder='Blockfrost API Key'
+            size='lg'
+            value={blockfrostApiKey}
+            onChange={e => setBlockfrostApiKey(e.target.value)}
+          />
+        </Box>
+        <Box bg="white" w="100%" p={4}>
+          <ConnectionHandler isDisabled={blockfrostApiKey === ''} />
+          {connected && (
+            <>
+              <Button size="lg" ml={4} colorScheme="teal" isDisabled={blockfrostApiKey === ''} onClick={onLock}>Lock 10 tADA</Button>
+              <Button size="lg" ml={4} colorScheme="teal" isDisabled={blockfrostApiKey === ''} onClick={onUnlock}>Unlock</Button>
+            </>
+          )}
+        </Box>
+      </Container>
     </div>
   );
 }
@@ -501,7 +501,7 @@ otherwise the transaction is invalid)
 
 So far what we have is this:
 ```ts title="src/offchain/lockTx.ts"
-async function getLockTx(wallet: BrowserWallet): Promise<Tx> {
+async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
   throw new Error("'lockTx' logic not implemented");
 }
 ```
@@ -628,13 +628,13 @@ txBuilder.buildSync({
 So that the final `getLockTx` function should look like this:
 
 ```ts title="src/offchain/lockTx.ts"
-async function getLockTx( wallet: BrowserWallet ): Promise<Tx> {
+async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
   // creates an address form the bech32 form
   const myAddr = Address.fromString(
     await wallet.getChangeAddress()
   );
 
-  const txBuilder = await getTxBuilder();
+  const txBuilder = await getTxBuilder(Blockfrost);
   const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
 
   if (myUTxOs.length === 0) {
@@ -698,7 +698,7 @@ So now we are going to do exactly that, we are going to spend some (our) smart c
 The starting point is similar to before.
 
 ```ts title="src/offchain/getUnlockTx.ts"
-async function getUnlockTx(wallet: BrowserWallet): Promise<Tx> {
+async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
   throw new Error("'unlockTx' logic not implemented");   
 }
 ```
@@ -762,19 +762,19 @@ const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo
   const datum = utxo.resolved.datum;
 
   // datum is inline and is only bytes
-  if (isData( datum ) && datum instanceof DataB) {
+  if (isData(datum) && datum instanceof DataB) {
     const pkh = datum.bytes.toBuffer();
 
     // search if it corresponds to one of my public keys
     const myPkhIdx = myAddrs.findIndex(
-      addr => uint8ArrayEq( pkh, addr.paymentCreds.hash.toBuffer() )
+      addr => uint8ArrayEq(pkh, addr.paymentCreds.hash.toBuffer())
     );
 
     // not a pkh of mine; not an utxo I can unlock
-    if( myPkhIdx < 0 ) return false;
+    if (myPkhIdx < 0) return false;
 
     // else found my locked utxo
-    myAddr = myAddrs[ myPkhIdx ];
+    myAddr = myAddrs[myPkhIdx];
 
     return true;
   }
@@ -811,9 +811,9 @@ txBuilder.buildSync({
       redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
     }
   }],
-  requiredSigners: [ myAddr.paymentCreds.hash ],
+  requiredSigners: [myAddr.paymentCreds.hash],
   // make sure to include collateral when using contracts
-  collaterals: [ myUTxOs[0] ],
+  collaterals: [myUTxOs[0]],
   // send everything back to us
   changeAddress: myAddr
 });
@@ -858,9 +858,9 @@ if it includes any other token it must be returned using the `collateralReturn` 
 So our final `getUnlockTx` function looks like this.
 
 
-```ts title="src/offchain/getUnlockTx.ts"
-async function getUnlockTx(wallet: BrowserWallet): Promise<Tx> {
-  const txBuilder = await getTxBuilder();
+```ts title="src/offchain/unlockTx.ts"
+async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  const txBuilder = await getTxBuilder(Blockfrost);
   const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
   const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
 
@@ -878,19 +878,19 @@ async function getUnlockTx(wallet: BrowserWallet): Promise<Tx> {
     const datum = utxo.resolved.datum;
 
     // datum is inline and is only bytes
-    if (isData( datum ) && datum instanceof DataB) {
+    if (isData(datum) && datum instanceof DataB) {
       const pkh = datum.bytes.toBuffer();
 
       // search if it corresponds to one of my public keys
       const myPkhIdx = myAddrs.findIndex(
-        addr => uint8ArrayEq( pkh, addr.paymentCreds.hash.toBuffer() )
+        addr => uint8ArrayEq(pkh, addr.paymentCreds.hash.toBuffer())
       );
 
       // not a pkh of mine; not an utxo I can unlock
-      if( myPkhIdx < 0 ) return false;
+      if (myPkhIdx < 0) return false;
 
       // else found my locked utxo
-      myAddr = myAddrs[ myPkhIdx ];
+      myAddr = myAddrs[myPkhIdx];
 
       return true;
     }
@@ -912,9 +912,9 @@ async function getUnlockTx(wallet: BrowserWallet): Promise<Tx> {
         redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
       }
     }],
-    requiredSigners: [ myAddr.paymentCreds.hash ],
+    requiredSigners: [myAddr.paymentCreds.hash],
     // make sure to include collateral when using contracts
-    collaterals: [ myUTxOs[0] ],
+    collaterals: [myUTxOs[0]],
     // send everything back to us
     changeAddress: myAddr
   });
