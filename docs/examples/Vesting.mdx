@@ -10,11 +10,15 @@ import TabItem from '@theme/TabItem';
 Now that we are a bit more famliar on how to interact properly with a smart contract
 let's do a step forward and see if we can come up with a sligthly more complex contract.
 
-The final result can be found at [`HarmonicLabs/vesting-pluts`](https://github.com/HarmonicLabs/vesting-pluts)
+The final result can be found at [`HarmonicLabs/vesting-pluts`](https://github.com/HarmonicLabs/vesting-pluts).
+
+:::info
+Check `package.json` file at [`HarmonicLabs/vesting-pluts`](https://github.com/HarmonicLabs/vesting-pluts/blob/main/package.json) for versions of packages used lately.
+:::
 
 ## Project set up
 
-We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template:
+We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template (with the plu-ts version ~0.8.0) :
 ```bash
 git clone https://github.com/HarmonicLabs/plu-ts-starter.git
 mv plu-ts-starter vesting-pluts
@@ -47,92 +51,8 @@ all we need to do to then is to run
 npm install
 ```
 
-to make things easier this time we'll assume to be working on a server environment;
-so we'll use [`cardanocli-pluts`](https://github.com/HarmonicLabs/cardanocli-pluts) in order to submit transacitons.
-
-to install it just run
-```bash
-npm install @harmoniclabs/cardanocli-pluts
-```
-
-:::note `cardano-cli`
-
-In order to use `cardano-cli` properly you need to have a `cardano-node` running
-
-you can install `cardano-node` and `cardano-cli` either form source or using the precompiled binaries from IOG
-
-
-<Tabs>
-<TabItem value="From source" label="From source" default>
-
-1) first lone the repository
-
-```bash
-git clone https://github.com/input-output-hk/cardano-node.git
-```
-
-2) make sure to have `cabal` updated
-
-```bash
-cabal update
-```
-
-3) build the tools
-
-```bash
-git fetch --all --recurse-submodules --tags # Download all branches and tags from the remote repository
-git checkout $(curl -s https://api.github.com/repos/input-output-hk/cardano-node/releases/latest | jq -r .tag_name) # Switch to the branch of the latest Cardano Node release
-echo -e "package cardano-crypto-praos\n flags: -external-libsodium-vrf" >> cabal.project.local # Append the cabal.project.local file in the current folder to avoid installing the custom libsodium library
-cabal build cardano-node cardano-cli # Compile the cardano-node and cardano-cli packages found in the current directory
-```
-
-4) clone the result in a directory where PATH can find them
-
-```bash
-sudo cp $(find ./dist-newstyle/build -type f -name "cardano-node") /usr/bin/cardano-node
-sudo cp $(find ./dist-newstyle/build -type f -name "cardano-cli")  /usr/bin/cardano-cli
-```
-
-</TabItem>
-<TabItem value="Binaries" label="Binaries" >
-
-1) Create a temporary path to store the pre-built binaries.
-
-```bash
-mkdir ~/vesting_tmp
-cd ~/vesting_tmp
-```
-
-2) Download the latest static binaries for Linux. Update below URL with the latest link before continuing.
-
-```bash
-wget https://update-cardano-mainnet.iohk.io/cardano-node-releases/cardano-node-1.35.5-linux.tar.gz
-```
-
-3) Extract the compressed folders
-
-```bash
-tar -xvf cardano*.gz
-```
-
-4) Install the new node and cli binaries.
-
-```bash
-sudo mv ~/vesting_tmp/cardano-cli /usr/local/bin/
-sudo mv ~/vesting_tmp/cardano-node /usr/local/bin/
-```
-
-5) Clean up temporary path.
-
-```bash
-cd
-rm -rf ~/tmp2
-```
-
-</TabItem>
-</Tabs>
-
-:::
+This time instead of working with Browser wallets, we will generate key pairs using [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey) and thus generate address.
+We will also be making use of [Blockfrost API](https://blockfrost.io/) to interact with the contract, address, transaction on/to-be-on chain (enabled with the package `@harmoniclabs/blockfrost-pluts`)
 
 
 ### Template overview
@@ -142,7 +62,7 @@ Before we dive in let's get familiar with the starter template.
 If we now navigate to `src/contract.ts` we see we have a very simple validator already!
 
 ```ts title="src/contract.ts"
-import { Address, bool, compile, makeValidator, PaymentCredentials, pBool, pfn, Script, ScriptType, V2 } from "@harmoniclabs/plu-ts";
+import { Address, bool, compile, makeValidator, Credential, pBool, pfn, Script, ScriptType, V2 } from "@harmoniclabs/plu-ts";
 import MyDatum from "./MyDatum";
 import MyRedeemer from "./MyRedeemer";
 
@@ -177,7 +97,7 @@ export const script = new Script(
 
 export const scriptMainnetAddr = new Address(
     "mainnet",
-    new PaymentCredentials(
+    new Credential(
         "script",
         script.hash
     )
@@ -185,7 +105,7 @@ export const scriptMainnetAddr = new Address(
 
 export const scriptTestnetAddr = new Address(
     "testnet",
-    new PaymentCredentials(
+    new Credential(
         "script",
         script.hash.clone()
     )
@@ -196,11 +116,11 @@ export default contract;
 
 Let's focus only on the contract for now;
 
-this contract expects a `MyDatum`, a `MyRedeemer` and finally a `PScriptContext` to validate a transaction.
+This contract expects a `MyDatum`, a `MyRedeemer` and finally a `PScriptContext` to validate a transaction.
 
-All of the three above are just [`Struct`s](../onchain/Values/Structs/definition)
+All of the three above are just  [`Struct`s](../onchain/Values/Structs/definition).
 
-`MyDatum` and `MyRedeemer` are types defined by us respectively in `src/MyDatum/index.ts` and `src/MyRedeemer/index.ts`
+`MyDatum` and `MyRedeemer` are user-defined types respectively in `src/MyDatum/index.ts` and `src/MyRedeemer/index.ts`.
 
 ```ts title="src/MyDatum/index.ts"
 import { int, pstruct } from "@harmoniclabs/plu-ts";
@@ -228,9 +148,9 @@ const MyRedeemer = pstruct({
 export default MyRedeemer;
 ```
 
-whereas `PScriptContex` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
+Whereas, `PScriptContex` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
 
-finally, the contract is used in `src/index.ts` which is our entry point.
+Finally, the contract is used in `src/index.ts` which is our entry point.
 
 ```ts title="src/index.ts"
 import { script } from "./contract";
@@ -245,11 +165,11 @@ console.log(
 );
 ```
 
-the index just imports `script` from `src/contract.ts` adn prints it out in the json form.
+The index just imports `script` from `src/contract.ts` and prints it out in the json form.
 
-if we go back to `src/contract.ts` we see that the script is obtained using the following steps:
+If we go back to `src/contract.ts` we see that the script is obtained using the following steps:
 
-1) adapting the validator to the standard using [`makeValidator`](../onchain/API/utilities/makeValidator)
+1) Adapting the validator to the standard using [`makeValidator`](../onchain/API/utilities/makeValidator)
 
 ```ts title="src/contract.ts"
 /* ... */
@@ -268,7 +188,7 @@ export const script = new Script(
 /* ... */
 ```
 
-2) compiling the validator with [`compile`](../onchain/API/utilities/compile)
+2) Compiling the validator with [`compile`](../onchain/API/utilities/compile)
 
 ```ts title="src/contract.ts"
 /* ... */
@@ -286,7 +206,7 @@ export const script = new Script(
 
 /* ... */
 ```
-3) wrapping it in a `Script` that can be used offchain
+3) Wrapping it in a `Script` that can be used offchain
 
 ```ts title="src/contract.ts"
 /* ... */
@@ -305,11 +225,11 @@ export const script = new Script(
 /* ... */
 ```
 
-that is all we need for now.
+That is all we need for now.
 
-### run the template
+### Run the template
 
-If we did every step of above correctly we should be able to run
+If we did every step above correctly, we should be able to run
 ```bash
 npm run start
 ```
@@ -327,7 +247,7 @@ validator compiled succesfully! 🎉
 
 Well congratulations 🥳!
 
-this is your first compiled smart contract 🎉!
+This is your first compiled smart contract 🎉!
 
 But we won't stop here for sure!
 
@@ -344,9 +264,9 @@ The contract should succeed if the following two conditions are met:
 
 The first thing we notice is that we need a custom datum.
 
-so we can rename the `MyDatum` folder to `VestingDatum` and modify `src/VestingDatum/index.ts` as follows
+Let's rename the `MyDatum` folder to `VestingDatum` and modify `src/contract.ts` as follows
 
-```ts title="src/VestingDatum/index.ts"
+```ts title="src/contract.ts"
 import { PPubKeyHash, int, pstruct } from "@harmoniclabs/plu-ts";
 
 // modify the Datum as you prefer
@@ -362,7 +282,7 @@ const VestingDatum = pstruct({
 export default VestingDatum;
 ```
 
-### contract signature
+### Contract signature
 
 Now that we have our datum structure we can use it in the contract definition.
 
@@ -371,7 +291,7 @@ Since we are changing the contract signature, we also know that we don't need an
 We can also delete the `MyRedeemer` directory, if we want, since we don't need it anymore.
 
 
-```ts title="src/VestingDatum/index.ts"
+```ts title="src/contract.ts"
 /* imports */
 
 export const contract = pfn([
@@ -389,15 +309,15 @@ export const contract = pfn([
 /* other code */
 ```
 
-### contract logic
+### Contract logic
 
 As for now our contract succeeds every time we use it.
 
-that definitely doesn't meet the specification; so we need to change the body of the funciton too.
+That definitely doesn't meet the specifications; so we need to change the function body too.
 
 We know for sure that we need 2 conditions; so we will check them separately using two terms: `signedByBeneficiary` and `deadlineReached`
 
-```ts title="src/VestingDatum/index.ts"
+```ts title="src/contract.ts"
 /* imports */
 
 export const contract = pfn([
@@ -423,19 +343,19 @@ export const contract = pfn([
 
 We just initialize them to `pBool( false )` so that if we forget them the contract fails.
 
-But se can already see the structure of the contract this way: we have two conditions, and we want bot to be true.
+But we can already see the structure of the contract this way: we have two conditions, and we want bot to be true.
 
 :::tip What's `// inlined` for?
 
-As defined above the terms are inlined **every time that are used**
+As defined above the terms are inlined **every time that are used**.
 
-This is because we are not using [`plet`](../onchain/Optimizations/plet) to create an actual `plu-ts` variable;
+This is because we are not using [`plet`](../onchain/Optimizations/plet) to create an actual `plu-ts` variable.
 
-instead we are just holding a reference to that piece of code.
+Instead we are just holding a reference to that piece of code.
 
-This is not necessarly bad because it helps making the contract more readable (and `plet` would have inlined the term anyway in this paritcular case for efficiency)
+This is not necessarly bad because it helps making the contract more readable (and `plet` would have inlined the term anyway in this particular case for efficiency).
 
-but is definitely useful to keep in mind that what we have is **always** inlined with a small comment
+But it is definitely useful to keep in mind that what we have is **always** inlined with a small comment.
 
 :::
 
@@ -471,7 +391,7 @@ ctx.tx.signatories.some( datum.beneficiary.eqTerm );
 And that's it!
 
 Our `signedByBeneficiary` condition becomes the one-liner
-```ts title="src/VestingDatum/index.ts"
+```ts title="src/contract.ts"
 // inlined
 const signedByBeneficiary = ctx.tx.signatories.some( datum.beneficiary.eqTerm );
 ```
@@ -543,9 +463,9 @@ and now that we have access to the transaction lower bound we can finally check 
 datum.deadline.ltEq( lowerInterval ) 
 ```
 
-so the final `deadlineReached` condition becomes:
+So the final `deadlineReached` condition becomes:
 
-```ts title="src/VestingDatum/index.ts"
+```ts title="src/contract.ts"
 // inlined
 const deadlineReached = 
     pmatch( ctx.tx.interval.from.bound )
@@ -555,11 +475,16 @@ const deadlineReached =
     ._( _ => pBool( false ) )
 ```
 
-## compiling the contract
+For debugging closely in case the contract fails due to `deadlineReached` condition, and to throw a specific error in that case, we can add `pTrace` to the return statement and thus modify it as:
+```ts title="src/contract.ts"
+return signedByBeneficiary.and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
+```
 
-So now the our smart contract should look something like this:
+## Compiling the contract
 
-```ts title="src/VestingDatum/index.ts"
+Now our smart contract should look something like this:
+
+```ts title="src/contract.ts"
 export const contract = pfn([
     VestingDatum.type,
     data,
@@ -578,18 +503,18 @@ export const contract = pfn([
         )
         ._( _ => pBool( false ) )
 
-    return signedByBeneficiary.and( deadlineReached );
+    return signedByBeneficiary.and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
 });
 ```
 
-as we saw in the [Hello plu-ts example project](./Hello%20World) we can compile the contract 
+As we saw in the [Hello plu-ts example project](./Hello%20World), we can compile the contract 
 by first passing the term to [`makeValidator`](../onchain/API/utilities/makeValidator)
 and then pass the result to the [`compile`](../onchain/API/utilities/compile) function.
 
 We finally pass the compiled Contract to the `Script` constructor so that we can use it properly.
 
 
-```ts title="src/VestingDatum/index.ts"
+```ts title="src/contract.ts"
 /* contract definition above */
 
 export const untypedValidator = makeValidator( contract );
@@ -604,7 +529,7 @@ export const script = new Script(
 /* some other code */
 ```
 
-so now running the project using
+So now running the project using
 ```bash
 npm run start
 ```
@@ -617,7 +542,7 @@ validator compiled succesfully! 🎉
 {
   "type": "PlutusScriptV2",
   "description": "",
-  "cborHex": "5901445901410100003232323232222533357346664446644a666ae680080045281991980510a502223322533357340042944004c0100084c00c004dc79bae357426010006664664601246ae80c0080040052f588eb8dd6191aba1357446ae88d5d11aba2357446ae88d5d11aba200130083574260100022646666444464664a666ae68c005200010031533357346002900108020a999ab9a300148010401458dc39aab9d00135573c0026ea8010d5d098049aba1300932357426ae88d5d11aba2357446ae88d5d11aba20013009357426012004002466e24dd6991aba135744002601400a6eb4d5d0800800925000300200114985888cc01084008888cc014008c00c0048d55cf1baa0013002222232333006300400130030010023300400300222253335573e0020062660046ae84004d5d10009191801119801001000918011198010010009"
+  "cborHex": "5901a259019f0100003232323232322225333573466644464646644a666ae68008004528198070a4811c4572726f7220696e207369676e6564427942656e6966696369617279003323300c214a04446644a666ae68008528800980200109801800919b8f375c6ae84008004cc8cc8c0308d5d01801000800a5eb11d71bac32357426ae88d5d11aba2357446ae88d5d11aba23574400200426601c2920125646561646c696e65206e6f742072656163686564206f72206e6f742073706563696669656400323333222232332533357346002900008018a999ab9a300148008401054ccd5cd1800a4008200a2c6e1cd55ce8009aab9e00137540086ae84c028d5d09805191aba1357446ae88d5d11aba2357446ae88d5d1000801800919b89375a646ae84d5d10008019bad357420020024940c020010c01cd5d098038008018010008a4c2c46aae78dd5000911980190801111198028011801800980111111919980318020009801800801198020018011112999aab9f001003133002357420026ae880048c8c0088cc0080080048c0088cc008008004894ccd5cd0008a511335738a004941"
 }
 ```
 
@@ -627,7 +552,7 @@ We will use the native `npm` script functionality to define some scripts to inte
 
 We can define a new script by adding an entry in the `scripts` field of the `package.json` file that you find in the root of the project.
 
-right now you should see something like this
+Right now you should see something like this:
 ```json title="package.json"
 "scripts": {
     "build": "tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json",
@@ -635,9 +560,9 @@ right now you should see something like this
 },
 ```
 
-we can add our own scripts by specifying the script name as key and the command to execute as value.
+We can add our own scripts by specifying the script name as key and the command to execute as value.
 
-as an example; say we want a better name for the `"start"` script.; we could do something like:
+As an example, say we want a better name for the `"start"` script, we could do something like:
 ```json title="package.json"
 "scripts": {
     "build": "tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json",
@@ -647,13 +572,13 @@ as an example; say we want a better name for the `"start"` script.; we could do 
 },
 ```
 
-and now running
+Now running
 ```bash
 npm run vesting:compile
 ```
 is equivalent to `npm run start`.
 
-to keep the project clean we'll create a new directory under `src` called `app` where all our scripts will be.
+To keep the project clean we'll create a new directory under `src` called `app` where all our scripts will be.
 
 ```
 ./vesting-pluts
@@ -661,56 +586,18 @@ to keep the project clean we'll create a new directory under `src` called `app` 
     └── app
 ```
 
-## setup the `cli` object
+## Save the script
 
-In the `app` folder create a new directory called `utils` and a new file called `cli.ts`.
+Now we can start working with the off-chain part of plu-ts.
 
-here we'll import the `CardanoCliPluts` class from the `@harmoniclabs/cardanocli-pluts` package we installed at the beginning;
-construct an instance and export it.
-
-```ts title="src/app/utils/cli.ts"
-import { CardanoCliPluts } from "@harmoniclabs/cardanocli-pluts";
-
-export const cli = new CardanoCliPluts({
-    network: "testnet 1",
-    // socketPath: undefined // defaults to process.env.CARDANO_NODE_SOCKET_PATH
-});
-```
-
-this cli will work for the `preprod` testnet.
-
-If you are working on a private testnet then you can also use the `dotenv` package and specify a custom `socketPath` for the private testnet node.
-
-you can install `dotenv` by running
-```bash
-npm install dotenv
-```
-
-In a set up like the one in the [`woofpool/cardano-private-testnet-setup`](https://github.com/woofpool/cardano-private-testnet-setup) the code becomes:
-```ts title="src/app/utils/cli.ts"
-import { CardanoCliPluts } from "@harmoniclabs/cardanocli-pluts";
-import { config } from "dotenv";
-
-config();
-
-export const cli = new CardanoCliPluts({
-    network: "testnet 42",
-    socketPath: (process.env.PRIVATE_TESTNET_PATH ?? ".") + "/node-spo1/node.sock"
-});
-```
-
-### save the script
-
-Now that we have access to the cli we can easly work with the offchain part of plu-ts and the cardano-node.
-
-let's start by saving the compiled script to a file when we compile it.
+Let's start by saving the compiled script to a file when we compile it.
 
 In the `src/index.ts` file add the following:
 
 ```ts title="src/index.ts"
 // highlight-start
 import { existsSync } from "fs";
-import { mkdir } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 // highlight-end
 
 /* old code */
@@ -722,45 +609,38 @@ async function main()
     {
         await mkdir("./testnet");
     }
-    cli.utils.writeScript( script, "./testnet/vesting.plutus.json")
+    await writeFile("./testnet/vesting.plutus.json", JSON.stringify(script.toJson(), undefined, 4))
 }
 main();
 // highlight-end
 ```
 
-now running 
+Now running 
 ```bash
 npm run vesting:compile
 ```
 
-should still print the old result; but it will also create a new `testnet` directory with file called `vesting.plutus.json` in it.
+should still print the old result; but it will also create a new `testnet` directory with the file `vesting.plutus.json` in it.
 
-### get some keys
+### Get some keys
 
-depending if you are working in private or public testnet
-there are 2 way to get your keys and start creating transactions:
+Depending on if you are working in private or public testnet, 
+there are 2 way to get your keys and start creating transactions.
 
 <Tabs>
-<TabItem value="public testnet" label="public testnet" default>
+<TabItem value="Public testnet" label="Public testnet" default>
 
-if you are working in the public testnet then you can generate a new pair of keys using
+You can generate your own key pair using `generateKey()` method from Crypto Web API. Read more about this [here](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey).
 
-```ts
-cli.address.keyGen()
-```
-
-which executes the `cardano-cli` command
-```bash
-cardano-cli address key-gen --testnet-magic 1
-```
-
-so to generate 2 pairs of keys we could create a file callde `genKeys.ts` in the `app` folder that looks like this
-```ts
+Using this, to generate 2 pairs of keys, create a file `genKeys.ts` in the `app` folder that looks like this
+```ts title="src/app/genKeys.ts"
 import { existsSync } from "fs";
-import { cli } from "./utils/cli";
-import { Address, PaymentCredentials } from "@harmoniclabs/plu-ts";
+import { Address, Credential, PublicKey, PrivateKey, PubKeyHash } from "@harmoniclabs/plu-ts";
 import { config } from "dotenv";
-import { mkdir } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
+
+import pkg from 'blakejs';
+const { blake2b } = pkg;
 
 config();
 
@@ -777,18 +657,58 @@ async function genKeys()
     
     for( let i = 1; i <= nKeys; i++ )
     {
-        const { privateKey, publicKey } = await cli.address.keyGen();
-        const addr = new Address(
-            "testnet",
-            PaymentCredentials.pubKey( publicKey.hash )
-        );
+        // generate public-private keypair
+        let keyPair = await globalThis.crypto.subtle.generateKey(
+            {
+                name: "Ed25519",
+                namedCurve: "Ed25519"
+              },
+              true,
+              ["sign", "verify"]
+          );
         
-        promises.push(
-            cli.utils.writeAddress( addr, `./testnet/address${i}.addr` ),
-            cli.utils.writePublicKey( publicKey, `./testnet/payment${i}.vkey` ),
-            cli.utils.writePrivateKey( privateKey, `./testnet/payment${i}.skey` )
-        );
-    }
+
+        // convert keyPair.(publicKey|privateKey)<CryptoKeyPair> ultimately to PublicKey which can be converted to cborString to store it for future reference
+
+        // Export public key in a way compatible to Cardano CLI
+        const publicKeyArrayBuffer = await globalThis.crypto.subtle.exportKey('raw', keyPair.publicKey); 
+        const publicKeyUint8Array = new Uint8Array(publicKeyArrayBuffer);
+        const publicKey = new PublicKey(publicKeyUint8Array);
+        const publicKeyHash = new PubKeyHash(blake2b(publicKeyUint8Array, undefined, 28)); // to build Credential
+        const pubKeyJsonObj = {
+            type: "PaymentVerificationKeyShelley_ed25519",
+            description: "Payment Verification Key",
+            cborHex: publicKey.toCbor().toString()
+        }; // JSON structure similar to the one generated when by Cardano CLI
+        const pubKeyJsonStr = JSON.stringify(pubKeyJsonObj, null, 4);
+        await writeFile(`./testnet/payment${i}.vkey`, pubKeyJsonStr);
+
+        // Export of the private key in a way that's compatible with the Cardano CLI
+        const privateKeyArrayBuffer = await globalThis.crypto.subtle.exportKey('pkcs8', keyPair.privateKey); // privateKey cannot be exported 'raw' hence 'pkcs8'
+        const privateKeyUint8Array = new Uint8Array(privateKeyArrayBuffer.slice(-32));
+        const privateKey = new PrivateKey(privateKeyUint8Array);
+        const pvtKeyJsonObj = {
+            type: "PaymentSigningKeyShelley_ed25519",
+            description: "Payment Signing Key",
+            cborHex: privateKey.toCbor().toString()
+        }; // JSON structure similar to the one generated when by Cardano CLI
+        const pvtKeyJsonStr = JSON.stringify(pvtKeyJsonObj, null, 4);
+        await writeFile(`./testnet/payment${i}.skey`, pvtKeyJsonStr);
+
+        // Check that the derivations went fine
+        const pubKeyfromPriv = privateKey.derivePublicKey();
+        if (pubKeyfromPriv.toString() !== publicKey.toString()) {
+            throw new Error("\tPublic key derivation from private key failed");
+        }
+        else {
+            console.log("\tPublic key derivation from private key succeeded");
+        }
+
+        // Create the address
+        const credential = Credential.keyHash(publicKeyHash);
+        const address = new Address("testnet", credential);
+        await writeFile(`./testnet/address${i}.addr`, address.toString());
+    }   
 
     // wait for all files to be copied
     await Promise.all( promises );
@@ -796,7 +716,7 @@ async function genKeys()
 genKeys();
 ```
 
-then we can add a new `npm` script called `vesting:genKeys`
+Add a new  `npm` script  `vesting:genKeys`
 ```json title="package.json"
 "scripts": {
     // ...
@@ -810,24 +730,26 @@ npm run vesting:genKeys
 ```
 should give us 2 pairs of keys and 2 addresses under the `testnet` folder.
 
-:::info get some founds
+:::info get some funds
 
-remeber to found one of the addresses.
+Remember to fund the addresses. In this example, make sure to fund **address1** and **address2**; just so that there has been some transactions involving these addresses, and they appear on blockchain and inturn be visible for Blockfrost. Read more about such possible Blockfrost error [here](https://blockfrost.dev/support/cardano#querying-address-returns-404-not-found-but-my-address-is-valid).
 
-you can get some founds as described in the [Hello World example](./Hello%20World#get-some-founds)
+You can use the [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnet/tools/faucet) to get some testnet funds.
+
+Just be sure to select the Preprod testnet (as we opted [here](http://localhost:3000/examples/Vesting#setup-the-cli-object)).
 
 :::
 
 </TabItem>
-<TabItem value="private testnet" label="private testnet" >
+<TabItem value="Private testnet" label="Private testnet" >
 
-if you are working in the private testnet then you probably want to use some keys you already have.
+If you are working in the private testnet then you probably want to use some keys you already have.
 
-then maybe you can copy those keys in the `testnet` folder we have here.
+Then maybe you can copy those keys in the `testnet` folder we have here.
 
-to do so we can set up a new `setup.ts` script under the `app` folder:
+To do so we can set up a new `setup.ts` script under the `app` folder:
 
-```ts
+```ts title="src/app/setup.ts"
 import { existsSync } from "fs";
 import { config } from "dotenv";
 import { copyFile, mkdir } from "fs/promises";
@@ -861,7 +783,7 @@ async function setup()
 setup();
 ```
 
-and then include a new `npm script` in `package.json`
+And then include a new `npm script` in `package.json`
 
 ```json title="package.json"
 "scripts": {
@@ -877,56 +799,128 @@ so that you can now run
 npm run vesting:setup
 ```
 
-to have your keys and addresses copied in the `testnet` folder
+to have your keys and addresses copied in the `testnet` folder.
 
 </TabItem>
 </Tabs>
 
-## create a vesting utxo
+## Setup Blockfrost API
+
+First and foremost, we need to setup Blockfrost API to use in our app. 
+
+It is enabled by the package `@harmoniclabs/blockfrost-pluts`. In your terminal, do
+```bash
+npm install @harmoniclabs/blockfrost-pluts
+```
+
+Go to https://blockfrost.io/ and create a new project for this example (a free plan is more than enough for now). Make sure to pick Preprod as your preferred network. 
+
+Once done, navigate to the Dashboard and copy over PROJECT_ID to setup.
+
+Now, create file `blockfrost.ts` within `src/app`:
+```ts title="src/app/blockfrost.ts"
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+
+function blockfrost () {
+    const provider = new BlockfrostPluts({
+        projectId: "Paste your PROJECT_ID here"
+    });
+    return provider;
+}
+
+export default blockfrost;
+```
+Make sure to not check-in your PROJECT_ID into any versioning systems. Alternatively, you can always use environment variables here.
+
+To enable blockfrost within other files, we will instantiate `blockfrost()` with the PROJECT_ID. 
+
+To perform transactions through Blockfrost, we need to instantiate our `TxBuilder` with Blockfrost.
+
+Create file `getTxBuilder.ts` within `src/app`, exporting method `getTxBuilder()` which will thus be used to instantiate an instance of `TxBuilder` and further used.
+```ts title="src/app/getTxBuilder.ts"
+import { TxBuilder } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+
+/**
+ * we don't want to do too many API call if we already have our `txBuilder`
+ * 
+ * so after the first call we'll store a copy here.
+**/
+let _cachedTxBuilder: TxBuilder | undefined = undefined
+
+export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise<TxBuilder>
+{
+    if(!( _cachedTxBuilder instanceof TxBuilder ))
+    {
+        const parameters = await Blockfrost.getProtocolParameters();
+        _cachedTxBuilder = new TxBuilder(parameters);
+    }
+
+    return _cachedTxBuilder;
+}
+```
+
+## Create a vesting utxo
 
 Now we can finally start playing around with the vesting contract.
 
-### read the script
+### Read the script
 
-Since we already have our file compiled and saved is probably a good idea to read the compiled result instead of re compiling the contract each time we run teh script.
+Since we already have our file compiled and saved, it is probably a good idea to read the compiled result instead of re-compiling the contract each time we run the script.
 
-to do so we can once again use the `cli.utils` to read a saved `Script`; we just need to specify the path.
-
-so in our case we can write:
+To do so, we can always read the saved `Script`. First we need to read the `vesting.plutus.json` file as string.
 ```ts
-const script = cli.utils.readScript("./testnet/vesting.plutus.json");
+const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
+```
+Then, to utimately retrieve the `Script` from the `cborHex` in the JSON file:
+```ts
+const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
 ```
 
-from here we can generate the script address using the `Address` class (from the offchain of `plu-ts`) and the `Script` as `PaymentCredentials`.
+From here we can generate the script address using the `Address` class (from the offchain of `plu-ts`) and the `Script` as `Credential`.
 ```ts
 const scriptAddr = new Address(
     "testnet",
-    PaymentCredentials.script( script.hash )
+    new Credential(CredentialType.Script, script.hash)
 );
 ```
+:::info Generate Address
+Instead of `new Address("testnet", ...)`, we can also do `Address.testnet(...)`. Read more [here](https://pluts.harmoniclabs.tech/offchain/cardano-ledger-ts/classes/Address#testnet).
+:::
 
-### get your address
+### Get your address
 
-Then to build and send our transaction we are just missing the sender key and address and the beneficiary public key.
+Now, to build and send our transaction we are just missing the sender key, address and the beneficiary public key.
 
-using the `cli.utils` once again we can get them very easly
+Once again we retrieve them from our saved files using node.js `readFile`.
 ```ts
-const privateKey = cli.utils.readPrivateKey("./testnet/payment1.skey");
-const addr = cli.utils.readAddress("./testnet/address1.addr");
-const beneficiary = cli.utils.readPublicKey("./testnet/payment2.vkey");
+const privateKeyFile = await readFile("./testnet/payment1.skey", { encoding: "utf-8" });
+const privateKey = PrivateKey.fromCbor( JSON.parse(privateKeyFile).cborHex );
+
+const addr = await readFile("./testnet/address1.addr", { encoding: "utf-8" });
+const address = Address.fromString(addr);
+    
+const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
+const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
 ```
 
-### query the address utxos
+### Query the address utxos
 
-before we really start building our transaction we need some utxos to use as input;
-we can get them always using the `cli`
+Before we really start building our transaction we need some utxos to use as input. We can query the utxos available in our address through Blockfrost.
+Make sure to populate both the addresses with some funds.
 ```ts
-const [ utxo ] = await cli.query.utxo({ address: addr });
+const utxos = await Blockfrost.addressUtxos( address );
 ```
+:::info
+Instead of blindly assigning the first utxo of the utxos[] as input, let us assure that we use the utxo that has atleast 10 ada in it just to avoid possible failures.
+```ts
+const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000)!;
+``` 
+:::
 
-### build the transaciton
+### Build the Transaciton
 
-then our transaction will be constructed as follow:
+Our transaction will be constructed as follows:
 - our UTxO as input
 - an output to the contract with an attached `VestingDatum`
 - the change going back to the address
@@ -935,13 +929,14 @@ which translates to the following code
 ```ts
 let tx = await cli.transaction.build({
     inputs: [{ utxo: utxo }],
+    collaterals: [ utxo ],
     outputs: [
         {
             address: scriptAddr,
             value: Value.lovelaces( 10_000_000 ),
             // highlight-start
             datum: VestingDatum.VestingDatum({
-                beneficiary: pBSToData.$( pByteString( beneficiary.hash.toBuffer() ) ),
+                beneficiary: pBSToData.$( pByteString( pkh.toBuffer() ) ),
                 deadline: pIntToData.$( nowPosix + 10_000 )
             })
             // highlight-end
@@ -951,62 +946,70 @@ let tx = await cli.transaction.build({
 });
 ```
 
-:::info have you noticed?
+:::info Have you noticed?
 
-the `datum` attached to the output is generated using on-chain code!
+The `datum` attached to the output is generated using on-chain code!
 
-this is done thanks to plu-ts being able to evaluate on chain code and use the result as `Data`
+This is done, thanks to plu-ts, being able to evaluate on-chain code and use the result as `Data`.
 
-this way we can use the on chain types to describe the plutus data offchain; whithout the need to use low level `Data` elements! 
+This way we can use the on-chain types to describe the plutus data off-chain, without the need to use low level `Data` elements! 
 
 :::
 
-### sign and submit
+### Sign and Submit
 
-so now that we have our transaciton all we need is just to sign and submit it.
+Now that we have our transaciton, all we need is just to Sign and Submit it.
 
-And guess what? this is also extremly easy thanks to `cardano-cli`
+And guess what? This is now extremly easy with `plu-ts` and `Blockfrost`.
 
 ```ts
-tx = await cli.transaction.sign({ tx, privateKey });
+await tx.signWith( new PrivateKey(privateKey) );
 
-await cli.transaction.submit({ tx: tx });
+const submittedTx = await Blockfrost.submitTx( tx );
 ```
 
-so all we need to do now is to put all together in a file called `createVesting.ts` under the `app` folder
+All we need to do now is to put it all together in a file `createVesting.ts` under the `app` folder.
 
 ```ts title="src/app/createVesting.ts"
-import { Address, PaymentCredentials, Value, pBSToData, pByteString, pIntToData } from "@harmoniclabs/plu-ts";
-import { cli } from "./utils/cli";
+import { Address, Credential, Hash28, PrivateKey, Value, pBSToData, pByteString, pIntToData, CredentialType, PublicKey, Script } from "@harmoniclabs/plu-ts";
 import VestingDatum from "../VestingDatum";
+import getTxBuilder from "./getTxBuilder";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import blockfrost from "./blockfrost";
+import { readFile } from "fs/promises";
 
-async function createVesting()
-{
-    const script = cli.utils.readScript("./testnet/vesting.plutus.json");
-
+async function createVesting(Blockfrost: BlockfrostPluts)
+{   
+    const txBuilder = await getTxBuilder(Blockfrost);
+     
+    const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
+    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
     const scriptAddr = new Address(
         "testnet",
-        PaymentCredentials.script( script.hash )
+        new Credential(CredentialType.Script, script.hash)
     );
     
-    const privateKey = cli.utils.readPrivateKey("./testnet/payment1.skey");
-    const addr = cli.utils.readAddress("./testnet/address1.addr");
-    const beneficiary = cli.utils.readPublicKey("./testnet/payment2.vkey");
+    const privateKeyFile = await readFile("./testnet/payment1.skey", { encoding: "utf-8" });
+    const privateKey = PrivateKey.fromCbor( JSON.parse(privateKeyFile).cborHex );
+    
+    const addr = await readFile("./testnet/address1.addr", { encoding: "utf-8" });
+    const address = Address.fromString(addr);
+    
+    const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
+    const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
 
-    const utxos = await cli.query.utxo({ address: addr });
+    const utxos = await Blockfrost.addressUtxos( address )
+        .catch( e => { throw new Error ("unable to find utxos at " + addr) })
 
-    if( utxos.length === 0 )
-    {
-        throw new Error(
-            "no utxos found at address " + addr.toString()
-        );
+    // atleast has 10 ada
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000)!;
+    if (!utxo) {
+        throw new Error("No utxo with more than 10 ada");
     }
-
-    const utxo = utxos[0];
-
+    
     const nowPosix = Date.now();
 
-    let tx = await cli.transaction.build({
+    let tx = await txBuilder.buildSync({
         inputs: [{ utxo: utxo }],
         collaterals: [ utxo ],
         outputs: [
@@ -1014,26 +1017,28 @@ async function createVesting()
                 address: scriptAddr,
                 value: Value.lovelaces( 10_000_000 ),
                 datum: VestingDatum.VestingDatum({
-                    beneficiary: pBSToData.$( pByteString( beneficiary.hash.toBuffer() ) ),
+                    beneficiary: pBSToData.$( pByteString( pkh.toBuffer() ) ),
                     deadline: pIntToData.$( nowPosix + 10_000 )
                 })
             }
         ],
-        changeAddress: addr
+        changeAddress: address
     });
+    
+    await tx.signWith( new PrivateKey(privateKey) );
 
-    tx = await cli.transaction.sign({ tx, privateKey });
-
-    await cli.transaction.submit({ tx: tx });
+    const submittedTx = await Blockfrost.submitTx( tx );
+    console.log(submittedTx);
+    
 }
 
 if( process.argv[1].includes("createVesting") )
 {
-    createVesting();
+    createVesting(blockfrost());
 }
 ```
 
-and for the ease of use we'll add a new `npm script` in package.json
+For the ease of use, let's add a new `npm script` in package.json
 
 ```json title="package.json"
 "scripts": {
@@ -1047,12 +1052,16 @@ now running
 ```bash
 npm run vesting:create
 ```
-
 will generate a new utxo for the smart contract ready to be spent!
 
-## spend the locked utxo
+We should also see the respective transaction hash in the console now.
+```bash
+8b3deb9095898c4d1385269f0af00febaa547e4b4365978d073519caa52f791e
+```
 
-### get all you need
+## Spend the locked utxo
+
+### Get all you need
 
 You know the process now:
 
@@ -1061,53 +1070,77 @@ You know the process now:
 - read address and keys
 - query utxo
 
-these are the steps needed before we can start to build the transaction and are often very similar.
-
-so here there's the code. You should be able to understand what it does whithout problems
+These are the steps needed before we can start to build the transaction and are often very similar.
 
 ```ts
-import { Address, DataI, PaymentCredentials } from "@harmoniclabs/plu-ts";
-import { cli } from "./utils/cli";
+import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos } from "@harmoniclabs/plu-ts";
+import getTxBuilder from "./getTxBuilder";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import blockfrost from "./blockfrost";
+import { readFile } from "fs/promises";
 
-async function claimVesting()
+async function claimVesting(Blockfrost: BlockfrostPluts)
 {
-    const script = cli.utils.readScript("./testnet/vesting.plutus.json");
+    const txBuilder = await getTxBuilder(Blockfrost);
 
+    const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
+    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
     const scriptAddr = new Address(
         "testnet",
-        PaymentCredentials.script( script.hash )
+        new Credential(CredentialType.Script, script.hash)
     );
     
-    const privateKey = cli.utils.readPrivateKey("./testnet/payment2.skey");
-    const addr = cli.utils.readAddress("./testnet/address2.addr");
+    const privateKeyFile = await readFile("./testnet/payment2.skey", { encoding: "utf-8" });
+    const privateKey = PrivateKey.fromCbor( JSON.parse(privateKeyFile).cborHex );
 
-    const utxos = await cli.query.utxo({ address: addr });
-    const scriptUtxos = await cli.query.utxo({ address: scriptAddr });
+    const addr = await readFile("./testnet/address2.addr", { encoding: "utf-8" });
+    const address = Address.fromString(addr);
 
-    if( utxos.length === 0 || scriptUtxos.length === 0 )
-    {
-        throw new Error(
-            "no utxos found at address " + addr.toString()
-        );
+    const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
+    const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
+
+    const utxos = await Blockfrost.addressUtxos( address )
+        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
+    // atleast has 10 ada
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000);
+    if (!utxo) {
+        throw new Error("No utxo with more than 10 ada");
     }
 
-    const utxo = utxos[0];
-
-    const pkh = cli.utils.readPublicKey("./testnet/payment2.vkey").hash;
+    /// ...to be continued
 }
+```
+
+Query the `scriptUtxos`, to specifically use the `utxo` that matches `publicKeyHash` within its datum.
+```ts
+    const scriptUtxos = await Blockfrost.addressUtxos( scriptAddr )
+        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
+    // matches with the pkh
+    const scriptUtxo = scriptUtxos.find(utxo => {
+        if (utxo.resolved.datum instanceof DataConstr) { 
+         const pkhData = utxo.resolved.datum.fields[0]; 
+         if (pkhData instanceof DataB) {
+             return pkh.toString() == Buffer.from( pkhData.bytes.toBuffer() ).toString("hex")
+         }
+        }
+        return false; 
+     });
+    if (!scriptUtxo) {
+        throw new Error ("No script utxo found for the pkh")
+    }
 ```
 
 :::info use the beneficiary keys!
 
-Note that we are reading the keys of the beneficiary we setted in the previous script this time
+Note that we are reading the keys(both private and public) of the beneficiary we setted in the previous script here.
 
-If we used the other keys teh script would fail each time!
+If we used the other keys the script would fail each time!
 
 :::
 
-### build the transaciton
+### Build the Transaciton
 
-this time our transaction will be formed as follows
+This time our transaction will be formed as follows
 
 - one of our utxos
 - the utxo locked at the script address (with corresponding `Script` in order to validate the spending of it)
@@ -1115,119 +1148,28 @@ this time our transaction will be formed as follows
 - our utxo as collateral input that MUST be present every time a script is included in the transaciton
 - the `invalidBefore` field corresponding to the last slot heigth (otherwise the transaciton interval is negative infinite and the contract will fail!)
 
-of the above the last one sounds courious... How do we get the last slot of the blockchain?
+Of the above, the last one sounds courious... How do we get the last slot of the blockchain?
 
-once again the cli does that for us too!
+Blockfrost helps us with that!
 
-we just have to call
+we just have to do,
 ```ts
-cli.query.tipSync()
+(await Blockfrost.getChainTip()).slot!
 ```
 
-and then access the `tip` field.
-
-so the transaction can be built as follows
-
+Before building the transaction, we have to ensure the txBuilder genesisInfo is set to its Preprod defaults, by:
 ```ts
-let tx = await cli.transaction.build({
-    inputs: [
-        { utxo: utxo },
-        {
-            utxo: scriptUtxos[0],
-            inputScript: {
-                script: script,
-                datum: "inline",
-                redeemer: new DataI( 0 )
-            }
-        }
-    ],
-    requiredSigners: [ pkh ], // required to be included in script context
-    collaterals: [ utxo ],
-    changeAddress: addr,
-    invalidBefore: cli.query.tipSync().slot
-});
-```
-:::info the `TxBuilder`
-
-`cardano-cli` will only work on a server environment
-
-if you are working in a web environment plu-ts exports a `TxBuilder` class that is extremly similar to how the `cardano-cli` works.
-
-to build a `TxBuilder` instance all you need are the protocol parameters; that as an example you can query easly using the cli
-```ts
-const txBuilder = new TxBuilder(
-    "testnet",
-    cli.query.protocolParamsSync()
-);
+txBuilder.setGenesisInfos( defaultPreprodGenesisInfos )
 ```
 
-and then you just need to replace `cli.transaciton.build` with 'txBuilder.build'; as in the example
+Now the Transaction can be built as follows:
 
 ```ts
-let tx = await txBuilder.build({
-    inputs: [
-        { utxo: utxo },
-        {
-            utxo: scriptUtxos[0],
-            inputScript: {
-                script: script,
-                datum: "inline",
-                redeemer: new DataI( 0 )
-            }
-        }
-    ],
-    requiredSigners: [ pkh ], // required to be included in script context
-    collaterals: [ utxo ],
-    changeAddress: addr,
-    invalidBefore: cli.query.tipSync().slot
-});
-```
-:::
-
-and finally; after we add teh sing and submit code as done previously;
-```ts
-tx = await cli.transaction.sign({ tx, privateKey });
-
-await cli.transaction.submit({ tx: tx });
-```
-
-we can put all together in a `claimVesting.ts` file in the `app` folder:
-
-```ts title="src/app/claimVesting.ts"
-import { Address, DataI, PaymentCredentials } from "@harmoniclabs/plu-ts";
-import { cli } from "./utils/cli";
-
-async function claimVesting()
-{
-    const script = cli.utils.readScript("./testnet/vesting.plutus.json");
-
-    const scriptAddr = new Address(
-        "testnet",
-        PaymentCredentials.script( script.hash )
-    );
-    
-    const privateKey = cli.utils.readPrivateKey("./testnet/payment2.skey");
-    const addr = cli.utils.readAddress("./testnet/address2.addr");
-
-    const utxos = await cli.query.utxo({ address: addr });
-    const scriptUtxos = await cli.query.utxo({ address: scriptAddr });
-
-    if( utxos.length === 0 || scriptUtxos.length === 0 )
-    {
-        throw new Error(
-            "no utxos found at address " + addr.toString()
-        );
-    }
-
-    const utxo = utxos[0];
-
-    const pkh = cli.utils.readPublicKey("./testnet/payment2.vkey").hash;
-
-    let tx = await cli.transaction.build({
+let tx = await txBuilder.buildSync({
         inputs: [
             { utxo: utxo },
             {
-                utxo: scriptUtxos[0],
+                utxo: scriptUtxo,
                 inputScript: {
                     script: script,
                     datum: "inline",
@@ -1237,22 +1179,109 @@ async function claimVesting()
         ],
         requiredSigners: [ pkh ], // required to be included in script context
         collaterals: [ utxo ],
-        changeAddress: addr,
-        invalidBefore: cli.query.tipSync().slot
+        changeAddress: address,
+        invalidBefore: (await Blockfrost.getChainTip()).slot!
+    });
+```
+
+Finally, after we add the Sign and Submit code as done previously:
+```ts
+await tx.signWith( privateKey );
+
+const submittedTx = await Blockfrost.submitTx( tx )
+```
+
+we can put all together in a `claimVesting.ts` file in the `app` folder:
+
+```ts title="src/app/claimVesting.ts"
+import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos } from "@harmoniclabs/plu-ts";
+import getTxBuilder from "./getTxBuilder";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import blockfrost from "./blockfrost";
+import { readFile } from "fs/promises";
+
+async function claimVesting(Blockfrost: BlockfrostPluts)
+{
+    const txBuilder = await getTxBuilder(Blockfrost);
+
+    const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
+    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
+    const scriptAddr = new Address(
+        "testnet",
+        new Credential(CredentialType.Script, script.hash)
+    );
+    
+    const privateKeyFile = await readFile("./testnet/payment2.skey", { encoding: "utf-8" });
+    const privateKey = PrivateKey.fromCbor( JSON.parse(privateKeyFile).cborHex );
+
+    const addr = await readFile("./testnet/address2.addr", { encoding: "utf-8" });
+    const address = Address.fromString(addr);
+
+    const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
+    const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
+
+    const utxos = await Blockfrost.addressUtxos( address )
+        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
+    // atleast has 10 ada
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000);
+    if (!utxo) {
+        throw new Error("No utxo with more than 10 ada");
+    }
+
+    const scriptUtxos = await Blockfrost.addressUtxos( scriptAddr )
+        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
+    // matches with the pkh
+    const scriptUtxo = scriptUtxos.find(utxo => {
+        if (utxo.resolved.datum instanceof DataConstr) { 
+         const pkhData = utxo.resolved.datum.fields[0]; 
+         if (pkhData instanceof DataB) {
+             return pkh.toString() == Buffer.from( pkhData.bytes.toBuffer() ).toString("hex")
+         }
+        }
+        return false; 
+     });
+    if (!scriptUtxo) {
+        throw new Error ("No script utxo found for the pkh")
+    }
+    
+    txBuilder.setGenesisInfos( defaultPreprodGenesisInfos )
+
+    if (Buffer.from(script.hash.toBuffer()).toString("hex") !== Buffer.from(scriptAddr.paymentCreds.hash.toBuffer()).toString("hex")) {
+        throw new Error("Script hash and script address hash do not match");
+    }
+
+    let tx = await txBuilder.buildSync({
+        inputs: [
+            { utxo: utxo },
+            {
+                utxo: scriptUtxo,
+                inputScript: {
+                    script: script,
+                    datum: "inline",
+                    redeemer: new DataI( 0 )
+                }
+            }
+        ],
+        requiredSigners: [ pkh ], // required to be included in script context
+        collaterals: [ utxo ],
+        changeAddress: address,
+        invalidBefore: (await Blockfrost.getChainTip()).slot!
     });
 
-    tx = await cli.transaction.sign({ tx, privateKey });
+    await tx.signWith( privateKey )
 
-    await cli.transaction.submit({ tx: tx });
+    const submittedTx = await Blockfrost.submitTx( tx );
+    console.log(submittedTx);
+    
 }
 
 if( process.argv[1].includes("claimVesting") )
 {
-    claimVesting();
+    claimVesting(blockfrost());
 }
 ```
 
-then after adding a new `npm script` in package.json
+After adding a new `npm script` in package.json
 
 ```json title="package.json"
 "scripts": {
@@ -1262,29 +1291,76 @@ then after adding a new `npm script` in package.json
 }
 ```
 
-To try claim the utxo we can run
+to try claim the utxo, we can run:
 ```bash
 npm run vesting:claim
 ```
 
-:::caution wait some seconds
+:::caution Wait some seconds
 
-if you run the script shortly after you created and locked the utxo the script will fail!
+If you run the script shortly after you created and locked the utxo the script will fail!
 
-in the previous script we setted a locking period of 10 seconds
+In the previous script, we had set a locking period of 10 seconds.
 
-so you just have to have a little patience :)
+So you just have to have a little patience :)
 
 :::
 
-if everything goes correctly the program should terminate whithout errors.
+If everything goes correctly, the program should terminate without errors. It will definitely console back the transaction hash in the terminal.
 
-## Bonus: return the tADA
+## Bonus: Return the tADA
 
-if you where in public testnet remeber to return the tADA to the faucet.
+If you were in public testnet remember to return the tADA to the faucet.
 
-here; you can add the following file and script to automate everything
+For this, you can add the following file and script to automate everything.
 
+```ts title="src/app/returnFaucet.ts"
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { Address, ITxBuildInput, IUTxO, PrivateKey } from "@harmoniclabs/plu-ts";
+import { readFile } from "fs/promises";
+import blockfrost from "./blockfrost";
+import getTxBuilder from "./getTxBuilder";
+
+async function returnFaucet(Blockfrost: BlockfrostPluts)
+{
+    const utxos: (ITxBuildInput | IUTxO)[] = [];
+    const pvtKeys: PrivateKey[] = [];
+    
+    for( let i = 1; i <= 2; i++ )
+    {
+        const pvtKeyFile = await readFile(`./testnet/payment${i}.skey`, { encoding: "utf-8" })
+        const pvtKey = PrivateKey.fromCbor( JSON.parse(pvtKeyFile).cborHex );
+        pvtKeys.push( pvtKey );
+
+        const addr = await readFile(`./testnet/address${i}.addr`, { encoding: "utf-8" });
+        const address = Address.fromString(addr);
+
+        const addrUtxos = await Blockfrost.addressUtxos( address )
+        addrUtxos.forEach( utxo => utxos.push({ utxo: utxo }) )
+    }
+
+
+    const txBuilder = await getTxBuilder(Blockfrost);
+
+    let returnTADATx = await txBuilder.buildSync({
+        inputs: utxos as any,
+        // the faucet address
+        changeAddress: "addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3"
+    });
+
+    for(const privateKey of pvtKeys)
+    {
+        await returnTADATx.signWith( privateKey );
+    }
+
+    const submittedTx = await Blockfrost.submitTx( returnTADATx );
+    console.log(submittedTx);
+}
+if( process.argv[1].includes("returnFaucet") )
+{
+    returnFaucet(blockfrost());
+}
+```
 ```json title="package.json"
 "scripts": {
     // ...
@@ -1294,42 +1370,4 @@ here; you can add the following file and script to automate everything
 ```
 ```bash
 npm run vesting:returnFaucet
-```
-```ts title="src/app/returnFaucet.ts"
-import { PrivateKey, TxOutRef } from "@harmoniclabs/plu-ts";
-import { cli } from "./utils/cli";
-
-async function returnFaucet()
-{
-    const utxos: { utxo: TxOutRef }[] = [];
-    const prvtKeys: PrivateKey[] = [];
-    
-    for( let i = 1; i <= 2; i++ )
-    {
-        prvtKeys.push( cli.utils.readPrivateKey(`./testnet/payment${i}.skey`) );
-        const addr = cli.utils.readAddress(`./testnet/address${i}.addr`);
-        
-        utxos.push(
-            ...(await cli.query.utxo({ address: addr }))
-            .map( ({ utxoRef }) => ({ utxo: utxoRef } ))
-        );
-    }
-
-    let returnTADA = await cli.transaction.build({
-        inputs: utxos as any,
-        // the faucet address
-        changeAddress: "addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3"
-    });
-
-    for(const privateKey of prvtKeys)
-    {
-        returnTADA = await cli.transaction.sign({ tx: returnTADA, privateKey });
-    }
-
-    await cli.transaction.submit({ tx: returnTADA });
-}
-if( process.argv[1].includes("returnFaucet") )
-{
-    returnFaucet();
-}
 ```
