@@ -2,7 +2,9 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 import {themes as prismThemes} from 'prism-react-renderer';
-require('dotenv').config();
+import { config as dotenvConfing } from "dotenv";
+
+dotenvConfing();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {

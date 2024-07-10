@@ -9,6 +9,18 @@ npm install
 
 ### Local Development
 
+IMPORTANT
+
+Before running the application make sure you have a `.env` file in the root of the project specifying the following environment variables
+
+```
+ALGOLIA_APP_ID=""
+ALGOLIA_API_KEY=""
+ALGOLIA_INDEX_NAME=""
+```
+
+Then you can run:
+
 ```
 npm run start
 ```
