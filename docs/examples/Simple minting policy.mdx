@@ -93,6 +93,11 @@ export const scriptTestnetAddr = new Address(
 );
 ```
 
+:::info redeemer validator
+For this smart contract we're using the `makeRedeemerValidator` method instead of the regular `makeValidator`.<br />
+And this is because we don't need a Datum, we'll be minting tokens and storing them on the user wallet.
+:::
+
 The other file is the `offchain/mintNft.ts`, which includes the logic for building and executing the transaction for the NFT minting.
 
 ```ts title="offchain/mintNft.ts"
@@ -128,16 +133,23 @@ export async function mintNft(wallet: BrowserWallet, projectId: string): Promise
     inputs: [{ utxo }],
     changeAddress: recipient,
     collaterals: [utxo],
+
+    // We need to declare a collateral return in order
+    // to store the minted token in the user wallet
     collateralReturn: {
       address: utxo.resolved.address,
       value: Value.sub(utxo.resolved.value, Value.lovelaces(5_000_000))
     },
+
+    // We need to declare the minting policy for the token
     mints: [{
+      // This is the name and amount of tokens we want to mint
       value: Value.singleAsset(
         scriptTestnetAddr.paymentCreds.hash,
         Buffer.from('Test Token'),
         1
       ),
+      // We pass the script as inline and the redeemer address
       script: {
         inline: script,
         policyId: scriptTestnetAddr.paymentCreds.hash,
