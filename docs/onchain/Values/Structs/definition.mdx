@@ -4,15 +4,17 @@ sidebar_position: 0
 
 # Struct definition
 
-When writing programs we often need to access data that is more articulate than simple integers or booleans; for this reason `plu-ts` allows ytou to define custom data-types.
+When writing programs we often need to access data that is more articulate than simple integers or booleans.
+For this reason `plu-ts` allows you to define custom data-types.
 
 ## `pstruct`
 
 To define your own type all you need is the `pstruct` typescript function.
 
 `pstruct` takes as an argument an object that describes the structure of the new data-type and returns a Typescript class that represents our new type.
+You can also add custom methods to this structure, to make it more versatile.
 
-the type of a struct definition (which is teh argument of `pstruct`) is something like:
+The type of a struct definition (which is the argument of `pstruct`) is something like:
 
 ```ts
 type StructDefiniton = {
@@ -40,7 +42,7 @@ const Dog = pstruct({
 });
 ```
 
-but our dog needs some toys to play with when we are out. So we define a structure that describes some toys:
+But our dog needs some toys to play with when we are out. So we define a structure that describes some toys:
 
 ```ts
 const Toy = pstruct({
@@ -68,11 +70,11 @@ const Dog = pstruct({
 
 :::caution IMPORTANT
 
-When defining a struct the order of the constructors and the order of the fields matters
+When defining a struct the order of the constructors and the order of the fields matters.
 
-infact at UPLC level there are no names
+In fact at UPLC level there are no names.
 
-this does have two important implications
+This does have two important implications:
 
 1) structs with similar definition will be interchangeable; meaning that something like the snippet below can be used in place of a `Dog` without anything breaking
 ```ts

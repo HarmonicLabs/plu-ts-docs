@@ -52,23 +52,23 @@ const pdoubleFactorial = plam( int, int )
     });
 ```
 
-This way `plu-ts` can first execute the `pfactorial.$( n )` function call and store the result in the `factorialResult` which was the intended behaviour in the first place.
+This way `plu-ts` can first execute the `pfactorial.$( n )` function call and store the result in the `factorialResult` which was the intended behavior in the first place.
 
 ### How does `plet` work?
 
-When used as in the snippet above the compiler will take a look at how the value you stored in a varible is used and might decide to inline it if it decides that it is more efficient.
+When used as in the snippet above the compiler will take a look at how the value you stored in a variable is used and might decide to inline it if it decides that it is more efficient.
 
-This will mosto of the time due to the value being used a single time.
+This will most of the time due to the value being used a single time.
 
-So even if you are using the result of `pfactorial.$( n )` a single time using `plet` won't store the result in a variable because there's no advantage;
+So even if you are using the result of `pfactorial.$( n )` a single time using `plet` won't store the result in a variable because there's no advantage.
 
-But still if you use it two or more time it will be stored in a variable instead so that it is computed only once-
+But still if you use it two or more time it will be stored in a variable instead so that it is computed only once.
 
 :::tip
 
 When in doubt use `plet`;
 
-The compiler is smart enough to unsertand if it should be inlined or stored in a variable
+The compiler is smart enough to understand if it should be inlined or stored in a variable
 
 :::
 
@@ -80,7 +80,7 @@ You can opt out the compiler taking control using the `plet`'s `in` method.
 The `plet( stuff ).in( myVar => {/*...*/})` construct **forces** the term to be stored in a variable **even if used once**.
 :::
 
-There are some cases where this might be the desired behaviour;
+There are some cases where this might be the desired behavior;
 
 as an example using the `in` method makes clear the scope of the variable;
 
@@ -106,7 +106,7 @@ const fancyDoubleMult = phoist(
                 .then( 0 )
                 .else(
                     // bad-start
-                    // we only have a single refernce here;
+                    // we only have a single reference here;
                     // so this `myVar` might be inlined
                     myVar.add( self.$( n.sub( 1 ) ) )
                     // bad-end

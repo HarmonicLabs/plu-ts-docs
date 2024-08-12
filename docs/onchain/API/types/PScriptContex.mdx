@@ -2,7 +2,7 @@
 sidebar_position: 0
 ---
 
-# `PScriptContex`
+# `PScriptContext`
 
 The Script Context is probably the most important piece of data your script receives.
 
@@ -15,17 +15,22 @@ definition:
 export const PScriptContext = pstruct({
     PScriptContext: {
         tx: PTxInfo.type,
+        redeemer: data,
         purpose: PScriptPurpose.type
     }
 });
 ```
 
-We see it has a single constructor that includes 2 fields:
+We see it has a single constructor that includes 3 fields:
 
 
 ### `tx`
 
 `tx` of type [`PTxInfo`](./PTxInfo)
+
+### `redeemer`
+
+`redeemer` of type `data`
 
 ### `purpose`
 

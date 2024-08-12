@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # `PScriptPurpose`
 
-It is the second field of the [`PScriptContex`](./PScriptContex) structure.
+It is the second field of the [`PScriptContext`](./PScriptContext) structure.
 
-It tells us what the script is used for based on the contstructor and it passes some useful informations that would be hard to access otherwise.
+It tells us what the script is used for based on the constructor and it passes some useful information that would be hard to access otherwise.
 
 definition:
 
@@ -14,8 +14,18 @@ definition:
 export const PScriptPurpose = pstruct({
     Minting: { currencySym: PCurrencySymbol.type },
     Spending: { utxoRef: PTxOutRef.type },
-    Rewarding: { stakeCredential: PStakingCredentials.type },
-    Certifying: { dCert: PDCert.type }
+    Rewarding: { stakeCredential: PCredential.type },
+    Certifying: {
+        index: int,
+        cert: PCertificate.type
+    },
+    Voting: {
+        voter: PVoter.type
+    },
+    Proposing: {
+        index: int,
+        proposal: PProposalProcedure.type
+    }
 });
 ```
 
@@ -37,12 +47,24 @@ type: `PTxOutRef.type`
 
 ### `stakeCredential`
 
-type: `PStakingCredentials.type`
+type: `PCredential.type`
 
 
 ## `Certifying`
 
-### `dCert`
+### `cert`
 
-type: `PDCert.type`
+type: `PCertificate.type`
+
+## `Voting`
+
+### `voter`
+
+type: `PVoter.type`
+
+## `Proposing`
+
+### `proposal`
+
+type: `PProposalProcedure.type`
 

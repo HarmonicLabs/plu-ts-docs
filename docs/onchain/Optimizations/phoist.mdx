@@ -49,7 +49,7 @@ const pfactorial =
     ))
 ```
 
-If you compare this definiton with the previous one you'll see that nothing has changed except for the `phoist`, that's it; now we can use `pfactorial` as many times we want.
+If you compare this definition with the previous one you'll see that nothing has changed except for the `phoist`, that's it; now we can use `pfactorial` as many times we want.
 
 ## Can I use `phoist` everywhere?
 
@@ -66,4 +66,4 @@ const fancyTerm = plam( int, int )
         phoist( n.mult( 2 ) ); // error.
     )
 ```
-will throw at compilation time because the variable `n` comes from _outside_ the `phoist` function, hence the term is _open_ (not closed).
+will throw at compilation time because the variable `n` comes from _outside_ the `phoist` function. Hence the term is _open_ (not closed).

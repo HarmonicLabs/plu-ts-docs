@@ -37,7 +37,7 @@ normal term                 | term with methods
 `Term<Alias<PType>>`        | depends by `PType`
 `Term<PStruct<StructDef>>`  | `TermStruct<StructDef>`
 
-We call these "**utility terms**" and are covered more in depth in the [standard library section](../../category/stdlib); but is good having in mind that these exsists as they makes our life much easier while writing a program.
+We call these "**utility terms**" and are covered more in depth in the [standard library section](../../category/stdlib); but is good having in mind that these exists as they make our life much easier while writing a program.
 
 ## I see two properties that look similar, which one should I use?
 
@@ -67,6 +67,6 @@ Generally speaking you want to use the ts function version for two reasons:
 1) is more readable
 2) might produce slightly less code (hence is more efficient)
 
-However, the fact that is defined as a function makes it unable to be passed as argument to `plu-ts` higher oreder functions (or a normal ts functions that expects `Term<PLam>` as argument).
+However, the fact that is defined as a function makes it unable to be passed as argument to `plu-ts` higher order functions (or a normal ts functions that expects `Term<PLam>` as argument).
 
 In that case you want to use the "...Term" alternative which is optimized exactly for that.

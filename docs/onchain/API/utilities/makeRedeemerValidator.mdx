@@ -4,14 +4,18 @@ sidebar_position: 2
 
 # `makeRedeemerValidator`
 
+:::caution [!CAUTION]
+This method is deprecated as of Plutus V3
+:::
+
 As said in [`makeValidator`], once on-chain contracts are not typed.
 
 `makeRedeemerValidator` is used for contract that do not expect a datum as first argument.
 
-the type signature is:
+The type signature is:
 
 ```ts
-port function makeRedeemerValidator(
+export function makeRedeemerValidator(
     typedValidator: Term<
         PLam<
             PType,
@@ -26,7 +30,7 @@ port function makeRedeemerValidator(
 
 ```
 
-as you can see it takes any typed validator and returns a generic untyped validator so that the node will be able to evaluate it correctly.
+As you can see it takes any typed validator and returns a generic untyped validator so that the node will be able to evaluate it correctly.
 
 ### errorMessage
 
