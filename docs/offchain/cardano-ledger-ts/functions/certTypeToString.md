@@ -1,16 +1,16 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / certTypeToString
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / certTypeToString
 
 # Function: certTypeToString()
 
-> **certTypeToString**\<`CertT`\>(`certT`): [`CertTypeToStr`](../type-aliases/CertTypeToStr)\<`CertT`\>
+> **certTypeToString**\<`CertT`\>(`certT`): [`CertTypeToStr`](../type-aliases/CertTypeToStr.md)\<`CertT`\>
 
-## Type parameters
+## Type Parameters
 
-• **CertT** extends [`CertificateType`](../enumerations/CertificateType)
+• **CertT** *extends* [`CertificateType`](../enumerations/CertificateType.md)
 
 ## Parameters
 
@@ -18,8 +18,8 @@
 
 ## Returns
 
-[`CertTypeToStr`](../type-aliases/CertTypeToStr)\<`CertT`\>
+[`CertTypeToStr`](../type-aliases/CertTypeToStr.md)\<`CertT`\>
 
-## Source
+## Defined in
 
-[src/ledger/certs/CertificateType.ts:60](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertificateType.ts#L60)
+[src/ledger/certs/CertificateType.ts:60](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertificateType.ts#L60)

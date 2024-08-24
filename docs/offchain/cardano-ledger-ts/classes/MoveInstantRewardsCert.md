@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / MoveInstantRewardsCert
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / MoveInstantRewardsCert
 
 # Class: ~~MoveInstantRewardsCert~~
 
@@ -12,81 +12,81 @@
 
 - `ToCbor`
 - `ToJson`
-- [`ICert`](../interfaces/ICert)
+- [`ICert`](../interfaces/ICert.md)
 
 ## Constructors
 
-### new MoveInstantRewardsCert(__namedParameters)
+### new MoveInstantRewardsCert()
 
-> **new MoveInstantRewardsCert**(`__namedParameters`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert)
+> **new MoveInstantRewardsCert**(`__namedParameters`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`IMoveInstantRewardsCert`](../interfaces/IMoveInstantRewardsCert)
+• **\_\_namedParameters**: [`IMoveInstantRewardsCert`](../interfaces/IMoveInstantRewardsCert.md)
 
 #### Returns
 
-[`MoveInstantRewardsCert`](MoveInstantRewardsCert)
+[`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:100](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L100)
+[src/ledger/certs/MoveInstantRewardsCert.ts:102](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L102)
 
 ## Properties
 
 ### ~~certType~~
 
-> **`readonly`** **certType**: [`MoveInstantRewards`](../enumerations/CertificateType#moveinstantrewards)
+> `readonly` **certType**: [`MoveInstantRewards`](../enumerations/CertificateType.md#moveinstantrewards)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
+[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:91](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L91)
+[src/ledger/certs/MoveInstantRewardsCert.ts:93](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L93)
 
 ***
 
 ### ~~destination~~
 
-> **`readonly`** **destination**: `CanBeUInteger` \| [`RewardsMap`](../type-aliases/RewardsMap)
+> `readonly` **destination**: `CanBeUInteger` \| [`RewardsMap`](../type-aliases/RewardsMap.md)
 
 If the second field is a map, funds are moved to stake credentials,
 otherwise the funds are given to the other accounting pot
 (eg. source is Reserve, hence founds are going to treasurery)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:98](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L98)
+[src/ledger/certs/MoveInstantRewardsCert.ts:100](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L100)
 
 ***
 
 ### ~~source~~
 
-> **`readonly`** **source**: [`InstantRewardsSource`](../enumerations/InstantRewardsSource)
+> `readonly` **source**: [`InstantRewardsSource`](../enumerations/InstantRewardsSource.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:92](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L92)
+[src/ledger/certs/MoveInstantRewardsCert.ts:94](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L94)
 
 ## Methods
 
 ### ~~getRequiredSigners()~~
 
-> **getRequiredSigners**(): [`Hash28`](Hash28)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
 
 #### Returns
 
-[`Hash28`](Hash28)[]
+[`Hash28`](Hash28.md)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
+[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:141](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L141)
+[src/ledger/certs/MoveInstantRewardsCert.ts:155](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L155)
 
 ***
 
@@ -102,9 +102,9 @@ otherwise the funds are given to the other accounting pot
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:146](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L146)
+[src/ledger/certs/MoveInstantRewardsCert.ts:160](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L160)
 
 ***
 
@@ -120,19 +120,41 @@ otherwise the funds are given to the other accounting pot
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:151](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L151)
+[src/ledger/certs/MoveInstantRewardsCert.ts:165](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L165)
+
+***
+
+### ~~toData()~~
+
+> **toData**(`version`?): `DataConstr`
+
+#### Parameters
+
+• **version?**: `ToDataVersion`
+
+#### Returns
+
+`DataConstr`
+
+#### Implementation of
+
+[`ICert`](../interfaces/ICert.md).[`toData`](../interfaces/ICert.md#todata)
+
+#### Defined in
+
+[src/ledger/certs/MoveInstantRewardsCert.ts:143](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L143)
 
 ***
 
 ### ~~toJson()~~
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### ~~certType~~
 
@@ -140,7 +162,7 @@ otherwise the funds are given to the other accounting pot
 
 ##### ~~destination~~
 
-> **destination**: `string` \| `Object`[]
+> **destination**: `string` \| `object`[]
 
 ##### ~~source~~
 
@@ -150,15 +172,15 @@ otherwise the funds are given to the other accounting pot
 
 `ToJson.toJson`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:182](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L182)
+[src/ledger/certs/MoveInstantRewardsCert.ts:196](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L196)
 
 ***
 
 ### ~~fromCborObj()~~
 
-> **`static`** **fromCborObj**(`cObj`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert)
+> `static` **fromCborObj**(`cObj`): [`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
 
 #### Parameters
 
@@ -166,8 +188,8 @@ otherwise the funds are given to the other accounting pot
 
 #### Returns
 
-[`MoveInstantRewardsCert`](MoveInstantRewardsCert)
+[`MoveInstantRewardsCert`](MoveInstantRewardsCert.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/MoveInstantRewardsCert.ts:161](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/MoveInstantRewardsCert.ts#L161)
+[src/ledger/certs/MoveInstantRewardsCert.ts:175](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/MoveInstantRewardsCert.ts#L175)

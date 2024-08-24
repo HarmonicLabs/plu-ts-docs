@@ -1,14 +1,14 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / Script
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / Script
 
 # Class: Script\<T\>
 
-## Type parameters
+## Type Parameters
 
-• **T** extends [`LitteralScriptType`](../type-aliases/LitteralScriptType) = [`LitteralScriptType`](../type-aliases/LitteralScriptType)
+• **T** *extends* [`LitteralScriptType`](../type-aliases/LitteralScriptType.md) = [`LitteralScriptType`](../type-aliases/LitteralScriptType.md)
 
 ## Implements
 
@@ -16,81 +16,81 @@
 
 ## Constructors
 
-### new Script(scriptType, bytes)
+### new Script()
 
-> **new Script**\<`T`\>(`scriptType`, `bytes`): [`Script`](Script)\<`T`\>
+> **new Script**\<`T`\>(`scriptType`, `bytes`): [`Script`](Script.md)\<`T`\>
 
 #### Parameters
 
 • **scriptType**: `T`
 
-• **bytes**: `Uint8Array` \| `T` extends [`NativeScript`](../enumerations/ScriptType#nativescript) ? [`NativeScript`](../type-aliases/NativeScript) : [`PlutusScriptJsonFormat`](../interfaces/PlutusScriptJsonFormat)\<[`PlutusScriptType`](../type-aliases/PlutusScriptType)\>
+• **bytes**: `Uint8Array` \| `T` *extends* [`NativeScript`](../enumerations/ScriptType.md#nativescript) ? [`NativeScript`](../type-aliases/NativeScript.md) : [`PlutusScriptJsonFormat`](../interfaces/PlutusScriptJsonFormat.md)\<[`PlutusScriptType`](../type-aliases/PlutusScriptType.md)\>
 
 #### Returns
 
-[`Script`](Script)\<`T`\>
+[`Script`](Script.md)\<`T`\>
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:41](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L41)
+[src/script/Script.ts:41](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L41)
 
 ## Properties
 
 ### bytes
 
-> **`readonly`** **bytes**: `Uint8Array`
+> `readonly` **bytes**: `Uint8Array`
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:32](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L32)
+[src/script/Script.ts:32](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L32)
 
 ***
 
 ### cbor
 
-> **`readonly`** **cbor**: `T` extends [`NativeScript`](../enumerations/ScriptType#nativescript) ? `never` : `CborString`
+> `readonly` **cbor**: `T` *extends* [`NativeScript`](../enumerations/ScriptType.md#nativescript) ? `never` : `CborString`
 
 format expected by `cardano-cli`
 
 for standard ledger format (as defined in CDDL) use `toCbor` method
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:38](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L38)
+[src/script/Script.ts:38](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L38)
 
 ***
 
 ### hash
 
-> **`readonly`** **hash**: [`Hash28`](Hash28)
+> `readonly` **hash**: [`Hash28`](Hash28.md)
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:39](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L39)
+[src/script/Script.ts:39](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L39)
 
 ***
 
 ### type
 
-> **`readonly`** **type**: `T`
+> `readonly` **type**: `T`
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:31](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L31)
+[src/script/Script.ts:31](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L31)
 
 ## Methods
 
 ### clone()
 
-> **clone**(): [`Script`](Script)\<`T`\>
+> **clone**(): [`Script`](Script.md)\<`T`\>
 
 #### Returns
 
-[`Script`](Script)\<`T`\>
+[`Script`](Script.md)\<`T`\>
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:163](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L163)
+[src/script/Script.ts:163](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L163)
 
 ***
 
@@ -108,9 +108,9 @@ format specified in the ledger CDDL
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:213](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L213)
+[src/script/Script.ts:213](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L213)
 
 ***
 
@@ -128,69 +128,69 @@ format specified in the ledger CDDL
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:220](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L220)
+[src/script/Script.ts:220](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L220)
 
 ***
 
 ### toJson()
 
-> **toJson**(): [`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
+> **toJson**(): [`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`
 
 #### Returns
 
-[`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`
+[`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:171](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L171)
+[src/script/Script.ts:171](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L171)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cbor`, `defType`): [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
+> `static` **fromCbor**(`cbor`, `defType`): [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
 
 #### Parameters
 
 • **cbor**: `CanBeCborString`
 
-• **defType**: [`ScriptType`](../enumerations/ScriptType)= `ScriptType.PlutusV2`
+• **defType**: [`ScriptType`](../enumerations/ScriptType.md) = `ScriptType.PlutusV2`
 
 #### Returns
 
-[`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
+[`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:240](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L240)
+[src/script/Script.ts:240](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L240)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`, `defType`): [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
+> `static` **fromCborObj**(`cObj`, `defType`): [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
 
 #### Parameters
 
 • **cObj**: `CborObj`
 
-• **defType**: [`ScriptType`](../enumerations/ScriptType)= `ScriptType.PlutusV2`
+• **defType**: [`ScriptType`](../enumerations/ScriptType.md) = `ScriptType.PlutusV2`
 
 #### Returns
 
-[`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
+[`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:245](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L245)
+[src/script/Script.ts:245](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L245)
 
 ***
 
 ### fromJson()
 
-> **`static`** **fromJson**(`json`): [`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
+> `static` **fromJson**(`json`): [`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
 
 #### Parameters
 
@@ -198,8 +198,8 @@ format specified in the ledger CDDL
 
 #### Returns
 
-[`Script`](Script)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType)\>
+[`Script`](Script.md)\<[`LitteralScriptType`](../type-aliases/LitteralScriptType.md)\>
 
-#### Source
+#### Defined in
 
-[src/script/Script.ts:195](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/script/Script.ts#L195)
+[src/script/Script.ts:195](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/script/Script.ts#L195)

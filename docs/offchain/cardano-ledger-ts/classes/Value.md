@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / Value
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / Value
 
 # Class: Value
 
@@ -13,92 +13,91 @@
 
 ## Constructors
 
-### new Value(map)
+### new Value()
 
-> **new Value**(`map`): [`Value`](Value)
+> **new Value**(`map`): [`Value`](Value.md)
 
 #### Parameters
 
-• **map**: [`IValue`](../type-aliases/IValue)
+• **map**: [`IValue`](../type-aliases/IValue.md)
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:45](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L45)
+[src/ledger/Value/Value.ts:47](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L47)
 
 ## Properties
 
 ### lovelaces
 
-> **`readonly`** **lovelaces**: `bigint`
+> `readonly` **lovelaces**: `bigint`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:110](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L110)
+[src/ledger/Value/Value.ts:114](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L114)
 
 ***
 
 ### map
 
-> **`readonly`** **map**: [`IValue`](../type-aliases/IValue)
+> `readonly` **map**: [`NormalizedIValue`](../type-aliases/NormalizedIValue.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L34)
+[src/ledger/Value/Value.ts:36](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L36)
 
 ## Accessors
 
 ### zero
 
-> **`get`** **`static`** **zero**(): [`Value`](Value)
+> `get` `static` **zero**(): [`Value`](Value.md)
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:174](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L174)
+[src/ledger/Value/Value.ts:178](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L178)
 
 ## Methods
 
-### `[iterator]`()
+### \[iterator\]()
 
-> **[iterator]**(): `Generator`\<`Object`, `void`, `unknown`\>
+> **\[iterator\]**(): `Generator`\<`object`, `void`, `unknown`\>
 
 #### Returns
 
-`Generator`\<`Object`, `void`, `unknown`\>
+`Generator`\<`object`, `void`, `unknown`\>
 
-> ##### assets
->
-> > **assets**: [`IValueAssets`](../type-aliases/IValueAssets)
->
-> ##### policy
->
-> > **policy**: `string`
->
+##### assets
 
-#### Source
+> **assets**: [`IValueAssetBI`](../type-aliases/IValueAssetBI.md)[]
 
-[src/ledger/Value/Value.ts:36](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L36)
+##### policy
+
+> **policy**: `string`
+
+#### Defined in
+
+[src/ledger/Value/Value.ts:38](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L38)
 
 ***
 
 ### clone()
 
-> **clone**(): [`Value`](Value)
+> **clone**(): [`Value`](Value.md)
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:283](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L283)
+[src/ledger/Value/Value.ts:287](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L287)
 
 ***
 
@@ -108,7 +107,7 @@
 
 #### Parameters
 
-• **policy**: `string` \| `Uint8Array` \| [`Hash28`](Hash28)
+• **policy**: `string` \| `Uint8Array` \| [`Hash28`](Hash28.md)
 
 • **assetName**: `Uint8Array`
 
@@ -116,9 +115,9 @@
 
 `bigint`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:112](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L112)
+[src/ledger/Value/Value.ts:116](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L116)
 
 ***
 
@@ -134,9 +133,9 @@
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:309](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L309)
+[src/ledger/Value/Value.ts:313](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L313)
 
 ***
 
@@ -152,9 +151,9 @@
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:313](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L313)
+[src/ledger/Value/Value.ts:317](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L317)
 
 ***
 
@@ -170,23 +169,23 @@
 
 `ToData.toData`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:288](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L288)
+[src/ledger/Value/Value.ts:292](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L292)
 
 ***
 
 ### toJson()
 
-> **toJson**(): [`ValueJson`](../type-aliases/ValueJson)
+> **toJson**(): [`ValueJson`](../type-aliases/ValueJson.md)
 
 #### Returns
 
-[`ValueJson`](../type-aliases/ValueJson)
+[`ValueJson`](../type-aliases/ValueJson.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:445](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L445)
+[src/ledger/Value/Value.ts:449](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L449)
 
 ***
 
@@ -198,55 +197,55 @@ cardano-cli format
 
 #### Parameters
 
-• **includeLovelaces**: `boolean`= `true`
+• **includeLovelaces**: `boolean` = `true`
 
 #### Returns
 
 `string`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:453](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L453)
+[src/ledger/Value/Value.ts:457](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L457)
 
 ***
 
 ### toUnits()
 
-> **toUnits**(): [`ValueUnitsBI`](../type-aliases/ValueUnitsBI)
+> **toUnits**(): [`ValueUnitsBI`](../type-aliases/ValueUnitsBI.md)
 
 #### Returns
 
-[`ValueUnitsBI`](../type-aliases/ValueUnitsBI)
+[`ValueUnitsBI`](../type-aliases/ValueUnitsBI.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:131](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L131)
+[src/ledger/Value/Value.ts:135](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L135)
 
 ***
 
 ### add()
 
-> **`static`** **add**(`a`, `b`): [`Value`](Value)
+> `static` **add**(`a`, `b`): [`Value`](Value.md)
 
 #### Parameters
 
-• **a**: [`Value`](Value)
+• **a**: [`Value`](Value.md)
 
-• **b**: [`Value`](Value)
+• **b**: [`Value`](Value.md)
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:273](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L273)
+[src/ledger/Value/Value.ts:277](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L277)
 
 ***
 
 ### assetEntry()
 
-> **`static`** **assetEntry**(`name`, `qty`): [`IValueAsset`](../type-aliases/IValueAsset)
+> `static` **assetEntry**(`name`, `qty`): [`IValueAssetBI`](../type-aliases/IValueAssetBI.md)
 
 #### Parameters
 
@@ -256,37 +255,37 @@ cardano-cli format
 
 #### Returns
 
-[`IValueAsset`](../type-aliases/IValueAsset)
+[`IValueAssetBI`](../type-aliases/IValueAssetBI.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:223](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L223)
+[src/ledger/Value/Value.ts:227](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L227)
 
 ***
 
 ### entry()
 
-> **`static`** **entry**(`policy`, `assets`): [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
+> `static` **entry**(`policy`, `assets`): [`NormalizedIValuePolicyEntry`](../interfaces/NormalizedIValuePolicyEntry.md)
 
 #### Parameters
 
-• **policy**: [`Hash28`](Hash28)
+• **policy**: [`Hash28`](Hash28.md)
 
-• **assets**: [`IValueAssets`](../type-aliases/IValueAssets)
+• **assets**: [`IValueAsset`](../type-aliases/IValueAsset.md)[]
 
 #### Returns
 
-[`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
+[`NormalizedIValuePolicyEntry`](../interfaces/NormalizedIValuePolicyEntry.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:265](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L265)
+[src/ledger/Value/Value.ts:269](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L269)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Value`](Value)
+> `static` **fromCbor**(`cStr`): [`Value`](Value.md)
 
 #### Parameters
 
@@ -294,17 +293,17 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:346](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L346)
+[src/ledger/Value/Value.ts:350](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L350)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Value`](Value)
+> `static` **fromCborObj**(`cObj`): [`Value`](Value.md)
 
 #### Parameters
 
@@ -312,89 +311,89 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:350](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L350)
+[src/ledger/Value/Value.ts:354](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L354)
 
 ***
 
 ### fromUnits()
 
-> **`static`** **fromUnits**(`units`): [`Value`](Value)
+> `static` **fromUnits**(`units`): [`Value`](Value.md)
 
 #### Parameters
 
-• **units**: [`ValueUnits`](../type-aliases/ValueUnits)
+• **units**: [`ValueUnits`](../type-aliases/ValueUnits.md)
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:146](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L146)
+[src/ledger/Value/Value.ts:150](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L150)
 
 ***
 
 ### isAdaOnly()
 
-> **`static`** **isAdaOnly**(`v`): `boolean`
+> `static` **isAdaOnly**(`v`): `boolean`
 
 #### Parameters
 
-• **v**: [`Value`](Value)
+• **v**: [`Value`](Value.md)
 
 #### Returns
 
 `boolean`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:200](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L200)
+[src/ledger/Value/Value.ts:204](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L204)
 
 ***
 
 ### isPositive()
 
-> **`static`** **isPositive**(`v`): `boolean`
+> `static` **isPositive**(`v`): `boolean`
 
 #### Parameters
 
-• **v**: [`Value`](Value)
+• **v**: [`Value`](Value.md)
 
 #### Returns
 
 `boolean`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:191](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L191)
+[src/ledger/Value/Value.ts:195](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L195)
 
 ***
 
 ### isZero()
 
-> **`static`** **isZero**(`v`): `boolean`
+> `static` **isZero**(`v`): `boolean`
 
 #### Parameters
 
-• **v**: [`Value`](Value)
+• **v**: [`Value`](Value.md)
 
 #### Returns
 
 `boolean`
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:179](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L179)
+[src/ledger/Value/Value.ts:183](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L183)
 
 ***
 
 ### lovelaceEntry()
 
-> **`static`** **lovelaceEntry**(`n`): [`IValueAdaEntry`](../type-aliases/IValueAdaEntry)
+> `static` **lovelaceEntry**(`n`): [`NormalizedIValueAdaEntry`](../type-aliases/NormalizedIValueAdaEntry.md)
 
 #### Parameters
 
@@ -402,17 +401,17 @@ cardano-cli format
 
 #### Returns
 
-[`IValueAdaEntry`](../type-aliases/IValueAdaEntry)
+[`NormalizedIValueAdaEntry`](../type-aliases/NormalizedIValueAdaEntry.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:205](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L205)
+[src/ledger/Value/Value.ts:209](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L209)
 
 ***
 
 ### lovelaces()
 
-> **`static`** **lovelaces**(`n`): [`Value`](Value)
+> `static` **lovelaces**(`n`): [`Value`](Value.md)
 
 #### Parameters
 
@@ -420,21 +419,21 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:218](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L218)
+[src/ledger/Value/Value.ts:222](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L222)
 
 ***
 
 ### singleAsset()
 
-> **`static`** **singleAsset**(`policy`, `name`, `qty`): [`Value`](Value)
+> `static` **singleAsset**(`policy`, `name`, `qty`): [`Value`](Value.md)
 
 #### Parameters
 
-• **policy**: [`Hash28`](Hash28)
+• **policy**: [`Hash28`](Hash28.md)
 
 • **name**: `Uint8Array`
 
@@ -442,21 +441,21 @@ cardano-cli format
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:250](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L250)
+[src/ledger/Value/Value.ts:254](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L254)
 
 ***
 
 ### singleAssetEntry()
 
-> **`static`** **singleAssetEntry**(`policy`, `name`, `qty`): [`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
+> `static` **singleAssetEntry**(`policy`, `name`, `qty`): [`NormalizedIValuePolicyEntry`](../interfaces/NormalizedIValuePolicyEntry.md)
 
 #### Parameters
 
-• **policy**: [`Hash28`](Hash28)
+• **policy**: [`Hash28`](Hash28.md)
 
 • **name**: `Uint8Array`
 
@@ -464,28 +463,28 @@ cardano-cli format
 
 #### Returns
 
-[`IValuePolicyEntry`](../type-aliases/IValuePolicyEntry)
+[`NormalizedIValuePolicyEntry`](../interfaces/NormalizedIValuePolicyEntry.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:238](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L238)
+[src/ledger/Value/Value.ts:242](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L242)
 
 ***
 
 ### sub()
 
-> **`static`** **sub**(`a`, `b`): [`Value`](Value)
+> `static` **sub**(`a`, `b`): [`Value`](Value.md)
 
 #### Parameters
 
-• **a**: [`Value`](Value)
+• **a**: [`Value`](Value.md)
 
-• **b**: [`Value`](Value)
+• **b**: [`Value`](Value.md)
 
 #### Returns
 
-[`Value`](Value)
+[`Value`](Value.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Value/Value.ts:278](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Value/Value.ts#L278)
+[src/ledger/Value/Value.ts:282](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Value/Value.ts#L282)

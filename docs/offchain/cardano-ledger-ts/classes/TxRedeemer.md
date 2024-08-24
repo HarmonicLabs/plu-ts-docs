@@ -1,51 +1,51 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxRedeemer
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / TxRedeemer
 
 # Class: TxRedeemer
 
 ## Implements
 
-- [`ITxRedeemer`](../interfaces/ITxRedeemer)
+- [`ITxRedeemer`](../interfaces/ITxRedeemer.md)
 - `ToCbor`
-- `Cloneable`\<[`TxRedeemer`](TxRedeemer)\>
+- `Cloneable`\<[`TxRedeemer`](TxRedeemer.md)\>
 - `ToJson`
 
 ## Constructors
 
-### new TxRedeemer(redeemer)
+### new TxRedeemer()
 
-> **new TxRedeemer**(`redeemer`): [`TxRedeemer`](TxRedeemer)
+> **new TxRedeemer**(`redeemer`): [`TxRedeemer`](TxRedeemer.md)
 
 #### Parameters
 
-• **redeemer**: [`ITxRedeemer`](../interfaces/ITxRedeemer)
+• **redeemer**: [`ITxRedeemer`](../interfaces/ITxRedeemer.md)
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer)
+[`TxRedeemer`](TxRedeemer.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:87](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L87)
+[src/tx/TxWitnessSet/TxRedeemer.ts:84](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L84)
 
 ## Properties
 
 ### data
 
-> **`readonly`** **data**: `Data`
+> `readonly` **data**: `Data`
 
 the actual value of the redeemer
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer).[`data`](../interfaces/ITxRedeemer#data)
+[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`data`](../interfaces/ITxRedeemer.md#data)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:84](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L84)
+[src/tx/TxWitnessSet/TxRedeemer.ts:81](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L81)
 
 ***
 
@@ -55,59 +55,59 @@ the actual value of the redeemer
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer).[`execUnits`](../interfaces/ITxRedeemer#execunits)
+[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`execUnits`](../interfaces/ITxRedeemer.md#execunits)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:85](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L85)
+[src/tx/TxWitnessSet/TxRedeemer.ts:82](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L82)
 
 ***
 
 ### index
 
-> **`readonly`** **index**: `number`
+> `readonly` **index**: `number`
 
 index of the input the redeemer corresponds to
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer).[`index`](../interfaces/ITxRedeemer#index)
+[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`index`](../interfaces/ITxRedeemer.md#index)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:80](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L80)
+[src/tx/TxWitnessSet/TxRedeemer.ts:77](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L77)
 
 ***
 
 ### tag
 
-> **`readonly`** **tag**: [`TxRedeemerTag`](../enumerations/TxRedeemerTag)
+> `readonly` **tag**: [`TxRedeemerTag`](../enumerations/TxRedeemerTag.md)
 
 #### Implementation of
 
-[`ITxRedeemer`](../interfaces/ITxRedeemer).[`tag`](../interfaces/ITxRedeemer#tag)
+[`ITxRedeemer`](../interfaces/ITxRedeemer.md).[`tag`](../interfaces/ITxRedeemer.md#tag)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:76](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L76)
+[src/tx/TxWitnessSet/TxRedeemer.ts:73](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L73)
 
 ## Methods
 
 ### clone()
 
-> **clone**(): [`TxRedeemer`](TxRedeemer)
+> **clone**(): [`TxRedeemer`](TxRedeemer.md)
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer)
+[`TxRedeemer`](TxRedeemer.md)
 
 #### Implementation of
 
 `Cloneable.clone`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:160](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L160)
+[src/tx/TxWitnessSet/TxRedeemer.ts:157](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L157)
 
 ***
 
@@ -123,9 +123,9 @@ index of the input the redeemer corresponds to
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:203](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L203)
+[src/tx/TxWitnessSet/TxRedeemer.ts:200](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L200)
 
 ***
 
@@ -137,9 +137,9 @@ index of the input the redeemer corresponds to
 
 `CborMapEntry`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:169](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L169)
+[src/tx/TxWitnessSet/TxRedeemer.ts:166](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L166)
 
 ***
 
@@ -155,19 +155,19 @@ index of the input the redeemer corresponds to
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:207](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L207)
+[src/tx/TxWitnessSet/TxRedeemer.ts:204](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L204)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### data
 
@@ -175,7 +175,7 @@ index of the input the redeemer corresponds to
 
 ##### execUnits
 
-> **execUnits**: `Object`
+> **execUnits**: `object`
 
 ##### execUnits.memory
 
@@ -197,15 +197,15 @@ index of the input the redeemer corresponds to
 
 `ToJson.toJson`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:239](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L239)
+[src/tx/TxWitnessSet/TxRedeemer.ts:236](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L236)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxRedeemer`](TxRedeemer)
+> `static` **fromCbor**(`cStr`): [`TxRedeemer`](TxRedeemer.md)
 
 #### Parameters
 
@@ -213,17 +213,17 @@ index of the input the redeemer corresponds to
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer)
+[`TxRedeemer`](TxRedeemer.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:217](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L217)
+[src/tx/TxWitnessSet/TxRedeemer.ts:214](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L214)
 
 ***
 
 ### fromCborMapEntry()
 
-> **`static`** **fromCborMapEntry**(`entry`): [`TxRedeemer`](TxRedeemer)
+> `static` **fromCborMapEntry**(`entry`): [`TxRedeemer`](TxRedeemer.md)
 
 #### Parameters
 
@@ -231,17 +231,17 @@ index of the input the redeemer corresponds to
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer)
+[`TxRedeemer`](TxRedeemer.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:183](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L183)
+[src/tx/TxWitnessSet/TxRedeemer.ts:180](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L180)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxRedeemer`](TxRedeemer)
+> `static` **fromCborObj**(`cObj`): [`TxRedeemer`](TxRedeemer.md)
 
 #### Parameters
 
@@ -249,8 +249,8 @@ index of the input the redeemer corresponds to
 
 #### Returns
 
-[`TxRedeemer`](TxRedeemer)
+[`TxRedeemer`](TxRedeemer.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/TxRedeemer.ts:221](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/TxRedeemer.ts#L221)
+[src/tx/TxWitnessSet/TxRedeemer.ts:218](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/TxRedeemer.ts#L218)

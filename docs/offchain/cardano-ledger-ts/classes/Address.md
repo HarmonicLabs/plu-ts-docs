@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / Address
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / Address
 
 # Class: Address
 
@@ -15,95 +15,95 @@ shelley specification in cardano-ledger; page 113
 
 ## Constructors
 
-### new Address(network, paymentCreds, stakeCreds, type)
+### new Address()
 
-> **new Address**(`network`, `paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address)
+> **new Address**(`network`, `paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address.md)
 
 #### Parameters
 
-• **network**: [`NetworkT`](../type-aliases/NetworkT)
+• **network**: [`NetworkT`](../type-aliases/NetworkT.md)
 
-• **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+• **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
-• **stakeCreds?**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
+• **stakeCreds?**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
 
-• **type?**: [`AddressType`](../type-aliases/AddressType)
+• **type?**: [`AddressType`](../type-aliases/AddressType.md)
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:74](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L74)
+[src/ledger/Address.ts:75](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L75)
 
 ## Properties
 
 ### network
 
-> **`readonly`** **network**: [`NetworkT`](../type-aliases/NetworkT)
+> `readonly` **network**: [`NetworkT`](../type-aliases/NetworkT.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:41](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L41)
+[src/ledger/Address.ts:42](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L42)
 
 ***
 
 ### paymentCreds
 
-> **`readonly`** **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+> `readonly` **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:42](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L42)
+[src/ledger/Address.ts:43](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L43)
 
 ***
 
 ### stakeCreds?
 
-> **`optional`** **`readonly`** **stakeCreds**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
+> `readonly` `optional` **stakeCreds**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:43](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L43)
+[src/ledger/Address.ts:44](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L44)
 
 ***
 
 ### type
 
-> **`readonly`** **type**: [`AddressType`](../type-aliases/AddressType)
+> `readonly` **type**: [`AddressType`](../type-aliases/AddressType.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:44](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L44)
+[src/ledger/Address.ts:45](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L45)
 
 ## Accessors
 
 ### fake
 
-> **`get`** **`static`** **fake**(): [`Address`](Address)
+> `get` `static` **fake**(): [`Address`](Address.md)
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:131](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L131)
+[src/ledger/Address.ts:132](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L132)
 
 ## Methods
 
 ### clone()
 
-> **clone**(): [`Address`](Address)
+> **clone**(): [`Address`](Address.md)
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:121](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L121)
+[src/ledger/Address.ts:122](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L122)
 
 ***
 
@@ -115,9 +115,9 @@ shelley specification in cardano-ledger; page 113
 
 `Uint8Array`
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:268](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L268)
+[src/ledger/Address.ts:269](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L269)
 
 ***
 
@@ -129,9 +129,9 @@ shelley specification in cardano-ledger; page 113
 
 `byte`[]
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:152](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L152)
+[src/ledger/Address.ts:153](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L153)
 
 ***
 
@@ -147,9 +147,9 @@ shelley specification in cardano-ledger; page 113
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:295](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L295)
+[src/ledger/Address.ts:337](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L337)
 
 ***
 
@@ -165,9 +165,9 @@ shelley specification in cardano-ledger; page 113
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:282](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L282)
+[src/ledger/Address.ts:324](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L324)
 
 ***
 
@@ -183,43 +183,45 @@ shelley specification in cardano-ledger; page 113
 
 `ToData.toData`
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:139](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L139)
+[src/ledger/Address.ts:140](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L140)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `string`
+> **toJson**(): \`addr1$\{string\}\` \| \`addr\_test1$\{string\}\`
 
 #### Returns
 
-`string`
+\`addr1$\{string\}\` \| \`addr\_test1$\{string\}\`
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:342](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L342)
+[src/ledger/Address.ts:384](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L384)
 
 ***
 
 ### toString()
 
-> **toString**(): `string`
+> **toString**(): \`addr1$\{string\}\` \| \`addr\_test1$\{string\}\`
+
+Returns a string representation of an object.
 
 #### Returns
 
-`string`
+\`addr1$\{string\}\` \| \`addr\_test1$\{string\}\`
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:305](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L305)
+[src/ledger/Address.ts:347](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L347)
 
 ***
 
 ### fromBuffer()
 
-> **`static`** **fromBuffer**(`buff`): [`Address`](Address)
+> `static` **fromBuffer**(`buff`): [`Address`](Address.md)
 
 #### Parameters
 
@@ -227,17 +229,17 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:273](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L273)
+[src/ledger/Address.ts:274](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L274)
 
 ***
 
 ### fromBytes()
 
-> **`static`** **fromBytes**(`bs`): [`Address`](Address)
+> `static` **fromBytes**(`bs`): [`Address`](Address.md)
 
 #### Parameters
 
@@ -245,17 +247,17 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:191](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L191)
+[src/ledger/Address.ts:192](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L192)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cbor`): [`Address`](Address)
+> `static` **fromCbor**(`cbor`): [`Address`](Address.md)
 
 #### Parameters
 
@@ -263,17 +265,17 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:300](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L300)
+[src/ledger/Address.ts:342](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L342)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`buff`): [`Address`](Address)
+> `static` **fromCborObj**(`buff`): [`Address`](Address.md)
 
 #### Parameters
 
@@ -281,17 +283,44 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:287](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L287)
+[src/ledger/Address.ts:329](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L329)
+
+***
+
+### fromEntropy()
+
+> `static` **fromEntropy**(`entropy`, `network`): [`Address`](Address.md)
+
+generates an `XPrv` from entropy and calls `Addres.fromXPrv`
+
+gets the standard address for single address wallets
+
+payment key at path "m/1852'/1815'/0'/0/0"
+stake key at path   "m/1852'/1815'/0'/2/0"
+
+#### Parameters
+
+• **entropy**: `string` \| `Uint8Array`
+
+• **network**: [`NetworkT`](../type-aliases/NetworkT.md) = `"mainnet"`
+
+#### Returns
+
+[`Address`](Address.md)
+
+#### Defined in
+
+[src/ledger/Address.ts:319](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L319)
 
 ***
 
 ### fromString()
 
-> **`static`** **fromString**(`addr`): [`Address`](Address)
+> `static` **fromString**(`addr`): [`Address`](Address.md)
 
 #### Parameters
 
@@ -299,52 +328,77 @@ shelley specification in cardano-ledger; page 113
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:313](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L313)
+[src/ledger/Address.ts:355](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L355)
+
+***
+
+### fromXPrv()
+
+> `static` **fromXPrv**(`xprv`, `network`): [`Address`](Address.md)
+
+gets the standard address for single address wallets
+
+payment key at path "m/1852'/1815'/0'/0/0"
+stake key at path   "m/1852'/1815'/0'/2/0"
+
+#### Parameters
+
+• **xprv**: `XPrv`
+
+• **network**: [`NetworkT`](../type-aliases/NetworkT.md) = `"mainnet"`
+
+#### Returns
+
+[`Address`](Address.md)
+
+#### Defined in
+
+[src/ledger/Address.ts:289](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L289)
 
 ***
 
 ### mainnet()
 
-> **`static`** **mainnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address)
+> `static` **mainnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address.md)
 
 #### Parameters
 
-• **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+• **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
-• **stakeCreds?**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
+• **stakeCreds?**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
 
-• **type?**: [`AddressType`](../type-aliases/AddressType)
+• **type?**: [`AddressType`](../type-aliases/AddressType.md)
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:46](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L46)
+[src/ledger/Address.ts:47](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L47)
 
 ***
 
 ### testnet()
 
-> **`static`** **testnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address)
+> `static` **testnet**(`paymentCreds`, `stakeCreds`?, `type`?): [`Address`](Address.md)
 
 #### Parameters
 
-• **paymentCreds**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+• **paymentCreds**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
-• **stakeCreds?**: [`StakeCredentials`](StakeCredentials)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType)\>
+• **stakeCreds?**: [`StakeCredentials`](StakeCredentials.md)\<[`StakeCredentialsType`](../type-aliases/StakeCredentialsType.md)\>
 
-• **type?**: [`AddressType`](../type-aliases/AddressType)
+• **type?**: [`AddressType`](../type-aliases/AddressType.md)
 
 #### Returns
 
-[`Address`](Address)
+[`Address`](Address.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/Address.ts:60](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/Address.ts#L60)
+[src/ledger/Address.ts:61](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/Address.ts#L61)

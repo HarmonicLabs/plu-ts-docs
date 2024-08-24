@@ -1,107 +1,107 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertVoteRegistrationDeleg
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / CertVoteRegistrationDeleg
 
 # Class: CertVoteRegistrationDeleg
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert)
-- [`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg)
+- [`ICert`](../interfaces/ICert.md)
+- [`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg.md)
 
 ## Constructors
 
-### new CertVoteRegistrationDeleg(__namedParameters)
+### new CertVoteRegistrationDeleg()
 
-> **new CertVoteRegistrationDeleg**(`__namedParameters`): [`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg)
+> **new CertVoteRegistrationDeleg**(`__namedParameters`): [`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg.md)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg)
+• **\_\_namedParameters**: [`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg.md)
 
 #### Returns
 
-[`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg)
+[`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:26](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L26)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:28](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L28)
 
 ## Properties
 
 ### certType
 
-> **`readonly`** **certType**: [`VoteRegistrationDeleg`](../enumerations/CertificateType#voteregistrationdeleg)
+> `readonly` **certType**: [`VoteRegistrationDeleg`](../enumerations/CertificateType.md#voteregistrationdeleg)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
+[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:21](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L21)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:23](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L23)
 
 ***
 
 ### coin
 
-> **`readonly`** **coin**: `bigint`
+> `readonly` **coin**: `bigint`
 
 #### Implementation of
 
-[`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg).[`coin`](../interfaces/ICertVoteRegistrationDeleg#coin)
+[`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg.md).[`coin`](../interfaces/ICertVoteRegistrationDeleg.md#coin)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:24](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L24)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:26](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L26)
 
 ***
 
 ### drep
 
-> **`readonly`** **drep**: `DRep`
+> `readonly` **drep**: [`DRep`](../type-aliases/DRep.md)
 
 #### Implementation of
 
-[`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg).[`drep`](../interfaces/ICertVoteRegistrationDeleg#drep)
+[`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg.md).[`drep`](../interfaces/ICertVoteRegistrationDeleg.md#drep)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:23](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L23)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:25](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L25)
 
 ***
 
 ### stakeCredential
 
-> **`readonly`** **stakeCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+> `readonly` **stakeCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
 #### Implementation of
 
-[`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg).[`stakeCredential`](../interfaces/ICertVoteRegistrationDeleg#stakecredential)
+[`ICertVoteRegistrationDeleg`](../interfaces/ICertVoteRegistrationDeleg.md).[`stakeCredential`](../interfaces/ICertVoteRegistrationDeleg.md#stakecredential)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:22](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L22)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:24](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L24)
 
 ## Methods
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
 
 #### Returns
 
-[`Hash28`](Hash28)[]
+[`Hash28`](Hash28.md)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
+[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:38](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L38)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:58](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L58)
 
 ***
 
@@ -113,9 +113,9 @@
 
 `CborString`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:43](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L43)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:63](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L63)
 
 ***
 
@@ -127,19 +127,41 @@
 
 `CborArray`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:47](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L47)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:67](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L67)
+
+***
+
+### toData()
+
+> **toData**(`version`?): `DataConstr`
+
+#### Parameters
+
+• **version?**: `ToDataVersion`
+
+#### Returns
+
+`DataConstr`
+
+#### Implementation of
+
+[`ICert`](../interfaces/ICert.md).[`toData`](../interfaces/ICert.md#todata)
+
+#### Defined in
+
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:40](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L40)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### certType
 
@@ -151,7 +173,7 @@
 
 ##### drep
 
-> **drep**: `Object`
+> **drep**: `object`
 
 ##### drep.drepType
 
@@ -159,7 +181,7 @@
 
 ##### stakeCredential
 
-> **stakeCredential**: `Object`
+> **stakeCredential**: `object`
 
 ##### stakeCredential.credentialType
 
@@ -169,15 +191,15 @@
 
 > **hash**: `string`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:76](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L76)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:96](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L96)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg)
+> `static` **fromCborObj**(`cbor`): [`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg.md)
 
 #### Parameters
 
@@ -185,8 +207,8 @@
 
 #### Returns
 
-[`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg)
+[`CertVoteRegistrationDeleg`](CertVoteRegistrationDeleg.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertVoteRegistrationDeleg.ts:57](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertVoteRegistrationDeleg.ts#L57)
+[src/ledger/certs/CertVoteRegistrationDeleg.ts:77](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertVoteRegistrationDeleg.ts#L77)

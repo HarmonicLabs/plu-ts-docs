@@ -1,100 +1,100 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / AuxiliaryData
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / AuxiliaryData
 
 # Class: AuxiliaryData
 
 ## Implements
 
-- [`IAuxiliaryData`](../interfaces/IAuxiliaryData)
+- [`IAuxiliaryData`](../interfaces/IAuxiliaryData.md)
 - `ToCbor`
 - `ToJson`
 
 ## Constructors
 
-### new AuxiliaryData(auxData)
+### new AuxiliaryData()
 
-> **new AuxiliaryData**(`auxData`): [`AuxiliaryData`](AuxiliaryData)
+> **new AuxiliaryData**(`auxData`): [`AuxiliaryData`](AuxiliaryData.md)
 
 #### Parameters
 
-• **auxData**: [`IAuxiliaryData`](../interfaces/IAuxiliaryData)
+• **auxData**: [`IAuxiliaryData`](../interfaces/IAuxiliaryData.md)
 
 #### Returns
 
-[`AuxiliaryData`](AuxiliaryData)
+[`AuxiliaryData`](AuxiliaryData.md)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:36](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L36)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:36](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L36)
 
 ## Properties
 
 ### hash
 
-> **`readonly`** **hash**: [`AuxiliaryDataHash`](AuxiliaryDataHash)
+> `readonly` **hash**: [`AuxiliaryDataHash`](AuxiliaryDataHash.md)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L34)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L34)
 
 ***
 
 ### metadata?
 
-> **`optional`** **`readonly`** **metadata**: [`TxMetadata`](TxMetadata)
+> `readonly` `optional` **metadata**: [`TxMetadata`](TxMetadata.md)
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`metadata`](../interfaces/IAuxiliaryData#metadata)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`metadata`](../interfaces/IAuxiliaryData.md#metadata)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:29](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L29)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:29](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L29)
 
 ***
 
 ### nativeScripts?
 
-> **`optional`** **`readonly`** **nativeScripts**: [`Script`](Script)\<[`NativeScript`](../enumerations/ScriptType#nativescript)\>[]
+> `readonly` `optional` **nativeScripts**: [`Script`](Script.md)\<[`NativeScript`](../enumerations/ScriptType.md#nativescript)\>[]
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`nativeScripts`](../interfaces/IAuxiliaryData#nativescripts)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`nativeScripts`](../interfaces/IAuxiliaryData.md#nativescripts)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:30](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L30)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:30](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L30)
 
 ***
 
 ### plutusV1Scripts?
 
-> **`optional`** **`readonly`** **plutusV1Scripts**: [`Script`](Script)\<[`PlutusV1`](../enumerations/ScriptType#plutusv1)\>[]
+> `readonly` `optional` **plutusV1Scripts**: [`Script`](Script.md)\<[`PlutusV1`](../enumerations/ScriptType.md#plutusv1)\>[]
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`plutusV1Scripts`](../interfaces/IAuxiliaryData#plutusv1scripts)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`plutusV1Scripts`](../interfaces/IAuxiliaryData.md#plutusv1scripts)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:31](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L31)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:31](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L31)
 
 ***
 
 ### plutusV2Scripts?
 
-> **`optional`** **`readonly`** **plutusV2Scripts**: [`Script`](Script)\<[`PlutusV2`](../enumerations/ScriptType#plutusv2)\>[]
+> `readonly` `optional` **plutusV2Scripts**: [`Script`](Script.md)\<[`PlutusV2`](../enumerations/ScriptType.md#plutusv2)\>[]
 
 #### Implementation of
 
-[`IAuxiliaryData`](../interfaces/IAuxiliaryData).[`plutusV2Scripts`](../interfaces/IAuxiliaryData#plutusv2scripts)
+[`IAuxiliaryData`](../interfaces/IAuxiliaryData.md).[`plutusV2Scripts`](../interfaces/IAuxiliaryData.md#plutusv2scripts)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:32](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L32)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:32](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L32)
 
 ## Methods
 
@@ -110,9 +110,9 @@
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:167](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L167)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:167](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L167)
 
 ***
 
@@ -128,19 +128,19 @@
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:171](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L171)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:171](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L171)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### metadata
 
@@ -148,29 +148,29 @@
 
 ##### nativeScripts
 
-> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 ##### plutusV1Scripts
 
-> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 ##### plutusV2Scripts
 
-> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 #### Implementation of
 
 `ToJson.toJson`
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:287](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L287)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:287](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L287)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`AuxiliaryData`](AuxiliaryData)
+> `static` **fromCbor**(`cStr`): [`AuxiliaryData`](AuxiliaryData.md)
 
 #### Parameters
 
@@ -178,17 +178,17 @@
 
 #### Returns
 
-[`AuxiliaryData`](AuxiliaryData)
+[`AuxiliaryData`](AuxiliaryData.md)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:200](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L200)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:200](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L200)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`AuxiliaryData`](AuxiliaryData)
+> `static` **fromCborObj**(`cObj`): [`AuxiliaryData`](AuxiliaryData.md)
 
 #### Parameters
 
@@ -196,8 +196,8 @@
 
 #### Returns
 
-[`AuxiliaryData`](AuxiliaryData)
+[`AuxiliaryData`](AuxiliaryData.md)
 
-#### Source
+#### Defined in
 
-[src/tx/AuxiliaryData/AuxiliaryData.ts:204](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/AuxiliaryData/AuxiliaryData.ts#L204)
+[src/tx/AuxiliaryData/AuxiliaryData.ts:204](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/AuxiliaryData/AuxiliaryData.ts#L204)

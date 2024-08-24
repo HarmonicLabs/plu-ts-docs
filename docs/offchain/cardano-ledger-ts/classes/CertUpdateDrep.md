@@ -1,93 +1,93 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertUpdateDrep
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / CertUpdateDrep
 
 # Class: CertUpdateDrep
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert)
-- [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep)
+- [`ICert`](../interfaces/ICert.md)
+- [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md)
 
 ## Constructors
 
-### new CertUpdateDrep(__namedParameters)
+### new CertUpdateDrep()
 
-> **new CertUpdateDrep**(`__namedParameters`): [`CertUpdateDrep`](CertUpdateDrep)
+> **new CertUpdateDrep**(`__namedParameters`): [`CertUpdateDrep`](CertUpdateDrep.md)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep)
+• **\_\_namedParameters**: [`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md)
 
 #### Returns
 
-[`CertUpdateDrep`](CertUpdateDrep)
+[`CertUpdateDrep`](CertUpdateDrep.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:21](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L21)
+[src/ledger/certs/CertUpdateDrep.ts:23](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L23)
 
 ## Properties
 
 ### anchor
 
-> **`readonly`** **anchor**: `undefined` \| `Anchor`
+> `readonly` **anchor**: `undefined` \| [`Anchor`](Anchor.md)
 
 #### Implementation of
 
-[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep).[`anchor`](../interfaces/ICertUpdateDrep#anchor)
+[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md).[`anchor`](../interfaces/ICertUpdateDrep.md#anchor)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L19)
+[src/ledger/certs/CertUpdateDrep.ts:21](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L21)
 
 ***
 
 ### certType
 
-> **`readonly`** **certType**: [`UpdateDrep`](../enumerations/CertificateType#updatedrep)
+> `readonly` **certType**: [`UpdateDrep`](../enumerations/CertificateType.md#updatedrep)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
+[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:17](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L17)
+[src/ledger/certs/CertUpdateDrep.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L19)
 
 ***
 
 ### drepCredential
 
-> **`readonly`** **drepCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+> `readonly` **drepCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
 #### Implementation of
 
-[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep).[`drepCredential`](../interfaces/ICertUpdateDrep#drepcredential)
+[`ICertUpdateDrep`](../interfaces/ICertUpdateDrep.md).[`drepCredential`](../interfaces/ICertUpdateDrep.md#drepcredential)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:18](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L18)
+[src/ledger/certs/CertUpdateDrep.ts:20](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L20)
 
 ## Methods
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
 
 #### Returns
 
-[`Hash28`](Hash28)[]
+[`Hash28`](Hash28.md)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
+[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:32](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L32)
+[src/ledger/certs/CertUpdateDrep.ts:50](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L50)
 
 ***
 
@@ -99,9 +99,9 @@
 
 `CborString`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:37](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L37)
+[src/ledger/certs/CertUpdateDrep.ts:55](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L55)
 
 ***
 
@@ -113,23 +113,45 @@
 
 `CborArray`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:41](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L41)
+[src/ledger/certs/CertUpdateDrep.ts:59](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L59)
+
+***
+
+### toData()
+
+> **toData**(`version`?): `DataConstr`
+
+#### Parameters
+
+• **version?**: `ToDataVersion`
+
+#### Returns
+
+`DataConstr`
+
+#### Implementation of
+
+[`ICert`](../interfaces/ICert.md).[`toData`](../interfaces/ICert.md#todata)
+
+#### Defined in
+
+[src/ledger/certs/CertUpdateDrep.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L34)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### anchor
 
-> **anchor**: `null` \| `Object`
+> **anchor**: `null` \| `object`
 
 ##### certType
 
@@ -137,7 +159,7 @@
 
 ##### drepCredential
 
-> **drepCredential**: `Object`
+> **drepCredential**: `object`
 
 ##### drepCredential.credentialType
 
@@ -147,15 +169,15 @@
 
 > **hash**: `string`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:66](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L66)
+[src/ledger/certs/CertUpdateDrep.ts:84](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L84)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertUpdateDrep`](CertUpdateDrep)
+> `static` **fromCborObj**(`cbor`): [`CertUpdateDrep`](CertUpdateDrep.md)
 
 #### Parameters
 
@@ -163,8 +185,8 @@
 
 #### Returns
 
-[`CertUpdateDrep`](CertUpdateDrep)
+[`CertUpdateDrep`](CertUpdateDrep.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertUpdateDrep.ts:50](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertUpdateDrep.ts#L50)
+[src/ledger/certs/CertUpdateDrep.ts:68](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertUpdateDrep.ts#L68)

@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / TxMetadata
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / TxMetadata
 
 # Class: TxMetadata
 
@@ -13,31 +13,31 @@
 
 ## Constructors
 
-### new TxMetadata(metadata)
+### new TxMetadata()
 
-> **new TxMetadata**(`metadata`): [`TxMetadata`](TxMetadata)
+> **new TxMetadata**(`metadata`): [`TxMetadata`](TxMetadata.md)
 
 #### Parameters
 
-• **metadata**: [`ITxMetadata`](../type-aliases/ITxMetadata)
+• **metadata**: [`ITxMetadata`](../type-aliases/ITxMetadata.md)
 
 #### Returns
 
-[`TxMetadata`](TxMetadata)
+[`TxMetadata`](TxMetadata.md)
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L19)
+[src/tx/metadata/TxMetadata.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L19)
 
 ## Properties
 
 ### metadata
 
-> **`readonly`** **metadata**: `ITxMetadataStr`
+> `readonly` **metadata**: `ITxMetadataStr`
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:17](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L17)
+[src/tx/metadata/TxMetadata.ts:17](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L17)
 
 ## Methods
 
@@ -53,9 +53,9 @@
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:49](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L49)
+[src/tx/metadata/TxMetadata.ts:49](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L49)
 
 ***
 
@@ -71,9 +71,9 @@
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:53](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L53)
+[src/tx/metadata/TxMetadata.ts:53](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L53)
 
 ***
 
@@ -89,15 +89,15 @@
 
 `ToJson.toJson`
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:92](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L92)
+[src/tx/metadata/TxMetadata.ts:92](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L92)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`TxMetadata`](TxMetadata)
+> `static` **fromCbor**(`cStr`): [`TxMetadata`](TxMetadata.md)
 
 #### Parameters
 
@@ -105,17 +105,17 @@
 
 #### Returns
 
-[`TxMetadata`](TxMetadata)
+[`TxMetadata`](TxMetadata.md)
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:65](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L65)
+[src/tx/metadata/TxMetadata.ts:65](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L65)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`TxMetadata`](TxMetadata)
+> `static` **fromCborObj**(`cObj`): [`TxMetadata`](TxMetadata.md)
 
 #### Parameters
 
@@ -123,8 +123,8 @@
 
 #### Returns
 
-[`TxMetadata`](TxMetadata)
+[`TxMetadata`](TxMetadata.md)
 
-#### Source
+#### Defined in
 
-[src/tx/metadata/TxMetadata.ts:69](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/metadata/TxMetadata.ts#L69)
+[src/tx/metadata/TxMetadata.ts:69](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/metadata/TxMetadata.ts#L69)

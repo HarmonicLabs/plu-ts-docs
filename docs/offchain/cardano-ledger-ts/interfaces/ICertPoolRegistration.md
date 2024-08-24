@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / ICertPoolRegistration
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / ICertPoolRegistration
 
 # Interface: ICertPoolRegistration
 
@@ -10,8 +10,8 @@
 
 ### poolParams
 
-> **poolParams**: [`IPoolParams`](IPoolParams)
+> **poolParams**: [`IPoolParams`](IPoolParams.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRegistration.ts:10](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRegistration.ts#L10)
+[src/ledger/certs/CertPoolRegistration.ts:12](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRegistration.ts#L12)
