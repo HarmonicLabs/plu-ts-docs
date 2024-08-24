@@ -4,11 +4,15 @@ sidebar_position: 1
 
 # `makeValidator`
 
+:::caution [!CAUTION]
+This method is deprecated as of Plutus V3
+:::
+
 Once on-chain contracts are not typed. Instead they only receive generic `data` arguments.
 
-This is why `makeValidator` exsists. 
+This is why `makeValidator` exists. 
 
-the type signature is not too complicated:
+The type signature is not too complicated:
 
 ```ts
 export function makeValidator(
@@ -29,15 +33,15 @@ export function makeValidator(
 
 ```
 
-as you can see it takes any typed validator and returns a generic untyped validator so that the node will be able to evaluate it correctly.
+As you can see it takes any typed validator and returns a generic untyped validator so that the node will be able to evaluate it correctly.
 
 :::caution use `makeValidator` only for spending scripts
 
-as you can see; `makeValidator` expects a contract with 3 arguments.
+As you can see; `makeValidator` expects a contract with 3 arguments.
 
-this means it can only be used for contracts with `Spending` as `PScriptPurpose`
+This means it can only be used for contracts with `Spending` as `PScriptPurpose`
 
-for all other purposes you likely want to use [`makeRedeemerValidator`](./makeRedeemerValidator)
+For all other purposes you likely want to use [`makeRedeemerValidator`](./makeRedeemerValidator)
 
 :::
 

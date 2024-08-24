@@ -65,9 +65,9 @@ const myPair = pPair( bs, int )( "caffee", 2 )
 
 :::info
 
-note how we are passing typescript value without transforming them to `plu-ts` ones;
+Note how we are passing typescript value without transforming them to `plu-ts` ones;
 
-this is some magic done by 'plu-ts' so that if the type is known we dont have to explicitly construct it.
+This is some magic done by 'plu-ts' so that if the type is known we don't have to explicitly construct it.
 
 We'll see that this turns really useful while writing a smart contract
 
@@ -77,7 +77,7 @@ We'll see that this turns really useful while writing a smart contract
 
 `delayed` doesn't really have a Typescript value, so it only makes sense in the `plu-ts` world.
 
-you can only obtain a delayed value from an exsisting one using `pdelay`
+You can only obtain a delayed value from an exsisting one using `pdelay`
 
 ```ts
 function pdelay<PT extends PType>( someTerm: Term<PT> ): Term<PDelayed<PT>>

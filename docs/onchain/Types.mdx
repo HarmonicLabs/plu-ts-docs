@@ -26,6 +26,7 @@ The possible types a `Term` can keep track of are defined in [PTypes](https://gi
 - `PFn<[ PInput_0 , ...PType[] ],POutput>` a function that takes multiple arguments (at least one) and returns something of type `POutput`
 - `PAlias<PType>` just an alias of the provided type; it behaves exactly like the Types of its argument, so `PAlias<PInt>` is equivalent to a `PInt`. This is useful for keeping track of a different meaning the type might have.
 - `PStruct<{...}>` an abstraction over `PData`, useful to construct more complex data structures.
+- `PSop<{...}>` essentially similar to `PStruct`; works in Plutus V3 as constructor is introduced. 
 
 ## `plu-ts` Types
 
@@ -51,7 +52,7 @@ In the same order of above, the `plu-ts` equivalents are:
 - `PDelayed` -> `delayed( type )`
 - `PLam` -> `lam( from, to )`
 - `PFn` -> `fn([ ...inputs ], output )`
-- aliases types and structs types will be retreived by the `type` static property of the classes (explained in the dedicated section for [aliases](./Values/aliases) and [structs](./Values/Structs/definition))
+- aliases types and structs types will be retrieved by the `type` static property of the classes (explained in the dedicated section for [aliases](./Values/aliases) and [structs](./Values/Structs/definition))
 
 ## `plu-ts` generics
 

@@ -4,9 +4,9 @@ sidebar_position: 2
 
 # `PTxInfo`
 
-It is the first field of the [`PScriptContex`](./PScriptContex) structure.
+It is the first field of the [`PScriptContext`](./PScriptContext) structure.
 
-It includes all the informations regarding the transaction in which the script is included.
+It includes all the information regarding the transaction in which the script is included.
 
 definition:
 
@@ -16,15 +16,19 @@ export const PTxInfo = pstruct({
         inputs: list( PTxInInfo.type ),
         refInputs: list( PTxInInfo.type ),
         outputs: list( PTxOut.type ),
-        fee:  PValue.type,
+        fee:  int, // lovelaces
         mint: PValue.type,
-        dCertificates: list( PDCert.type ),
-        withdrawals: list( pair( PStakingCredentials.type, int ) ),
+        certificates: list( PCertificate.type ),
+        withdrawals: map( PCredential.type, int ),
         interval: PPOSIXTimeRange.type,
         signatories: list( PPubKeyHash.type ),
-        redeemers: list( pair( PScriptPurpose.type, data ) ),
-        datums: list( pair( PDatumHash.type, data ) ),
-        id: PTxId.type
+        redeemers: map( PScriptPurpose.type, data ),
+        datums: map( PDatumHash.type, data ),
+        id: PTxId.type,
+        votes: map( PVoter.type, map( PTxOutRef.type, PVote.type ) ),
+        proposalProcedures: list( PProposalProcedure.type ),
+        currentTreasury: PMaybe( int ).type,
+        treasuryDonation: PMaybe( int ).type,
     }
 });
 ```
@@ -60,7 +64,7 @@ The value implements all the properties defined on the [`TermList`](../../stdlib
 
 type: [`PValue.type`](./PValue)
 
-despite being only a value it always includes a single entry which repersents the lovelaces paid as fees.
+despite being only a value it always includes a single entry which represents the lovelaces paid as fees.
 
 ### `mint`
 
@@ -76,23 +80,22 @@ since lovelaces can't be minted/burned the quantity will always be 0
 
 :::
 
-### `dCertificates`
+### `certificates`
 
-type: `list( PDCert.type )`
+type: `list( PCertificate.type )`
 
-elements's type: [`PDCert`](./PDCert)
+elements's type: [`PCertificate`](./PCertificate)
 
 The value implements all the properties defined on the [`TermList`](../../stdlib/TermList) utility term.
 
 
 ### `withdrawals`
 
-type: `list( pair( PStakingCredentials.type, int ) )`
+type: `map( PCredential.type, int )`
 
 elements's types: 
 
-- [`TermPair`](../../stdlib/TermPair)
-- [`PStakingCredentials`](./PStakingCredentials)
+- [`PCredential`](./PCredential)
 - [`TermInt`](../../stdlib/TermInt)
 
 The value implements all the properties defined on the [`TermList`](../../stdlib/TermList) utility term.
@@ -141,3 +144,41 @@ The value implements all the properties defined on the [`TermList`](../../stdlib
 ### `id`
 
 type: [`PTxId.type`](./PTxId)
+
+
+### `votes`
+
+type: `map( PVoter.type, map( PTxOutRef.type, PVote.type ) )`
+
+elements's types: 
+
+- [`PVoter`](./PVoter)
+- [`PTxOutRef`](./PTxOutRef)
+- [`PVote`](./PVote)
+
+
+### `proposalProcedures`
+
+type: `list( PProposalProcedure.type )`
+
+elements's types: 
+
+- [`PProposalProcedure`](./PProposalProcedure)
+
+
+### `currentTreasury`
+
+type: `PMaybe( int ).type`
+
+elements's types: 
+
+- [`PMaybe`](./PMaybe)
+
+
+### `treasuryDonation`
+
+type: `PMaybe( int ).type`
+
+elements's types: 
+
+- [`PMaybe`](./PMaybe)

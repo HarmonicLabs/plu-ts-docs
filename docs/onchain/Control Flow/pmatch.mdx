@@ -39,11 +39,11 @@ const getMailmanName = plam( Toy.type, str )
 
 It then executes the branch based on the constructor used to get the struct instance.
 
-A `pmatch` branch gets as input the instance of the sturct with all fields aviable trough dot notation.
+A `pmatch` branch gets as input the instance of the struct with all fields aviable trough dot notation.
 
 This way the defined function returns the name of the mailman if the Toy was actually constructed using the `Mailman` constructor; otherwise it returns an empty string.
 
-## the underscore (`_`) wildcard
+## The underscore (`_`) wildcard
 
 `pmatch` will force you to cover the cases for all constructors; but many times we only want to do something if the struct was built using one specific constructor without regard for any other constructors.
 
@@ -60,9 +60,9 @@ const getMailmanName = plam( Toy.type, str )
 ```
 This not only makes the code more readable but in the vast majority of the cases it also makes it more efficient!
 
-## inline dot notation
+## Inline dot notation
 
-Now that we have a way to extract the name of the mailman from a Toy, we need to pass the actual toy to the fuction we just defined.
+Now that we have a way to extract the name of the mailman from a Toy, we need to pass the actual toy to the function we just defined.
 
 Using the `pmatch` function, our code would look like this:
 
@@ -85,7 +85,7 @@ const getMailmanNameFromDog = plam( Dog.type, str )
 )
 ```
 
-This works just fine but is a lot of code just to get a field of a constructor we know is unique...
+This works just fine but is a lot of code just to get a field of a constructor we know is unique.
 
 Fortunately for us, if the struct definition has only one possible constructor,
 this struct term directly exposes the fields; so that we can threat it as a normal javascript object 

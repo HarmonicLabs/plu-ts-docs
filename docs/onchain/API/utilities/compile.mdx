@@ -15,9 +15,9 @@ function compile(
 ): Uint8Array;
 ```
 
-`compile` takes **any** Term as input and returns an `Uint8Array` that are the `flat` srialization of the Term.
+`compile` takes **any** Term as input and returns an `Uint8Array` that are the `flat` serialization of the Term.
 
-It optionally takes a touple of 3 `number`s (expected to be all positive integer) representing the contract version.
+It optionally takes a tuple of 3 `number`s (expected to be all positive integer) representing the contract version.
 
 The version defaults to `[ 1, 0, 0 ]` and is unlikely you will ever need to specify it.
 
@@ -27,6 +27,6 @@ The `flat` format is how the contract is stored on chain.
 
 However is not the format **is not** how it is include in a transaction (nor how it is used by `cardano-cli`)
 
-top use the result of `compile` you should pass it to a `Script` constructor so that it can handle the format for you.
+To use the result of `compile` you should pass it to a `Script` constructor so that it can handle the format for you.
 
 :::

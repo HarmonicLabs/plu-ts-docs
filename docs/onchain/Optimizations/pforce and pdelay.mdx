@@ -12,7 +12,7 @@ this is because they significantly reduce both script size and cost of execution
 
 As we know, `plu-ts` is strictly evaluated, meaning that arguments are evaluated before being passed to a function.
 
-We can opt out of this behaviour using `pdelay` which wraps a term of any type in a `delayed` type so a term of type `int` becomes `delayed( int )` if passed to `pdelay`. A `delayed` type can be unwrapped only using `pforce`; that finally executes the term.
+We can opt out of this behavior using `pdelay` which wraps a term of any type in a `delayed` type so a term of type `int` becomes `delayed( int )` if passed to `pdelay`. A `delayed` type can be unwrapped only using `pforce`, that finally executes the term.
 
 There are two main reasons for why we would want to do this:
 
@@ -37,8 +37,7 @@ pforce(
     )
 )
 ```
-
-so that we only evaluate what we need.
+So that we only evaluate what we need.
 
 Not only that, but if one of the two branches throws an error but we don't need it, everything goes through smoothly:
 
@@ -54,8 +53,10 @@ pforce(
     )
 )
 ```
-Here, everything is ok. If instead we just used the plain `pstrictIf`
 
+Here, everything is ok. 
+
+If instead we just used the plain `pstrictIf`
 ```ts
     pstrictIf( int )
     .$( pBool( true ) )
@@ -63,4 +64,4 @@ Here, everything is ok. If instead we just used the plain `pstrictIf`
     // highlight-error
     .$( perror( int ) ) // KABOOM !!!
 ```
-this results in an error, because the error is evaluated _before_ being passed as argument.
+This results in an error, because the error is evaluated _before_ being passed as argument.

@@ -42,7 +42,7 @@ Fortunately for us there are some [builtin functions](./builtins) that form the 
 
 We can use these to describe the body of our lambda.
 
-these builtins will often be aviable directly on our `Term`, as in the example below
+These builtins will often be aviable directly on our `Term`, as in the example below
 
 ```ts
 const pintIsZero = makeLambdaFromIntToBool(
@@ -55,9 +55,9 @@ is convention to name `plu-ts` functions starting with a lower case "p"; indicat
 
 :::
 
-Here we are using the `peqInt` builtin function; the `$` method is a short form for the [`papp` function](./Function_appliaciton) and is how we pass arguments to a `plu-ts` function (we'll cover function application in the very next section).
+Here we are using the `peqInt` builtin function; the `$` method is a short form for the [`papp` function](./Function_application) and is how we pass arguments to a `plu-ts` function (we'll cover function application in the very next section).
 
-What matters for now is that we succesfully transformed an `int` into a `bool` using only `plu-ts`; and we now have a new function that we can re-use when needed.
+What matters for now is that we successfully transformed an `int` into a `bool` using only `plu-ts`; and we now have a new function that we can re-use when needed.
 ```ts
 pintIsZero.$( pInt(42) ) // this is a Term<PBool> equivalent to `pBool( false )`
 ```
@@ -69,18 +69,18 @@ Now that we know how the `plam` machinery works let's look at the more useful `p
 The signature (a bit simplified; this is not Typescript) is
 ```ts
 function pfn<InputsTypes extends [ TermType, ...TermType[] ], OutputType extends TermType>( inputsTypes: InputsTypes, outputType: OutputType )
-    : ( termFunction: ( ...inptus: PInputs ) => POutput ) => 
+    : ( termFunction: ( ...inputs: PInputs ) => POutput ) => 
         Term<PFn<PInputs, POutput>>
 ```
 
-and with the exception of an array of types as input rather than a single type we see it is doing the exact same thing as `plam` but with more inputs.
+And with the exception of an array of types as input rather than a single type we see it is doing the exact same thing as `plam` but with more inputs.
 
 So if we want a function that builds a `plu-ts` level function for us of type `int -> int -> list( int )` we just write
 ```ts
 const makeListFromTwoInts = pfn( [ int, int ], list( int ) );
 ```
 
-and just like the `plam` case, we use the function we just got to build a `plu-ts` one.
+And just like the `plam` case, we use the function we just got to build a `plu-ts` one.
 ```ts
 const pTwoIntegersList = makeListFromTwoInts(
     ( int1, int2 ) => pList([ int1, int2 ])

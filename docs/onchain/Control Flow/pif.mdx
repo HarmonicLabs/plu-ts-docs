@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # if then else
 
-As a solution to _condtitional code execution_ `plu-ts` exposes an _if then else_ construct.
+As a solution to _conditional code execution_ `plu-ts` exposes an _if then else_ construct.
 
 However, since everything in `plu-ts` is an expression, the _if then else_ construct does not allow stuff that in typescript would have been written as
 ```ts
@@ -13,7 +13,7 @@ if( my_condition )
     doSomething();
 }
 ```
-because we don't really know what to do if the condtion is false.
+Because we don't really know what to do if the condition is false.
 
 So the _if then else_ we have in `plu-ts` is more similar to the typescript ` ? : ` ternary operator, so at the end of the day, _if then else_ is just a function.
 
@@ -24,11 +24,11 @@ pif( int ).$( true )
 .else( 69 )
 ```
 
-This `plu-ts` expression checks the condition (in our case `pBool(true)`; remeber that `plu-ts` is converting the typescript value for us) 
+This `plu-ts` expression checks the condition (in our case `pBool(true)`; remember that `plu-ts` is converting the typescript value for us) 
 
-and if it is a `Term<PBool>` equivalent to `true` it returns `pInt(42)` otherwhise it returns `pInt(69)`.
+And, if it is a `Term<PBool>` equivalent to `true` it returns `pInt(42)` otherwise it returns `pInt(69)`.
 
-### Why `pif` is a typescript function and not a constant like other `plu-ts` funcitons?
+### Why `pif` is a typescript function and not a constant like other `plu-ts` functions?
 
 Since the type of _if then else_ is something like `bool -> a -> a -> a`, we need to specify the type of `a` _prior_ to the actual expression.
 
@@ -47,7 +47,7 @@ pif( int ).$( true )
 
 ## What happens if one of the two branches raises an error?
 
-`plu-ts` is a _strict language_ as we saw while having a look at [`papp`](../Values/Functions/Function_appliaciton); that means that arguments are evaluated _prior_ being passed to a function.
+`plu-ts` is a _strict language_ as we saw while having a look at [`papp`](../Values/Functions/Function_application); that means that arguments are evaluated _prior_ being passed to a function.
 
 **what happens if one of the argument returns an error?**
 
@@ -55,9 +55,9 @@ The answer is _what you expect to happen_. Or, to be more precise, if the error 
 
 This is because even if by default functions are strict, `pif` is _lazy_; meaning that it evaluates only the argument it needs and not the others.
 
-This is done using [`pforce` and `pdelay`](../Optimizations/pforce%20and%20pdelay) so the compiled funcion is a bit larger than the one you'd expect.
+This is done using [`pforce` and `pdelay`](../Optimizations/pforce%20and%20pdelay) so the compiled function is a bit larger than the one you'd expect.
 
-> if you don't need _lazyness_ you can use the `pstrictIf` function that emits slightly less code but evaluates both the arguments.
+> if you don't need _laziness_ you can use the `pstrictIf` function that emits slightly less code but evaluates both the arguments.
 > 
 > so something like
 > ```ts
