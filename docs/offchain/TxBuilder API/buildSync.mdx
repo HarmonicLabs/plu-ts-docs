@@ -67,14 +67,21 @@ interface ITxBuildInput {
 #### `utxo`
 
 required field, expects an instance of [`UTxO`](../cardano-ledger-ts/classes/UTxO)
-
-#### `
-
+ 
 ### `changeAddress`
 
 an instance of `Address` or a bech32 encoded address (starting with `"addr1"` or `"addr_test1"` if in testnet);
 
 will add an output to the specified address (in the **last** position in tx outputs ordering).
+
+### `change`
+
+like `changeAddress` but with more control over the output
+
+it also allows to set a `datum` and a `refScript` for the output
+
+of course no value can be specified as it is calculated by the `TxBuilder`
+
 
 ### `outputs`
 

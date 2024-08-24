@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 :::caution There is an updated version of this page
 
-[You can find the last version here](./Hello%20World).
+[You can find the last version here](./Hello_World).
 
 :::
 
@@ -162,7 +162,7 @@ const MyRedeemer = pstruct({
 export default MyRedeemer;
 ```
 
-whereas `PScriptContex` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
+whereas `PScriptContext` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
 
 finally, the contract is used in `src/index.ts` which is our entry point.
 
@@ -373,7 +373,7 @@ then we'll check that the transaction is signed by the owner specified in the da
 
 to do so we need informations about the tranasaction and who signed it.
 
-all the informations about the tranasaction are in the `tx` field of the [`PScriptContex`](../onchain/API/types/PScriptContex)
+all the informations about the tranasaction are in the `tx` field of the [`PScriptContext`](../onchain/API/types/PScriptContext.mdx)
 
 an in particular we are interested in the [`signatories` field](../onchain/API/types/PTxInfo#signatories) 
 ```ts
