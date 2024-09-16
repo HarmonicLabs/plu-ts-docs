@@ -1,0 +1,36 @@
+---
+sidebar_position: 18
+---
+
+# `PTxInInfo`
+
+:::warning
+Modified in V2 version
+:::
+
+
+Type that represents detailed information about a Cardano transaction input. 
+Each input references a UTXO and includes the resolved details of that UTXO, essential in understanding the funds being spent in the transaction.
+
+Definition:
+
+```ts
+import { pstruct } from "../../../PTypes/PStruct/pstruct";
+import { PTxOut } from "./PTxOut";
+import { PTxOutRef } from "./PTxOutRef";
+
+export const PTxInInfo = pstruct({
+    PTxInInfo: {
+        utxoRef: PTxOutRef.type,
+        resolved: PTxOut.type
+    }
+});
+```
+
+## utxoRef
+
+type: [`PTxOutRef.type`](./PTxOutRef)
+
+## resolved
+
+type: ['PTxOut.type'](./PTxOut)

@@ -1,0 +1,50 @@
+---
+sidebar_position: 19
+---
+
+# `PTxOut`
+
+
+:::warning
+Modified in V2 version
+:::
+
+
+Type that represents a transaction output.
+
+Definition:
+
+```ts
+import { pstruct } from "../../../PTypes/PStruct/pstruct";
+import { PDatumHash } from "../ScriptsHashes/PDatumHash";
+import { PValue } from "../Value/PValue";
+import { PAddress } from "../Address/PAddress";
+import { PMaybe } from "../../../lib/std/PMaybe/PMaybe";
+
+export const PTxOut = pstruct({
+    PTxOut: {
+        address: PAddress.type,
+        value: PValue.type,
+        datumHash: PMaybe( PDatumHash.type ).type
+    }
+});
+```
+
+## `address`
+
+Destination address (recipient) to which the value is sent
+
+type: [`PAddress.type`](./PAddress)
+
+## `value`
+
+Amount of value being transferred in the transaction output. This includes the currency and the amount.
+
+type: [`PValue.type`](./PValue)
+
+## `datumHash`
+
+Optionally provides a hash of the additional data associated with the transaction output.
+
+type: [`PMaybe( PDatumHash.type ).type`](.PDatumHash)
+
