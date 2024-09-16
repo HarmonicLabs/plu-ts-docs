@@ -6,6 +6,7 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
+    "copy-build-output": "npm run build && cp -r ./build/* ../plu-ts-docs-build/",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",

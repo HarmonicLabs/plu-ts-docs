@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # `PTxInfo`
 
-It is the first field of the [`PScriptContext`](./PScriptContext) structure.
+It is the first field of the [`PScriptContext`](./PScriptContext.mdx) structure.
 
 It includes all the information regarding the transaction in which the script is included.
 
@@ -84,7 +84,7 @@ since lovelaces can't be minted/burned the quantity will always be 0
 
 type: `list( PCertificate.type )`
 
-elements's type: [`PCertificate`](./PCertificate)
+elements's type: `PCertificate`
 
 The value implements all the properties defined on the [`TermList`](../../stdlib/TermList) utility term.
 
@@ -152,9 +152,9 @@ type: `map( PVoter.type, map( PTxOutRef.type, PVote.type ) )`
 
 elements's types: 
 
-- [`PVoter`](./PVoter)
-- [`PTxOutRef`](./PTxOutRef)
-- [`PVote`](./PVote)
+- `PVoter`
+- [`PTxOutRef`](./PTxOutRef.mdx)
+- `PVote`
 
 
 ### `proposalProcedures`
@@ -163,7 +163,7 @@ type: `list( PProposalProcedure.type )`
 
 elements's types: 
 
-- [`PProposalProcedure`](./PProposalProcedure)
+- `PProposalProcedure` 
 
 
 ### `currentTreasury`
@@ -172,7 +172,7 @@ type: `PMaybe( int ).type`
 
 elements's types: 
 
-- [`PMaybe`](./PMaybe)
+- `PMaybe`
 
 
 ### `treasuryDonation`
@@ -181,4 +181,4 @@ type: `PMaybe( int ).type`
 
 elements's types: 
 
-- [`PMaybe`](./PMaybe)
+- `PMaybe`

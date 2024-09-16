@@ -1,0 +1,168 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Minting policy
+
+Now we can continue with a simple minting policy example.
+
+The final result can be found at [`HarmonicLabs/simple-minting-pluts`](https://github.com/HarmonicLabs/simple-minting-pluts).
+
+## Project set up
+
+We will start from the [`simple-minting-pluts`](https://github.com/HarmonicLabs/simple-minting-pluts) example:
+```bash
+git clone https://github.com/HarmonicLabs/simple-minting-pluts.git
+cd simple-minting-pluts
+git remote remove origin
+```
+
+This gives us a simple project structure:
+```
+./simple-minting-pluts
+├── contracts
+│   └── minting.ts
+├── next.config.js
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── src
+│   ├── components
+│   │   └── ConnectionHandler.tsx
+│   ├── offchain
+│   │   ├── getTxBuilder.ts
+│   │   ├── mesh-utils.ts
+│   │   └── mintNft.ts
+│   ├── pages
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   └── index.tsx
+│   └── styles
+│       ├── globals.css
+│       └── Home.module.css
+└── tsconfig.json
+```
+
+### Install dependencies
+
+Just like the [Hello plu-ts](./Hello_World.mdx) example; this project already comes with plu-ts as dependecy;
+all we need to do to then is to run
+
+```
+npm install
+```
+
+## Project overview
+
+From the project structure we see that the code can be found in the `src` folder and the `contracts` folder.
+
+The `contracts` only file is the `minting.ts` one; which always success and exports the compiled result.
+
+```ts title="contracts/minting.ts"
+import { Address, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeRedeemerValidator, pfn, pBool, data } from "@harmoniclabs/plu-ts";
+
+const minting = pfn([
+  data,
+  PScriptContext.type
+], bool)
+((redeemer, ctx) => {
+  return pBool(true);
+});
+
+///////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------- //
+// ------------------------- utilities ------------------------- //
+// ------------------------------------------------------------- //
+///////////////////////////////////////////////////////////////////
+
+export const untypedValidator = makeRedeemerValidator(minting);
+
+export const compiledContract = compile(untypedValidator);
+
+export const script = new Script(
+  "PlutusScriptV2",
+  compiledContract
+);
+
+export const scriptTestnetAddr = new Address(
+  "testnet",
+  PaymentCredentials.script(script.hash)
+);
+```
+
+The other file is the `offchain/mintNft.ts`, which includes the logic for building and executing the transaction for the NFT minting.
+
+```ts title="offchain/mintNft.ts"
+import { BrowserWallet } from "@meshsdk/core";
+import { Value, Address } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { scriptTestnetAddr, script } from "../../contracts/minting";
+import { toPlutsUtxo } from "./mesh-utils";
+import getTxBuilder from "./getTxBuilder";
+
+export async function mintNft(wallet: BrowserWallet, projectId: string): Promise<string> {
+
+  const recipient = Address.fromString(
+    await wallet.getChangeAddress()
+  );
+
+  const Blockfrost = new BlockfrostPluts({ projectId });
+
+  const txBuilder = await getTxBuilder(Blockfrost);
+  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+
+  if (myUTxOs.length === 0) {
+    throw new Error("have you requested founds from the faucet?");
+  }
+
+  const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
+
+  if (utxo === undefined) {
+    throw new Error("not enough ada");
+  }
+
+  const unsignedTx = await txBuilder.buildSync({
+    inputs: [{ utxo }],
+    changeAddress: recipient,
+    collaterals: [utxo],
+    collateralReturn: {
+      address: utxo.resolved.address,
+      value: Value.sub(utxo.resolved.value, Value.lovelaces(5_000_000))
+    },
+    mints: [{
+      value: Value.singleAsset(
+        scriptTestnetAddr.paymentCreds.hash,
+        Buffer.from('Test Token'),
+        1
+      ),
+      script: {
+        inline: script,
+        policyId: scriptTestnetAddr.paymentCreds.hash,
+        redeemer: recipient.toData()
+      }
+    }]
+  });
+
+  const txStr = await wallet.signTx(unsignedTx.toCbor().toString());
+
+  return await Blockfrost.submitTx(txStr);
+}
+```
+
+### Test it out
+
+To test it out run 
+```sh
+npm run dev
+```
+
+And navigate to the specified url (eg. `http://localhost:3000/`);
+
+Then connect your wallet.
+
+And click on the `Mint NFT` button.
+
+If everything works correctly you should be prompted to sign a transaction.

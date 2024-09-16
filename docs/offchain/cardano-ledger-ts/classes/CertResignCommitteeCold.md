@@ -1,93 +1,93 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertResignCommitteeCold
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / CertResignCommitteeCold
 
 # Class: CertResignCommitteeCold
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert)
-- [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold)
+- [`ICert`](../interfaces/ICert.md)
+- [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md)
 
 ## Constructors
 
-### new CertResignCommitteeCold(__namedParameters)
+### new CertResignCommitteeCold()
 
-> **new CertResignCommitteeCold**(`__namedParameters`): [`CertResignCommitteeCold`](CertResignCommitteeCold)
+> **new CertResignCommitteeCold**(`__namedParameters`): [`CertResignCommitteeCold`](CertResignCommitteeCold.md)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold)
+• **\_\_namedParameters**: [`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md)
 
 #### Returns
 
-[`CertResignCommitteeCold`](CertResignCommitteeCold)
+[`CertResignCommitteeCold`](CertResignCommitteeCold.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:21](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L21)
+[src/ledger/certs/CertResignCommitteeCold.ts:23](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L23)
 
 ## Properties
 
 ### anchor
 
-> **`readonly`** **anchor**: `undefined` \| `Anchor`
+> `readonly` **anchor**: `undefined` \| [`Anchor`](Anchor.md)
 
 #### Implementation of
 
-[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold).[`anchor`](../interfaces/ICertResignCommitteeCold#anchor)
+[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md).[`anchor`](../interfaces/ICertResignCommitteeCold.md#anchor)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L19)
+[src/ledger/certs/CertResignCommitteeCold.ts:21](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L21)
 
 ***
 
 ### certType
 
-> **`readonly`** **certType**: [`ResignCommitteeCold`](../enumerations/CertificateType#resigncommitteecold)
+> `readonly` **certType**: [`ResignCommitteeCold`](../enumerations/CertificateType.md#resigncommitteecold)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
+[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:17](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L17)
+[src/ledger/certs/CertResignCommitteeCold.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L19)
 
 ***
 
 ### coldCredential
 
-> **`readonly`** **coldCredential**: [`Credential`](Credential)\<[`CredentialType`](../enumerations/CredentialType)\>
+> `readonly` **coldCredential**: [`Credential`](Credential.md)\<[`CredentialType`](../enumerations/CredentialType.md)\>
 
 #### Implementation of
 
-[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold).[`coldCredential`](../interfaces/ICertResignCommitteeCold#coldcredential)
+[`ICertResignCommitteeCold`](../interfaces/ICertResignCommitteeCold.md).[`coldCredential`](../interfaces/ICertResignCommitteeCold.md#coldcredential)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:18](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L18)
+[src/ledger/certs/CertResignCommitteeCold.ts:20](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L20)
 
 ## Methods
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
 
 #### Returns
 
-[`Hash28`](Hash28)[]
+[`Hash28`](Hash28.md)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
+[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:32](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L32)
+[src/ledger/certs/CertResignCommitteeCold.ts:50](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L50)
 
 ***
 
@@ -99,9 +99,9 @@
 
 `CborString`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:37](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L37)
+[src/ledger/certs/CertResignCommitteeCold.ts:55](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L55)
 
 ***
 
@@ -113,23 +113,45 @@
 
 `CborArray`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:41](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L41)
+[src/ledger/certs/CertResignCommitteeCold.ts:59](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L59)
+
+***
+
+### toData()
+
+> **toData**(`version`?): `DataConstr`
+
+#### Parameters
+
+• **version?**: `ToDataVersion`
+
+#### Returns
+
+`DataConstr`
+
+#### Implementation of
+
+[`ICert`](../interfaces/ICert.md).[`toData`](../interfaces/ICert.md#todata)
+
+#### Defined in
+
+[src/ledger/certs/CertResignCommitteeCold.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L34)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### anchor
 
-> **anchor**: `null` \| `Object`
+> **anchor**: `null` \| `object`
 
 ##### certType
 
@@ -137,7 +159,7 @@
 
 ##### coldCredential
 
-> **coldCredential**: `Object`
+> **coldCredential**: `object`
 
 ##### coldCredential.credentialType
 
@@ -147,15 +169,15 @@
 
 > **hash**: `string`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:66](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L66)
+[src/ledger/certs/CertResignCommitteeCold.ts:84](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L84)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertResignCommitteeCold`](CertResignCommitteeCold)
+> `static` **fromCborObj**(`cbor`): [`CertResignCommitteeCold`](CertResignCommitteeCold.md)
 
 #### Parameters
 
@@ -163,8 +185,8 @@
 
 #### Returns
 
-[`CertResignCommitteeCold`](CertResignCommitteeCold)
+[`CertResignCommitteeCold`](CertResignCommitteeCold.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertResignCommitteeCold.ts:50](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertResignCommitteeCold.ts#L50)
+[src/ledger/certs/CertResignCommitteeCold.ts:68](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertResignCommitteeCold.ts#L68)

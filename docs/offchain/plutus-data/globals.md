@@ -1,4 +1,4 @@
-**@harmoniclabs/plutus-data** • [Readme](README) \| API
+**@harmoniclabs/plutus-data** • [Readme](README.md) \| API
 
 ***
 

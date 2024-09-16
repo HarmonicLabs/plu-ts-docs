@@ -1,40 +1,40 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / Tx
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / Tx
 
 # Class: Tx
 
 ## Implements
 
-- [`ITx`](../interfaces/ITx)
+- [`ITx`](../interfaces/ITx.md)
 - `ToCbor`
 - `ToJson`
 
 ## Constructors
 
-### new Tx(tx)
+### new Tx()
 
-> **new Tx**(`tx`): [`Tx`](Tx)
+> **new Tx**(`tx`): [`Tx`](Tx.md)
 
 #### Parameters
 
-• **tx**: [`ITx`](../interfaces/ITx)
+• **tx**: [`ITx`](../interfaces/ITx.md)
 
 #### Returns
 
-[`Tx`](Tx)
+[`Tx`](Tx.md)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:79](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L79)
+[src/tx/Tx.ts:79](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L79)
 
 ## Properties
 
-### addVKeyWitness
+### addVKeyWitness()
 
-> **`readonly`** **addVKeyWitness**: (`vkeyWit`) => `void`
+> `readonly` **addVKeyWitness**: (`vkeyWit`) => `void`
 
 checks that the signer is needed
 if true adds the witness
@@ -45,85 +45,85 @@ when signature is provided by a third party (example CIP30 wallet)
 
 #### Parameters
 
-• **vkeyWit**: [`VKeyWitness`](VKeyWitness)
+• **vkeyWit**: [`VKeyWitness`](VKeyWitness.md)
 
 #### Returns
 
 `void`
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:47](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L47)
+[src/tx/Tx.ts:47](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L47)
 
 ***
 
 ### auxiliaryData?
 
-> **`optional`** **`readonly`** **auxiliaryData**: `null` \| [`AuxiliaryData`](AuxiliaryData)
+> `readonly` `optional` **auxiliaryData**: `null` \| [`AuxiliaryData`](AuxiliaryData.md)
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx).[`auxiliaryData`](../interfaces/ITx#auxiliarydata)
+[`ITx`](../interfaces/ITx.md).[`auxiliaryData`](../interfaces/ITx.md#auxiliarydata)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:37](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L37)
+[src/tx/Tx.ts:37](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L37)
 
 ***
 
 ### body
 
-> **`readonly`** **body**: [`TxBody`](TxBody)
+> `readonly` **body**: [`TxBody`](TxBody.md)
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx).[`body`](../interfaces/ITx#body)
+[`ITx`](../interfaces/ITx.md).[`body`](../interfaces/ITx.md#body)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L34)
+[src/tx/Tx.ts:34](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L34)
 
 ***
 
 ### hash
 
-> **`readonly`** **hash**: [`Hash32`](Hash32)
+> `readonly` **hash**: [`Hash32`](Hash32.md)
 
 getter
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:77](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L77)
+[src/tx/Tx.ts:77](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L77)
 
 ***
 
 ### isComplete
 
-> **`readonly`** **isComplete**: `boolean`
+> `readonly` **isComplete**: `boolean`
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:73](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L73)
+[src/tx/Tx.ts:73](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L73)
 
 ***
 
 ### isScriptValid
 
-> **`readonly`** **isScriptValid**: `boolean`
+> `readonly` **isScriptValid**: `boolean`
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx).[`isScriptValid`](../interfaces/ITx#isscriptvalid)
+[`ITx`](../interfaces/ITx.md).[`isScriptValid`](../interfaces/ITx.md#isscriptvalid)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:36](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L36)
+[src/tx/Tx.ts:36](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L36)
 
 ***
 
-### signWith
+### signWith()
 
-> **`readonly`** **signWith**: (`signer`) => `void`
+> `readonly` **signWith**: (`signer`) => `void`
 
 checks that the signer is needed
 if true signs the transaction with the specified key
@@ -131,21 +131,21 @@ otherwise nothing happens (the signature is not added)
 
 #### Parameters
 
-• **signer**: [`PrivateKey`](PrivateKey)
+• **signer**: [`PrivateKey`](PrivateKey.md) \| `XPrv`
 
 #### Returns
 
 `void`
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:53](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L53)
+[src/tx/Tx.ts:53](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L53)
 
 ***
 
-### signWithCip30Wallet
+### signWithCip30Wallet()
 
-> **`readonly`** **signWithCip30Wallet**: (`cip30wallet`) => `Promise`\<`void`\>
+> `readonly` **signWithCip30Wallet**: (`cip30wallet`) => `Promise`\<`void`\>
 
 signs the transaction using any browser wallet 
 that follows the [CIP-0030 standard]
@@ -153,29 +153,29 @@ that follows the [CIP-0030 standard]
 
 #### Parameters
 
-• **cip30wallet**: [`Cip30LikeSignTx`](../interfaces/Cip30LikeSignTx)
+• **cip30wallet**: [`Cip30LikeSignTx`](../interfaces/Cip30LikeSignTx.md)
 
 #### Returns
 
 `Promise`\<`void`\>
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:60](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L60)
+[src/tx/Tx.ts:60](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L60)
 
 ***
 
 ### witnesses
 
-> **`readonly`** **witnesses**: [`TxWitnessSet`](TxWitnessSet)
+> `readonly` **witnesses**: [`TxWitnessSet`](TxWitnessSet.md)
 
 #### Implementation of
 
-[`ITx`](../interfaces/ITx).[`witnesses`](../interfaces/ITx#witnesses)
+[`ITx`](../interfaces/ITx.md).[`witnesses`](../interfaces/ITx.md#witnesses)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:35](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L35)
+[src/tx/Tx.ts:35](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L35)
 
 ## Methods
 
@@ -191,9 +191,9 @@ that follows the [CIP-0030 standard]
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:191](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L191)
+[src/tx/Tx.ts:215](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L215)
 
 ***
 
@@ -209,27 +209,27 @@ that follows the [CIP-0030 standard]
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:195](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L195)
+[src/tx/Tx.ts:219](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L219)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### auxiliaryData
 
-> **auxiliaryData**: `undefined` \| `Object`
+> **auxiliaryData**: `undefined` \| `object`
 
 ##### body
 
-> **body**: `Object`
+> **body**: `object`
 
 ##### body.auxDataHash
 
@@ -237,15 +237,15 @@ that follows the [CIP-0030 standard]
 
 ##### body.certs
 
-> **certs**: `undefined` \| (`Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object` \| `Object`)[]
+> **certs**: `undefined` \| (`object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object` \| `object`)[]
 
 ##### body.collateralInputs
 
-> **collateralInputs**: `undefined` \| `Object`[]
+> **collateralInputs**: `undefined` \| `object`[]
 
 ##### body.collateralReturn
 
-> **collateralReturn**: `undefined` \| `Object`
+> **collateralReturn**: `undefined` \| `object`
 
 ##### body.fee
 
@@ -253,19 +253,19 @@ that follows the [CIP-0030 standard]
 
 ##### body.inputs
 
-> **inputs**: `Object`[]
+> **inputs**: `object`[]
 
 ##### body.mint
 
-> **mint**: `undefined` \| [`ValueJson`](../type-aliases/ValueJson)
+> **mint**: `undefined` \| [`ValueJson`](../type-aliases/ValueJson.md)
 
 ##### body.network
 
-> **network**: `undefined` \| [`NetworkT`](../type-aliases/NetworkT)
+> **network**: `undefined` \| [`NetworkT`](../type-aliases/NetworkT.md)
 
 ##### body.outputs
 
-> **outputs**: `Object`[]
+> **outputs**: `object`[]
 
 ##### body.protocolUpdate
 
@@ -273,7 +273,7 @@ that follows the [CIP-0030 standard]
 
 ##### body.refInputs
 
-> **refInputs**: `undefined` \| `Object`[]
+> **refInputs**: `undefined` \| `object`[]
 
 ##### body.requiredSigners
 
@@ -297,7 +297,7 @@ that follows the [CIP-0030 standard]
 
 ##### body.withdrawals
 
-> **withdrawals**: `undefined` \| `Object`
+> **withdrawals**: `undefined` \| `object`
 
 ##### isScriptValid
 
@@ -305,11 +305,11 @@ that follows the [CIP-0030 standard]
 
 ##### witnesses
 
-> **witnesses**: `Object`
+> **witnesses**: `object`
 
 ##### witnesses.bootstrapWitnesses
 
-> **bootstrapWitnesses**: `undefined` \| `Object`[]
+> **bootstrapWitnesses**: `undefined` \| `object`[]
 
 ##### witnesses.datums
 
@@ -317,41 +317,41 @@ that follows the [CIP-0030 standard]
 
 ##### witnesses.nativeScripts
 
-> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **nativeScripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 ##### witnesses.plutusV1Scripts
 
-> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **plutusV1Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 ##### witnesses.plutusV2Scripts
 
-> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **plutusV2Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 ##### witnesses.plutusV3Scripts
 
-> **plutusV3Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature) \| [`ScriptAll`](../interfaces/ScriptAll) \| [`ScriptAny`](../interfaces/ScriptAny) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast) \| [`ScriptAfter`](../interfaces/ScriptAfter) \| [`ScriptBefore`](../interfaces/ScriptBefore) \| `Object`)[]
+> **plutusV3Scripts**: `undefined` \| ([`ScriptSignature`](../interfaces/ScriptSignature.md) \| [`ScriptAll`](../interfaces/ScriptAll.md) \| [`ScriptAny`](../interfaces/ScriptAny.md) \| [`ScriptAtLeast`](../interfaces/ScriptAtLeast.md) \| [`ScriptAfter`](../interfaces/ScriptAfter.md) \| [`ScriptBefore`](../interfaces/ScriptBefore.md) \| `object`)[]
 
 ##### witnesses.redeemers
 
-> **redeemers**: `undefined` \| `Object`[]
+> **redeemers**: `undefined` \| `object`[]
 
 ##### witnesses.vkeyWitnesses
 
-> **vkeyWitnesses**: `undefined` \| `Object`[]
+> **vkeyWitnesses**: `undefined` \| `object`[]
 
 #### Implementation of
 
 `ToJson.toJson`
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:234](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L234)
+[src/tx/Tx.ts:258](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L258)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`Tx`](Tx)
+> `static` **fromCbor**(`cStr`): [`Tx`](Tx.md)
 
 #### Parameters
 
@@ -359,17 +359,17 @@ that follows the [CIP-0030 standard]
 
 #### Returns
 
-[`Tx`](Tx)
+[`Tx`](Tx.md)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:207](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L207)
+[src/tx/Tx.ts:231](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L231)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`Tx`](Tx)
+> `static` **fromCborObj**(`cObj`): [`Tx`](Tx.md)
 
 #### Parameters
 
@@ -377,8 +377,8 @@ that follows the [CIP-0030 standard]
 
 #### Returns
 
-[`Tx`](Tx)
+[`Tx`](Tx.md)
 
-#### Source
+#### Defined in
 
-[src/tx/Tx.ts:211](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/Tx.ts#L211)
+[src/tx/Tx.ts:235](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/Tx.ts#L235)

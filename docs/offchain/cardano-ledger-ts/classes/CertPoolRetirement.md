@@ -1,93 +1,93 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / CertPoolRetirement
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / CertPoolRetirement
 
 # Class: CertPoolRetirement
 
 ## Implements
 
-- [`ICert`](../interfaces/ICert)
-- [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement)
+- [`ICert`](../interfaces/ICert.md)
+- [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md)
 
 ## Constructors
 
-### new CertPoolRetirement(__namedParameters)
+### new CertPoolRetirement()
 
-> **new CertPoolRetirement**(`__namedParameters`): [`CertPoolRetirement`](CertPoolRetirement)
+> **new CertPoolRetirement**(`__namedParameters`): [`CertPoolRetirement`](CertPoolRetirement.md)
 
 #### Parameters
 
-• **\_\_namedParameters**: [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement)
+• **\_\_namedParameters**: [`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md)
 
 #### Returns
 
-[`CertPoolRetirement`](CertPoolRetirement)
+[`CertPoolRetirement`](CertPoolRetirement.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:22](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L22)
+[src/ledger/certs/CertPoolRetirement.ts:24](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L24)
 
 ## Properties
 
 ### certType
 
-> **`readonly`** **certType**: [`PoolRetirement`](../enumerations/CertificateType#poolretirement)
+> `readonly` **certType**: [`PoolRetirement`](../enumerations/CertificateType.md#poolretirement)
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`certType`](../interfaces/ICert#certtype)
+[`ICert`](../interfaces/ICert.md).[`certType`](../interfaces/ICert.md#certtype)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:18](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L18)
+[src/ledger/certs/CertPoolRetirement.ts:20](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L20)
 
 ***
 
 ### epoch
 
-> **`readonly`** **epoch**: `CanBeUInteger`
+> `readonly` **epoch**: `CanBeUInteger`
 
 #### Implementation of
 
-[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement).[`epoch`](../interfaces/ICertPoolRetirement#epoch)
+[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md).[`epoch`](../interfaces/ICertPoolRetirement.md#epoch)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:20](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L20)
+[src/ledger/certs/CertPoolRetirement.ts:22](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L22)
 
 ***
 
 ### poolHash
 
-> **`readonly`** **poolHash**: [`Hash28`](Hash28)
+> `readonly` **poolHash**: [`Hash28`](Hash28.md)
 
 #### Implementation of
 
-[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement).[`poolHash`](../interfaces/ICertPoolRetirement#poolhash)
+[`ICertPoolRetirement`](../interfaces/ICertPoolRetirement.md).[`poolHash`](../interfaces/ICertPoolRetirement.md#poolhash)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:19](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L19)
+[src/ledger/certs/CertPoolRetirement.ts:21](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L21)
 
 ## Methods
 
 ### getRequiredSigners()
 
-> **getRequiredSigners**(): [`Hash28`](Hash28)[]
+> **getRequiredSigners**(): [`Hash28`](Hash28.md)[]
 
 #### Returns
 
-[`Hash28`](Hash28)[]
+[`Hash28`](Hash28.md)[]
 
 #### Implementation of
 
-[`ICert`](../interfaces/ICert).[`getRequiredSigners`](../interfaces/ICert#getrequiredsigners)
+[`ICert`](../interfaces/ICert.md).[`getRequiredSigners`](../interfaces/ICert.md#getrequiredsigners)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:33](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L33)
+[src/ledger/certs/CertPoolRetirement.ts:56](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L56)
 
 ***
 
@@ -99,9 +99,9 @@
 
 `CborString`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:38](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L38)
+[src/ledger/certs/CertPoolRetirement.ts:61](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L61)
 
 ***
 
@@ -113,19 +113,41 @@
 
 `CborArray`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:42](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L42)
+[src/ledger/certs/CertPoolRetirement.ts:65](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L65)
+
+***
+
+### toData()
+
+> **toData**(`version`?): `DataConstr`
+
+#### Parameters
+
+• **version?**: `ToDataVersion`
+
+#### Returns
+
+`DataConstr`
+
+#### Implementation of
+
+[`ICert`](../interfaces/ICert.md).[`toData`](../interfaces/ICert.md#todata)
+
+#### Defined in
+
+[src/ledger/certs/CertPoolRetirement.ts:35](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L35)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### certType
 
@@ -139,15 +161,15 @@
 
 > **poolHash**: `string`
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:69](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L69)
+[src/ledger/certs/CertPoolRetirement.ts:92](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L92)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cbor`): [`CertPoolRetirement`](CertPoolRetirement)
+> `static` **fromCborObj**(`cbor`): [`CertPoolRetirement`](CertPoolRetirement.md)
 
 #### Parameters
 
@@ -155,8 +177,8 @@
 
 #### Returns
 
-[`CertPoolRetirement`](CertPoolRetirement)
+[`CertPoolRetirement`](CertPoolRetirement.md)
 
-#### Source
+#### Defined in
 
-[src/ledger/certs/CertPoolRetirement.ts:51](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/ledger/certs/CertPoolRetirement.ts#L51)
+[src/ledger/certs/CertPoolRetirement.ts:74](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/ledger/certs/CertPoolRetirement.ts#L74)

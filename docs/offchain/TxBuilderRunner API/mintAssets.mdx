@@ -5,12 +5,6 @@ sidebar_position: 17
 
 # `mintAsstes`
 
-:::warning not yet implemented
-
-this method will be implemented in v0.8
-
-:::
-
 ```ts
 readonly mintAssets: (
     assets: IValuePolicyEntry,
@@ -19,9 +13,9 @@ readonly mintAssets: (
 ) => TxBuilderRunner
 ```
 
-- `assets`: [`IValuePolicyEntry`](../cardano-ledger-ts/type-aliases/IValuePolicyEntry)
-- `script_or_ref`: [`Script`](../cardano-ledger-ts/classes/Script) | [`CanResolveToUTxO`](../miscellaneous/CanResolveToUTxO) | `undefined`
-- `redeemer`: [`CanBeData`](../miscellaneous/CanBeData) | `undefined`,
+- `assets`: `IValuePolicyEntry`
+- `script_or_ref`: [`Script`](../cardano-ledger-ts/classes/Script) | [`CanResolveToUTxO`](../miscellaneous/CanResolveToUTxO.mdx) | `undefined`
+- `redeemer`: [`CanBeData`](../miscellaneous/CanBeData.mdx) | `undefined`,
 
 `redeemer` may be omitted if `script_or_ref` is a native script.
 

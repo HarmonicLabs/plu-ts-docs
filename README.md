@@ -9,6 +9,22 @@ npm install
 
 ### Local Development
 
+IMPORTANT
+
+Before running the application make sure you have a `.env` file in the root of the project specifying the following environment variables
+
+```
+ALGOLIA_APP_ID=""
+ALGOLIA_API_KEY=""
+ALGOLIA_INDEX_NAME=""
+```
+
+`ALGOLIA_APP_ID` and `ALGOLIA_API_KEY` are present on your application overview in the algolia dashboard
+
+`ALGOLIA_INDEX_NAME` is the name of the index you find on the top nav bar if you click "search" in the dashboard
+
+Then you can run:
+
 ```
 npm run start
 ```

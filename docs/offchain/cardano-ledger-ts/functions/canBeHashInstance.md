@@ -1,8 +1,8 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / canBeHashInstance
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / canBeHashInstance
 
 # Function: canBeHashInstance()
 
@@ -16,6 +16,6 @@
 
 `boolean`
 
-## Source
+## Defined in
 
-[src/hashes/Hash.ts:9](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/hashes/Hash.ts#L9)
+[src/hashes/Hash.ts:10](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/hashes/Hash.ts#L10)

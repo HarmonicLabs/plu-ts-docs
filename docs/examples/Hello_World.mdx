@@ -1,0 +1,950 @@
+---
+sidebar_position: 0
+titiel: Hello World
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Hello plu-ts
+
+In this example project we'll write our first smart contract and interact with it using the [CIP-0030](https://cips.cardano.org/cips/cip30/) standard.
+
+The final verision of this project is available [here](https://github.com/michele-nuzzi/hello-pluts-react-final) and you can test it out in the [live demo](https://hello-pluts.harmoniclabs.tech/).
+
+:::note old version of this example project
+
+If you are looking for the old version of this example project you can [click here](./Hello_world_v0) to check it out.
+
+We would also highlight the [useful run trough of the old example](https://www.youtube.com/watch?v=b6MaSz6NIh8&themeRefresh=1) created by our community members
+
+:::
+
+## Pre-requisites
+
+All we need to build a dApp is:
+
+- `plu-ts`
+- Some way to submit transactions.
+- React + [`MeshSDK`](https://meshjs.dev/)
+
+In fact, `plu-ts` allows you to write the smart contract and create transactions.
+
+To submit the transaction we will use [`blockfrost-pluts`](../tools/blockfrost-pluts), a wrapper on top of the [Blockfrost](https://blockfrost.io/) API that uses `plu-ts` offchain types;
+but we'll talk about that later.
+
+So for now our pre-requisites add up to:
+
+- `plu-ts` (and `npm` to install it)
+- Anything that can run javascript (server environment or browser, doesn't matter)
+- An internet connection
+
+## Project set up
+
+Using `git` we clone the initial `hello-pluts-react` project form [github](https://github.com/HarmonicLabs/hello-pluts-react):
+```bash
+git clone https://github.com/HarmonicLabs/hello-pluts-react.git
+cd hello-pluts-react
+git remote remove origin
+```
+
+This gives us the following project structure:
+```
+./hello-pluts-react
+├── contracts
+│   └── helloPluts.ts
+├── next.config.js
+├── next-env.d.ts
+├── package.json
+├── package-lock.json
+├── src
+│   ├── components
+│   │   └── ConnectionHandler.tsx
+│   ├── offchain
+│   │   ├── getTxBuilder.ts
+│   │   ├── lockTx.ts
+│   │   ├── mesh-utils.ts
+│   │   └── unlockTx.ts
+│   ├── pages
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   └── index.tsx
+│   └── styles
+│       ├── globals.css
+│       └── Home.module.css
+└── tsconfig.json
+```
+
+The project comes with all the dependencies we need;
+
+The most important ones are:
+
+```json title="package.json"
+"dependencies": {
+    "@harmoniclabs/plu-ts": "^0.7.0",
+    "@harmoniclabs/uint8array-utils": "^1.0.0",
+    "@harmoniclabs/blockfrost-pluts": "^0.1.11",
+    "@meshsdk/core": "^1.5.2",
+    "@meshsdk/react": "^1.1.7",
+    /* other deps */
+}
+```
+
+So now we only need to run `npm install` to automatically add them.
+
+```sh
+npm install
+```
+
+_Et voilà_ we are ready to start!
+
+### Project overview
+
+From the project structure we see that the code can be found in the `src` folder and the `contracts` folder.
+
+The `contracts` only file is the `helloPluts.ts` one; which for now contains only a contract that always fails and exports the compiled result.
+
+```ts title="contracts/helloPluts.ts"
+import { Address, PPubKeyHash, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeValidator, pfn, data, pBool } from "@harmoniclabs/plu-ts";
+
+const helloPluts = pfn([
+  data,
+  data,
+  PScriptContext.type
+], bool)
+((datum, redeemer, ctx) => {
+  // locks funds forever
+  return pBool( false );
+});
+
+///////////////////////////////////////////////////////////////////
+// ------------------------------------------------------------- //
+// ------------------------- utilities ------------------------- //
+// ------------------------------------------------------------- //
+///////////////////////////////////////////////////////////////////
+
+export const untypedValidator = makeValidator(helloPluts);
+
+export const compiledContract = compile(untypedValidator);
+
+export const script = new Script(
+  "PlutusScriptV2",
+  compiledContract
+);
+
+export const scriptTestnetAddr = new Address(
+  "testnet",
+  PaymentCredentials.script(script.hash)
+);
+```
+
+We'll come back on this file later.
+
+The other two files we'll work with are `src/offchain/lockTx.ts` and `src/offchain/unlockTx.ts`.
+
+Both very similar:
+
+```ts title="src/offchain/lockTx.ts"
+import { Value, DataB, Address, Tx } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { BrowserWallet } from "@meshsdk/core";
+import { scriptTestnetAddr } from "../../contracts/helloPluts";
+import { toPlutsUtxo } from "./mesh-utils";
+import getTxBuilder from "./getTxBuilder";
+
+async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  throw new Error("'lockTx' logic not implemented");
+}
+
+export async function lockTx(wallet: BrowserWallet, projectId: string): Promise<string> {
+  const Blockfrost = new BlockfrostPluts({ projectId });
+  const unsingedTx = await getLockTx(wallet, Blockfrost);
+  const txStr = await wallet.signTx(unsingedTx.toCbor().toString());
+  return await Blockfrost.submitTx(txStr);
+}
+```
+
+```ts title="src/offchain/unlockTx.ts"
+import { Address, isData, DataB, Tx } from "@harmoniclabs/plu-ts";
+import { fromAscii, uint8ArrayEq } from "@harmoniclabs/uint8array-utils";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { BrowserWallet } from "@meshsdk/core";
+import { script, scriptTestnetAddr } from "../../contracts/helloPluts";
+import { toPlutsUtxo } from "./mesh-utils";
+import getTxBuilder from "./getTxBuilder";
+
+async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  throw new Error("'unlockTx' logic not implemented");   
+}
+
+export async function unlockTx(wallet: BrowserWallet, projectId: string): Promise<string> {
+  const Blockfrost = new BlockfrostPluts({ projectId });
+  const unsingedTx = await getUnlockTx(wallet, Blockfrost);
+
+  const txStr = await wallet.signTx(
+    unsingedTx.toCbor().toString(),
+    true // partial sign because we have smart contracts in the transaction
+  );
+
+  return await Blockfrost.submitTx(txStr);
+}
+```
+
+Our work later in this project will be to create the transactions that will interact with the contract.
+
+This will be done using the plu-ts [`TxBuilder`](../offchain/TxBuilder%20API/TxBuilder).
+
+The code to get a `TxBuilder` instance is already defined in the `src/offchain/getTxBuilder.ts`
+
+```ts title="src/offchain/getTxBuilder.ts"
+import { TxBuilder } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+
+/**
+ * we don't want to do too many API call if we already have our `txBuilder`
+ * 
+ * so after the first call we'll store a copy here.
+**/
+let _cachedTxBuilder: TxBuilder | undefined = undefined
+
+export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise<TxBuilder> {
+  if (!(_cachedTxBuilder instanceof TxBuilder)) {
+    const parameters = await Blockfrost.epochsLatestParameters();
+    _cachedTxBuilder = new TxBuilder(parameters);
+  }
+  return _cachedTxBuilder;
+}
+```
+
+Constructing a `TxBuilder` requires us to pass the protocol parameters of the chain we are operating in.
+
+To get the protocol parameters we are using a `Blockfrost` object.
+
+Then there is the website.
+
+This is a very simple [Next.js](https://nextjs.org/) project, of which the only page is in `src/pages/index.tsx`
+
+```tsx title="src/pages/index.tsx"
+import { useState } from "react";
+import { Container, Box, Text, Button, Input, useToast } from "@chakra-ui/react";
+import { useNetwork, useWallet } from "@meshsdk/react";
+
+import style from "@/styles/Home.module.css";
+import ConnectionHandler from "@/components/ConnectionHandler";
+import { lockTx } from "@/offchain/lockTx";
+import { unlockTx } from "@/offchain/unlockTx";
+
+export default function Home() {
+  const [blockfrostApiKey, setBlockfrostApiKey] = useState<string>('');
+  const {wallet, connected} = useWallet();
+  const network = useNetwork();
+  const toast = useToast();
+
+  if (typeof network === "number" && network !== 0) {
+    return (
+      <div className={style.root}>
+        <Container maxW="container.sm" py={12} centerContent>
+          <Box bg="white" w="100%" p={8}>
+            <Text fontSize="xl" mb={6}>Make sure to set your wallet in testnet mode;<br/>We are playing with founds here!</Text>
+            <Button size="lg" colorScheme="blue" onClick={() => window.location.reload()}>Refresh page</Button>
+          </Box>
+        </Container>
+      </div>
+    )
+  }
+
+  const onLock = () => {
+    lockTx(wallet, blockfrostApiKey)
+      // lock transaction created successfully
+      .then(txHash => toast({
+        title: `lock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
+        status: "success"
+      }))
+      // lock transaction failed
+      .catch(e => {
+        toast({
+          title: "something went wrong",
+          status: "error"
+        });
+        console.error(e);
+      });
+  }
+
+  const onUnlock = () => {
+    unlockTx(wallet, blockfrostApiKey)
+      // unlock transaction created successfully
+      .then(txHash => toast({
+        title: `unlock tx submitted: https://preprod.cardanoscan.io/transaction/${txHash}`,
+        status: "success"
+      }))
+      // unlock transaction failed
+      .catch(e => {
+        toast({
+          title: "something went wrong",
+          status: "error"
+        });
+        console.error(e);
+      });
+  }
+
+  return (
+    <div className={style.root}>
+      <Container maxW="container.sm" py={12} centerContent>
+        <Box bg="white" w="100%" p={4} mb={4}>
+          <Text fontSize="md" mb={4}>
+            In order to run this example you need to provide a Blockfrost API Key<br />
+            More info on <a href="https://blockfrost.io/" target="_blank" style={{color:'#0BC5EA'}}>blockfrost.io</a>
+          </Text>
+          <Input
+            variant='filled'
+            placeholder='Blockfrost API Key'
+            size='lg'
+            value={blockfrostApiKey}
+            onChange={e => setBlockfrostApiKey(e.target.value)}
+          />
+        </Box>
+        <Box bg="white" w="100%" p={4}>
+          <ConnectionHandler isDisabled={blockfrostApiKey === ''} />
+          {connected && (
+            <>
+              <Button size="lg" ml={4} colorScheme="teal" isDisabled={blockfrostApiKey === ''} onClick={onLock}>Lock 10 tADA</Button>
+              <Button size="lg" ml={4} colorScheme="teal" isDisabled={blockfrostApiKey === ''} onClick={onUnlock}>Unlock</Button>
+            </>
+          )}
+        </Box>
+      </Container>
+    </div>
+  );
+}
+```
+
+All the logic of the user interface (UI) is happening here.
+
+We are using the `useNetwork` react hook imported from [`@meshsdk/react`](https://meshjs.dev/react/wallet-hooks)
+just to prevent users to play with the contract in mainnet.
+
+But the cool part is the `useWallet` hook that gives us access to the user's wallet once connected.
+
+The connection happens in the `ConnectionHandler` component we defined in `src/components/ConnectionHandler.ts`.
+You can check it yourself if you want to see how easy the connection process becomes with [`@meshsdk/react`](https://meshjs.dev/react/wallet-hooks)
+
+And with that this is it.
+
+You can try this web application running
+```sh
+npm run dev
+```
+
+This will output something like the following
+```
+> hello-pluts-react@0.1.0 dev
+> next dev
+
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+```
+
+The numbers may vary a little but that is not a problem.
+
+You can check out the website going to the specified url; in the example above is `http://localhost:3000`.
+
+However at this very moment the app won't do much.
+
+So let's start by defining what the contract should do.
+
+## The contract
+
+We want to personalize the smart contract so that:
+
+- It suceeds if the transaction is signed by us.
+- And we are being polite by saluting the contract.
+
+### Introduce an `owner`
+
+To make sure the transaction is signed by us we'll keep track of an `owner` in the datum (the first argument we saw in the contract).
+
+:::tip datum
+
+The datum helps us keep track of the history of the input the smart contract is validating.
+
+:::
+
+Currently our datum is a generic `data` argument, but it could be really anything;
+
+In our case all we need to keep track of is an owner
+
+And that can be identified using a public key hash.
+
+So in `src/contract.ts` we'll change the first `data` to [`PPubKeyHash`](../onchain/API/types/PPubKeyHash)
+
+```ts title="src/contract.ts"
+/* imports */
+
+const helloPluts = pfn([
+  // highlight-next-line
+  PPubKeyHash.type,
+  data,
+  PScriptContext.type
+], bool)
+// highlight-next-line
+//  datum -> owner
+// highlight-next-line
+((owner, redeemer, ctx) => {
+  // locks funds forever
+  return pBool( false );
+});
+
+/* ... */
+```
+
+### Send messages to the contracts
+
+The second condition requires us to send some message to the contract.
+
+This is done thanks to the redeemer (or the second argument of a validator).
+
+:::info redeemer
+
+The redeemer is the argument specified by the user that interacts with the smart contract
+
+:::
+
+Once again, all we need in order to have a message is just a `bytestring`, nothing more complex,
+
+So we'll change the second `data` to the primitive type `bs`.
+
+```ts title="src/contract.ts"
+/* imports */
+
+const helloPluts = pfn([
+  PPubKeyHash.type,
+  // highlight-next-line
+  bs,
+  PScriptContext.type
+], bool)
+// highlight-next-line
+//  redeemer -> message
+// highlight-next-line
+((owner, message, ctx) => {
+  // locks funds forever
+  return pBool( false );
+});
+
+/* ... */
+```
+
+### Implement the logic
+
+Finally we'll check both the conditions in the body of the function.
+
+So we'll first create a term that checks that the message is the one expected:
+
+```ts
+const isBeingPolite = message.eq("Hello plu-ts");
+```
+
+Then we'll check that the transaction is signed by the owner specified in the datum.
+
+To do so we need information about the transaction and who signed it.
+
+All the information about the transaction is in the `tx` field of the [`PScriptContext`](../onchain/API/types/PScriptContext.mdx)
+
+An in particular we are interested in the [`signatories` field](../onchain/API/types/PTxInfo#signatories) 
+```ts
+ctx.tx.signatories;
+```
+
+Since this is a list of all the required signatories we chan use all the [`TermList`](../onchain/stdlib/TermList) methods;
+of which [`some`](../onchain/stdlib/TermList#some) allows us to check that **at leat one** element of the list respects a given property:
+```ts
+const signedByOwner = ctx.tx.signatories.some(owner.eq);
+```
+
+And finally, we put all together
+
+```ts title="src/contract.ts"
+import { Address, PPubKeyHash, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeValidator, pfn } from "@harmoniclabs/plu-ts";
+
+const helloPluts = pfn([
+  PPubKeyHash.type,
+  bs,
+  PScriptContext.type
+], bool)
+((owner, message, ctx) => {
+  // highlight-start
+  const isBeingPolite = message.eq("Hello plu-ts");
+  const signedByOwner = ctx.tx.signatories.some(owner.eq);
+  return isBeingPolite.and(signedByOwner);
+  // highlight-end
+});
+
+/* ... */
+```
+And this is it! this is our contract.
+
+To test it however we need to create transactions with it...
+
+## Lock some funds
+
+In order for the smart contract to run it first needs something to spend;
+so now we will build a transaction that sends some funds to the contract
+and provides the datum that will be used when the funds we are sending are spent.
+
+:::info datum
+
+As said before the datum acts as the contract local memory.
+
+For this reason we must set it now that we are funding the contract;
+as such; the datum is not provided in the spending transaction
+(or if it is it has to match the one that was setted in the transaction before;
+otherwise the transaction is invalid)
+
+:::
+
+So far what we have is this:
+```ts title="src/offchain/lockTx.ts"
+async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  throw new Error("'lockTx' logic not implemented");
+}
+```
+
+### `myAddr`
+
+The function takes as input the wallet with which the user is connected.
+
+The first thing we can do with the wallet is to request the user address
+```ts
+await wallet.getChangeAddress()
+```
+
+That expresion returns a string which is a cardano address in bech32 format (`"addr_test1v..."`)
+
+A string isn't really that useful, so we'll use that to build a plu-ts `Address` instance:
+```ts
+const myAddr = Address.fromString(
+  await wallet.getChangeAddress()
+);
+```
+
+### `txBuilder`
+
+Since we want to build a transaction here it might be a good idea to have a `TxBuilder` instance to help us.
+
+We already have the code to create one in the `src/offchain/getTxBuilder.ts` file; so we just need to import it and call the function
+
+```ts
+const txBuilder = await getTxBuilder();
+```
+
+### `myUTxOs`
+
+A transaction expects as input some output of a previous transaction that hasn't been spent yet;
+
+People call this stuff UTxO (**U**nspent **T**ransa*ct*ion **O**utput).
+
+The `BrowserWallet` turns ourselves useful once again here; we can get the wallet utxos calling
+```ts
+await wallet.getUtxos();
+```
+
+However, since this is a function defined by `mesh`; it is not of the type that the plu-ts `TxBuilder` expects.
+
+For this reason we can `map` `toPlutsUtxo` (defined in `src/offchain/mesh-utils.ts`) over the result of the `getUtxos` call;
+so that `myUTxOs` is defined as:
+
+```ts
+const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+
+if (myUTxOs.length === 0) {
+  throw new Error("have you requested founds from the faucet?");
+}
+```
+
+:::tip get some funds
+
+If `myUTxOs` happens to be empty (`length === 0`) that means that your wallet has nothing in it.
+
+If that is the case you can use the [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnet/tools/faucet) to get some testnet funds.
+
+Just be sure to select the **Preprod** testnet.
+
+:::
+
+:::caution return the test ADA
+
+Once you finish with your tADA make sure to return them to the faucet.
+
+tADA have no real world value but are still limited, and other developers will need them!
+
+To return tADA to the faucet just send them to the following testnet address:
+
+`addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3`
+
+:::
+
+### `utxo`
+
+With this transaction we want to send 10 ADA to the contract.
+
+So we search between the utxos we already have for one that has a little more than that (so that we can cover the transaction fees).
+
+```ts
+const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
+
+if (utxo === undefined) {
+  throw new Error("not enough ada");
+}
+```
+
+### Build and return the transaction
+
+And with all this we have:
+
+- An user utxo to use as input
+- The `scriptTestnetAddr` (imported from `contracts/helloPluts.ts`) which is the script address to use in the output
+- The user public key hash that we'll use as output datum
+
+Which is all we need for our transaction;
+
+So we can build it using the `txBuilder` we have:
+
+```ts
+txBuilder.buildSync({
+  inputs: [{ utxo }],
+  outputs: [{ // output holding the founds that we'll spend later
+    address: scriptTestnetAddr,
+    // 10M lovelaces === 10 ADA
+    value: Value.lovelaces(10_000_000),
+    // remeber to include a datum
+    datum: new DataB(
+      // remember we set the datum to be the public key hash?
+      // we can extract it from the address as follows
+      myAddr.paymentCreds.hash.toBuffer()
+    )
+  }],
+  // send everything left back to us
+  changeAddress: myAddr
+});
+```
+
+So that the final `getLockTx` function should look like this:
+
+```ts title="src/offchain/lockTx.ts"
+async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  // creates an address form the bech32 form
+  const myAddr = Address.fromString(
+    await wallet.getChangeAddress()
+  );
+
+  const txBuilder = await getTxBuilder(Blockfrost);
+  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+
+  if (myUTxOs.length === 0) {
+    throw new Error("have you requested founds from the faucet?");
+  }
+
+  const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
+
+  if (utxo === undefined) {
+    throw new Error("not enough ada");
+  }
+
+  return txBuilder.buildSync({
+    inputs: [{ utxo }],
+    outputs: [{ // output holding the founds that we'll spend later
+      address: scriptTestnetAddr,
+      // 10M lovelaces === 10 ADA
+      value: Value.lovelaces(10_000_000),
+      // remeber to include a datum
+      datum: new DataB(
+        // remember we set the datum to be the public key hash?
+        // we can extract it from the address as follows
+        myAddr.paymentCreds.hash.toBuffer()
+      )
+    }],
+    // send everything left back to us
+    changeAddress: myAddr
+  });
+}
+```
+
+### Test it out
+
+With `getLockTx` implemented the first button on the webpage should now work.
+
+To test it out run 
+```sh
+npm run dev
+```
+
+And navigate to the specified url (eg. `http://localhost:3000/`);
+
+Then connect your wallet.
+
+And click on the `Lock 10 tADA` button.
+
+If everything works correctly you should be prompted to sign a transaction.
+
+![sing transaction pop-up](sign_lock_hello_world.gif)
+
+## Unlock the funds
+
+Now that the smart contract has something to spend we can really test it out.
+
+In fact, our smart contract never ran so far.
+
+That is because Cardano smart contracts only run if funds needs to be spent (some call them "Spending Validators").
+
+So now we are going to do exactly that, we are going to spend some (our) smart contract funds.
+
+The starting point is similar to before.
+
+```ts title="src/offchain/getUnlockTx.ts"
+async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  throw new Error("'unlockTx' logic not implemented");   
+}
+```
+
+### `txBuilder` and `myUTxOs`
+
+Transaction builder and utxos for the transaction.
+
+The steps are the same:
+
+```ts
+const txBuilder = await getTxBuilder();
+const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+```
+
+### `myAddrs` and `myAddr`
+
+Before we got the user address by calling `wallet.getChangeAddress`.
+
+This returns a single address of the contract. But wallet might have many;
+and from the moment that we are not really sure of which one we'll get, this time we'll select it manually.
+
+To get all the address of a wallet we can call
+```ts
+await wallet.getUsedAddresses()
+```
+
+Just like before the method returns strings; so we'll need to call `Address.fromString` for each of them.
+
+This way we can get all the wallet addresses as follows:
+
+```ts
+const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
+```
+
+From these we'll decide which one will be used in the next step.
+
+For now lets just declare a variable for it.
+
+```ts
+let myAddr!: Address;
+```
+
+### Get the script's utxos
+
+Script utxos are a bit trickier... scripts don't have wallets!
+
+So to retrieve the script's utxos we'll rely on Blockfrost; the code to query them is:
+```ts
+await Blockfrost.addressUtxos(scriptTestnetAddr)
+```
+
+Where `scriptTestnetAddr` is imported from `contracts/helloPluts.ts`.
+
+But a script might (and will) have multiple utxos... how do we know which one is our?
+
+For that we'll search between them using the following function
+
+```ts
+const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo => {
+  const datum = utxo.resolved.datum;
+
+  // datum is inline and is only bytes
+  if (isData(datum) && datum instanceof DataB) {
+    const pkh = datum.bytes.toBuffer();
+
+    // search if it corresponds to one of my public keys
+    const myPkhIdx = myAddrs.findIndex(
+      addr => uint8ArrayEq(pkh, addr.paymentCreds.hash.toBuffer())
+    );
+
+    // not a pkh of mine; not an utxo I can unlock
+    if (myPkhIdx < 0) return false;
+
+    // else found my locked utxo
+    myAddr = myAddrs[myPkhIdx];
+
+    return true;
+  }
+
+  return false;
+});
+```
+
+Given an utxo we first need to check that it has an inline datum and that the datum is just made of bytes.
+
+Once we know the datum is in the correct format we extract the setted public key hash that represents that utxo owner:
+
+```ts
+const pkh = datum.bytes.toBuffer();
+```
+
+And finally we check for the owner to be equal to any of the addresses in control of the wallet;
+if any address matches the we found the address to be used and the utxo to be spent; otherwise we check another utxo.
+
+After the filter call `myAddr` will then be defined.
+
+### Build the transaction
+
+Now that we have everything we need; we can build the unlocking transaction:
+
+```ts
+txBuilder.buildSync({
+  inputs: [{
+    utxo: utxoToSpend as any,
+    // we must include the utxo that holds our script
+    inputScript: {
+      script,
+      datum: "inline", // the datum is present already on `utxoToSpend`
+      redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
+    }
+  }],
+  requiredSigners: [myAddr.paymentCreds.hash],
+  // make sure to include collateral when using contracts
+  collaterals: [myUTxOs[0]],
+  // send everything back to us
+  changeAddress: myAddr
+});
+```
+
+This time the transaction is a bit more complicated so let's check what's new.
+
+First of all the input now comes from a script! For this reason we have to include the script in alongside the utxo to be spent for the script to validate it.
+
+This is done trough the `inputScript` option:
+
+```ts
+inputScript: {
+  script,
+  datum: "inline", // the datum is present already on `utxoToSpend`
+  redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
+}
+```
+
+The `script` is the one imported from `contracts/helloPluts.ts`.
+
+`datum` is set to be `"inline"` which means that the datum is already present on the UTxO being spent.
+
+Finally `redeemer` is used to pass the redeemer to call the contract with.
+
+:::tip redeemer
+
+Unlike the datum, the redeemer is used to pass data to the script at the moment of calling it.
+
+This can be used as a way to comunicate between the user and the contract
+
+:::
+
+The other important part of the transaction is the `requiredSigners` option.
+
+Here we have to specify the our public key hash so that it can be included in the `signatories` field of the context passed to the contract.
+If we forget it the `ctx.tx.signatories` value in our smart contract will be empty!
+
+And finally, the third news is the `collaterals` option; this can be any utxo we own as long as it contains only ADA;
+if it includes any other token it must be returned using the `collateralReturn` option; but this is not our case.
+
+So our final `getUnlockTx` function looks like this.
+
+
+```ts title="src/offchain/unlockTx.ts"
+async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+  const txBuilder = await getTxBuilder(Blockfrost);
+  const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
+  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+
+  /**
+   * Wallets migh have multiple addresses;
+   * 
+   * to understand which one we previously used to lock founds
+   * we'll get the address based on the utxo that keeps one of ours
+   * public key hash as datum
+  **/
+  let myAddr!: Address;
+
+  // only the onses with valid datum
+  const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo => {
+    const datum = utxo.resolved.datum;
+
+    // datum is inline and is only bytes
+    if (isData(datum) && datum instanceof DataB) {
+      const pkh = datum.bytes.toBuffer();
+
+      // search if it corresponds to one of my public keys
+      const myPkhIdx = myAddrs.findIndex(
+        addr => uint8ArrayEq(pkh, addr.paymentCreds.hash.toBuffer())
+      );
+
+      // not a pkh of mine; not an utxo I can unlock
+      if (myPkhIdx < 0) return false;
+
+      // else found my locked utxo
+      myAddr = myAddrs[myPkhIdx];
+
+      return true;
+    }
+
+    return false;
+  });
+
+  if (utxoToSpend === undefined) {
+    throw new Error("uopsie, are you sure your tx had enough time to get to the blockchain?");
+  }
+
+  return txBuilder.buildSync({
+    inputs: [{
+      utxo: utxoToSpend as any,
+      // we must include the utxo that holds our script
+      inputScript: {
+        script,
+        datum: "inline", // the datum is present already on `utxoToSpend`
+        redeemer: new DataB(fromAscii("Hello plu-ts")) // be polite
+      }
+    }],
+    requiredSigners: [myAddr.paymentCreds.hash],
+    // make sure to include collateral when using contracts
+    collaterals: [myUTxOs[0]],
+    // send everything back to us
+    changeAddress: myAddr
+  });
+}
+```
+
+### Test the contract
+
+Now our applicaiton is complete.
+
+We just need to test out the last feature introduced.
+
+Once again spin up the web page and this time let's click on the second button.
+
+![unlock tx pop-up](sign_unlock_hello_world.gif)
+
+:::tip smart contract determinism
+
+Did you know that smart contract on cardano are deterministic?
+
+It means that when you run them with the same inputs you always get the same output.
+
+For this reason the plu-ts `TxBuilder` is able to pre-evaluate your transaction
+and will throw an error if the script fails!
+
+That means that if you are signing a transaction built wit plu-ts you can be sure there are no surprises!
+
+:::
+
+Here is an example of a successful transaction:
+
+https://preprod.cardanoscan.io/transaction/3d04a8bb90c3d6edb765439f3ec370053b2904841648ba64281c0680a73226fa

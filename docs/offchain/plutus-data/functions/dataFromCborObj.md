@@ -1,8 +1,8 @@
-**@harmoniclabs/plutus-data** • [Readme](../README) \| [API](../globals)
+**@harmoniclabs/plutus-data** • [Readme](../README.md) \| [API](../globals)
 
 ***
 
-[@harmoniclabs/plutus-data](../README) / dataFromCborObj
+[@harmoniclabs/plutus-data](../README.md) / dataFromCborObj
 
 # Function: dataFromCborObj()
 

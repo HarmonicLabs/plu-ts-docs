@@ -1,98 +1,98 @@
-**@harmoniclabs/cardano-ledger-ts** • [Readme](../Introduction) \| [API](../globals)
+[**@harmoniclabs/cardano-ledger-ts**](../README.md) • **Docs**
 
 ***
 
-[@harmoniclabs/cardano-ledger-ts](../Introduction) / BootstrapWitness
+[@harmoniclabs/cardano-ledger-ts](../globals.md) / BootstrapWitness
 
 # Class: BootstrapWitness
 
 ## Implements
 
 - `ToCbor`
-- `Cloneable`\<[`BootstrapWitness`](BootstrapWitness)\>
+- `Cloneable`\<[`BootstrapWitness`](BootstrapWitness.md)\>
 - `ToJson`
 
 ## Constructors
 
-### new BootstrapWitness(pubKey, signature, chainCode, attributes)
+### new BootstrapWitness()
 
-> **new BootstrapWitness**(`pubKey`, `signature`, `chainCode`, `attributes`): [`BootstrapWitness`](BootstrapWitness)
+> **new BootstrapWitness**(`pubKey`, `signature`, `chainCode`, `attributes`): [`BootstrapWitness`](BootstrapWitness.md)
 
 #### Parameters
 
-• **pubKey**: [`Hash32`](Hash32)
+• **pubKey**: [`Hash32`](Hash32.md)
 
-• **signature**: [`Signature`](Signature)
+• **signature**: [`Signature`](Signature.md)
 
-• **chainCode**: [`Hash32`](Hash32)
+• **chainCode**: [`Hash32`](Hash32.md)
 
 • **attributes**: `Uint8Array`
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness)
+[`BootstrapWitness`](BootstrapWitness.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:20](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L20)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:20](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L20)
 
 ## Properties
 
 ### attributes
 
-> **`readonly`** **attributes**: `Uint8Array`
+> `readonly` **attributes**: `Uint8Array`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:18](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L18)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:18](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L18)
 
 ***
 
 ### chainCode
 
-> **`readonly`** **chainCode**: [`Hash32`](Hash32)
+> `readonly` **chainCode**: [`Hash32`](Hash32.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:17](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L17)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:17](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L17)
 
 ***
 
 ### pubKey
 
-> **`readonly`** **pubKey**: [`VKey`](VKey)
+> `readonly` **pubKey**: [`VKey`](VKey.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:15](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L15)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:15](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L15)
 
 ***
 
 ### signature
 
-> **`readonly`** **signature**: [`Signature`](Signature)
+> `readonly` **signature**: [`Signature`](Signature.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:16](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L16)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:16](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L16)
 
 ## Methods
 
 ### clone()
 
-> **clone**(): [`BootstrapWitness`](BootstrapWitness)
+> **clone**(): [`BootstrapWitness`](BootstrapWitness.md)
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness)
+[`BootstrapWitness`](BootstrapWitness.md)
 
 #### Implementation of
 
 `Cloneable.clone`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:63](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L63)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:63](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L63)
 
 ***
 
@@ -108,9 +108,9 @@
 
 `ToCbor.toCbor`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:73](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L73)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:73](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L73)
 
 ***
 
@@ -126,19 +126,19 @@
 
 `ToCbor.toCborObj`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:77](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L77)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:77](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L77)
 
 ***
 
 ### toJson()
 
-> **toJson**(): `Object`
+> **toJson**(): `object`
 
 #### Returns
 
-`Object`
+`object`
 
 ##### attributes
 
@@ -160,15 +160,15 @@
 
 `ToJson.toJson`
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:107](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L107)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:107](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L107)
 
 ***
 
 ### fromCbor()
 
-> **`static`** **fromCbor**(`cStr`): [`BootstrapWitness`](BootstrapWitness)
+> `static` **fromCbor**(`cStr`): [`BootstrapWitness`](BootstrapWitness.md)
 
 #### Parameters
 
@@ -176,17 +176,17 @@
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness)
+[`BootstrapWitness`](BootstrapWitness.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:87](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L87)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:87](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L87)
 
 ***
 
 ### fromCborObj()
 
-> **`static`** **fromCborObj**(`cObj`): [`BootstrapWitness`](BootstrapWitness)
+> `static` **fromCborObj**(`cObj`): [`BootstrapWitness`](BootstrapWitness.md)
 
 #### Parameters
 
@@ -194,8 +194,8 @@
 
 #### Returns
 
-[`BootstrapWitness`](BootstrapWitness)
+[`BootstrapWitness`](BootstrapWitness.md)
 
-#### Source
+#### Defined in
 
-[src/tx/TxWitnessSet/BootstrapWitness.ts:91](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/d1659b0/src/tx/TxWitnessSet/BootstrapWitness.ts#L91)
+[src/tx/TxWitnessSet/BootstrapWitness.ts:91](https://github.com/HarmonicLabs/cardano-ledger-ts/blob/94dd590ffe94133126b0d8d49920fc7b002e1975/src/tx/TxWitnessSet/BootstrapWitness.ts#L91)
