@@ -20,8 +20,10 @@ import { PCurrencySymbol } from "../../Value/PCurrencySymbol";
 export const PScriptPurpose = pstruct({
     Minting: { currencySym: PCurrencySymbol.type },
     Spending: { utxoRef: PTxOutRef.type },
+    // highlight-start
     Rewarding: { stakeCredential: PStakingCredential.type },
     Certifying: { dCert: PDCert.type }
+    // highlight-end
 });
 ```
 
@@ -35,7 +37,6 @@ Currency symbol for identifying the tokens being minted
 
 type: [`PCurrencySymbol`](./PCurrencySymbol)
 
-
 ## `Spending`
 
 Represents the purpose of the script when it is used for spending funds from a specific UTXO (Unspent Transaction Output).
@@ -45,7 +46,6 @@ References the UTXO being spent
 
 type:  [`PTxOutRef.type`](./PTxOutRef)
 
-
 ## `Rewarding`
 
 Represents the purpose of the script when it is involved in rewarding stakeholders.
@@ -54,7 +54,6 @@ Represents the purpose of the script when it is involved in rewarding stakeholde
 Staking credential (or address) to be rewarded. This could involve distributing rewards based on staking participation.
 
 type:  [`PStakingCredential.type`](./PStakingCredential)
-
 
 ## `Certifying`
 

@@ -1,0 +1,80 @@
+---
+sidebar_position: 20
+---
+
+# `PScriptInfo`
+
+:::info
+Introduced in V3 version
+:::
+
+Define various contexts in which a script operates
+
+Definition:
+
+```ts
+export const PScriptInfo = pstruct({
+    Minting: { currencySym: PCurrencySymbol.type },
+    Spending: {
+        utxoRef: PTxOutRef.type,
+        datum: PMaybe( data ).type
+    },
+    Rewarding: { stakeCredential: PCredential.type },
+    Certifying: {
+        index: int,
+        cert: PCertificate.type
+    },
+    Voting: {
+        voter: PVoter.type
+    },
+    Proposing: {
+        index: int,
+        proposal: PProposalProcedure.type
+    }
+});
+```
+
+## `Minting`
+Context for minting a new asset
+
+### `currencySym`
+type: [`PCurrencySymbol.type`](../../V1/Value/PCurrencySymbol)
+
+## `Spending`
+Context for spending a UTXO
+
+### `utxoRef`
+type: [`PTxOutRef.type`](../Tx/PTxOutRef)
+
+### `datum`
+type: `PMaybe( data ).type`
+
+## `Rewarding`
+Context for rewarding a participant
+
+### `stakeCredential`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+## `Certifying`
+Context for certifying actions or events
+
+### `index`
+type: [`TermInt`](../../stdlib/TermInt)
+
+### `cert`
+type: [`PCertificate.type`](./PCertificate)
+
+## `Voting`
+Context for casting a vote
+
+### `voter`
+type: [`PVoter.type`](../Governance/PVoter)
+
+## `Proposing`
+Context for proposing a new procedure or action
+
+### `index`
+type: [`TermInt`](../../stdlib/TermInt)
+
+### `proposal`
+type: [`PProposalProcedure.type`](../Governance/PProposalProcedure)

@@ -1,0 +1,166 @@
+---
+sidebar_position: 7
+---
+
+# `PCertificate`
+
+:::info
+Modified from [`PDCert`](../../V1/PDCert/PDCert) in V1 version
+:::
+
+It represents any possible certificate that can be included in a transaction.
+
+Definition:
+
+```ts
+export const PCertificate =  pstruct({
+    StakeRegistration: {
+        stakeKey: PCredential.type,
+        deposit: PMaybeInt.type
+    },
+    StakeDeRegistration: {
+        stakeKey: PCredential.type,
+        refound: PMaybeInt.type
+    },
+    Delegation: {
+        delegator: PCredential.type,
+        delegatee: PDelegatee.type
+    },
+    RegistrationAndDelegation: {
+        delegator: PCredential.type,
+        delegatee: PDelegatee.type,
+        lovelacesDeposit: int
+    },
+    DRepRegistration: {
+        drep: PCredential.type,
+        lovelacesDeposit: int
+    },
+    DRepUpdate: {
+        drep: PCredential.type
+    },
+    DRepDeRegistration: {
+        drep: PCredential.type,
+        refound: int
+    },
+    PoolRegistration: {
+        poolId: PPubKeyHash.type,
+        poolVFR: PPubKeyHash.type,
+    },
+    PoolRetire: {
+        poolId: PPubKeyHash.type,
+        epoch: int,
+    },
+    CommitteeHotAuthorization: {
+        cold: PCredential.type,
+        hot: PCredential.type
+    },
+    CommitteeResignation: {
+        cold: PCredential.type
+    }
+});
+```
+
+## `StakeRegistration`
+
+Stake credential registration certificate
+
+### `stakeKey`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `deposit`
+type: `PMaybeInt.type`  ( [`TermInt`](../../stdlib/TermInt) )
+
+## `StakeDeRegistration`
+
+Stake credential de-registration certificate
+
+### `stakeKey`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `refound`
+type: `PMaybeInt.type` ( [`TermInt`](../../stdlib/TermInt) )
+
+## `Delegation`
+
+Delegation of the founds controlled by the specified `PCredential` to the specified poolId
+
+### `delegator`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `delegatee`
+type: [`PDelegatee.type`](./PDelegatee)
+
+### `RegistrationAndDelegation`
+
+Combined registration and delegation certificate.
+
+### `delegator`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `delegatee`
+type: [`PDelegatee.type`](./PDelegatee)
+
+### `DRepRegistration`
+
+Delegated representative (DRep) registration certificate.
+
+### `drep`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `lovelacesDeposit`
+type: [`TermInt`](../../stdlib/TermInt)
+
+### `DRepUpdate`
+
+Update certificate for an existing DRep.
+
+### `drep`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `DRepDeregistration`
+
+DRep de-registration certificate.
+
+### `drep`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `refound`
+type: [`TermInt`](../../stdlib/TermInt)
+
+## `PoolRegistration`
+
+Pool registration certificate
+
+### `poolId`
+type: [`PPubKeyHash.type`](../../V1/PubKey/PPubKeyHash)
+
+### `poolVFR`
+type: [`PPubKeyHash.type`](../../V1/PubKey/PPubKeyHash)
+
+## `PoolRetire`
+
+Pool de-registration certificate
+
+### `poolId`
+type: [`PPubKeyHash.type`](../../V1/PubKey/PPubKeyHash)
+
+### `epoch`
+type: [`TermInt`](../../stdlib/TermInt)
+
+### `CommitteeHotAuthorization`
+
+Authorization certificate for committee hot keys
+
+### `cold`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `hot`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+### `CommitteeResignation`
+
+Resignation certificate for committee members.
+
+### `cold`
+type: [`PCredential.type`](../../V1/Address/PCredential)
+

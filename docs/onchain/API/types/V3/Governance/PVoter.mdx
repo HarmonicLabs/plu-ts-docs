@@ -1,0 +1,42 @@
+---
+sidebar_position: 20
+---
+
+# `PChangedParams`
+
+:::info
+Introduced in V3 version
+:::
+
+This structure represents the details of a voter within a voting mechanism, including their credentials and associated entities. 
+
+Definition:
+
+```ts
+export const PVoter = pstruct({
+    Committee: { hotCredentials: PCredential.type },
+    DRep: { credentials: PCredential.type }, 
+    StakePool: { poolHash: PPubKeyHash.type }
+});
+```
+
+## `Committee`
+
+### `hotCredentials`
+Credentials associated with the committee
+
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+## `DRep`
+
+### `credentials`
+Credentials of the delegated representative (DRep). It uses `PCredential` to define the identity of DRep involved in the voting process.
+
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+## `StakePool`
+
+### `poolHash`
+Hash of the stake pool associated with the voter
+
+type: [`PPubKeyHash.type`](../../V1/PubKey/PPubKeyHash)

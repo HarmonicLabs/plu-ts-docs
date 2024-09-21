@@ -1,0 +1,31 @@
+---
+sidebar_position: 20
+---
+
+# `PVote`
+
+:::info
+Introduced in V3 version
+:::
+
+This structure represents a voting mechanism with three possible outcomes: No, Yes, and Abstain
+It can be used to capture and process user votes within a decentralized application (dApp).
+
+Definition:
+
+```ts
+export const PVote = pstruct({
+    No: {},
+    Yes: {},
+    Abstain: {}
+});
+```
+
+## `No`
+Represents a vote against a proposal. This property can be used to signify disapproval or opposition.
+
+## `Yes`
+Represents a vote in favor of a proposal. This property signifies support or approval.
+
+## `Abstain`
+Represents a neutral stance where the voter chooses not to vote either for or against the proposal.
