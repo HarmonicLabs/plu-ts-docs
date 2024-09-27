@@ -45,7 +45,7 @@ export const PTxInfo = pstruct({
 ```
 
 
-Values implements all the properties defined on the [`TermList`](../../stdlib/TermList) utility term.
+Values implements all the properties defined on the [`TermList`](../../../../stdlib/TermList) utility term.
 
 ## `inputs`
 
@@ -54,7 +54,7 @@ List of transaction inputs. Each input representing an unspent transaction outpu
 type: `list( PTxInInfo.type )`
 
 elements's type: 
-    - [`PTxInInfo`](./PTxInInfo)
+    - [`PTxInInfo`](../Tx/PTxInInfo)
 
 ## `refInputs`
 
@@ -64,7 +64,7 @@ This additional context/information maybe necessary for the contract logic but d
 type: `list( PTxInInfo.type )`
 
 elements's type: 
-    - [`PTxInInfo`](./PTxInInfo)
+    - [`PTxInInfo`](../Tx/PTxInInfo)
 
 ## `outputs`
 
@@ -72,13 +72,13 @@ List of transaction outputs. Each output represents a new UTXO created by the tr
 
 type: `list( PTxOut.type )`
 
-elements's type: [`PTxOut`](./PTxOut)
+elements's type: [`PTxOut`](../../V2/Tx/PTxOut)
 
 ## `fee`
 
 Transaction fee specified in lovelaces
 
-type: [`TermInt`](../../stdlib/TermInt)
+type: [`TermInt`](../../../../stdlib/TermInt)
 
 ## `mint`
 
@@ -110,7 +110,7 @@ type: `map( PCredential.type, int )`
 
 elements's types: 
 - [`PCredential`](../../V1/Address/PCredential)
-- [`TermInt`](../../stdlib/TermInt)
+- [`TermInt`](../../../../stdlib/TermInt)
 
 ### `interval`
 
@@ -134,7 +134,7 @@ Map of redeemers associated with specific script purposes
 type: `map( PScriptPurpose.type, data )`
 
 elements's types:
-    - [`PScriptPurpose`](./PScriptPurpose)
+    - [`PScriptPurpose`](../ScriptContext/PScriptPurpose)
     - `data`
 
 ### `datums`
@@ -161,7 +161,7 @@ type: `map( PVoter.type, map( PTxOutRef.type, PVote.type ) )`
 
 elements's types:
     - [`PVoter.type`](../Governance/PVoter)
-    - [`PTxOutRef.type`](../Tx/PTxOutRef)
+    - [`PTxOutRef.type`](../../V1/Tx/PTxOutRef)
     - [`PVote.type`](../Governance/PVote)
 
 ### `proposalProcedures`

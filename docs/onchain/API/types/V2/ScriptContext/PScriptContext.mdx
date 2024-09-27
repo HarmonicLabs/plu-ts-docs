@@ -15,10 +15,6 @@ The Script Context is probably the most important piece of data your script rece
 Definition:
 
 ```ts
-import { pstruct } from "../../../PTypes/PStruct/pstruct";
-import { PScriptPurpose } from "./PScriptPurpose";
-import { PTxInfo } from "./PTxInfo/PTxInfo";
-
 export const PScriptContext = pstruct({
     PScriptContext: {
         tx: PTxInfo.type,

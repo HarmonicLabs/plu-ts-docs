@@ -7,7 +7,7 @@ sidebar_position: 7
 :::caution [!CAUTION]
 This method is deprecated as of Plutus V3
 :::
-:::warn
+:::warning
 Renamed and modified to [`PCertificate`](../../V3/ScriptContext/PCertificate) in V3 version
 :::
 
@@ -16,11 +16,6 @@ It represents any possible certificate that can be included in a transaction. Th
 Definition:
 
 ```ts
-import { pstruct } from "../../../PTypes/PStruct/pstruct";
-import { int } from "../../../type_system/types";
-import { PStakingCredential } from "../Address/PStakingCredential";
-import { PPubKeyHash } from "../PubKey/PPubKeyHash";
-
 export const PDCert = pstruct({
     KeyRegistration: { stakeKey: PStakingCredential.type },
     KeyDeRegistration: { stakeKey: PStakingCredential.type },
@@ -48,7 +43,7 @@ This certificate is used to register a staking key (delegation or operating a st
 ### `stakeKey`
 Represents the staking credential being deregistered.
 
-type: [`PStakingCredential`](./PStakingCredential)
+type: [`PStakingCredential`](../Address/PStakingCredential)
 
 ## `KeyDeRegistration`
 
@@ -57,7 +52,7 @@ This certificate is used to deregister a staking key, effectively removing the s
 ### `stakeKey`
 Represents the staking credential being deregistered.
 
-type: [`PStakingCredential`](./PStakingCredential)
+type: [`PStakingCredential`](../Address/PStakingCredential)
 
 ## `KeyDelegation`
 
@@ -66,12 +61,12 @@ This certificate is used to delegate stake from a delegator's staking key to a s
 ### `delegator`
 The staking key of the person delegating their stake.
 
-type: [`PStakingCredential`](./PStakingCredential)
+type: [`PStakingCredential`](../Address/PStakingCredential)
 
 ### `poolKeyHash`
 The public key hash of the stake pool to which the stake is being delegated.
 
-type: [`PPubKeyHash`](./PPubKeyHash)
+type: [`PPubKeyHash`](../PubKey/PPubKeyHash)
 
 ## `PoolRegistration`
 
@@ -80,12 +75,12 @@ This certificate is used to register a new stake pool on the Cardano network.
 ### `poolId`
 The public key hash representing the stake pool.
 
-type: [`PPubKeyHash`](./PPubKeyHash)
+type: [`PPubKeyHash`](../PubKey/PPubKeyHash)
 
 ### `poolVRF`
 The public key hash representing the stake pool’s VRF (Verifiable Random Function) key, which is used in slot leader election.
 
-type: [`PPubKeyHash`](./PPubKeyHash) 
+type: [`PPubKeyHash`](../PubKey/PPubKeyHash) 
 
 ## `PoolRetire`
 
@@ -94,12 +89,12 @@ Used to retire an existing stake pool after a specific epoch
 ### `poolId`
 The public key hash of the stake pool being retired.
 
-type: [`PPubKeyHash`](./PPubKeyHash)
+type: [`PPubKeyHash`](../PubKey/PPubKeyHash)
 
 ### `epoch`
 The epoch at which the pool will retire. Once this epoch is reached, the pool is no longer active.
 
-type: [`TermInt`](../../stdlib/TermInt)
+type: [`TermInt`](../../../../stdlib/TermInt)
 
 ## `Genesis`
 
