@@ -1,0 +1,22 @@
+---
+sidebar_position: 20
+---
+
+# `PChangedParams`
+
+:::info
+Introduced in V3 version
+:::
+
+This type represents a Plutus `Data` object containing proposed changes to the Cardano protocol parameters. 
+It uses a map structure to store only the changed parameters, while unchanged parameters are excluded.
+
+The map must be non-empty. The keys (parameter IDs) are stored in ascending order.
+
+Definition:
+
+```ts
+export const PChangedParams = palias( map( data, data ) );
+```
+
+aliased type: [`TermBS`](../../stdlib/TermBS)

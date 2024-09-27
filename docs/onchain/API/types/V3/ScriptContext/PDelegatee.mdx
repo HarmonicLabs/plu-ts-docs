@@ -1,0 +1,45 @@
+---
+sidebar_position: 20
+---
+
+# `PDelegatee`
+
+:::info
+Introduced in V3 version
+:::
+
+Defines various forms of delegation in context of staking and voting
+
+Definition:
+
+```ts
+export const PDelegatee = pstruct({
+    DelegStake: { poolId: PPubKeyHash.type },
+    DelegVote: { drep: PDrep.type },
+    DelegStakeVote: { poolId: PPubKeyHash.type, drep: PDrep.type }
+});
+```
+
+## `DelegStake`
+
+Certificate for delegating stake to a specified pool
+
+### `poolId`
+type: [`PPubKeyHash.type`](../../V1/PubKey/PPubKeyHash)
+
+## `DelegVote`
+
+Certificate for delegating voting power to a specified DRep 
+
+### `drep`
+type: [`PDrep.type`](./PDrep)
+
+## `DelegStakeVote`
+
+Certificate for delegating both stake and voting power
+
+### `poolId`
+type: [`PPubKeyHash.type`](../../V1/PubKey/PPubKeyHash)
+
+### `drep`
+type: [`PDrep.type`](./PDrep)

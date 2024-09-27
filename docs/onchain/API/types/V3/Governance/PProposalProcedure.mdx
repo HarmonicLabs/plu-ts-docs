@@ -1,0 +1,42 @@
+---
+sidebar_position: 20
+---
+
+# `PProposalProcedure`
+
+:::info
+Introduced in V3 version
+:::
+
+Represents the procedure for submitting a governance proposal in the Cardano blockchain. It includes the deposit amount required, the credentials for returning the deposit, and the associated governance action
+
+Definition:
+
+```ts
+export const PProposalProcedure = pstruct({
+    PProposalProcedure: {
+        /** lovelaces */
+        deposit: int,
+        returnCredentials: PCredential.type,
+        governanceAction: PGovernanceAction.type
+    }
+});
+```
+
+## `deposit`
+
+The deposit amount (in lovelaces) required to submit the proposal
+
+type: [`TermInt`](../../stdlib/TermInt)
+
+## `returnCredentials`
+
+The staking or payment credential used to return the deposit after the proposal process is complete
+
+type: [`PCredential.type`](../../V1/Address/PCredential)
+
+## `governanceAction`
+
+The specific governance action being proposed
+
+type: [`PGovernanceAction.type`](./PGovernanceAction)

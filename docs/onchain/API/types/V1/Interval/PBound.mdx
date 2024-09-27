@@ -1,0 +1,36 @@
+---
+sidebar_position: 4
+---
+
+# `PBound`
+
+Represents a bound in a range with an associated inclusivity flag. 
+The `PBound` type is typically used to define the bounds of an interval, where each bound is either inclusive or exclusive, and the value of the bound itself is described by an `PExtended` type.
+
+Definition:
+
+```ts
+import { pstruct } from "../../../PTypes/PStruct/pstruct";
+import { bool } from "../../../type_system/types";
+import { PExtended } from "./PExtended";
+
+export const PBound = pstruct({
+    PBound: {
+        bound: PExtended.type,
+        inclusive: bool 
+    }
+});
+```
+
+## `bound`
+
+This field specifies the actual value of the boundary in the interval. This can either be a concrete value or an infinite one (i.e., open-ended bound).
+The `PExtended` type allows for this flexibility by supporting both finite and infinite bounds.
+
+type: [`PExtended`](./PExtended)
+
+### `inclusive`
+
+A boolean flag that indicates whether the bound is inclusive or exclusive, meaning part or not part of the interval
+
+type: [`bool`](../../stdlib/TermBool)

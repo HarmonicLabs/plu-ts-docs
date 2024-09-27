@@ -1,0 +1,30 @@
+---
+sidebar_position: 6
+---
+
+# `PInterval`
+
+Used to describe the time interval in which a transaction is considered valid, defining a start and end time using `PBound` for each. 
+Both bounds (`from` and `to`) can represent either finite times or infinite boundaries (open-ended intervals).
+
+Definition:
+
+```ts
+import { pstruct } from "../../../PTypes/PStruct/pstruct";
+import { PBound } from "./PBound";
+
+export const PInterval = pstruct({
+    PInterval: {
+        from: PBound.type,
+        to: PBound.type
+    }
+});
+```
+
+## from
+
+type: [`PBound`](./PBound)
+
+## to
+
+type: [`PBound`](./PBound)

@@ -1,0 +1,34 @@
+---
+sidebar_position: 20
+---
+
+# `PTxOutRef`
+
+Type that represents a reference to a UTXO.
+
+Definition:
+
+```ts
+import { pstruct } from "../../../PTypes/PStruct/pstruct";
+import { int } from "../../../type_system/types";
+import { PTxId } from "./PTxId";
+
+export const PTxOutRef = pstruct({
+    PTxOutRef: {
+        id: PTxId.type,
+        index: int
+    }
+});
+```
+
+## `id`
+
+Unique transaction ID
+
+type: [`PTxId.type`](./PTxId)
+
+## `index`
+
+Index of the specific output within this transaction
+
+type: [`TermInt`](../../stdlib/TermInt)
