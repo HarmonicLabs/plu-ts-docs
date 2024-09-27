@@ -374,7 +374,7 @@ In our case all we need to keep track of is an owner
 
 And that can be identified using a public key hash.
 
-So in `src/contract.ts` we'll change the first `data` to [`PPubKeyHash`](../onchain/API/types/PPubKeyHash)
+So in `src/contract.ts` we'll change the first `data` to [`PPubKeyHash`](../onchain/API/types/V1/PubKey/PPubKeyHash)
 
 ```ts title="src/contract.ts"
 /* imports */
@@ -446,7 +446,7 @@ Then we'll check that the transaction is signed by the owner specified in the da
 
 To do so we need information about the transaction and who signed it.
 
-All the information about the transaction is in the `tx` field of the [`PScriptContext`](../onchain/API/types/PScriptContext.mdx)
+All the information about the transaction is in the `tx` field of the [`PScriptContext`](../onchain/API/types/V1/ScriptContext/PScriptContext.mdx)
 
 An in particular we are interested in the [`signatories` field](../onchain/API/types/PTxInfo#signatories) 
 ```ts
