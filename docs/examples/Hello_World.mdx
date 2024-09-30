@@ -81,11 +81,11 @@ The most important ones are:
 
 ```json title="package.json"
 "dependencies": {
-    "@harmoniclabs/plu-ts": "^0.7.0",
+    "@harmoniclabs/plu-ts": "^0.8.0",
     "@harmoniclabs/uint8array-utils": "^1.0.0",
-    "@harmoniclabs/blockfrost-pluts": "^0.1.11",
-    "@meshsdk/core": "^1.5.2",
-    "@meshsdk/react": "^1.1.7",
+    "@harmoniclabs/blockfrost-pluts": "^0.1.14",
+    "@meshsdk/core": "^1.6.2",
+    "@meshsdk/react": "^1.6.2",
     /* other deps */
 }
 ```
@@ -105,36 +105,25 @@ From the project structure we see that the code can be found in the `src` folder
 The `contracts` only file is the `helloPluts.ts` one; which for now contains only a contract that always fails and exports the compiled result.
 
 ```ts title="contracts/helloPluts.ts"
-import { Address, PPubKeyHash, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeValidator, pfn, data, pBool } from "@harmoniclabs/plu-ts";
+import { Address, PScriptContext, ScriptType, Credential, Script, compile, pfn, unit, plet, punBData, pmatch, perror, PMaybe, data, pBool, passert } from "@harmoniclabs/plu-ts";
 
-const helloPluts = pfn([
-  data,
-  data,
+const contract = pfn([
   PScriptContext.type
-], bool)
-((datum, redeemer, ctx) => {
-  // locks funds forever
-  return pBool( false );
+], unit)
+(({ redeemer, tx, purpose }) => {
+  return passert.$(false);
 });
 
-///////////////////////////////////////////////////////////////////
-// ------------------------------------------------------------- //
-// ------------------------- utilities ------------------------- //
-// ------------------------------------------------------------- //
-///////////////////////////////////////////////////////////////////
-
-export const untypedValidator = makeValidator(helloPluts);
-
-export const compiledContract = compile(untypedValidator);
+export const compiledContract = compile(contract);
 
 export const script = new Script(
-  "PlutusScriptV2",
+  ScriptType.PlutusV3,
   compiledContract
 );
 
 export const scriptTestnetAddr = new Address(
   "testnet",
-  PaymentCredentials.script(script.hash)
+  Credential.script(script.hash)
 );
 ```
 
@@ -186,7 +175,12 @@ export async function unlockTx(wallet: BrowserWallet, projectId: string): Promis
     true // partial sign because we have smart contracts in the transaction
   );
 
-  return await Blockfrost.submitTx(txStr);
+  const txWit = Tx.fromCbor(txStr).witnesses.vkeyWitnesses ?? [];
+  for (const wit of txWit) {
+    unsingedTx.addVKeyWitness(wit);
+  }
+
+  return await Blockfrost.submitTx(unsingedTx);
 }
 ```
 
@@ -197,7 +191,7 @@ This will be done using the plu-ts [`TxBuilder`](../offchain/TxBuilder%20API/TxB
 The code to get a `TxBuilder` instance is already defined in the `src/offchain/getTxBuilder.ts`
 
 ```ts title="src/offchain/getTxBuilder.ts"
-import { TxBuilder } from "@harmoniclabs/plu-ts";
+import { TxBuilder, defaultProtocolParameters } from "@harmoniclabs/plu-ts";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 
 /**
@@ -368,29 +362,23 @@ The datum helps us keep track of the history of the input the smart contract is 
 
 :::
 
-Currently our datum is a generic `data` argument, but it could be really anything;
-
-In our case all we need to keep track of is an owner
-
-And that can be identified using a public key hash.
-
-So in `src/contract.ts` we'll change the first `data` to [`PPubKeyHash`](../onchain/API/types/V1/PubKey/PPubKeyHash)
+So the first thing we need to do is to obtain the datum from the purpose parameter:
 
 ```ts title="src/contract.ts"
 /* imports */
 
-const helloPluts = pfn([
-  // highlight-next-line
-  PPubKeyHash.type,
-  data,
+const contract = pfn([
   PScriptContext.type
-], bool)
-// highlight-next-line
-//  datum -> owner
-// highlight-next-line
-((owner, redeemer, ctx) => {
-  // locks funds forever
-  return pBool( false );
+], unit)
+(({ redeemer, tx, purpose }) => {
+
+  const maybeDatum = plet(
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+  );
+
+  return passert.$(false);
 });
 
 /* ... */
@@ -400,7 +388,7 @@ const helloPluts = pfn([
 
 The second condition requires us to send some message to the contract.
 
-This is done thanks to the redeemer (or the second argument of a validator).
+This is done thanks to the redeemer.
 
 :::info redeemer
 
@@ -408,25 +396,24 @@ The redeemer is the argument specified by the user that interacts with the smart
 
 :::
 
-Once again, all we need in order to have a message is just a `bytestring`, nothing more complex,
-
-So we'll change the second `data` to the primitive type `bs`.
+Once again, all we need in order to have a message is just convert the redeemer to a bytestring:
 
 ```ts title="src/contract.ts"
 /* imports */
 
-const helloPluts = pfn([
-  PPubKeyHash.type,
-  // highlight-next-line
-  bs,
+const contract = pfn([
   PScriptContext.type
-], bool)
-// highlight-next-line
-//  redeemer -> message
-// highlight-next-line
-((owner, message, ctx) => {
-  // locks funds forever
-  return pBool( false );
+], unit)
+(({ redeemer, tx, purpose }) => {
+  const message = plet(punBData.$(redeemer));
+
+  const maybeDatum = plet(
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+  );
+
+  return passert.$(false);
 });
 
 /* ... */
@@ -446,35 +433,54 @@ Then we'll check that the transaction is signed by the owner specified in the da
 
 To do so we need information about the transaction and who signed it.
 
-All the information about the transaction is in the `tx` field of the [`PScriptContext`](../onchain/API/types/V1/ScriptContext/PScriptContext.mdx)
+All the information about the transaction is in the [`Tx` parameter](/category/tx-2)
 
-An in particular we are interested in the [`signatories` field](../onchain/API/types/PTxInfo#signatories) 
+An in particular we are interested in the [`signatories` field](/onchain/API/types/V3/Tx/PTxInInfo#signatories) 
 ```ts
-ctx.tx.signatories;
+tx.signatories;
 ```
 
-Since this is a list of all the required signatories we chan use all the [`TermList`](../onchain/stdlib/TermList) methods;
-of which [`some`](../onchain/stdlib/TermList#some) allows us to check that **at leat one** element of the list respects a given property:
+Since this is a list of all the required signatories we chan use all the [`TermList`](/onchain/stdlib/TermList) methods:
 ```ts
-const signedByOwner = ctx.tx.signatories.some(owner.eq);
+const signedByOwner = plet(
+  pmatch(maybeDatum)
+  .onNothing( _ => pBool(true))
+  .onJust(({ val }) =>
+    tx.signatories.includes(punBData.$(val))
+  )
+);
 ```
 
 And finally, we put all together
 
 ```ts title="src/contract.ts"
-import { Address, PPubKeyHash, PScriptContext, PaymentCredentials, Script, bool, bs, compile, makeValidator, pfn } from "@harmoniclabs/plu-ts";
+import { Address, PScriptContext, ScriptType, Credential, Script, compile, pfn, unit, plet, punBData, pmatch, perror, PMaybe, data, pBool, passert } from "@harmoniclabs/plu-ts";
 
-const helloPluts = pfn([
-  PPubKeyHash.type,
-  bs,
+const contract = pfn([
   PScriptContext.type
-], bool)
-((owner, message, ctx) => {
-  // highlight-start
+], unit)
+(({ redeemer, tx, purpose }) => {
+  const message = plet(punBData.$(redeemer));
+
+  const maybeDatum = plet(
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+  );
+
+  const signedByOwner = plet(
+    pmatch(maybeDatum)
+    .onNothing( _ => pBool(true))
+    .onJust(({ val }) =>
+      tx.signatories.includes(punBData.$(val))
+    )
+  );
+
   const isBeingPolite = message.eq("Hello plu-ts");
-  const signedByOwner = ctx.tx.signatories.some(owner.eq);
-  return isBeingPolite.and(signedByOwner);
-  // highlight-end
+
+  return passert.$(
+    signedByOwner.and(isBeingPolite)
+  );
 });
 
 /* ... */
