@@ -15,10 +15,6 @@ Each input references a UTXO and includes the resolved details of that UTXO, ess
 Definition:
 
 ```ts
-import { pstruct } from "../../../PTypes/PStruct/pstruct";
-import { PTxOut } from "./PTxOut";
-import { PTxOutRef } from "./PTxOutRef";
-
 export const PTxInInfo = pstruct({
     PTxInInfo: {
         utxoRef: PTxOutRef.type,
@@ -29,8 +25,8 @@ export const PTxInInfo = pstruct({
 
 ## utxoRef
 
-type: [`PTxOutRef.type`](./PTxOutRef)
+type: [`PTxOutRef.type`](../Tx/PTxOutRef)
 
 ## resolved
 
-type: ['PTxOut.type'](./PTxOut)
+type: ['PTxOut.type'](../Tx/PTxOut)

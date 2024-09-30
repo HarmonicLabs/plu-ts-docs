@@ -60,10 +60,10 @@ export const PGovernanceAction = pstruct({
 This type represents a rational number in the governance system, composed of a numerator and a denominator.
 
 ### `numerator`
-type: [`TermInt`](../../stdlib/TermInt)
+type: [`TermInt`](../../../../stdlib/TermInt)
 
 ### deno`minator
-type: [`TermInt`](../../stdlib/TermInt)
+type: [`TermInt`](../../../../stdlib/TermInt)
 
 ## `PConstitution`
 
@@ -84,7 +84,7 @@ Proposes changes to protocol parameters
 #### `govActionId`
 (Optional) Transaction output reference for the action
 
-type: [`PMaybe( PTxOutRef.type ).type`](../Tx/PTxOutRef)
+type: [`PMaybe( PTxOutRef.type ).type`](../../V1/Tx/PTxOutRef)
 
 #### `changedParameters`
 A map of parameters that are being changed.
@@ -103,7 +103,7 @@ Initiates a hard fork with a new protocol version.
 #### `govActionId`
 (Optional) Transaction output reference.
 
-type: [`PMaybe( PTxOutRef.type ).type`](../Tx/PTxOutRef)
+type: [`PMaybe( PTxOutRef.type ).type`](../../V1/Tx/PTxOutRef)
 
 #### `nextProtocolVersion`
 The protocol version to be implemented after the hard fork.
@@ -122,7 +122,7 @@ type: `map( PCredential.type, int )`
 elements's types: 
 
 - [`PCredential`](../../V1/Address/PCredential)
-- [`TermInt`](../../stdlib/TermInt)
+- [`TermInt`](../../../../stdlib/TermInt)
 
 #### `constitutionScriptHash`
 (Optional) Validator hash of the constitution.
@@ -136,7 +136,7 @@ A vote of no confidence.
 #### `govActionId`
 (Optional) Transaction output reference.
 
-type: [`PMaybe( PTxOutRef.type ).type`](../Tx/PTxOutRef)
+type: [`PMaybe( PTxOutRef.type ).type`](../../V1/Tx/PTxOutRef)
 
 ### `UpdateCommittee`
 
@@ -145,7 +145,7 @@ Updates the governance committee.
 #### `govActionId`
 (Optional) Transaction output reference.
 
-type: [`PMaybe( PTxOutRef.type ).type`](../Tx/PTxOutRef)
+type: [`PMaybe( PTxOutRef.type ).type`](../../V1/Tx/PTxOutRef)
 
 #### `removedMembers`
 A list of committee members being removed.
@@ -164,12 +164,12 @@ type: `map( PCredential.type, int )`
 elements's types: 
 
 - [`PCredential`](../../V1/Address/PCredential)
-- [`TermInt`](../../stdlib/TermInt)
+- [`TermInt`](../../../../stdlib/TermInt)
 
 #### `newQuorum`
 A rational number representing the new quorum.
 
-type: [`PRational.type`](./PRational)
+type: `PRational.type`
 
 ### `NewConstitution`
 
@@ -178,12 +178,12 @@ Proposes a new constitution.
 #### `govActionId`
 (Optional) Transaction output reference.
 
-type: [`PMaybe( PTxOutRef.type ).type`](../Tx/PTxOutRef)
+type: [`PMaybe( PTxOutRef.type ).type`](../../V1/Tx/PTxOutRef)
 
 #### `consitution`
 The proposed new constitution.
 
-type: [`PConstitution.type`](./PConstitution)
+type: `PConstitution.type`
 
 ### `cold`
 

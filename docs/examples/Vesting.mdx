@@ -365,7 +365,7 @@ The first condtion for the contract to succeed is:
 
 > the transaction is signed by the `PPubKeyHash` defined in the UTxO datum;
 
-To check that we can use the [`signatories` field](../onchain/API/types/PTxInfo#signatories) defined in the [`PTxInfo`](../onchain/API/types/PTxInfo) struct.
+To check that we can use the [`signatories` field](../onchain/API/types/V3/ScriptContext/PTxInfo#signatories) defined in the [`PTxInfo`](../onchain/API/types/V3/ScriptContext/PTxInfo) struct.
 
 We can access the field from the context using the dot notation:
 ```ts
@@ -418,7 +418,7 @@ So we can at least be sure that the script is excuted in the given time range.
 
 :::
 
-We can access the transaction validity time range trough the [`interval` property](../onchain/API/types/PTxInfo#interval) of the [`PTxInfo`](../onchain/API/types/PTxInfo) struct.
+We can access the transaction validity time range trough the [`interval` property](../onchain/API/types/V3/ScriptContext/PTxInfo#interval) of the [`PTxInfo`](../onchain/API/types/V3/ScriptContext/PTxInfo) struct.
 
 this is done once again using the dot notation:
 
