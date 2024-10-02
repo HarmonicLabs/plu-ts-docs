@@ -7,8 +7,8 @@ import TabItem from '@theme/TabItem';
 
 # Vesting
 
-Now that we are a bit more famliar on how to interact properly with a smart contract
-let's do a step forward and see if we can come up with a sligthly more complex contract.
+Now that we are a bit more familiar on how to interact properly with a smart contract,
+let's do a step forward and see if we can come up with a slightly more complex contract.
 
 The final result can be found at [`HarmonicLabs/vesting-pluts`](https://github.com/HarmonicLabs/vesting-pluts).
 
@@ -18,7 +18,7 @@ Check `package.json` file at [`HarmonicLabs/vesting-pluts`](https://github.com/H
 
 ## Project set up
 
-We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template (with the plu-ts version ~0.8.0) :
+We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template (with the plu-ts version ~0.8.1) :
 ```bash
 git clone https://github.com/HarmonicLabs/plu-ts-starter.git
 mv plu-ts-starter vesting-pluts
@@ -44,7 +44,7 @@ this gives us a simple project structure:
 
 ## Add dependencies
 
-Just like the [Hello plu-ts](./Hello_World.mdx) example; this project already comes with plu-ts as dependecy;
+Just like the [Hello plu-ts](./Hello_World.mdx) example; this project already comes with plu-ts as dependency;
 all we need to do to then is to run
 
 ```
@@ -62,22 +62,15 @@ Before we dive in let's get familiar with the starter template.
 If we now navigate to `src/contract.ts` we see we have a very simple validator already!
 
 ```ts title="src/contract.ts"
-import { Address, bool, compile, makeValidator, Credential, pBool, pfn, Script, ScriptType, V2 } from "@harmoniclabs/plu-ts";
-import MyDatum from "./MyDatum";
-import MyRedeemer from "./MyRedeemer";
+import { Address, compile, Credential, pfn, Script, ScriptType, PScriptContext, unit, passert } from "@harmoniclabs/plu-ts";
 
-
-// highlight-start
 export const contract = pfn([
-    MyDatum.type,
-    MyRedeemer.type,
-    V2.PScriptContext.type
-],  bool)
-(( datum, redeemer, ctx ) =>
-    // always suceeds
-    pBool( true )
-);
-// highlight-end
+    PScriptContext.type
+],  unit )
+(( { redemeer, tx, purpose } ) => {
+    // always succeeds
+    return passert.$(true)
+});
 
 
 ///////////////////////////////////////////////////////////////////
@@ -86,27 +79,23 @@ export const contract = pfn([
 // ------------------------------------------------------------- //
 ///////////////////////////////////////////////////////////////////
 
-export const untypedValidator = makeValidator( contract );
-
-export const compiledContract = compile( untypedValidator );
+export const compiledContract = compile( contract );
 
 export const script = new Script(
-    ScriptType.PlutusV2,
+    ScriptType.PlutusV3,
     compiledContract
 );
 
 export const scriptMainnetAddr = new Address(
     "mainnet",
-    new Credential(
-        "script",
+    Credential.script(
         script.hash
     )
 );
 
 export const scriptTestnetAddr = new Address(
     "testnet",
-    new Credential(
-        "script",
+    Credential.script(
         script.hash.clone()
     )
 );
@@ -114,48 +103,18 @@ export const scriptTestnetAddr = new Address(
 export default contract;
 ```
 
-Let's focus only on the contract for now;
+Let's focus only on the contract for now.
 
-This contract expects a `MyDatum`, a `MyRedeemer` and finally a `PScriptContext` to validate a transaction.
+As per the latest Plutus V3, this contract expects a mandatory `PScriptContext` to validate a transaction.
 
-All of the three above are just  [`Struct`s](../onchain/Values/Structs/definition).
-
-`MyDatum` and `MyRedeemer` are user-defined types respectively in `src/MyDatum/index.ts` and `src/MyRedeemer/index.ts`.
-
-```ts title="src/MyDatum/index.ts"
-import { int, pstruct } from "@harmoniclabs/plu-ts";
-
-// modify the Datum as you prefer
-const MyDatum = pstruct({
-    Num: {
-        number: int
-    },
-    NoDatum: {}
-});
-
-export default MyDatum;
-```
-
-```ts title="src/MyRedeemer/index.ts"
-import { pstruct } from "@harmoniclabs/plu-ts";
-
-// modify the Redeemer as you prefer
-const MyRedeemer = pstruct({
-    Option1: {},
-    Option2: {}
-});
-
-export default MyRedeemer;
-```
-
-Whereas, `PScriptContex` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
+`PScriptContext` is a predefined data structure that is passed by the `cardano-node` itself that will run our smart contract.
 
 Finally, the contract is used in `src/index.ts` which is our entry point.
 
 ```ts title="src/index.ts"
 import { script } from "./contract";
 
-console.log("validator compiled succesfully! 🎉\n");
+console.log("validator compiled successfully! 🎉\n");
 console.log(
     JSON.stringify(
         script.toJson(),
@@ -169,60 +128,33 @@ The index just imports `script` from `src/contract.ts` and prints it out in the 
 
 If we go back to `src/contract.ts` we see that the script is obtained using the following steps:
 
-1) Adapting the validator to the standard using [`makeValidator`](../onchain/API/utilities/makeValidator)
+1) Compiling the validator with [`compile`](../onchain/API/utilities/compile)
 
 ```ts title="src/contract.ts"
-/* ... */
 
 // highlight-start
-export const untypedValidator = makeValidator( contract );
+export const compiledContract = compile( contract );
 // highlight-end
 
-export const compiledContract = compile( untypedValidator );
-
 export const script = new Script(
-    ScriptType.PlutusV2,
+    ScriptType.PlutusV3,
     compiledContract
 );
 
-/* ... */
 ```
-
-2) Compiling the validator with [`compile`](../onchain/API/utilities/compile)
-
-```ts title="src/contract.ts"
-/* ... */
-
-export const untypedValidator = makeValidator( contract );
-
-// highlight-start
-export const compiledContract = compile( untypedValidator );
-// highlight-end
-
-export const script = new Script(
-    ScriptType.PlutusV2,
-    compiledContract
-);
-
-/* ... */
-```
-3) Wrapping it in a `Script` that can be used offchain
+2) Wrapping it in a `Script` that can be used offchain
 
 ```ts title="src/contract.ts"
-/* ... */
 
-export const untypedValidator = makeValidator( contract );
-
-export const compiledContract = compile( untypedValidator );
+export const compiledContract = compile( contract );
 
 // highlight-start
 export const script = new Script(
-    ScriptType.PlutusV2,
+    ScriptType.PlutusV3,
     compiledContract
 );
 // highlight-end
 
-/* ... */
 ```
 
 That is all we need for now.
@@ -236,12 +168,12 @@ npm run start
 
 and the output should look like:
 ```
-validator compiled succesfully! 🎉
+validator compiled successfully! 🎉
 
 {
-  "type": "PlutusScriptV2",
+  "type": "PlutusScriptV3",
   "description": "",
-  "cborHex": "56550100002225333573466644494400c0080045261601"
+  "cborHex": "515001010023259800800c5268b2ae689441"
 }
 ```
 
@@ -258,83 +190,93 @@ Let's personalize this smart contract.
 The contract should succeed if the following two conditions are met:
 
 - the transaction is signed by the `PPubKeyHash` defined in the UTxO datum;
-- the transaction lower bound is `Finite` and greather than the datum `deadline` field;
+- the transaction lower bound is `Finite` and greater than the datum `deadline` field;
 
 ### `VestingDatum`
 
 The first thing we notice is that we need a custom datum.
 
-Let's rename the `MyDatum` folder to `VestingDatum` and modify `src/contract.ts` as follows
+Let's create a folder `VestingDatum` with `index.ts` file to define the types `beneficiary` and `deadline` in the contract should hold.
 
-```ts title="src/contract.ts"
+Now, modify `src/contract.ts` as follows
+
+```ts title="src/VestingDatum/index.ts"
 import { PPubKeyHash, int, pstruct } from "@harmoniclabs/plu-ts";
 
 // modify the Datum as you prefer
-// highlight-start
 const VestingDatum = pstruct({
     VestingDatum: {
         beneficiary: PPubKeyHash.type,
         deadline: int // posix time
     }
 });
-// highlight-end
 
 export default VestingDatum;
 ```
 
 ### Contract signature
 
-Now that we have our datum structure we can use it in the contract definition.
-
-Since we are changing the contract signature, we also know that we don't need any particular redeemer; so we can just change it to a simple `data` type;
-
-We can also delete the `MyRedeemer` directory, if we want, since we don't need it anymore.
-
+There is no change in the contract signature, as all details about the transaction and the purpose of the script within the transaction are embedded within `PScriptContext`.
 
 ```ts title="src/contract.ts"
 /* imports */
 
 export const contract = pfn([
-    // highlight-next-line
-    VestingDatum.type,
-    // highlight-next-line
-    data,
+    // highlight-start
     PScriptContext.type
-],  bool)
-(( datum, _redeemer, ctx ) =>
-    // always succeeds
-    pBool( true )
-);
+    // highlight-end
+],  unit)
+// highlight-start
+(( {redeemer, tx, purpose} ) => {
+// highlight-end
+    /* contract logic */
+
+});
 
 /* other code */
+
 ```
+
 
 ### Contract logic
 
-As for now our contract succeeds every time we use it.
+We know for sure that we need 2 conditions. So we will check them separately using two terms- `signedByBeneficiary` and `deadlineReached`.
 
-That definitely doesn't meet the specifications; so we need to change the function body too.
-
-We know for sure that we need 2 conditions; so we will check them separately using two terms: `signedByBeneficiary` and `deadlineReached`
+Now that we have our datum structure, we can use it in the contract definition.
 
 ```ts title="src/contract.ts"
 /* imports */
 
 export const contract = pfn([
-    VestingDatum.type,
-    data,
     PScriptContext.type
-],  bool)
-(( datum, _redeemer, ctx ) => {
+],  unit)
+(( {redeemer, tx, purpose} ) => {
     // highlight-start
 
-    // inlined
-    const signedByBeneficiary = pBool( false );
+    const maybeDatum = plet(
+        pmatch(purpose)
+        .onSpending(({ datum }) => datum)
+        ._(_ => perror(PMaybe(data).type))
+    );
+
+    const datum = plet( punsafeConvertType( maybeDatum.unwrap, VestingDatum.type ) )
+
+    const signedByBeneficiary = tx.signatories.some( datum.beneficiary.eq )
 
     // inlined
-    const deadlineReached = pBool( false );
+    const deadlineReached = plet(
+        pmatch( tx.interval.from.bound )
+        .onPFinite(({ n: lowerInterval }) =>
+            datum.deadline.ltEq( lowerInterval ) 
+        )
+        ._( _ => pBool( false ) )
+    )
 
-    return signedByBeneficiary.and( deadlineReached );
+    return passert.$(
+        (ptraceIfFalse.$(pdelay(pStr("Error in signedByBenificiary"))).$(signedByBeneficiary))
+        .and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
+    );
+
     // highlight-end
 });
 
@@ -343,66 +285,85 @@ export const contract = pfn([
 
 We just initialize them to `pBool( false )` so that if we forget them the contract fails.
 
-But we can already see the structure of the contract this way: we have two conditions, and we want bot to be true.
+But we can already see the structure of the contract this way: we have two conditions, and we want both to be true.
 
 :::tip What's `// inlined` for?
 
 As defined above the terms are inlined **every time that are used**.
 
-This is because we are not using [`plet`](../onchain/Optimizations/plet) to create an actual `plu-ts` variable.
+This is because we are not using [`plet`](../onchain/Optimizations/plet) to create an actual `plu-ts` variable. Instead we are just holding a reference to that piece of code.
 
-Instead we are just holding a reference to that piece of code.
+This is not necessarily bad because it helps making the contract more readable (and `plet` would have inlined the term anyway in this particular case for efficiency).
 
-This is not necessarly bad because it helps making the contract more readable (and `plet` would have inlined the term anyway in this particular case for efficiency).
-
-But it is definitely useful to keep in mind that what we have is **always** inlined with a small comment.
+But, it is definitely useful to keep in mind that what we have is **always** inlined with a small comment.
 
 :::
 
 ## `signedByBeneficiary`
 
-The first condtion for the contract to succeed is:
+The first condition for the contract to succeed is:
 
 > the transaction is signed by the `PPubKeyHash` defined in the UTxO datum;
 
 To check that we can use the [`signatories` field](../onchain/API/types/V3/ScriptContext/PTxInfo#signatories) defined in the [`PTxInfo`](../onchain/API/types/V3/ScriptContext/PTxInfo) struct.
 
-We can access the field from the context using the dot notation:
+We can access the field from the transaction using the dot notation:
 ```ts
-ctx.tx.signatories
+tx.signatories
 ```
 
-the `signatories` field is a list of `PPubKeyHash`; so we have access to all the [`TermList`](../onchain/stdlib/TermList) methods.
+The `signatories` field is a list of `PPubKeyHash`; so we have access to all the [`TermList`](../onchain/stdlib/TermList) methods.
 
 so we can use the [`some` method](../onchain/stdlib/TermList#some) to check that **at least one** element of the list satisfies a given predicate.
 
 In our case:
 
 ```ts 
-ctx.tx.signatories.some( signer => signer.eq( datum.beneficiary ) );
+tx.signatories.some( signer => signer.eq( datum.beneficiary ) );
 ```
 
-Or the equivalent (but sligthly more efficient)
+Or the equivalent (but slightly more efficient)
 
 ```ts 
-ctx.tx.signatories.some( datum.beneficiary.eqTerm );
+tx.signatories.some( datum.beneficiary.eq );
 ```
+
+Here, we would define the `beneficiary` and `deadline` in `datum` of the _spending transaction_(in `src/app/createVesting.ts`).
+
+To use them, extract the `maybeDatum` from `purpose`, and then properly type convert to ultimately get `datum`:
+```ts title="src/contract.ts"
+const maybeDatum = plet(
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+);
+
+const datum = plet( punsafeConvertType( maybeDatum.unwrap, VestingDatum.type ) )
+```
+
 
 And that's it!
 
-Our `signedByBeneficiary` condition becomes the one-liner
+Our `signedByBeneficiary` condition is ready
 ```ts title="src/contract.ts"
-// inlined
-const signedByBeneficiary = ctx.tx.signatories.some( datum.beneficiary.eqTerm );
+const maybeDatum = plet(
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+);
+
+const datum = plet( punsafeConvertType( maybeDatum.unwrap, VestingDatum.type ) )
+
+const signedByBeneficiary = tx.signatories.some( datum.beneficiary.eq )
 ```
 
 ## `deadlineReached`
 
-Now we can pass at the second condtion:
+Now we can pass to the second condition:
 
-> the transaction lower bound is `Finite` and greather than the datum `deadline` field
+> the transaction lower bound is `Finite` and greater than the datum `deadline` field
 
-:::info but what do we mean by _"transaciton lower bound"_?
+:::info but what do we mean by _"transaction lower bound"_?
 
 That is due to how time is handled on-chain.
 
@@ -412,18 +373,18 @@ That means that we can't really be 100% sure of the exact moment the script is e
 
 To work around this problem, time is represented on chain with a range in which the transaction is considered valid.
 
-If ever the transaction where sent outside of the range it would be rejected by the node before even executing the script!
+If ever the transaction where sent outside of the range, it would be rejected by the node before even executing the script!
 
-So we can at least be sure that the script is excuted in the given time range.
+So we can at least be sure that the script is executed in the given time range.
 
 :::
 
 We can access the transaction validity time range trough the [`interval` property](../onchain/API/types/V3/ScriptContext/PTxInfo#interval) of the [`PTxInfo`](../onchain/API/types/V3/ScriptContext/PTxInfo) struct.
 
-this is done once again using the dot notation:
+This is done once again using the dot notation:
 
 ```ts 
-ctx.tx.interval
+tx.interval
 ```
 
 The `interval` type is somewhat complex due to the nested structure; we have
@@ -435,81 +396,96 @@ The `interval` type is somewhat complex due to the nested structure; we have
 ```ts 
 const PExtended = pstruct({
     PNegInf: {},
-    PFinite: { _0: int },
+    PFinite: { n: int },
     PPosInf: {}
 });
 ```
 
-where the `PFinite` one is the one we are interested in.
+where `PFinite` is the one we are interested in.
 
-so reaching the `bound` field is the easy part and can be done as follows:
+So reaching the `bound` field is the easy part and can be done as follows:
 ```ts 
-ctx.tx.interval.from.bound
+tx.interval.from.bound
 ```
 
-but then we have to use [`pmatch`](../onchain/Control%20Flow/pmatch) to understand what constructor was used;
+But then we have to use [`pmatch`](../onchain/Control%20Flow/pmatch) to understand what constructor was used.
 
-in particular we are only interested in the `PFinite` one so we'll use the underscore (`_`) wildcard to match the other two.
+In particular, we are only interested in the `PFinite` one. So we'll use the underscore (`_`) wildcard to match the other two.
 
 ```ts 
-pmatch( ctx.tx.interval.from.bound )
-.onPFinite(({ _0: lowerInterval }) => ... )
+pmatch( tx.interval.from.bound )
+.onPFinite(({ n: lowerInterval }) => 
+    /* deadline condition */
+)
 ._( _ => pBool( false ) )
 ```
 
-and now that we have access to the transaction lower bound we can finally check for the deadline to have been passed
+Now that we have access to the transaction lower bound, we can finally check for the deadline to have been passed.
 
 ```ts 
 datum.deadline.ltEq( lowerInterval ) 
 ```
 
-So the final `deadlineReached` condition becomes:
+The final `deadlineReached` condition becomes:
 
 ```ts title="src/contract.ts"
 // inlined
-const deadlineReached = 
-    pmatch( ctx.tx.interval.from.bound )
-    .onPFinite(({ _0: lowerInterval }) =>
+const deadlineReached = plet(
+    pmatch( tx.interval.from.bound )
+    .onPFinite(({ n: lowerInterval }) =>
         datum.deadline.ltEq( lowerInterval ) 
     )
     ._( _ => pBool( false ) )
+)
 ```
 
-For debugging closely in case the contract fails due to `deadlineReached` condition, and to throw a specific error in that case, we can add `pTrace` to the return statement and thus modify it as:
+For debugging closely in case the contract fails due to `deadlineReached` condition, and to throw a specific error in that case, we can add `pTrace` to the return statement and modify it as:
 ```ts title="src/contract.ts"
-return signedByBeneficiary.and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
+return passert.$(
+        (ptraceIfFalse.$(pdelay(pStr("Error in signedByBenificiary"))).$(signedByBeneficiary))
+        .and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
+);
 ```
 
 ## Compiling the contract
 
-Now our smart contract should look something like this:
+Our smart contract should now look something like this:
 
 ```ts title="src/contract.ts"
 export const contract = pfn([
-    VestingDatum.type,
-    data,
     PScriptContext.type
-],  bool)
-(( datum, _redeemer, ctx ) => {
+],  unit)
+(( {redeemer, tx, purpose} ) => {
+
+  const maybeDatum = plet(
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+  );
+
+     const datum = plet( punsafeConvertType( maybeDatum.unwrap, VestingDatum.type ) )
+
+     const signedByBeneficiary = tx.signatories.some( datum.beneficiary.eq )
 
     // inlined
-    const signedByBeneficiary = ctx.tx.signatories.some( datum.beneficiary.eqTerm );
-
-    // inlined
-    const deadlineReached = 
-        pmatch( ctx.tx.interval.from.bound )
-        .onPFinite(({ _0: lowerInterval }) =>
-                datum.deadline.ltEq( lowerInterval ) 
+    const deadlineReached = plet(
+        pmatch( tx.interval.from.bound )
+        .onPFinite(({ n: lowerInterval }) =>
+            datum.deadline.ltEq( lowerInterval ) 
         )
         ._( _ => pBool( false ) )
+    )
 
-    return signedByBeneficiary.and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
+    return passert.$(
+        (ptraceIfFalse.$(pdelay(pStr("Error in signedByBenificiary"))).$(signedByBeneficiary))
+        .and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
+      );
+
 });
 ```
 
 As we saw in the [Hello plu-ts example project](./Hello_World.mdx), we can compile the contract 
-by first passing the term to [`makeValidator`](../onchain/API/utilities/makeValidator)
-and then pass the result to the [`compile`](../onchain/API/utilities/compile) function.
+by passing the term to the [`compile`](../onchain/API/utilities/compile) function.
 
 We finally pass the compiled Contract to the `Script` constructor so that we can use it properly.
 
@@ -517,12 +493,10 @@ We finally pass the compiled Contract to the `Script` constructor so that we can
 ```ts title="src/contract.ts"
 /* contract definition above */
 
-export const untypedValidator = makeValidator( contract );
-
-export const compiledContract = compile( untypedValidator );
+export const compiledContract = compile( contract );
 
 export const script = new Script(
-    ScriptType.PlutusV2,
+    ScriptType.PlutusV3,
     compiledContract
 );
 
@@ -537,18 +511,76 @@ npm run start
 we should see something like this
 
 ```
-validator compiled succesfully! 🎉
+validator compiled successfully! 🎉
 
 {
-  "type": "PlutusScriptV2",
+  "type": "PlutusScriptV3",
   "description": "",
-  "cborHex": "5901a259019f0100003232323232322225333573466644464646644a666ae68008004528198070a4811c4572726f7220696e207369676e6564427942656e6966696369617279003323300c214a04446644a666ae68008528800980200109801800919b8f375c6ae84008004cc8cc8c0308d5d01801000800a5eb11d71bac32357426ae88d5d11aba2357446ae88d5d11aba23574400200426601c2920125646561646c696e65206e6f742072656163686564206f72206e6f742073706563696669656400323333222232332533357346002900008018a999ab9a300148008401054ccd5cd1800a4008200a2c6e1cd55ce8009aab9e00137540086ae84c028d5d09805191aba1357446ae88d5d11aba2357446ae88d5d1000801800919b89375a646ae84d5d10008019bad357420020024940c020010c01cd5d098038008018010008a4c2c46aae78dd5000911980190801111198028011801800980111111919980318020009801800801198020018011112999aab9f001003133002357420026ae880048c8c0088cc0080080048c0088cc008008004894ccd5cd0008a511335738a004941"
+  "cborHex": "59022d59022a0101003232323232323223232323259800800c5268b2ae686644b3001002800c5282ae6866016292011c4572726f7220696e207369676e6564427942656e69666963696172790033233009214a04446644b30010028a51800aae68600800426006002466e3cdd71aba10020013323323009235740600400200297ac475c6eb0c8d5d09aba2357446ae88d5d11aba2357446ae88d5d10008010998058a48125646561646c696e65206e6f742072656163686564206f72206e6f7420737065636966696564003298009aba1300735742600e646ae84d5d11aba2357446ae88d5d11aba235744002007001919b89375a600e0066eb4d5d0800c005222232332598009800a400110038acc004c00520028802456600260029002440162cab9a2ae68ab9a1b8735573a0026aae78004dd500209281802991aba135573c6ea8004ca6002646ae84d5d11aba2001003800c00600300191803000c005222222232332598009800a400110038acc004c00520028802456600260029002440162b300130014801a200d1598009800a401110078acc004c005200a8804459573455cd1573455cd1573455cd0dc39aab9d00135573c0026ea801c4c60086ae84004c00c0048d5d09aba2001235573c6ea800488cc00c84008888cc014008c00c004c0088888ca600260080033003001801200c3300400300222259800800c00e2660046ae84004d5d1000aaae7c46460044660040040024600446600400400244b30010018a51899ab9c50024a0ab9a1"
 }
 ```
 
+
+## Setup Blockfrost API
+
+First and foremost, we need to setup Blockfrost API to use in our app. 
+
+It is enabled by the package `@harmoniclabs/blockfrost-pluts`. In your terminal, do
+```bash
+npm install @harmoniclabs/blockfrost-pluts
+```
+
+Go to https://blockfrost.io/ and create a new project for this example (a free plan is more than enough for now). Make sure to pick `Preprod` as your preferred network. 
+
+Once done, navigate to the Dashboard and copy over PROJECT_ID to setup.
+
+Now, create file `blockfrost.ts` within `src/app`:
+```ts title="src/app/blockfrost.ts"
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+
+function blockfrost () {
+    const provider = new BlockfrostPluts({
+        projectId: "Paste your PROJECT_ID here"
+    });
+    return provider;
+}
+
+export default blockfrost;
+```
+Make sure to not check-in your PROJECT_ID into any versioning systems. Alternatively, you can always use environment variables here.
+
+To enable blockfrost within other files, we will instantiate `blockfrost()` with the PROJECT_ID. 
+
+To perform transactions through Blockfrost, we need to instantiate our `TxBuilder` with Blockfrost.
+
+Create file `getTxBuilder.ts` within `src/app`, exporting method `getTxBuilder()` which will thus be used to instantiate an instance of `TxBuilder` and further used.
+```ts title="src/app/getTxBuilder.ts"
+import { TxBuilder } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+
+/**
+ * we don't want to do too many API call if we already have our `txBuilder`
+ * 
+ * so after the first call we'll store a copy here.
+**/
+let _cachedTxBuilder: TxBuilder | undefined = undefined
+
+export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise<TxBuilder>
+{
+    if(!( _cachedTxBuilder instanceof TxBuilder ))
+    {
+        const parameters = await Blockfrost.getProtocolParameters();
+        _cachedTxBuilder = new TxBuilder(parameters);
+    }
+
+    return _cachedTxBuilder;
+}
+```
+
+
 ## Interacting with the contract
 
-We will use the native `npm` script functionality to define some scripts to interact arbitrarly with our new contract.
+We will use the native `npm` script functionality to define some scripts to interact arbitrarily with our new contract.
 
 We can define a new script by adding an entry in the `scripts` field of the `package.json` file that you find in the root of the project.
 
@@ -620,9 +652,10 @@ Now running
 npm run vesting:compile
 ```
 
-should still print the old result; but it will also create a new `testnet` directory with the file `vesting.plutus.json` in it.
+should still print a success result; but it will also create a new `testnet` directory with the file `vesting.plutus.json` in it. 
 
-### Get some keys
+
+## Get Addresses and their keys
 
 Depending on if you are working in private or public testnet, 
 there are 2 way to get your keys and start creating transactions.
@@ -734,9 +767,7 @@ should give us 2 pairs of keys and 2 addresses under the `testnet` folder.
 
 Remember to fund the addresses. In this example, make sure to fund **address1** and **address2**; just so that there has been some transactions involving these addresses, and they appear on blockchain and inturn be visible for Blockfrost. Read more about such possible Blockfrost error [here](https://blockfrost.dev/support/cardano#querying-address-returns-404-not-found-but-my-address-is-valid).
 
-You can use the [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnet/tools/faucet) to get some testnet funds.
-
-Just be sure to select the Preprod testnet (as we opted [here](http://localhost:3000/examples/Vesting#setup-the-cli-object)).
+You can use the [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnet/tools/faucet) to get some testnet funds. Just be sure to select `Preprod` testnet.
 
 :::
 
@@ -804,63 +835,8 @@ to have your keys and addresses copied in the `testnet` folder.
 </TabItem>
 </Tabs>
 
-## Setup Blockfrost API
 
-First and foremost, we need to setup Blockfrost API to use in our app. 
-
-It is enabled by the package `@harmoniclabs/blockfrost-pluts`. In your terminal, do
-```bash
-npm install @harmoniclabs/blockfrost-pluts
-```
-
-Go to https://blockfrost.io/ and create a new project for this example (a free plan is more than enough for now). Make sure to pick Preprod as your preferred network. 
-
-Once done, navigate to the Dashboard and copy over PROJECT_ID to setup.
-
-Now, create file `blockfrost.ts` within `src/app`:
-```ts title="src/app/blockfrost.ts"
-import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
-
-function blockfrost () {
-    const provider = new BlockfrostPluts({
-        projectId: "Paste your PROJECT_ID here"
-    });
-    return provider;
-}
-
-export default blockfrost;
-```
-Make sure to not check-in your PROJECT_ID into any versioning systems. Alternatively, you can always use environment variables here.
-
-To enable blockfrost within other files, we will instantiate `blockfrost()` with the PROJECT_ID. 
-
-To perform transactions through Blockfrost, we need to instantiate our `TxBuilder` with Blockfrost.
-
-Create file `getTxBuilder.ts` within `src/app`, exporting method `getTxBuilder()` which will thus be used to instantiate an instance of `TxBuilder` and further used.
-```ts title="src/app/getTxBuilder.ts"
-import { TxBuilder } from "@harmoniclabs/plu-ts";
-import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
-
-/**
- * we don't want to do too many API call if we already have our `txBuilder`
- * 
- * so after the first call we'll store a copy here.
-**/
-let _cachedTxBuilder: TxBuilder | undefined = undefined
-
-export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise<TxBuilder>
-{
-    if(!( _cachedTxBuilder instanceof TxBuilder ))
-    {
-        const parameters = await Blockfrost.getProtocolParameters();
-        _cachedTxBuilder = new TxBuilder(parameters);
-    }
-
-    return _cachedTxBuilder;
-}
-```
-
-## Create a vesting utxo
+## Create a Vesting UTxO
 
 Now we can finally start playing around with the vesting contract.
 
@@ -872,10 +848,13 @@ To do so, we can always read the saved `Script`. First we need to read the `vest
 ```ts
 const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
 ```
-Then, to utimately retrieve the `Script` from the `cborHex` in the JSON file:
+Then, to finally retrieve the `Script` from the `cborHex` in the JSON file:
 ```ts
-const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
+const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
 ```
+:::info
+Make sure to specify `ScriptType.PlutusV3` as second argument to [`Script.fromCbor`](offchain/cardano-ledger-ts/classes/Script#fromcbor) even though it is optional, because the `defType` arg is by default `Script.PlutusV2` which being legacy.
+:::
 
 From here we can generate the script address using the `Address` class (from the offchain of `plu-ts`) and the `Script` as `Credential`.
 ```ts
@@ -904,17 +883,17 @@ const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf
 const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
 ```
 
-### Query the address utxos
+### Query the address UTxOs
 
-Before we really start building our transaction we need some utxos to use as input. We can query the utxos available in our address through Blockfrost.
+Before we really start building our transaction we need some UTxOs to use as input. We can query the UTxOs available in our address through Blockfrost.
 Make sure to populate both the addresses with some funds.
 ```ts
 const utxos = await Blockfrost.addressUtxos( address );
 ```
 :::info
-Instead of blindly assigning the first utxo of the utxos[] as input, let us assure that we use the utxo that has atleast 10 ada in it just to avoid possible failures.
+Instead of blindly assigning the first UTxO of the utxos[] as input, let us assure that we use the UTxO that has atleast 15 ada in it just to avoid possible failures.
 ```ts
-const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000)!;
+const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000)!;
 ``` 
 :::
 
@@ -927,7 +906,7 @@ Our transaction will be constructed as follows:
 
 which translates to the following code
 ```ts
-let tx = await cli.transaction.build({
+let tx = await txBuilder.buildSync({
     inputs: [{ utxo: utxo }],
     collaterals: [ utxo ],
     outputs: [
@@ -942,7 +921,7 @@ let tx = await cli.transaction.build({
             // highlight-end
         }
     ],
-    changeAddress: addr
+    changeAddress: address
 });
 ```
 
@@ -958,9 +937,11 @@ This way we can use the on-chain types to describe the plutus data off-chain, wi
 
 ### Sign and Submit
 
-Now that we have our transaciton, all we need is just to Sign and Submit it.
+Now that we have our transaction, all we need is just to Sign and Submit it.
 
-And guess what? This is now extremly easy with `plu-ts` and `Blockfrost`.
+And guess what? 
+
+This is now extremly easy with `plu-ts` and `Blockfrost`.
 
 ```ts
 await tx.signWith( new PrivateKey(privateKey) );
@@ -971,7 +952,7 @@ const submittedTx = await Blockfrost.submitTx( tx );
 All we need to do now is to put it all together in a file `createVesting.ts` under the `app` folder.
 
 ```ts title="src/app/createVesting.ts"
-import { Address, Credential, Hash28, PrivateKey, Value, pBSToData, pByteString, pIntToData, CredentialType, PublicKey, Script } from "@harmoniclabs/plu-ts";
+import { Address, Credential, Hash28, PrivateKey, Value, pBSToData, pByteString, pIntToData, CredentialType, PublicKey, Script, ScriptType } from "@harmoniclabs/plu-ts";
 import VestingDatum from "../VestingDatum";
 import getTxBuilder from "./getTxBuilder";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
@@ -983,7 +964,7 @@ async function createVesting(Blockfrost: BlockfrostPluts)
     const txBuilder = await getTxBuilder(Blockfrost);
      
     const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
-    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
+    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
     const scriptAddr = new Address(
         "testnet",
         new Credential(CredentialType.Script, script.hash)
@@ -1002,11 +983,11 @@ async function createVesting(Blockfrost: BlockfrostPluts)
         .catch( e => { throw new Error ("unable to find utxos at " + addr) })
 
     // atleast has 10 ada
-    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000)!;
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000)!;
     if (!utxo) {
         throw new Error("No utxo with more than 10 ada");
     }
-    
+
     const nowPosix = Date.now();
 
     let tx = await txBuilder.buildSync({
@@ -1052,14 +1033,14 @@ now running
 ```bash
 npm run vesting:create
 ```
-will generate a new utxo for the smart contract ready to be spent!
+will generate a new UTxO for the smart contract ready to be spent!
 
-We should also see the respective transaction hash in the console now.
+We should also see a similar transaction hash in the console now.
 ```bash
 8b3deb9095898c4d1385269f0af00febaa547e4b4365978d073519caa52f791e
 ```
 
-## Spend the locked utxo
+## Spend the locked UTxO
 
 ### Get all you need
 
@@ -1068,12 +1049,12 @@ You know the process now:
 - read the script
 - build the script address
 - read address and keys
-- query utxo
+- query UTxO
 
 These are the steps needed before we can start to build the transaction and are often very similar.
 
 ```ts
-import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos } from "@harmoniclabs/plu-ts";
+import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos, ScriptType } from "@harmoniclabs/plu-ts";
 import getTxBuilder from "./getTxBuilder";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 import blockfrost from "./blockfrost";
@@ -1084,7 +1065,7 @@ async function claimVesting(Blockfrost: BlockfrostPluts)
     const txBuilder = await getTxBuilder(Blockfrost);
 
     const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
-    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
+    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
     const scriptAddr = new Address(
         "testnet",
         new Credential(CredentialType.Script, script.hash)
@@ -1102,7 +1083,7 @@ async function claimVesting(Blockfrost: BlockfrostPluts)
     const utxos = await Blockfrost.addressUtxos( address )
         .catch( e => { throw new Error ("unable to find utxos at " + addr) });
     // atleast has 10 ada
-    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000);
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000);
     if (!utxo) {
         throw new Error("No utxo with more than 10 ada");
     }
@@ -1130,9 +1111,9 @@ Query the `scriptUtxos`, to specifically use the `utxo` that matches `publicKeyH
     }
 ```
 
-:::info use the beneficiary keys!
+:::info Use the beneficiary keys!
 
-Note that we are reading the keys(both private and public) of the beneficiary we setted in the previous script here.
+Note that we are reading the keys (both private and public) of the beneficiary, we had set in the previous script, here.
 
 If we used the other keys the script would fail each time!
 
@@ -1143,9 +1124,9 @@ If we used the other keys the script would fail each time!
 This time our transaction will be formed as follows
 
 - one of our utxos
-- the utxo locked at the script address (with corresponding `Script` in order to validate the spending of it)
+- the UTxO locked at the script address (with corresponding `Script` in order to validate the spending of it)
 - the public key hash as `requiredSigners` element so that it is aviable in `ctx.tx.signatories`
-- our utxo as collateral input that MUST be present every time a script is included in the transaciton
+- our UTxO as collateral input that MUST be present every time a script is included in the transaciton
 - the `invalidBefore` field corresponding to the last slot heigth (otherwise the transaciton interval is negative infinite and the contract will fail!)
 
 Of the above, the last one sounds courious... How do we get the last slot of the blockchain?
@@ -1194,7 +1175,7 @@ const submittedTx = await Blockfrost.submitTx( tx )
 we can put all together in a `claimVesting.ts` file in the `app` folder:
 
 ```ts title="src/app/claimVesting.ts"
-import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos } from "@harmoniclabs/plu-ts";
+import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos, ScriptType } from "@harmoniclabs/plu-ts";
 import getTxBuilder from "./getTxBuilder";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 import blockfrost from "./blockfrost";
@@ -1205,7 +1186,7 @@ async function claimVesting(Blockfrost: BlockfrostPluts)
     const txBuilder = await getTxBuilder(Blockfrost);
 
     const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
-    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex)
+    const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
     const scriptAddr = new Address(
         "testnet",
         new Credential(CredentialType.Script, script.hash)
@@ -1223,7 +1204,7 @@ async function claimVesting(Blockfrost: BlockfrostPluts)
     const utxos = await Blockfrost.addressUtxos( address )
         .catch( e => { throw new Error ("unable to find utxos at " + addr) });
     // atleast has 10 ada
-    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 10_000_000);
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000);
     if (!utxo) {
         throw new Error("No utxo with more than 10 ada");
     }
@@ -1291,14 +1272,14 @@ After adding a new `npm script` in package.json
 }
 ```
 
-to try claim the utxo, we can run:
+to try claim the UTxO, we can run:
 ```bash
 npm run vesting:claim
 ```
 
 :::caution Wait some seconds
 
-If you run the script shortly after you created and locked the utxo the script will fail!
+If you run the script shortly after you created and locked the UTxO the script will fail!
 
 In the previous script, we had set a locking period of 10 seconds.
 
