@@ -9,10 +9,6 @@ Type that represents a reference to a UTXO.
 Definition:
 
 ```ts
-import { pstruct } from "../../../PTypes/PStruct/pstruct";
-import { int } from "../../../type_system/types";
-import { PTxId } from "./PTxId";
-
 export const PTxOutRef = pstruct({
     PTxOutRef: {
         id: PTxId.type,
@@ -31,4 +27,4 @@ type: [`PTxId.type`](./PTxId)
 
 Index of the specific output within this transaction
 
-type: [`TermInt`](../../stdlib/TermInt)
+type: [`TermInt`](../../../../stdlib/TermInt)

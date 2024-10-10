@@ -37,7 +37,7 @@ export const PTxInfo = pstruct({
 })
 ```
 
-Values implements all the properties defined on the [`TermList`](../../stdlib/TermList) utility term.
+Values implements all the properties defined on the [`TermList`](../../../../stdlib/TermList) utility term.
 
 ## `inputs`
 
@@ -45,7 +45,7 @@ List of transaction inputs. Each input representing an unspent transaction outpu
 
 type: `list( PTxInInfo.type )`
 
-elements's type: [`PTxInInfo`](./PTxInInfo)
+elements's type: [`PTxInInfo`](../Tx/PTxInInfo)
 
 ## `refInputs`
 
@@ -54,7 +54,7 @@ This additional context/information maybe necessary for the contract logic but d
 
 type: `list( PTxInInfo.type )`
 
-elements's type: [`PTxInInfo`](./PTxInInfo)
+elements's type: [`PTxInInfo`](../Tx/PTxInInfo)
 
 ## `outputs`
 
@@ -62,7 +62,7 @@ List of transaction outputs. Each output represents a new UTXO created by the tr
 
 type: `list( PTxOut.type )`
 
-elements's type: [`PTxOut`](./PTxOut)
+elements's type: [`PTxOut`](../Tx/PTxOut)
 
 ## `fee`
 
@@ -91,7 +91,7 @@ List of delegation certificates included in the transaction.
 
 type: `list( PDCert.type )`
 
-elements's type: [`PDCert`](../../V1/PDCert/PDCert)
+elements's type: [`PDCert`](../../V1/PDCert)
 
 ### `withdrawals`
 
@@ -102,7 +102,7 @@ type: `list( pair( PStakingCredential.type, int ) )`
 elements's types: 
 
 - [`PStakingCredential`](../../V1/Address/PStakingCredential)
-- [`TermInt`](../../stdlib/TermInt)
+- [`TermInt`](../../../../stdlib/TermInt)
 
 ### `interval`
 
@@ -126,7 +126,7 @@ List of redeemers associated with the transaction, to understand how they are su
 type: `list( pair( PScriptPurpose.type, data ) )`
 
 elements's types:
-    - [`TermPair`](../../stdlib/TermPair)
+    - [`TermPair`](../../../../stdlib/TermPair)
     - [`PScriptPurpose`](../../V1/ScriptContext/PScriptPurpose)
     - `data`
 
@@ -139,7 +139,7 @@ type: `list( pair( PDatumHash.type, data ) )`
 
 elements's types: 
 
-- [`TermPair`](../../stdlib/TermPair)
+- [`TermPair`](../../../../stdlib/TermPair)
 - [`PDatumHash`](../../V1/ScriptsHashes/PDatumHash)
 - `data`
 
