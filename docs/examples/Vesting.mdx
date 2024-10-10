@@ -853,7 +853,7 @@ Then, to finally retrieve the `Script` from the `cborHex` in the JSON file:
 const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
 ```
 :::info
-Make sure to specify `ScriptType.PlutusV3` as second argument to [`Script.fromCbor`](offchain/cardano-ledger-ts/classes/Script#fromcbor) even though it is optional, because the `defType` arg is by default `Script.PlutusV2` which being legacy.
+Make sure to specify `ScriptType.PlutusV3` as second argument to [`Script.fromCbor`](../offchain/cardano-ledger-ts/classes/Script#fromcbor) even though it is optional, because the `defType` arg is by default `Script.PlutusV2` which being legacy.
 :::
 
 From here we can generate the script address using the `Address` class (from the offchain of `plu-ts`) and the `Script` as `Credential`.
@@ -864,7 +864,7 @@ const scriptAddr = new Address(
 );
 ```
 :::info Generate Address
-Instead of `new Address("testnet", ...)`, we can also do `Address.testnet(...)`. Read more [here](https://pluts.harmoniclabs.tech/offchain/cardano-ledger-ts/classes/Address#testnet).
+Instead of `new Address("testnet", ...)`, we can also do `Address.testnet(...)`. Read more [here](../offchain/cardano-ledger-ts/classes/Address#testnet).
 :::
 
 ### Get your address
