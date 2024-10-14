@@ -31,7 +31,7 @@ export const PTxInfo = pstruct({
 })
 ```
 
-Values implements all the properties defined on the [`TermList`](../../stdlib/TermList) utility term.
+Values implements all the properties defined on the [`TermList`](../../../../stdlib/TermList) utility term.
 
 ## `inputs`
 
@@ -39,7 +39,7 @@ List of transaction inputs. Each input representing an unspent transaction outpu
 
 type: `list( PTxInInfo.type )`
 
-elements's type: [`PTxInInfo`](./PTxInInfo)
+elements's type: [`PTxInInfo`](../Tx/PTxInInfo)
 
 ## `outputs`
 
@@ -47,20 +47,20 @@ List of transaction outputs. Each output represents a new UTXO created by the tr
 
 type: `list( PTxOut.type )`
 
-elements's type: [`PTxOut`](./PTxOut)
+elements's type: [`PTxOut`](../Tx/PTxOut)
 
 ## `fee`
 
 Transaction fee paid for processing the transaction.
 Despite being only a value it always includes a single entry which represents the lovelaces paid as fees.
 
-type: [`PValue.type`](./PValue)
+type: [`PValue.type`](../Value/PValue)
 
 ## `mint`
 
 Includes all tokens minted/burned in the transaction.
 
-type: [`PValue.type`](./PValue)
+type: [`PValue.type`](../Value/PValue)
 
 :::info ADA entry
 
@@ -76,7 +76,7 @@ List of delegation certificates included in the transaction.
 
 type: `list( PDCert.type )`
 
-elements's type: [`PDCert`](./PDCert)
+elements's type: [`PDCert`](../PDCert)
 
 ### `withdrawals`
 
@@ -86,14 +86,14 @@ type: `list( pair( PStakingCredential.type, int ) )`
 
 elements's types: 
 
-- [`PStakingCredential`](./PStakingCredential)
-- [`TermInt`](../../stdlib/TermInt)
+- [`PStakingCredential`](../Address/PStakingCredential)
+- [`TermInt`](../../../../stdlib/TermInt)
 
 ### `interval`
 
 Time interval during which the transaction is valid.
 
-type: [`PPOSIXTimeRange.type`](./PPOSIXTimeRange)
+type: [`PPOSIXTimeRange.type`](../Time/PPOSIXTimeRange)
 
 
 ### `signatories`
@@ -102,7 +102,7 @@ A list of public key hashes of the parties that have signed the transaction to v
 
 type: `list( PPubKeyHash.type )`
 
-elements's type: [`PPubKeyHash`](./PPubKeyHash) 
+elements's type: [`PPubKeyHash`](../PubKey/PPubKeyHash) 
 
 ### `datums`
 
@@ -113,12 +113,12 @@ type: `list( pair( PDatumHash.type, data ) )`
 
 elements's types: 
 
-- [`TermPair`](../../stdlib/TermPair)
-- [`PDatumHash`](./PDatumHash)
+- [`TermPair`](../../../../stdlib/TermPair)
+- [`PDatumHash`](../ScriptsHashes/PDatumHash)
 - `data`
 
 ### `id`
 
 The unique identifier of the transaction, used to reference and track the specific transaction on the blockchain.
 
-type: [`PTxId.type`](./PTxId)
+type: [`PTxId.type`](../Tx/PTxId)

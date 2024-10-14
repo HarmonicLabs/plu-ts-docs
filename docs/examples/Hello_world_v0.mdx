@@ -373,9 +373,9 @@ then we'll check that the transaction is signed by the owner specified in the da
 
 to do so we need informations about the tranasaction and who signed it.
 
-all the informations about the tranasaction are in the `tx` field of the [`PScriptContext`](../onchain/API/types/PScriptContext.mdx)
+all the informations about the tranasaction are in the `tx` field of the [`PScriptContext`](../onchain/API/types/V3/ScriptContext/PScriptContext.mdx)
 
-an in particular we are interested in the [`signatories` field](../onchain/API/types/PTxInfo#signatories) 
+an in particular we are interested in the [`signatories` field](../onchain/API/types/V3/ScriptContext/PTxInfo#signatories) 
 ```ts
 ctx.tx.signatories;
 ```

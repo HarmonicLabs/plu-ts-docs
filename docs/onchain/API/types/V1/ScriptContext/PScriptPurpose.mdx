@@ -11,12 +11,6 @@ It tells us what specific role or purpose the script is used for based on the co
 Definition:
 
 ```ts
-import { pstruct } from "../../../../PTypes/PStruct/pstruct";
-import { PStakingCredential } from "../../Address/PStakingCredential";
-import { PDCert } from "../../PDCert";
-import { PTxOutRef } from "../../Tx/PTxOutRef";
-import { PCurrencySymbol } from "../../Value/PCurrencySymbol";
-
 export const PScriptPurpose = pstruct({
     Minting: { currencySym: PCurrencySymbol.type },
     Spending: { utxoRef: PTxOutRef.type },
@@ -35,7 +29,7 @@ Represents the purpose of the script when it is involved in minting/burning new 
 ### `currencySym`
 Currency symbol for identifying the tokens being minted
 
-type: [`PCurrencySymbol`](./PCurrencySymbol)
+type: [`PCurrencySymbol`](../Value/PCurrencySymbol)
 
 ## `Spending`
 
@@ -44,7 +38,7 @@ Represents the purpose of the script when it is used for spending funds from a s
 ###  `utxoRef`
 References the UTXO being spent
 
-type:  [`PTxOutRef.type`](./PTxOutRef)
+type:  [`PTxOutRef.type`](../Tx/PTxOutRef)
 
 ## `Rewarding`
 
@@ -53,7 +47,7 @@ Represents the purpose of the script when it is involved in rewarding stakeholde
 ### `stakeCredential`
 Staking credential (or address) to be rewarded. This could involve distributing rewards based on staking participation.
 
-type:  [`PStakingCredential.type`](./PStakingCredential)
+type:  [`PStakingCredential.type`](../Address/PStakingCredential)
 
 ## `Certifying`
 
@@ -62,4 +56,4 @@ Represents the purpose of the script when it is used for certifying delegation c
 ### `dCert`
 Delegation certificate information
 
-type:  [`PDCert.type`](./PDCert)
+type:  [`PDCert.type`](../PDCert)

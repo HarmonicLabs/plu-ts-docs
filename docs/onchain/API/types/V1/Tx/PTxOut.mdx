@@ -34,17 +34,17 @@ export const PTxOut = pstruct({
 
 Destination address (recipient) to which the value is sent
 
-type: [`PAddress.type`](./PAddress)
+type: [`PAddress.type`](../Address/PAddress)
 
 ## `value`
 
 Amount of value being transferred in the transaction output. This includes the currency and the amount.
 
-type: [`PValue.type`](./PValue)
+type: [`PValue.type`](../Value/PValue)
 
 ## `datumHash`
 
 Optionally provides a hash of the additional data associated with the transaction output.
 
-type: [`PMaybe( PDatumHash.type ).type`](.PDatumHash)
+type: [`PMaybe( PDatumHash.type ).type`](../ScriptsHashes/PDatumHash)
 
