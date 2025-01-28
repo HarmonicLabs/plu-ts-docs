@@ -179,7 +179,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Harmonic Laboratories Srl.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Harmonic Laboratories LTD.`,
       },
       algolia: {
         appId: process.env.ALGOLIA_APP_ID,
