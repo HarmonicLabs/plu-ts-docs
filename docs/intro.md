@@ -7,7 +7,7 @@ slug: /
 
 Built with ❤️ by [Harmonic Laboratories](https://www.harmoniclabs.tech/)
 
-This documentation is for `plu-ts` v0.7.0^, if you are using a previous version it is suggested to install the latest version, feel free to ask for help in the [Harmonic Labs' discord server](https://discord.gg/CGKNcG7ade)
+This documentation is for `plu-ts` v0.8.0^, if you are using a previous version it is suggested to install the latest version, feel free to ask for help in the [Harmonic Labs' discord server](https://discord.gg/CGKNcG7ade)
 
 ## Introduction
 
