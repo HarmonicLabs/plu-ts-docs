@@ -65,12 +65,11 @@ const config = {
             const items = await defaultCreateSitemapItems(rest);
             return items.filter((item) => !item.url.includes('/page/'));
           },
-        },
+        }
       }),
     ],
   ],
-
-  themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-search-algolia'],
+  themes: ['@docusaurus/theme-live-codeblock'],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
