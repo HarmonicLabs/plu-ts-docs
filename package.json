@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "rm -rf static/vs && cp -r node_modules/@harmoniclabs/monaco-editor/out/monaco-editor/dev/vs static/vs",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
@@ -24,7 +25,8 @@
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "react-pebble-editor": "^0.0.1-dev2"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.3.2",
