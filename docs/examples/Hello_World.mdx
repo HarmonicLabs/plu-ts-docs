@@ -12,13 +12,6 @@ In this example project we'll write our first smart contract and interact with i
 
 The final version of this project is available [here](https://github.com/michele-nuzzi/hello-pluts-react-final) and you can test it out in the [live demo](https://hello-pluts.harmoniclabs.tech/).
 
-:::note old version of this example project
-
-If you are looking for the old version of this example project you can [click here](./Hello_world_v0) to check it out.
-
-We would also highlight the [useful run through of the old example](https://www.youtube.com/watch?v=b6MaSz6NIh8&themeRefresh=1) created by our community members
-
-:::
 
 ## Pre-requisites
 
@@ -30,8 +23,11 @@ All we need to build a dApp is:
 
 In fact, `plu-ts` allows you to write the smart contract and create transactions.
 
-To submit the transaction we will use [`blockfrost-pluts`](../tools/blockfrost-pluts), a wrapper on top of the [Blockfrost](https://blockfrost.io/) API that uses `plu-ts` offchain types;
+To submit the transaction we will use two methods -
+
+1. [`blockfrost-pluts`](../tools/blockfrost-pluts), a wrapper on top of the [Blockfrost](https://blockfrost.io/) API that uses `plu-ts` offchain types;
 but we'll talk about that later.
+2. [`Plu-ts Emulator`](https://github.com/HarmonicLabs/pluts-emulator), our own emulator that emulates an onchain behavior with mempool and blocks, to validate and submit transactions. 
 
 So for now our pre-requisites add up to:
 
@@ -81,9 +77,9 @@ The most important ones are:
 
 ```json title="package.json"
 "dependencies": {
-    "@harmoniclabs/plu-ts": "^0.8.0",
+    "@harmoniclabs/plu-ts": "^0.9.0",
     "@harmoniclabs/uint8array-utils": "^1.0.0",
-    "@harmoniclabs/blockfrost-pluts": "^0.1.14",
+    "@harmoniclabs/blockfrost-pluts": "^0.1.16",
     "@meshsdk/core": "^1.6.2",
     "@meshsdk/react": "^1.6.2",
     /* other deps */
@@ -188,7 +184,7 @@ Our work later in this project will be to create the transactions that will inte
 
 This will be done using the plu-ts [`TxBuilder`](../offchain/TxBuilder%20API/TxBuilder).
 
-The code to get a `TxBuilder` instance is already defined in the `src/offchain/getTxBuilder.ts`
+The code to get a `TxBuilder` instance is defined in the `src/offchain/getTxBuilder.ts`.
 
 ```ts title="src/offchain/getTxBuilder.ts"
 import { TxBuilder, defaultProtocolParameters } from "@harmoniclabs/plu-ts";
@@ -210,16 +206,64 @@ export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise
 }
 ```
 
-Constructing a `TxBuilder` requires us to pass the protocol parameters of the chain we are operating in.
+Constructing a `TxBuilder` requires us to pass the protocol parameters of the chain we are operating in. To get the protocol parameters we were only using a `Blockfrost` object.
 
-To get the protocol parameters we are using a `Blockfrost` object.
+But now let's modify the `TxBuilder` to support both Plu-ts Emulator and Blockfrost, as per the example run script.
+
+```ts title="src/offchain/getTxBuilder.ts"
+import { TxBuilder, defaultProtocolParameters, toCostModelArrV3 } from "@harmoniclabs/plu-ts";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
+
+/**
+ * we don't want to do too many API call if we already have our `txBuilder`
+ * 
+ * so after the first call we'll store a copy here.
+**/
+let _cachedTxBuilder: TxBuilder | undefined = undefined
+
+export default async function getTxBuilder(provider: BlockfrostPluts | Emulator): Promise<TxBuilder> {
+  if (!provider) {
+    console.warn("No provider passed to getTxBuilder. Using defaults which may not be suitable for mainnet/testnet transactions.");
+  }
+  // Return cached TxBuilder if available and no provider is specified
+  if (_cachedTxBuilder && !provider) {
+    return _cachedTxBuilder;
+  }
+
+  if (provider) {
+    // Use the provided provider to get protocol parameters and genesis infos
+    const [protocolParameters] = await Promise.all([
+      provider.getProtocolParameters(),
+    ]);
+
+    const txBuilder = new TxBuilder(protocolParameters);
+
+    // Cache the TxBuilder for future use
+    if (!_cachedTxBuilder) {
+      _cachedTxBuilder = txBuilder;
+    }
+
+    return txBuilder;
+  } else {
+    // Use default values if no provider is provided
+    if (!_cachedTxBuilder) {
+      _cachedTxBuilder = new TxBuilder(
+        defaultProtocolParameters,
+      );
+    }
+  }
+  return _cachedTxBuilder;
+}
+```
+
 
 Then there is the website.
 
 This is a very simple [Next.js](https://nextjs.org/) project, of which the only page is in `src/pages/index.tsx`
 
 ```tsx title="src/pages/index.tsx"
-import { useState } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { Container, Box, Text, Button, Input, useToast } from "@chakra-ui/react";
 import { useNetwork, useWallet } from "@meshsdk/react";
 
@@ -234,6 +278,10 @@ export default function Home() {
   const network = useNetwork();
   const toast = useToast();
 
+  useEffect(() => {
+    setBlockfrostApiKey(window.localStorage.getItem('BLOCKFROST_API_KEY') || '');
+  }, []);
+
   if (typeof network === "number" && network !== 0) {
     return (
       <div className={style.root}>
@@ -245,6 +293,11 @@ export default function Home() {
         </Container>
       </div>
     )
+  }
+
+  const onChangeBlockfrostApiKey = (e: ChangeEvent<HTMLInputElement>) => {
+    setBlockfrostApiKey(e.target.value);
+    window.localStorage.setItem('BLOCKFROST_API_KEY', e.target.value);
   }
 
   const onLock = () => {
@@ -274,7 +327,7 @@ export default function Home() {
       // unlock transaction failed
       .catch(e => {
         toast({
-          title: "something went wrong",
+          title: "something went wrong: " + e?.messge ,
           status: "error"
         });
         console.error(e);
@@ -294,7 +347,7 @@ export default function Home() {
             placeholder='Blockfrost API Key'
             size='lg'
             value={blockfrostApiKey}
-            onChange={e => setBlockfrostApiKey(e.target.value)}
+            onChange={onChangeBlockfrostApiKey}
           />
         </Box>
         <Box bg="white" w="100%" p={4}>
@@ -324,12 +377,17 @@ You can check it yourself if you want to see how easy the connection process bec
 
 And with that this is it.
 
-You can try this web application running
+You can try this web application, by running
 ```sh
 npm run dev
 ```
+for running it onchain with Blockfrost API, or by
+```sh
+npm run dev:emulator
+```
+to test out the example in Plu-ts Emulator.
 
-This will output something like the following
+The first, `npm run dev` will output something like the following
 ```
 > hello-pluts-react@0.1.0 dev
 > next dev
@@ -535,10 +593,12 @@ const myAddr = Address.fromString(
 
 Since we want to build a transaction here it might be a good idea to have a `TxBuilder` instance to help us.
 
-We already have the code to create one in the `src/offchain/getTxBuilder.ts` file; so we just need to import it and call the function
+The modified code in the `src/offchain/getTxBuilder.ts` file will help us.
+
+Now, call the function with `provider` that is extracted from the npm run script within `src/pages/index.tsx`, which we can see later.
 
 ```ts
-const txBuilder = await getTxBuilder();
+const txBuilder = await getTxBuilder(provider);
 ```
 
 ### `myUTxOs`
@@ -547,27 +607,14 @@ A transaction expects as input some output of a previous transaction that hasn't
 
 People call this stuff UTxO (**U**nspent **T**ransa*ct*ion **O**utput).
 
-The `BrowserWallet` turns ourselves useful once again here; we can get the wallet utxos calling
+We can get the wallet utxos calling `.getUtxos()`. As Plu-ts Emulator is built to mimic Blockfrost API, both emulator and blockfrost supports the `getUtxos()` and gives back array of UTxOs
 ```ts
-await wallet.getUtxos();
-```
-
-However, since this is a function defined by `mesh`; it is not of the type that the plu-ts `TxBuilder` expects.
-
-For this reason we can `map` `toPlutsUtxo` (defined in `src/offchain/mesh-utils.ts`) over the result of the `getUtxos` call;
-so that `myUTxOs` is defined as:
-
-```ts
-const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
-
-if (myUTxOs.length === 0) {
-  throw new Error("have you requested founds from the faucet?");
-}
+const utxos = await provider.getUtxos(myAddr);
 ```
 
 :::tip get some funds
 
-If `myUTxOs` happens to be empty (`length === 0`) that means that your wallet has nothing in it.
+If `utxos` happens to be empty (`length === 0`) that means that your wallet has nothing in it.
 
 If that is the case you can use the [Cardano Testnet Faucet](https://docs.cardano.org/cardano-testnet/tools/faucet) to get some testnet funds.
 
@@ -594,7 +641,7 @@ With this transaction we want to send 10 ADA to the contract.
 So we search between the utxos we already have for one that has a little more than that (so that we can cover the transaction fees).
 
 ```ts
-const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
+const utxo = utxos.find(u => u.resolved.value.lovelaces > 15_000_000);
 
 if (utxo === undefined) {
   throw new Error("not enough ada");
@@ -620,7 +667,7 @@ txBuilder.buildSync({
     address: scriptTestnetAddr,
     // 10M lovelaces === 10 ADA
     value: Value.lovelaces(10_000_000),
-    // remeber to include a datum
+    // remember to include a datum
     datum: new DataB(
       // remember we set the datum to be the public key hash?
       // we can extract it from the address as follows
@@ -635,22 +682,21 @@ txBuilder.buildSync({
 So that the final `getLockTx` function should look like this:
 
 ```ts title="src/offchain/lockTx.ts"
-async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
+export async function getLockTx(wallet: IWallet | BrowserWallet, provider: BlockfrostPluts | Emulator, isEmulator: boolean): Promise<Tx> {
   // creates an address form the bech32 form
   const myAddr = Address.fromString(
     await wallet.getChangeAddress()
   );
 
-  const txBuilder = await getTxBuilder(Blockfrost);
-  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+  const txBuilder = await getTxBuilder(provider);
 
-  if (myUTxOs.length === 0) {
-    throw new Error("have you requested founds from the faucet?");
-  }
+  const utxos = await provider.getUtxos(myAddr);
+  if (utxos.length === 0) {
+    throw new Error(isEmulator ? "No UTxOs have been found at this address on the emulated ledger" : "Have you requested funds from the faucet?");
+  }  
+  const utxo = utxos.find(u => u.resolved.value.lovelaces >= 15_000_000n);
 
-  const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
-
-  if (utxo === undefined) {
+  if (!utxo) {
     throw new Error("not enough ada");
   }
 
@@ -660,7 +706,7 @@ async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Pr
       address: scriptTestnetAddr,
       // 10M lovelaces === 10 ADA
       value: Value.lovelaces(10_000_000),
-      // remeber to include a datum
+      // remember to include a datum
       datum: new DataB(
         // remember we set the datum to be the public key hash?
         // we can extract it from the address as follows
@@ -673,11 +719,47 @@ async function getLockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Pr
 }
 ```
 
+And, to facilitiate the functionality of locking, let's now add a `lockTx` function as well (mostly done for cleaner implementation)
+```ts title="src/offchain/lockTx.ts"
+export async function lockTx(wallet: IWallet | BrowserWallet, provider: Emulator | BlockfrostPluts | null, isEmulator: boolean): Promise<string> {
+  if (!provider) {
+    throw new Error("Cannot proceed without a Emulator or Blockfrost provider");
+  }
+
+  const myAddr = Address.fromString(await wallet.getChangeAddress());
+
+  console.log("About to get lock tx");
+  const unsignedTx = await getLockTx(wallet, provider, isEmulator);
+  console.log("Unsigned Tx:", unsignedTx.toJson());
+  
+  // Sign the tx body hash
+  const txHashHex = unsignedTx.body.hash.toString();
+  // Build the witness set data
+  const {key, signature} = await wallet.signData(txHashHex, myAddr.toString());
+  const witness = vkeyWitnessFromSignData(key, signature);
+
+  // inject it to the unsigned tx
+  unsignedTx.addVKeyWitness(witness);
+
+  const txHash = await provider.submitTx(unsignedTx);
+  console.log("Transaction Hash:", txHash);
+
+  if (provider instanceof Emulator) { // emulator
+    provider.awaitBlock(1);
+    const ledgerState = provider.prettyPrintLedgerState();
+    console.log("Ledger State:", ledgerState);
+  }
+
+  return txHash;
+
+}
+```
+
 ### Test it out
 
-With `getLockTx` implemented the first button on the webpage should now work.
+With `lockTx` implemented the first button on the webpage should now work.
 
-To test it out run 
+To test it out in BLockfrost, run 
 ```sh
 npm run dev
 ```
@@ -702,12 +784,14 @@ That is because Cardano smart contracts only run if funds needs to be spent (som
 
 So now we are going to do exactly that, we are going to spend some (our) smart contract funds.
 
-The starting point is similar to before.
+The starting point is similar to before, adding in an arguement for `provider: Emulator | BlockfrostPluts`.
 
 ```ts title="src/offchain/getUnlockTx.ts"
-async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
-  throw new Error("'unlockTx' logic not implemented");   
-}
+export async function lockTx(wallet: IWallet | BrowserWallet, provider: Emulator | BlockfrostPluts | null, isEmulator: boolean): Promise<string> {
+  if (!provider) {
+    throw new Error("Cannot proceed without a Emulator or Blockfrost provider");
+  }
+  /* ... */
 ```
 
 ### `txBuilder` and `myUTxOs`
@@ -717,8 +801,8 @@ Transaction builder and utxos for the transaction.
 The steps are the same:
 
 ```ts
-const txBuilder = await getTxBuilder();
-const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+const txBuilder = await getTxBuilder(provider);
+const utxos = await provider.getUtxos(walletAddress);
 ```
 
 ### `myAddrs` and `myAddr`
@@ -738,7 +822,7 @@ Just like before the method returns strings; so we'll need to call `Address.from
 This way we can get all the wallet addresses as follows:
 
 ```ts
-const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
+const walletAddress = (await wallet.getUsedAddresses()).map(Address.fromString);
 ```
 
 From these we'll decide which one will be used in the next step.
@@ -753,19 +837,19 @@ let myAddr!: Address;
 
 Script utxos are a bit trickier... scripts don't have wallets!
 
-So to retrieve the script's utxos we'll rely on Blockfrost; the code to query them is:
+So to retrieve the script's utxos we'll rely on Emulator/Blockfrost provider; the code to query them is:
 ```ts
-await Blockfrost.addressUtxos(scriptTestnetAddr)
+await provider.addressUtxos(scriptTestnetAddr)
 ```
 
 Where `scriptTestnetAddr` is imported from `contracts/helloPluts.ts`.
 
-But a script might (and will) have multiple utxos... how do we know which one is our?
+But a script might (and will) have multiple utxos... how do we know which one is ours?
 
 For that we'll search between them using the following function
 
 ```ts
-const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo => {
+const utxoToSpend = (await provider.addressUtxos(scriptTestnetAddr)).find(utxo => {
   const datum = utxo.resolved.datum;
 
   // datum is inline and is only bytes
@@ -792,7 +876,7 @@ const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo
 
 Given an utxo we first need to check that it has an inline datum and that the datum is just made of bytes.
 
-Once we know the datum is in the correct format we extract the setted public key hash that represents that utxo owner:
+Once we know the datum is in the correct format, we extract the setted public key hash that represents that utxo owner:
 
 ```ts
 const pkh = datum.bytes.toBuffer();
@@ -820,13 +904,13 @@ txBuilder.buildSync({
   }],
   requiredSigners: [myAddr.paymentCreds.hash],
   // make sure to include collateral when using contracts
-  collaterals: [myUTxOs[0]],
+  collaterals: [utxos[0]],
   // send everything back to us
   changeAddress: myAddr
 });
 ```
 
-This time the transaction is a bit more complicated so let's check what's new.
+This time the transaction is a bit more complicated, so let's check what's new.
 
 First of all the input now comes from a script! For this reason we have to include the script in alongside the utxo to be spent for the script to validate it.
 
@@ -866,22 +950,29 @@ So our final `getUnlockTx` function looks like this.
 
 
 ```ts title="src/offchain/unlockTx.ts"
-async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): Promise<Tx> {
-  const txBuilder = await getTxBuilder(Blockfrost);
+export async function getUnlockTx(wallet: IWallet | BrowserWallet, provider: BlockfrostPluts | Emulator, isEmulator: boolean): Promise<Tx> {
+  const txBuilder = await getTxBuilder(provider);
   const myAddrs = (await wallet.getUsedAddresses()).map(Address.fromString);
-  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+
+  const walletAddress = Address.fromString(await wallet.getChangeAddress());
+
+  const utxos = await provider.getUtxos(walletAddress);
+  if (utxos.length === 0) {
+    throw new Error(isEmulator ? "No UTxOs have been found at this address on the emulated ledger" : "Have you requested funds from the faucet?");
+  }  
+
+  let myAddr!: Address;
 
   /**
-   * Wallets migh have multiple addresses;
+   * Wallets might have multiple addresses;
    * 
    * to understand which one we previously used to lock founds
    * we'll get the address based on the utxo that keeps one of ours
    * public key hash as datum
   **/
-  let myAddr!: Address;
 
-  // only the onses with valid datum
-  const utxoToSpend = (await Blockfrost.addressUtxos(scriptTestnetAddr)).find(utxo => {
+  // reassign utxoToSpend with only the responses with valid datum
+  const utxoToSpend = (await provider.addressUtxos(scriptTestnetAddr)).find(utxo => {
     const datum = utxo.resolved.datum;
 
     // datum is inline and is only bytes
@@ -906,7 +997,10 @@ async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): 
   });
 
   if (utxoToSpend === undefined) {
-    throw new Error("uopsie, are you sure your tx had enough time to get to the blockchain?");
+    const errorMessage = isEmulator ? 
+      "Oops, are you sure you invoked awaitBlock on emulator to ensure the tx was included in a block?" : 
+      "Oops, are you sure your tx had enough time to get to the blockchain?";
+    throw new Error(errorMessage);
   }
 
   return txBuilder.buildSync({
@@ -921,10 +1015,43 @@ async function getUnlockTx(wallet: BrowserWallet, Blockfrost: BlockfrostPluts): 
     }],
     requiredSigners: [myAddr.paymentCreds.hash],
     // make sure to include collateral when using contracts
-    collaterals: [myUTxOs[0]],
+    collaterals: [utxos[0]],
     // send everything back to us
     changeAddress: myAddr
   });
+}
+```
+
+And, to facilitiate the functionality of unlocking, let's now add a `unlockTx` function as done with lock.
+```ts title="src/offchain/unlockTx.ts"
+export async function unlockTx(wallet: IWallet | BrowserWallet, provider: Emulator | BlockfrostPluts | null, isEmulator: boolean): Promise<string> {
+  if (!provider) {
+    throw new Error("Cannot proceed without a Emulator or Blockfrost provider");
+  }
+
+  const myAddr = Address.fromString(await wallet.getChangeAddress());
+
+  console.log("About to unlock tx");
+  const unsignedTx = await getUnlockTx(wallet, provider, isEmulator);
+
+  // Sign the tx body hash
+  const txHashHex = unsignedTx.body.hash.toString();
+  // Build the witness set data
+  const {key, signature} = await wallet.signData(txHashHex, myAddr.toString());
+  const witness = vkeyWitnessFromSignData(key, signature);
+
+  unsignedTx.addVKeyWitness(witness);
+
+  const txHash = await provider.submitTx(unsignedTx);
+  console.log("Transaction Hash:", txHash);
+
+  if (provider instanceof Emulator) {
+    provider.awaitBlock(1);
+    const ledgerState = provider.prettyPrintLedgerState();
+    console.log("Ledger State:", ledgerState);
+  }
+
+  return txHash;
 }
 ```
 
@@ -951,6 +1078,10 @@ That means that if you are signing a transaction built wit plu-ts you can be sur
 
 :::
 
-Here is an example of a successful transaction:
+Here is an example of a successful transaction, running `npm run dev`:
 
 https://preprod.cardanoscan.io/transaction/3d04a8bb90c3d6edb765439f3ec370053b2904841648ba64281c0680a73226fa
+
+Upon running `npm run dev:emulator`:
+
+![Hello Plu-ts Example - Emulator Run Result](./HelloPluts_Emulator_Run.png)
