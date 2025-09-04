@@ -84,70 +84,82 @@ export const scriptTestnetAddr = new Address(
 );
 ```
 
-The other file is the `offchain/mintNft.ts`, which includes the logic for building and executing the transaction for the NFT minting.
+The other file is the `offchain/mintNft.ts`, which includes the logic for building and executing the transaction for the NFT minting. `provider` `Emulator | BlockFrostPluts` is passed into the `mintNft` based on which the interactions are done.
 
 ```ts title="offchain/mintNft.ts"
-import { BrowserWallet } from "@meshsdk/core";
-import { Value, Address } from "@harmoniclabs/plu-ts";
+import { BrowserWallet, IWallet } from "@meshsdk/core";
+import { Value, Address, Tx } from "@harmoniclabs/plu-ts";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 import { scriptTestnetAddr, script } from "../../contracts/minting";
-import { toPlutsUtxo } from "./mesh-utils";
+import { vkeyWitnessFromSignData } from "./commons";
 import getTxBuilder from "./getTxBuilder";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
 
-export async function mintNft(wallet: BrowserWallet, projectId: string): Promise<string> {
+export async function mintNft(wallet: BrowserWallet | IWallet, provider: Emulator | BlockfrostPluts | null, isEmulator: boolean): Promise<string> {
 
-  const recipient = Address.fromString(
+  if (!provider) {
+    throw new Error("no Emulator/Blockfrost provider");
+  }
+
+  const address = Address.fromString(
     await wallet.getChangeAddress()
   );
 
-  const Blockfrost = new BlockfrostPluts({ projectId });
 
-  const txBuilder = await getTxBuilder(Blockfrost);
-  const myUTxOs = (await wallet.getUtxos()).map(toPlutsUtxo);
+  const txBuilder = await getTxBuilder(provider);
+  const utxos = await provider.getUtxos(address);
+  if (utxos.length === 0) {
+    throw new Error(isEmulator ? "No UTxOs have been found at this address on the emulated ledger" : "Have you requested funds from the faucet?");
+  }  
+  const utxo = utxos.find(u => u.resolved.value.lovelaces >= 15_000_000n);
 
-  if (myUTxOs.length === 0) {
-    throw new Error("have you requested founds from the faucet?");
-  }
-
-  const utxo = myUTxOs.find(u => u.resolved.value.lovelaces > 15_000_000);
-
-  if (utxo === undefined) {
+  if (!utxo) {
     throw new Error("not enough ada");
   }
 
   const unsignedTx = await txBuilder.buildSync({
     inputs: [{ utxo }],
-    changeAddress: recipient,
+    changeAddress: address,
     collaterals: [utxo],
-
-    // We need to declare a collateral return in order
-    // to store the minted token in the user wallet
     collateralReturn: {
       address: utxo.resolved.address,
       value: Value.sub(utxo.resolved.value, Value.lovelaces(5_000_000))
     },
-
-    // We need to declare the minting policy for the token
     mints: [{
-      // This is the name and amount of tokens we want to mint
       value: Value.singleAsset(
         scriptTestnetAddr.paymentCreds.hash,
-        Buffer.from('Test Token'),
+        new Uint8Array(Buffer.from('Test Token')),
         1
       ),
-      // We pass the script as inline and the redeemer address
       script: {
         inline: script,
         policyId: scriptTestnetAddr.paymentCreds.hash,
-        redeemer: recipient.toData()
+        redeemer: address.toData()
       }
     }]
   });
 
-  const txStr = await wallet.signTx(unsignedTx.toCbor().toString());
+  // Sign the tx body hash
+  const txHashHex = unsignedTx.body.hash.toString();
+  // Build the witness set data
+  const {key, signature} = await wallet.signData(txHashHex, address.toString());
+  const witness = vkeyWitnessFromSignData(key, signature);
 
-  return await Blockfrost.submitTx(txStr);
+  // inject it to the unsigned tx
+  unsignedTx.addVKeyWitness(witness);
+
+  const txHash = await provider.submitTx(unsignedTx);
+  console.log("Transaction Hash:", txHash);
+
+  if (isEmulator && provider instanceof Emulator) {
+    provider.awaitBlock(1);
+    const ledgerState = provider.prettyPrintLedgerState(true);
+    console.log("Ledger State:", ledgerState);
+  }
+
+  return txHash;
 }
+
 ```
 
 ### Test it out
