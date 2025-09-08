@@ -18,7 +18,7 @@ Check `package.json` file at [`HarmonicLabs/vesting-pluts`](https://github.com/H
 
 ## Project set up
 
-We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template (with the plu-ts version ~0.8.2) :
+We will once again start from the [`plu-ts-starter`](https://github.com/HarmonicLabs/plu-ts-starter) template (with the plu-ts version ~0.9.0) :
 ```bash
 git clone https://github.com/HarmonicLabs/plu-ts-starter.git
 mv plu-ts-starter vesting-pluts
@@ -26,7 +26,7 @@ cd vesting-pluts
 git remote remove origin
 ```
 
-this gives us a simple project structure:
+This gives us a simple project structure:
 ```
 ./vesting-pluts
 ├── package.json
@@ -53,7 +53,7 @@ npm install
 
 This time instead of working with Browser wallets, we will generate key pairs using [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey) and thus generate address.
 We will also be making use of [Blockfrost API](https://blockfrost.io/) to interact with the contract, address, transaction on/to-be-on chain (enabled with the package `@harmoniclabs/blockfrost-pluts`)
-
+Along with Blockfrost, we will also be making use of [Plu-ts Emulator](https://github.com/HarmonicLabs/pluts-emulator), like in our previous Hello Plu-ts example.
 
 ### Template overview
 
@@ -254,28 +254,29 @@ export const contract = pfn([
     // highlight-start
 
     const maybeDatum = plet(
-        pmatch(purpose)
-        .onSpending(({ datum }) => datum)
-        ._(_ => perror(PMaybe(data).type))
-    );
+    pmatch(purpose)
+    .onSpending(({ datum }) => datum)
+    ._(_ => perror(PMaybe(data).type))
+  );
 
-    const datum = plet( punsafeConvertType( maybeDatum.unwrap, VestingDatum.type ) )
+     const datum = plet( punsafeConvertType( maybeDatum.unwrap, VestingDatum.type ) )
 
-    const signedByBeneficiary = tx.signatories.some( datum.beneficiary.eq )
+     const signedByBeneficiary = tx.signatories.some( datum.beneficiary.eq )
 
     // inlined
     const deadlineReached = plet(
         pmatch( tx.interval.from.bound )
-        .onPFinite(({ n: lowerInterval }) =>
-            datum.deadline.ltEq( lowerInterval ) 
+        .onPFinite(({ n: lowerInterval }) =>  
+            datum.deadline.ltEq(  ptraceVal( int ).$( lowerInterval ) ) 
         )
         ._( _ => pBool( false ) )
     )
 
     return passert.$(
-        (ptraceIfFalse.$(pdelay(pStr("Error in signedByBenificiary"))).$(signedByBeneficiary))
+        (ptraceIfFalse.$(pdelay(pStr("Error in signedByBeneficiary"))).$(signedByBeneficiary))
         .and( ptraceIfFalse.$(pdelay(pStr("deadline not reached or not specified"))).$( deadlineReached ) )
-    );
+        .and ( ptraceIfFalse.$(pdelay( pshowInt.$( datum.deadline ).utf8Decoded )).$( deadlineReached )) 
+      );
 
     // highlight-end
 });
@@ -426,6 +427,8 @@ Now that we have access to the transaction lower bound, we can finally check for
 datum.deadline.ltEq( lowerInterval ) 
 ```
 
+Replace `lowerInterval` above with `ptraceVal( int ).$( lowerInterval )` to be able to output the value in `lowerInterval` for debugging purposes.
+
 The final `deadlineReached` condition becomes:
 
 ```ts title="src/contract.ts"
@@ -433,7 +436,7 @@ The final `deadlineReached` condition becomes:
 const deadlineReached = plet(
     pmatch( tx.interval.from.bound )
     .onPFinite(({ n: lowerInterval }) =>
-        datum.deadline.ltEq( lowerInterval ) 
+        datum.deadline.ltEq( ptraceVal( int ).$( lowerInterval ) ) 
     )
     ._( _ => pBool( false ) )
 )
@@ -534,46 +537,149 @@ Go to https://blockfrost.io/ and create a new project for this example (a free p
 
 Once done, navigate to the Dashboard and copy over PROJECT_ID to setup.
 
-Now, create file `blockfrost.ts` within `src/app`:
-```ts title="src/app/blockfrost.ts"
-import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+Make sure to not check-in your PROJECT_ID into any versioning systems. Alternatively, you can always use environment variable. Here, please create a `.env` file in your project root and paste the below:
+```title=".env"
+BLOCKFROST_PROJECT_ID=" <Paste your PROJECT_ID here> "
+```
 
-function blockfrost () {
+To enable blockfrost within other files, we will later instantiate `blockfrost()` with the PROJECT_ID. 
+
+## Setup TxBuilder
+
+To perform transactions, either through Blockfrost or Emulator, we need to instantiate our `TxBuilder` with the provider of choice.
+
+First, Create file `getProvider.ts` within `src/app/utils`, exporting `getProvider()` with a boolean argument `useEmulator` which decides `createEmulatorProvider` or `createBlockfrostProvider` is to be invoked/setup.
+```ts file="src/app/utils/getProvider.ts"
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
+import * as dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
+/**
+ * Creates a Blockfrost provider instance
+ * @returns BlockfrostPluts provider
+ */
+function createBlockfrostProvider(): BlockfrostPluts {
+    // highlight-start
+    // Read projectId from environment variables
+    const projectId = process.env.BLOCKFROST_PROJECT_ID;
+    //highlight-end
+
+    if (!projectId) {
+        throw new Error("PROJECT_ID is not defined in environment variables");
+    }
     const provider = new BlockfrostPluts({
-        projectId: "Paste your PROJECT_ID here"
+        projectId: projectId
     });
     return provider;
 }
 
-export default blockfrost;
-```
-Make sure to not check-in your PROJECT_ID into any versioning systems. Alternatively, you can always use environment variables here.
-
-To enable blockfrost within other files, we will instantiate `blockfrost()` with the PROJECT_ID. 
-
-To perform transactions through Blockfrost, we need to instantiate our `TxBuilder` with Blockfrost.
-
-Create file `getTxBuilder.ts` within `src/app`, exporting method `getTxBuilder()` which will thus be used to instantiate an instance of `TxBuilder` and further used.
-```ts title="src/app/getTxBuilder.ts"
-import { TxBuilder } from "@harmoniclabs/plu-ts";
-import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+/**
+ * Creates an Emulator provider instance
+ * @param initialSettings Optional settings for the emulator
+ * @returns Emulator provider
+ * TODO: use initializeEmulator from Emulator in the return statement
+ */
+export function createEmulatorProvider(
+    initialSettings?: {
+        initialUtxos?: any[],
+        debugLevel?: number
+    }
+): Emulator {
+    return new Emulator(
+        initialSettings?.initialUtxos || [], 
+        undefined, // Use default genesis infos
+        undefined, // Use default protocol parameters
+        initialSettings?.debugLevel ?? 0 // Default debug level is 0
+    );
+}
 
 /**
- * we don't want to do too many API call if we already have our `txBuilder`
- * 
- * so after the first call we'll store a copy here.
-**/
-let _cachedTxBuilder: TxBuilder | undefined = undefined
+ * Factory function that returns the appropriate provider based on configuration
+ * @param useEmulator Whether to use the emulator instead of Blockfrost
+ * @param initialSettings Optional settings for the emulator (only used when useEmulator is true)
+ * @returns Either BlockfrostPluts or Emulator instance
+ */
+export function getProvider(
+    useEmulator: boolean = false,
+    initialSettings?: {
+        initialUtxos?: any[],
+        debugLevel?: number
+    }
+): BlockfrostPluts | Emulator {
+    if (useEmulator) {
+        console.log("Using Emulator");
+        return createEmulatorProvider(initialSettings);
+    } else {
+        console.log("Using Blockfrost - ensure your addresses have been funded with a faucet");
+        return createBlockfrostProvider();
+    }
+}
 
-export default async function getTxBuilder(Blockfrost: BlockfrostPluts): Promise<TxBuilder>
-{
-    if(!( _cachedTxBuilder instanceof TxBuilder ))
-    {
-        const parameters = await Blockfrost.getProtocolParameters();
-        _cachedTxBuilder = new TxBuilder(parameters);
+/**
+ * Default provider - uses Blockfrost
+ * Maintained for backward compatibility with existing code
+ */
+export default function blockfrost(): BlockfrostPluts {
+    return createBlockfrostProvider();
+}
+```
+
+Create file `getTxBuilder.ts` within `src/app/utils`, exporting method `getTxBuilder()` which will thus be used to instantiate an instance of `TxBuilder` based on the choice of `provider` passed in, and further used.
+```ts title="src/app/utils/getTxBuilder.ts"
+import { TxBuilder, defaultMainnetGenesisInfos } from "@harmoniclabs/buildooor";
+import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
+import { defaultProtocolParameters } from "@harmoniclabs/plu-ts";
+
+// Cache for the TxBuilder to avoid redundant API calls
+let cachedTxBuilder: TxBuilder | undefined = undefined;
+
+/**
+ * Creates a TxBuilder with the appropriate protocol parameters and genesis infos
+ * Caches the result to avoid redundant API calls
+ * @param provider Optional provider (Blockfrost or Emulator) to use for protocol parameters and genesis infos
+ * @returns A configured TxBuilder instance
+ */
+export default async function getTxBuilder(provider?: BlockfrostPluts | Emulator): Promise<TxBuilder> {
+  if (!provider) {
+    console.warn("No provider passed to getTxBuilder. Using defaults which may not be suitable for mainnet/testnet transactions.");
+  }
+  // Return cached TxBuilder if available and no provider is specified
+  if (cachedTxBuilder && !provider) {
+    return cachedTxBuilder;
+  }
+
+  if (provider) {
+    // Use the provided provider to get protocol parameters and genesis infos
+    const [protocolParameters, genesisInfos] = await Promise.all([
+      provider.getProtocolParameters(),
+      provider.getGenesisInfos()
+    ]);
+
+    const txBuilder = new TxBuilder(
+      protocolParameters,
+      genesisInfos
+    );
+
+    // Cache the TxBuilder for future use
+    if (!cachedTxBuilder) {
+      cachedTxBuilder = txBuilder;
     }
 
-    return _cachedTxBuilder;
+    return txBuilder;
+  } else {
+    // Use default values if no provider is provided
+    if (!cachedTxBuilder) {
+      cachedTxBuilder = new TxBuilder(
+        defaultProtocolParameters,
+        defaultMainnetGenesisInfos
+      );
+    }
+    
+    return cachedTxBuilder;
+  }
 }
 ```
 
@@ -666,87 +772,112 @@ there are 2 way to get your keys and start creating transactions.
 You can generate your own key pair using `generateKey()` method from Crypto Web API. Read more about this [here](https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/generateKey).
 
 Using this, to generate 2 pairs of keys, create a file `genKeys.ts` in the `app` folder that looks like this
-```ts title="src/app/genKeys.ts"
+```ts title="src/app/utils/genKeys.ts"
 import { existsSync } from "fs";
 import { Address, Credential, PublicKey, PrivateKey, PubKeyHash } from "@harmoniclabs/plu-ts";
 import { config } from "dotenv";
 import { mkdir, writeFile } from "fs/promises";
+import { blake2b } from 'blakejs';
 
-import pkg from 'blakejs';
-const { blake2b } = pkg;
-
+// Load environment variables
 config();
 
-async function genKeys()
-{
-    const nKeys = 2;
-
-    const promises: Promise<any>[] = [];
-
-    if( !existsSync("./testnet") )
-    {
-        await mkdir("./testnet");
+/**
+ * Generate Cardano keys and addresses for testing
+ * @param numKeys Number of key pairs to generate
+ * @param outputDir Directory to store the generated keys and addresses
+ */
+export async function genKeys(numKeys = 2, outputDir = "./testnet") {
+  try {
+    console.log(`Generating ${numKeys} key pairs in ${outputDir}`);
+    
+    // Create output directory if it doesn't exist
+    if (!existsSync(outputDir)) {
+      console.log(`Creating directory: ${outputDir}`);
+      await mkdir(outputDir, { recursive: true });
     }
     
-    for( let i = 1; i <= nKeys; i++ )
-    {
-        // generate public-private keypair
-        let keyPair = await globalThis.crypto.subtle.generateKey(
-            {
-                name: "Ed25519",
-                namedCurve: "Ed25519"
-              },
-              true,
-              ["sign", "verify"]
-          );
+    for (let i = 1; i <= numKeys; i++) {
+      console.log(`\nGenerating key pair ${i} of ${numKeys}...`);
+      
+      try {
+        // Generate Ed25519 key pair
+        const keyPair = await globalThis.crypto.subtle.generateKey(
+          {
+            name: "Ed25519",
+            namedCurve: "Ed25519"
+          },
+          true,
+          ["sign", "verify"]
+        );
         
-
-        // convert keyPair.(publicKey|privateKey)<CryptoKeyPair> ultimately to PublicKey which can be converted to cborString to store it for future reference
-
-        // Export public key in a way compatible to Cardano CLI
-        const publicKeyArrayBuffer = await globalThis.crypto.subtle.exportKey('raw', keyPair.publicKey); 
+        // Process public key
+        console.log(`  Processing public key ${i}...`);
+        const publicKeyArrayBuffer = await globalThis.crypto.subtle.exportKey('raw', keyPair.publicKey);
         const publicKeyUint8Array = new Uint8Array(publicKeyArrayBuffer);
         const publicKey = new PublicKey(publicKeyUint8Array);
-        const publicKeyHash = new PubKeyHash(blake2b(publicKeyUint8Array, undefined, 28)); // to build Credential
+        const publicKeyHash = new PubKeyHash(blake2b(publicKeyUint8Array, undefined, 28));
+        
+        // Create and save public key file
         const pubKeyJsonObj = {
-            type: "PaymentVerificationKeyShelley_ed25519",
-            description: "Payment Verification Key",
-            cborHex: publicKey.toCbor().toString()
-        }; // JSON structure similar to the one generated when by Cardano CLI
-        const pubKeyJsonStr = JSON.stringify(pubKeyJsonObj, null, 4);
-        await writeFile(`./testnet/payment${i}.vkey`, pubKeyJsonStr);
-
-        // Export of the private key in a way that's compatible with the Cardano CLI
-        const privateKeyArrayBuffer = await globalThis.crypto.subtle.exportKey('pkcs8', keyPair.privateKey); // privateKey cannot be exported 'raw' hence 'pkcs8'
+          type: "PaymentVerificationKeyShelley_ed25519",
+          description: "Payment Verification Key",
+          cborHex: publicKey.toCbor().toString()
+        };
+        const pubKeyPath = `${outputDir}/payment${i}.vkey`;
+        await writeFile(pubKeyPath, JSON.stringify(pubKeyJsonObj, null, 2));
+        console.log(`  Public key saved to: ${pubKeyPath}`);
+        
+        // Process private key
+        console.log(`  Processing private key ${i}...`);
+        const privateKeyArrayBuffer = await globalThis.crypto.subtle.exportKey('pkcs8', keyPair.privateKey);
+        
+        // Get the last 32 bytes which is the actual private key in Ed25519
         const privateKeyUint8Array = new Uint8Array(privateKeyArrayBuffer.slice(-32));
         const privateKey = new PrivateKey(privateKeyUint8Array);
+        
+        // Create and save private key file
         const pvtKeyJsonObj = {
-            type: "PaymentSigningKeyShelley_ed25519",
-            description: "Payment Signing Key",
-            cborHex: privateKey.toCbor().toString()
-        }; // JSON structure similar to the one generated when by Cardano CLI
-        const pvtKeyJsonStr = JSON.stringify(pvtKeyJsonObj, null, 4);
-        await writeFile(`./testnet/payment${i}.skey`, pvtKeyJsonStr);
-
-        // Check that the derivations went fine
-        const pubKeyfromPriv = privateKey.derivePublicKey();
-        if (pubKeyfromPriv.toString() !== publicKey.toString()) {
-            throw new Error("\tPublic key derivation from private key failed");
+          type: "PaymentSigningKeyShelley_ed25519",
+          description: "Payment Signing Key",
+          cborHex: privateKey.toCbor().toString()
+        };
+        const privateKeyPath = `${outputDir}/payment${i}.skey`;
+        await writeFile(privateKeyPath, JSON.stringify(pvtKeyJsonObj, null, 2));
+        console.log(`  Private key saved to: ${privateKeyPath}`);
+        
+        // Verify key derivation
+        const derivedPublicKey = privateKey.derivePublicKey();
+        if (derivedPublicKey.toString() !== publicKey.toString()) {
+          throw new Error("Public key derivation from private key failed");
         }
-        else {
-            console.log("\tPublic key derivation from private key succeeded");
-        }
-
-        // Create the address
+        console.log(`  Verified: Public key correctly derived from private key`);
+        
+        // Create and save address
         const credential = Credential.keyHash(publicKeyHash);
         const address = new Address("testnet", credential);
-        await writeFile(`./testnet/address${i}.addr`, address.toString());
-    }   
-
-    // wait for all files to be copied
-    await Promise.all( promises );
+        const addressPath = `${outputDir}/address${i}.addr`;
+        await writeFile(addressPath, address.toString());
+        console.log(`  Address saved to: ${addressPath}`);
+        
+      } catch (error) {
+        console.error(`Error generating key pair ${i}:`, error);
+        
+      }
+    }
+    
+    console.log(`\nSuccessfully generated ${numKeys} key pairs in ${outputDir}`);
+  } catch (error) {
+    console.error("Key generation failed:", error);
+    process.exit(1);
+  }
 }
-genKeys();
+
+// Allow command line arguments to specify the number of keys
+const numKeys = process.argv[2] ? parseInt(process.argv[2]) : 2;
+
+// Execute the function
+genKeys(numKeys);
 ```
 
 Add a new  `npm` script  `vesting:genKeys`
@@ -754,7 +885,7 @@ Add a new  `npm` script  `vesting:genKeys`
 "scripts": {
     // ...
     // highlight-next-line
-    "vesting:genKeys": "npm run build:light && node dist/app/genKeys.js"
+    "vesting:genKeys": "npm run build:light && node dist/app/utils/genKeys.js"
 }
 ```
 so that running
@@ -780,7 +911,7 @@ Then maybe you can copy those keys in the `testnet` folder we have here.
 
 To do so we can set up a new `setup.ts` script under the `app` folder:
 
-```ts title="src/app/setup.ts"
+```ts title="src/app/utils/setup.ts"
 import { existsSync } from "fs";
 import { config } from "dotenv";
 import { copyFile, mkdir } from "fs/promises";
@@ -820,7 +951,7 @@ And then include a new `npm script` in `package.json`
 "scripts": {
     // ...
     // highlight-next-line
-    "vesting:setup": "npm run build:light && node dist/app/setup.js"
+    "vesting:setup": "npm run build:light && node dist/app/utils/setup.js"
 }
 ```
 
@@ -885,10 +1016,10 @@ const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
 
 ### Query the address UTxOs
 
-Before we really start building our transaction we need some UTxOs to use as input. We can query the UTxOs available in our address through Blockfrost.
+Before we really start building our transaction we need some UTxOs to use as input. We can query the UTxOs available in our address through Emulator/Blockfrost provider.
 Make sure to populate both the addresses with some funds.
 ```ts
-const utxos = await Blockfrost.addressUtxos( address );
+const utxos = await provider.addressUtxos( address );
 ```
 :::info
 Instead of blindly assigning the first UTxO of the utxos[] as input, let us assure that we use the UTxO that has atleast 15 ada in it just to avoid possible failures.
@@ -897,7 +1028,7 @@ const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000)!;
 ``` 
 :::
 
-### Build the Transaciton
+### Build the Transaction
 
 Our transaction will be constructed as follows:
 - our UTxO as input
@@ -906,19 +1037,20 @@ Our transaction will be constructed as follows:
 
 which translates to the following code
 ```ts
+const chainTip = await provider.getChainTip();
+const deadline = txBuilder.slotToPOSIX(chainTip.slot! + 9); //convert to units POSIX time
+
 let tx = await txBuilder.buildSync({
     inputs: [{ utxo: utxo }],
-    collaterals: [ utxo ],
+    collaterals: [utxo],
     outputs: [
         {
             address: scriptAddr,
-            value: Value.lovelaces( 10_000_000 ),
-            // highlight-start
+            value: Value.lovelaces(5_000_000),
             datum: VestingDatum.VestingDatum({
-                beneficiary: pBSToData.$( pByteString( pkh.toBuffer() ) ),
-                deadline: pIntToData.$( nowPosix + 10_000 )
+                beneficiary: pBSToData.$(pByteString(pkh.toBuffer())),
+                deadline: pIntToData.$(deadline)
             })
-            // highlight-end
         }
     ],
     changeAddress: address
@@ -941,27 +1073,31 @@ Now that we have our transaction, all we need is just to Sign and Submit it.
 
 And guess what? 
 
-This is now extremly easy with `plu-ts` and `Blockfrost`.
+This is now extremly easy with `plu-ts` and `Blockfrost`/`Emulator`.
 
 ```ts
-await tx.signWith( new PrivateKey(privateKey) );
+await tx.signWith( privateKey );
 
-const submittedTx = await Blockfrost.submitTx( tx );
+const submittedTx = await provider.submitTx( tx );
 ```
 
 All we need to do now is to put it all together in a file `createVesting.ts` under the `app` folder.
 
-```ts title="src/app/createVesting.ts"
-import { Address, Credential, Hash28, PrivateKey, Value, pBSToData, pByteString, pIntToData, CredentialType, PublicKey, Script, ScriptType } from "@harmoniclabs/plu-ts";
-import VestingDatum from "../VestingDatum";
-import getTxBuilder from "./getTxBuilder";
+```ts title="src/app/offchain/createVesting.ts"
+import { Address, Credential, PrivateKey, Value, pBSToData, pByteString, pIntToData, CredentialType, PublicKey, Script, ScriptType, IProvider } from "@harmoniclabs/plu-ts";
+import VestingDatum from "../../VestingDatum";
+import getTxBuilder from "../utils/getTxBuilder";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
-import blockfrost from "./blockfrost";
 import { readFile } from "fs/promises";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
 
-async function createVesting(Blockfrost: BlockfrostPluts)
-{   
-    const txBuilder = await getTxBuilder(Blockfrost);
+/**
+ * Creates a vesting contract transaction
+ * @param provider The provider to use (Blockfrost or Emulator)
+ * @returns The transaction hash
+ */
+export async function createVesting(provider: BlockfrostPluts | Emulator): Promise<string> {   
+    const txBuilder = await getTxBuilder(provider);
      
     const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
     const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
@@ -978,44 +1114,40 @@ async function createVesting(Blockfrost: BlockfrostPluts)
     
     const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
     const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
-
-    const utxos = await Blockfrost.addressUtxos( address )
-        .catch( e => { throw new Error ("unable to find utxos at " + addr) })
-
-    // atleast has 10 ada
-    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000)!;
+    const utxos = await provider.addressUtxos(address)
+        .catch(e => { throw new Error(`Unable to find UTxOs at ${addr}: ${e.message}`) });
+    // At least has 15 ADA
+    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000);
     if (!utxo) {
-        throw new Error("No utxo with more than 10 ada");
+        throw new Error(`No UTxO with more than 15 ADA at address ${address}`);
     }
 
-    const nowPosix = Date.now();
+    const chainTip = await provider.getChainTip();
+    const deadline = txBuilder.slotToPOSIX(chainTip.slot! + 9); //convert to units POSIX time
 
     let tx = await txBuilder.buildSync({
         inputs: [{ utxo: utxo }],
-        collaterals: [ utxo ],
+        collaterals: [utxo],
         outputs: [
             {
                 address: scriptAddr,
-                value: Value.lovelaces( 10_000_000 ),
+                value: Value.lovelaces(5_000_000),
                 datum: VestingDatum.VestingDatum({
-                    beneficiary: pBSToData.$( pByteString( pkh.toBuffer() ) ),
-                    deadline: pIntToData.$( nowPosix + 10_000 )
+                    beneficiary: pBSToData.$(pByteString(pkh.toBuffer())),
+                    deadline: pIntToData.$(deadline)
                 })
             }
         ],
         changeAddress: address
     });
     
-    await tx.signWith( new PrivateKey(privateKey) );
+    await tx.signWith(privateKey);
 
-    const submittedTx = await Blockfrost.submitTx( tx );
-    console.log(submittedTx);
+    const submittedTx = await provider.submitTx(tx);
+    console.log(`Vesting transaction submitted: ${submittedTx}`);
+    console.log(`Vesting deadline set to: ${deadline} - ${new Date(deadline).toISOString()}`);
     
-}
-
-if( process.argv[1].includes("createVesting") )
-{
-    createVesting(blockfrost());
+    return submittedTx;
 }
 ```
 
@@ -1054,60 +1186,89 @@ You know the process now:
 These are the steps needed before we can start to build the transaction and are often very similar.
 
 ```ts
-import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos, ScriptType } from "@harmoniclabs/plu-ts";
-import getTxBuilder from "./getTxBuilder";
+import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos, ScriptType, IProvider, Machine, UPLCProgram, parseUPLC } from "@harmoniclabs/plu-ts";
+import getTxBuilder from "../utils/getTxBuilder";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
-import blockfrost from "./blockfrost";
 import { readFile } from "fs/promises";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
 
-async function claimVesting(Blockfrost: BlockfrostPluts)
-{
-    const txBuilder = await getTxBuilder(Blockfrost);
+/**
+ * Claims funds from a vesting contract
+ * @param provider The provider to use (Blockfrost or Emulator)
+ * @returns The transaction hash
+ */
+export async function claimVesting(provider: BlockfrostPluts | Emulator): Promise<string> {
+    const txBuilder = await getTxBuilder(provider);
 
     const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
     const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
+
     const scriptAddr = new Address(
         "testnet",
         new Credential(CredentialType.Script, script.hash)
     );
-    
+
     const privateKeyFile = await readFile("./testnet/payment2.skey", { encoding: "utf-8" });
-    const privateKey = PrivateKey.fromCbor( JSON.parse(privateKeyFile).cborHex );
+    const privateKey = PrivateKey.fromCbor(JSON.parse(privateKeyFile).cborHex);
+
+    const pubKey = privateKey.derivePublicKey();
 
     const addr = await readFile("./testnet/address2.addr", { encoding: "utf-8" });
     const address = Address.fromString(addr);
 
     const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
-    const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
+    const pkh = PublicKey.fromCbor(JSON.parse(publicKeyFile).cborHex).hash;
 
-    const utxos = await Blockfrost.addressUtxos( address )
-        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
-    // atleast has 10 ada
-    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000);
+
+    const utxos = await provider.addressUtxos(address)
+        .catch(e => { throw new Error(`Unable to find UTxOs at ${addr}: ${e.message}`) });
+
+    // At least has 15 ADA
+    let utxo; 
+    utxos.forEach(item => { 
+        if (item.resolved.value.lovelaces >= 15_000_000) {
+            utxo = item;
+        }
+    });
     if (!utxo) {
-        throw new Error("No utxo with more than 10 ada");
+        throw new Error("No UTxO with more than 15 ADA");
     }
 
-    /// ...to be continued
+    // Use the following lines if you want to use a specific collateral UTxO
+    // Find a smaller UTxO for collateral
+    let collateralUtxo;
+    utxos.forEach(item => {
+        const lovelaces = item.resolved.value.lovelaces
+        if (lovelaces >= 1_00_000 && lovelaces <= 5_000_000) {
+            collateralUtxo = item;
+        }
+    });
+    if (!collateralUtxo) {
+        throw new Error("No small UTxO found for collateral. Use a UTxO with at least 0.1 ADA but less than 5 ADA");
+    }
+
+    /* ...to be continued */
 }
 ```
 
 Query the `scriptUtxos`, to specifically use the `utxo` that matches `publicKeyHash` within its datum.
 ```ts
-    const scriptUtxos = await Blockfrost.addressUtxos( scriptAddr )
-        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
-    // matches with the pkh
+    const scriptUtxos = await provider.addressUtxos(scriptAddr)
+        .catch(e => { throw new Error(`Unable to find UTxOs at script address: ${e.message}`) });
+        
+    // Find the script UTxO that matches our public key hash
     const scriptUtxo = scriptUtxos.find(utxo => {
         if (utxo.resolved.datum instanceof DataConstr) { 
-         const pkhData = utxo.resolved.datum.fields[0]; 
-         if (pkhData instanceof DataB) {
-             return pkh.toString() == Buffer.from( pkhData.bytes.toBuffer() ).toString("hex")
-         }
+            const pkhData = utxo.resolved.datum.fields[0]; 
+            if (pkhData instanceof DataB) {
+                return pkh.toString() === Buffer.from(pkhData.bytes.toBuffer()).toString("hex");
+            }
         }
         return false; 
-     });
+    });
+    
     if (!scriptUtxo) {
-        throw new Error ("No script utxo found for the pkh")
+        throw new Error("No script UTxO found for the pkh");
     }
 ```
 
@@ -1129,13 +1290,11 @@ This time our transaction will be formed as follows
 - our UTxO as collateral input that MUST be present every time a script is included in the transaciton
 - the `invalidBefore` field corresponding to the last slot heigth (otherwise the transaciton interval is negative infinite and the contract will fail!)
 
-Of the above, the last one sounds courious... How do we get the last slot of the blockchain?
+Of the above, the last one sounds courious... How do we get the last slot of the blockchain/emulator?
 
-Blockfrost helps us with that!
-
-we just have to do,
+Blockfrost does helps us with that! Emulator is also built mimicing Blockfrost. So, we just have to do,
 ```ts
-(await Blockfrost.getChainTip()).slot!
+(await provider.getChainTip()).slot!
 ```
 
 Before building the transaction, we have to ensure the txBuilder genesisInfo is set to its Preprod defaults, by:
@@ -1148,20 +1307,20 @@ Now the Transaction can be built as follows:
 ```ts
 let tx = await txBuilder.buildSync({
         inputs: [
-            { utxo: utxo },
+            { utxo: utxo }, // Regular input
             {
-                utxo: scriptUtxo,
+                utxo: scriptUtxo, // Script input
                 inputScript: {
-                    script: script,
-                    datum: "inline",
-                    redeemer: new DataI( 0 )
+                    script: script, // Plutus script
+                    datum: "inline", // Datum associated with the script UTxO
+                    redeemer: new DataI(0) // Redeemer to unlock the script UTxO
                 }
             }
         ],
-        requiredSigners: [ pkh ], // required to be included in script context
-        collaterals: [ utxo ],
+        requiredSigners: [pkh],
+        collaterals: [collateralUtxo],
         changeAddress: address,
-        invalidBefore: (await Blockfrost.getChainTip()).slot!
+        invalidBefore: invalidBefore
     });
 ```
 
@@ -1169,96 +1328,126 @@ Finally, after we add the Sign and Submit code as done previously:
 ```ts
 await tx.signWith( privateKey );
 
-const submittedTx = await Blockfrost.submitTx( tx )
+const submittedTx = await provide.submitTx( tx )
 ```
 
-we can put all together in a `claimVesting.ts` file in the `app` folder:
+We can put all together in a `claimVesting.ts` file in the `app` folder:
 
-```ts title="src/app/claimVesting.ts"
-import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos, ScriptType } from "@harmoniclabs/plu-ts";
-import getTxBuilder from "./getTxBuilder";
+```ts title="src/app/offchain/claimVesting.ts"
+import { Address, DataI, Credential, PrivateKey, CredentialType, Script, DataConstr, DataB, PublicKey, defaultPreprodGenesisInfos, ScriptType, IProvider, Machine, UPLCProgram, parseUPLC } from "@harmoniclabs/plu-ts";
+import getTxBuilder from "../utils/getTxBuilder";
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
-import blockfrost from "./blockfrost";
 import { readFile } from "fs/promises";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
 
-async function claimVesting(Blockfrost: BlockfrostPluts)
-{
-    const txBuilder = await getTxBuilder(Blockfrost);
+/**
+ * Claims funds from a vesting contract
+ * @param provider The provider to use (Blockfrost or Emulator)
+ * @returns The transaction hash
+ */
+export async function claimVesting(provider: BlockfrostPluts | Emulator): Promise<string> {
+    const txBuilder = await getTxBuilder(provider);
 
     const scriptFile = await readFile("./testnet/vesting.plutus.json", { encoding: "utf-8" });
     const script = Script.fromCbor(JSON.parse(scriptFile).cborHex, ScriptType.PlutusV3)
+
     const scriptAddr = new Address(
         "testnet",
         new Credential(CredentialType.Script, script.hash)
     );
-    
+
     const privateKeyFile = await readFile("./testnet/payment2.skey", { encoding: "utf-8" });
-    const privateKey = PrivateKey.fromCbor( JSON.parse(privateKeyFile).cborHex );
+    const privateKey = PrivateKey.fromCbor(JSON.parse(privateKeyFile).cborHex);
+
+    const pubKey = privateKey.derivePublicKey();
 
     const addr = await readFile("./testnet/address2.addr", { encoding: "utf-8" });
     const address = Address.fromString(addr);
 
     const publicKeyFile = await readFile("./testnet/payment2.vkey", { encoding: "utf-8" });
-    const pkh = PublicKey.fromCbor( JSON.parse(publicKeyFile).cborHex ).hash;
+    const pkh = PublicKey.fromCbor(JSON.parse(publicKeyFile).cborHex).hash;
 
-    const utxos = await Blockfrost.addressUtxos( address )
-        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
-    // atleast has 10 ada
-    const utxo = utxos.find(utxo => utxo.resolved.value.lovelaces >= 15_000_000);
+
+    const utxos = await provider.addressUtxos(address)
+        .catch(e => { throw new Error(`Unable to find UTxOs at ${addr}: ${e.message}`) });
+
+    // At least has 15 ADA
+    let utxo; 
+    utxos.forEach(item => { 
+        if (item.resolved.value.lovelaces >= 15_000_000) {
+            utxo = item;
+        }
+    });
     if (!utxo) {
-        throw new Error("No utxo with more than 10 ada");
+        throw new Error("No UTxO with more than 15 ADA");
     }
 
-    const scriptUtxos = await Blockfrost.addressUtxos( scriptAddr )
-        .catch( e => { throw new Error ("unable to find utxos at " + addr) });
-    // matches with the pkh
+    // Use the following lines if you want to use a specific collateral UTxO
+    // Find a smaller UTxO for collateral
+    let collateralUtxo;
+    utxos.forEach(item => {
+        const lovelaces = item.resolved.value.lovelaces
+        if (lovelaces >= 1_00_000 && lovelaces <= 5_000_000) {
+            collateralUtxo = item;
+        }
+    });
+    if (!collateralUtxo) {
+        throw new Error("No small UTxO found for collateral. Use a UTxO with at least 0.1 ADA but less than 5 ADA");
+    }
+
+
+    const scriptUtxos = await provider.addressUtxos(scriptAddr)
+        .catch(e => { throw new Error(`Unable to find UTxOs at script address: ${e.message}`) });
+        
+    // Find the script UTxO that matches our public key hash
     const scriptUtxo = scriptUtxos.find(utxo => {
         if (utxo.resolved.datum instanceof DataConstr) { 
-         const pkhData = utxo.resolved.datum.fields[0]; 
-         if (pkhData instanceof DataB) {
-             return pkh.toString() == Buffer.from( pkhData.bytes.toBuffer() ).toString("hex")
-         }
+            const pkhData = utxo.resolved.datum.fields[0]; 
+            if (pkhData instanceof DataB) {
+                return pkh.toString() === Buffer.from(pkhData.bytes.toBuffer()).toString("hex");
+            }
         }
         return false; 
-     });
-    if (!scriptUtxo) {
-        throw new Error ("No script utxo found for the pkh")
-    }
+    });
     
-    txBuilder.setGenesisInfos( defaultPreprodGenesisInfos )
+    if (!scriptUtxo) {
+        throw new Error("No script UTxO found for the pkh");
+    }
+     
+    txBuilder.setGenesisInfos(defaultPreprodGenesisInfos);
 
     if (Buffer.from(script.hash.toBuffer()).toString("hex") !== Buffer.from(scriptAddr.paymentCreds.hash.toBuffer()).toString("hex")) {
         throw new Error("Script hash and script address hash do not match");
     }
 
-    let tx = await txBuilder.buildSync({
-        inputs: [
-            { utxo: utxo },
-            {
-                utxo: scriptUtxo,
-                inputScript: {
-                    script: script,
-                    datum: "inline",
-                    redeemer: new DataI( 0 )
-                }
-            }
-        ],
-        requiredSigners: [ pkh ], // required to be included in script context
-        collaterals: [ utxo ],
-        changeAddress: address,
-        invalidBefore: (await Blockfrost.getChainTip()).slot!
-    });
-
-    await tx.signWith( privateKey )
-
-    const submittedTx = await Blockfrost.submitTx( tx );
-    console.log(submittedTx);
+    // Get chain tip to set correct validity timeframe
+    const chainTip = await provider.getChainTip();
+    const invalidBefore = chainTip.slot!;
+    console.log("Claim Invalid Before : " + invalidBefore)
     
-}
+        let tx = await txBuilder.buildSync({
+            inputs: [
+                { utxo: utxo }, // Regular input
+                {
+                    utxo: scriptUtxo, // Script input
+                    inputScript: {
+                        script: script, // Plutus script
+                        datum: "inline", // Datum associated with the script UTxO
+                        redeemer: new DataI(0) // Redeemer to unlock the script UTxO
+                    }
+                }
+            ],
+            requiredSigners: [pkh],
+            collaterals: [collateralUtxo],
+            changeAddress: address,
+            invalidBefore: invalidBefore
+        });
 
-if( process.argv[1].includes("claimVesting") )
-{
-    claimVesting(blockfrost());
+    await tx.signWith(privateKey);
+    
+    const submittedTx = await provider.submitTx(tx);
+    
+    return submittedTx;
 }
 ```
 
@@ -1268,7 +1457,7 @@ After adding a new `npm script` in package.json
 "scripts": {
     // ...
     // highlight-next-line
-    "vesting:claim": "npm run build:light && node dist/app/claimVesting.js"
+    "vesting:claim": "npm run build:light && node dist/app/offchain/claimVesting.js"
 }
 ```
 
@@ -1295,60 +1484,326 @@ If you were in public testnet remember to return the tADA to the faucet.
 
 For this, you can add the following file and script to automate everything.
 
-```ts title="src/app/returnFaucet.ts"
+```ts title="src/app/offchain/returnFaucet.ts"
 import { BlockfrostPluts } from "@harmoniclabs/blockfrost-pluts";
 import { Address, ITxBuildInput, IUTxO, PrivateKey } from "@harmoniclabs/plu-ts";
-import { readFile } from "fs/promises";
-import blockfrost from "./blockfrost";
-import getTxBuilder from "./getTxBuilder";
+import { readFile, readdir} from "fs/promises";
+import { Emulator } from "@harmoniclabs/pluts-emulator";
+// import { blockfrost } from "../utils/getProvider";
+import getTxBuilder from "../utils/getTxBuilder";
 
-async function returnFaucet(Blockfrost: BlockfrostPluts)
-{
-    const utxos: (ITxBuildInput | IUTxO)[] = [];
-    const pvtKeys: PrivateKey[] = [];
+// Faucet return address (preprod)
+const faucetAddress = "addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3";
+
+/**
+ * Finds all key pairs in the specified directory
+ * @param keyDir Directory containing the keys and addresses
+ * @returns Array of key indices found
+ */
+async function findKeyPairs(keyDir: string): Promise<number[]> {
+    try {
+      // Read all files in the directory
+      const files = await readdir(keyDir);
+      
+      // Find all files matching the pattern "payment*.skey"
+      const skeyFiles = files.filter(file => file.match(/^payment(\d+)\.skey$/));
+      
+      // Extract the indices from the filenames
+      const indices = skeyFiles.map(file => {
+        const match = file.match(/^payment(\d+)\.skey$/);
+        return match ? parseInt(match[1]) : -1;
+      }).filter(index => index > 0);
+      
+      return indices.sort((a, b) => a - b);
+    } catch (error) {
+      console.error(`Error scanning directory ${keyDir}:`, error);
+      return [];
+    }
+  }
+
+/**
+ * Returns all funds from generated addresses back to the faucet
+ * @param numKeys Number of key pairs to process (default: 2)
+ * @param keyDir Directory containing the keys and addresses (default: "./testnet")
+ * @param useEmulator Whether to use the emulator instead of Blockfrost (default: false)
+ * @returns Transaction hash of the submitted transaction
+ */
+export async function returnFaucet(provider: BlockfrostPluts | Emulator, keyDir = "./testnet", useEmulator = false): Promise<string> {
+    try {
+        const keyIndices = await findKeyPairs(keyDir);
+
+        if (keyIndices.length === 0) {
+            console.log("No key pairs found in the specified directory.");
+            return "";
+        }
+        
+        const utxos: ITxBuildInput[] = [];
+        const pvtKeys: PrivateKey[] = [];
+
+        for (const keyIndex of keyIndices) {
+            try {
+                const pvtKeyPath = `${keyDir}/payment${keyIndex}.skey`;
+                const pvtKeyFile = await readFile(pvtKeyPath, { encoding: "utf-8" });
+                const pvtKey = PrivateKey.fromCbor(JSON.parse(pvtKeyFile).cborHex);
+
+                // Load address
+                const addrPath = `${keyDir}/address${keyIndex}.addr`;
+                const addrFile = await readFile(addrPath, { encoding: "utf-8" });
+                const addr = Address.fromString(addrFile);
+
+                // Get UTxOs for the address
+                const addrUtxos = await provider.addressUtxos(addr);
+
+                if (addrUtxos.length === 0) {
+                    console.log(`No UTxOs found for address ${addr}`);
+                    continue;
+                }
+
+                const totalLovelaces = addrUtxos.reduce((sum, utxo) => sum + utxo.resolved.value.lovelaces, 0n);
+                
+                // Cannot send less than 1 ADA
+                if (totalLovelaces < 1_000_000) {
+                    console.log(`Not enough lovelaces at address ${addr}. Skipping...`);
+                    continue;
+                }
+                
+                // Add UTxOs to the list
+                addrUtxos.forEach(utxo => utxos.push({ utxo }));
+
+                // Add private key to the list
+                pvtKeys.push(pvtKey);
+
+            } catch (error) {
+                console.error(`Error processing key pair ${keyIndex}:`, error);
+                // Continue to the next key pair
+                continue;
+            }
+        }
+
+        // Check if we have any UTxOs to process
+        if (utxos.length === 0) {
+            console.log("No UTxOs found for the specified key pairs.");
+            return "";
+        }
+
+        // Building the transaction
+        const txBuilder = await getTxBuilder(provider);
+
+        let returnTx = await txBuilder.buildSync({
+            inputs: utxos,
+            changeAddress: faucetAddress,
+        });
+
+        // Sign the transaction with all private keys
+        for (const privateKey of pvtKeys) {
+            await returnTx.signWith(privateKey);
+        }
+
+        // Submit the transaction
+        const submittedTx = await provider.submitTx(returnTx);
+        return submittedTx;
+    } catch (error) {
+        console.error("Error returning funds to faucet:", error);
+        throw error;
+    }
+}
+
+
+// Parse command line arguments
+function parseArgs() {
+    const args = process.argv.slice(2);
+    let keyDir = "./testnet";
+    let useEmulator = false;
     
-    for( let i = 1; i <= 2; i++ )
-    {
-        const pvtKeyFile = await readFile(`./testnet/payment${i}.skey`, { encoding: "utf-8" })
-        const pvtKey = PrivateKey.fromCbor( JSON.parse(pvtKeyFile).cborHex );
-        pvtKeys.push( pvtKey );
-
-        const addr = await readFile(`./testnet/address${i}.addr`, { encoding: "utf-8" });
-        const address = Address.fromString(addr);
-
-        const addrUtxos = await Blockfrost.addressUtxos( address )
-        addrUtxos.forEach( utxo => utxos.push({ utxo: utxo }) )
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] === '--dir' || args[i] === '-d') {
+        if (i + 1 < args.length) {
+          keyDir = args[i + 1];
+          i++;
+        }
+      } else if (args[i] === '--emulator' || args[i] === '-e') {
+        useEmulator = true;
+      } else if (!args[i].startsWith('-') && i === 0) {
+        keyDir = args[i];
+      }
     }
+    
+    return { keyDir, useEmulator };
+  }
 
-
-    const txBuilder = await getTxBuilder(Blockfrost);
-
-    let returnTADATx = await txBuilder.buildSync({
-        inputs: utxos as any,
-        // the faucet address
-        changeAddress: "addr_test1qqr585tvlc7ylnqvz8pyqwauzrdu0mxag3m7q56grgmgu7sxu2hyfhlkwuxupa9d5085eunq2qywy7hvmvej456flknswgndm3"
-    });
-
-    for(const privateKey of pvtKeys)
-    {
-        await returnTADATx.signWith( privateKey );
-    }
-
-    const submittedTx = await Blockfrost.submitTx( returnTADATx );
-    console.log(submittedTx);
-}
-if( process.argv[1].includes("returnFaucet") )
-{
-    returnFaucet(blockfrost());
-}
 ```
 ```json title="package.json"
 "scripts": {
     // ...
     // highlight-next-line
-    "vesting:returnFaucet": "npm run build:light && node dist/app/returnFaucet.js"
+    "vesting:returnFaucet": "npm run build:light && node dist/app/offchain/returnFaucet.js"
 }
 ```
 ```bash
 npm run vesting:returnFaucet
+```
+
+## Test with Emulator
+
+The above details mainly covered running the vesting example with Blockfrost. When trying to test the example in the Plu-ts Emulator environment locally, we need to add a few more details to facilitate this.
+
+First, let's add a script file `testE2E.ts` to `src/test/`. See [`main/src/test/testE2E.ts`](https://github.com/HarmonicLabs/vesting-pluts/blob/main/src/test/testE2E.ts) for the contents of the file.
+See [Vesting - README.md](https://github.com/HarmonicLabs/vesting-pluts/blob/main/README.md#run) for more details.
+
+Now, add an npm run script for emulator debugging
+```json title="package.json"
+"scripts": {
+    // ...
+    // highlight-next-line
+    "test:emulator": "npm run build:light && node dist/test/testE2E.js --emulator"
+}
+```
+
+Run the example as per the Vesting-README.md. 
+
+You should be able to see something similar to below in your terminal.
+```
+$ npm run test:emulator
+
+> vesting-pluts@0.0.1 test:emulator
+> npm run build:light && node dist/test/testE2E.js --emulator
+
+
+> vesting-pluts@0.0.1 build:light
+> tsc -p ./tsconfig.json && tsc-alias -p ./tsconfig.json
+
+Running vesting E2E test using Emulator
+
+=== Initial Emulator State ===
+=== Ledger State ===
+Block Height: 0
+Current Slot: 4492800
+Current Time: 2020-07-29T21:44:51.000Z
+
+=== UTxOs (3) ===
+Address: addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04
+  UTxOs: 1
+  Total Balance: 15000000 lovelaces
+Address: addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp
+  UTxOs: 2
+  Total Balance: 20000000 lovelaces
+
+=== Mempool ===
+Mempool is empty.
+
+=== End of Ledger State ===
+
+
+=== Step 1: Creating vesting contract ===
+[Emulator Debug level 2]: Resolving UTxOs for address: addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04
+[Emulator Debug level 2]: Found 1 UTxO references for address: addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04
+[Emulator Debug level 2]: Resolved 1 UTxOs for address addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04:
+[Emulator Debug level 2]:   UTxO: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef#0, Value: 15000000 lovelaces
+[Emulator Debug level 1]: Submitting transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57
+[Emulator Debug level 1]: Transaction body: {"inputs":[{"utxoRef":{"id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","index":0},"resolved":{"address":"addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04","value":{"":{"":"15000000"}}}}],"outputs":[{"address":"addr_test1wrp7w2ltm6sv2ptk8eq47hct6lk27k8rxcfdyx7z9mekh5sqxvxc4","value":{"":{"":"5000000"}},"datum":{"constr":0,"fields":[{"bytes":"5ba01febd9aed102bc78278eea50cfc6713e43507a445b4182e87e36"},{"int":"1596059100000"}]}},{"address":"addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04","value":{"":{"":"9830275"}}}],"fee":"169725","collateralInputs":[{"utxoRef":{"id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","index":0},"resolved":{"address":"addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04","value":{"":{"":"15000000"}}}}],"network":"testnet"}
+[Emulator Debug level 2]: Validating transaction: 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57
+[Emulator Debug level 2]: Transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57 is valid
+[Emulator Debug level 1]: Transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57 has passed phase-1 validation. Proceeding for phase-2.
+[Emulator Debug level 1]: Phase2 validation result:  
+[Emulator Debug level 1]: Transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57 is valid: Adding to mempool, length: 1.
+Vesting transaction submitted: 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57
+Vesting deadline set to: 1596059100000 - 2020-07-29T21:45:00.000Z
+Vesting contract created with transaction: 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57
+
+=== Step 2: Waiting for confirmation ===
+Advancing emulator by 3 blocks for confirmation
+[Emulator Debug level 1]: Advancing to block number 3 (slot 4492860). Time: 2020-07-29T21:44:54.000Z
+[Emulator Debug level 2]: Processing block 1 of 3
+[Emulator Debug level 1]: Updating ledger, mempool length: 1
+[Emulator Debug level 2]: Max block body size: 73728
+[Emulator Debug level 2]: Processing transaction of size 322.
+[Emulator Debug level 1]: Processing transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57
+[Emulator Debug level 2]: Validating transaction: 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57
+[Emulator Debug level 2]: Transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57 is valid
+[Emulator Debug level 2]: Removing input 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef#0 from ledger
+[Emulator Debug level 2]: Adding output 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57#0 to ledger
+[Emulator Debug level 2]: Adding output 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57#1 to ledger
+[Emulator Debug level 1]: Updated UTxO Set: [object Map]
+[Emulator Debug level 2]: Processed transaction 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57, size 322 bytes, block: 322/73728 bytes.
+[Emulator Debug level 1]: Block processing complete. 1 transactions processed for 322 bytes.
+[Emulator Debug level 2]: Fast forwarding remaning 2 blocks as mempool is empty
+
+=== Step 3: Waiting for deadline to pass ===
+Advancing emulator by 6 blocks to pass deadline
+[Emulator Debug level 1]: Advancing to block number 9 (slot 4492980). Time: 2020-07-29T21:45:00.000Z
+[Emulator Debug level 2]: Fast forwarding remaning 6 blocks as mempool is empty
+
+=== Step 4: Claiming vested funds ===
+[Emulator Debug level 2]: Resolving UTxOs for address: addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp
+[Emulator Debug level 2]: Found 2 UTxO references for address: addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp
+[Emulator Debug level 2]: Resolved 2 UTxOs for address addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp:
+[Emulator Debug level 2]:   UTxO: 123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0#0, Value: 15000000 lovelaces
+[Emulator Debug level 2]:   UTxO: 23456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef01#0, Value: 5000000 lovelaces
+[Emulator Debug level 2]: Resolving UTxOs for address: addr_test1wrp7w2ltm6sv2ptk8eq47hct6lk27k8rxcfdyx7z9mekh5sqxvxc4
+[Emulator Debug level 2]: Found 1 UTxO references for address: addr_test1wrp7w2ltm6sv2ptk8eq47hct6lk27k8rxcfdyx7z9mekh5sqxvxc4
+[Emulator Debug level 2]: Resolved 1 UTxOs for address addr_test1wrp7w2ltm6sv2ptk8eq47hct6lk27k8rxcfdyx7z9mekh5sqxvxc4:
+[Emulator Debug level 2]:   UTxO: 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57#0, Value: 5000000 lovelaces
+Claim Invalid Before : 4492860
+[Emulator Debug level 1]: Submitting transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a
+[Emulator Debug level 1]: Transaction body: {"inputs":[{"utxoRef":{"id":"123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0","index":0},"resolved":{"address":"addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp","value":{"":{"":"15000000"}}}},{"utxoRef":{"id":"40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57","index":0},"resolved":{"address":"addr_test1wrp7w2ltm6sv2ptk8eq47hct6lk27k8rxcfdyx7z9mekh5sqxvxc4","value":{"":{"":"5000000"}},"datum":{"constr":0,"fields":[{"bytes":"5ba01febd9aed102bc78278eea50cfc6713e43507a445b4182e87e36"},{"int":"1596059100000"}]}}}],"outputs":[{"address":"addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp","value":{"":{"":"19778906"}}}],"fee":"221094","validityIntervalStart":"4492860","scriptDataHash":"ff3ce028b166b25e4b6c43de8e66bc6698f8b466941f2a1d4d723c6849cadb97","collateralInputs":[{"utxoRef":{"id":"23456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef01","index":0},"resolved":{"address":"addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp","value":{"":{"":"5000000"}}}}],"requiredSigners":["5ba01febd9aed102bc78278eea50cfc6713e43507a445b4182e87e36"],"network":"testnet"}
+[Emulator Debug level 2]: Validating transaction: 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a
+[Emulator Debug level 2]: Transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a is valid
+[Emulator Debug level 1]: Transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a has passed phase-1 validation. Proceeding for phase-2.
+[Emulator Debug level 1]: Phase2 validation result: [object Object] 
+[Emulator Debug level 1]: Transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a is valid: Adding to mempool, length: 1.
+Vested funds claimed with transaction: 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a
+
+=== Step 5: Waiting for final confirmation ===
+Advancing emulator by 1 block for confirmation
+[Emulator Debug level 1]: Advancing to block number 10 (slot 4493000). Time: 2020-07-29T21:45:01.000Z
+[Emulator Debug level 2]: Processing block 1 of 1
+[Emulator Debug level 1]: Updating ledger, mempool length: 1
+[Emulator Debug level 2]: Max block body size: 73728
+[Emulator Debug level 2]: Processing transaction of size 1264.
+[Emulator Debug level 1]: Processing transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a
+[Emulator Debug level 2]: Validating transaction: 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a
+[Emulator Debug level 2]: Transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a is valid
+[Emulator Debug level 2]: Removing input 123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0#0 from ledger
+[Emulator Debug level 2]: Removing input 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57#0 from ledger
+[Emulator Debug level 2]: Adding output 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a#0 to ledger
+[Emulator Debug level 1]: Updated UTxO Set: [object Map]
+[Emulator Debug level 2]: Processed transaction 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a, size 1264 bytes, block: 1264/73728 bytes.
+[Emulator Debug level 1]: Block processing complete. 1 transactions processed for 1264 bytes.
+
+=== Final Emulator State ===
+=== Ledger State ===
+Block Height: 10
+Current Slot: 4493000
+Current Time: 2020-07-29T21:45:01.000Z
+
+=== UTxOs (3) ===
+Address: addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp
+  UTxOs: 2
+  Total Balance: 24778906 lovelaces
+Address: addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04
+  UTxOs: 1
+  Total Balance: 9830275 lovelaces
+
+=== Mempool ===
+Mempool is empty.
+
+=== End of Ledger State ===
+
+
+=== Final Verification ===
+[Emulator Debug level 2]: Resolving UTxOs for address: addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04
+[Emulator Debug level 2]: Found 1 UTxO references for address: addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04
+[Emulator Debug level 2]: Resolved 1 UTxOs for address addr_test1vqkrxf2jhqzhwrl4q2ncqvdul9t5c7m6gzh9mlpjerv2v8sfgqf04:
+[Emulator Debug level 2]:   UTxO: 40a8ceaa364e49730d0cebce43fc8edcd2648b1eacfe2cca26a700b2e1c31f57#1, Value: 9830275 lovelaces
+[Emulator Debug level 2]: Resolving UTxOs for address: addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp
+[Emulator Debug level 2]: Found 2 UTxO references for address: addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp
+[Emulator Debug level 2]: Resolved 2 UTxOs for address addr_test1vpd6q8ltmxhdzq4u0qnca6jselr8z0jr2paygk6pst58udsgyg7wp:
+[Emulator Debug level 2]:   UTxO: 23456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef01#0, Value: 5000000 lovelaces
+[Emulator Debug level 2]:   UTxO: 3554c9b4eee213f48b483d724053c504e596619074fb6e31b3886c05e366d68a#0, Value: 19778906 lovelaces
+Address 1 balance: 9830275 lovelaces
+Address 2 balance: 24778906 lovelaces
+Verification complete
+
+=== Test Completed Successfully ===
+Test completed successfully
 ```
