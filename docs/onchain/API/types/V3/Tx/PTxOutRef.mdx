@@ -5,7 +5,7 @@ sidebar_position: 20
 # `PTxOutRef`
 
 :::warning
-Modified in V3 version as PTxId is modified
+Modified from V1 version, as PTxId in V3 is updated.
 :::
 
 Type that represents a reference to a UTXO.
@@ -13,6 +13,10 @@ Type that represents a reference to a UTXO.
 Definition:
 
 ```ts
+import { pstruct } from "../../../PTypes/PStruct/pstruct";
+import { int } from "../../../type_system/types";
+import { PTxId } from "./PTxId";
+
 export const PTxOutRef = pstruct({
     PTxOutRef: {
         id: PTxId.type,
@@ -31,4 +35,4 @@ type: [`PTxId.type`](./PTxId)
 
 Index of the specific output within this transaction
 
-type: [`TermInt`](../../../../stdlib/TermInt)
+type: [`TermInt`](../../stdlib/TermInt)
