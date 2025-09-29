@@ -8,8 +8,8 @@ dotenvConfing();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'plu-ts',
-  tagline: 'Your Cardano dApp in Typescript',
+  title: 'Pebble',
+  tagline: 'A standalone language for building Cardano dApps',
   favicon: 'img/plu-ts.svg',
 
   // Set the production url of your site here
@@ -111,7 +111,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/plu-ts.svg',
       navbar: {
-        title: 'plu-ts',
+        title: 'pebble',
         logo: {
           alt: 'My Site Logo',
           src: 'img/plu-ts.svg',
@@ -151,15 +151,7 @@ const config = {
               {
                 label: 'examples',
                 to: '/category/examples',
-              },
-              {
-                label: 'onchain',
-                to: '/category/onchain',
-              },
-              {
-                label: 'offchain',
-                to: '/category/offchain',
-              },
+              }
             ],
           },
           {
