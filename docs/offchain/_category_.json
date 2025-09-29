@@ -3,6 +3,6 @@
   "position": 4,
   "link": {
     "type": "generated-index",
-    "description": "Cardano ledger types implementation and the \"TxBuilder\" API"
+    "description": "Cardano ledger types implementation and the \"TxBuilder\" API. Refer - https://github.com/HarmonicLabs/buildooor-docs."
   }
 }

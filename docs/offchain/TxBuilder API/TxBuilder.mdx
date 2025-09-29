@@ -5,13 +5,13 @@ sidebar_position: 0
 
 # `TxBuilder`
 
-`plu-ts/offchain` exposes the `TxBuilder` class.
+`pebble/offchain` exposes the `TxBuilder` class.
 
 ## How to use
 
-Its purpose is to allow you to build transactions more easly.
+Its purpose is to allow you to build transactions more easily.
 
-You could infact build transactions by calling the [`Tx`](../cardano-ledger-ts/classes/Tx) constructor.
+You could in fact build transactions by calling the [`Tx`](../cardano-ledger-ts/classes/Tx) constructor.
 
 However that requires a profound understanding of the structure of a Cardano transaction.
 
@@ -20,10 +20,10 @@ for this reason we have the `TxBuilder`.
 You can get your `TxBuilder` by passing the [`ProtocolParameters`](../cardano-ledger-ts/interfaces/ProtocolParameters) (that you'll need to query)
 needed for the network you are building transactions for.
 
-constructor definiton:
+constructor definition:
 ```ts
 constructor(
-    protocolParamters: Readonly<ProtocolParameters>,
+    protocolParameters: Readonly<ProtocolParameters>,
     genesisInfos?: GenesisInfos
 )
 ```
@@ -72,12 +72,12 @@ once you have a `TxBuilder` instance there are 2 ways to build a transaction:
 
 ### Pro and Cons
 
-The [`buildSync`](./buildSync) method gives you full controll,
+The [`buildSync`](./buildSync) method gives you full control,
 you need to query the resolved utxos for the inputs,
 as well any other information required for transaction validation.
 
 Once you provide the data as specified in by [`ITxBuildArgs`](./buildSync#itxbuildargs)
-the `TxBuilder` instance will syncronously build and validate your transaction.
+the `TxBuilder` instance will synchronously build and validate your transaction.
 
 If you don't want to take care of querying the data, you can pass a [`Provider`](../TxBuilderRunner%20API/IProvider#iprovider)
 to the [`runWithProvider`](./runWithProvider) method,

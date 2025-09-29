@@ -151,6 +151,10 @@ const config = {
               {
                 label: 'examples',
                 to: '/category/examples',
+              },
+              {
+                label: 'offchain',
+                to: '/category/offchain',
               }
             ],
           },
