@@ -60,3 +60,13 @@ npm install @harmoniclabs/pebble
 ## Examples
 
 Have a look at [Examples](./category/examples) for some example project
+
+## Pebble Configuration
+
+Let us dive a bit into the details of `pebble.config.json` file placed in the root of the project.
+
+```
+"entry": "", // entry pebble file, eg: "./main.pebble"
+"root": "", // root of the application, eg: "." 
+"outDir": "", // directory to which the build is to be generated to, eg: "build"
+```

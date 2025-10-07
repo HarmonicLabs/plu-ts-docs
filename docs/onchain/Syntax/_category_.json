@@ -1,0 +1,8 @@
+{
+    "label": "Syntax",
+    "position": 6,
+    "link": {
+      "type": "generated-index",
+      "description": "Defines the structural rules and constructs of Pebble — including statements, blocks, and control flows that shape how code is written and executed."
+    }
+}

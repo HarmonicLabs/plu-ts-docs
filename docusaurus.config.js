@@ -119,7 +119,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'Introduction',
             position: 'left',
             label: 'Docs',
           },
@@ -145,15 +145,19 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Intro',
+                label: 'Introduction',
                 to: '/',
               },
               {
-                label: 'examples',
+                label: 'Examples',
                 to: '/category/examples',
               },
               {
-                label: 'offchain',
+                label: 'Onchain',
+                to: '/category/offchain',
+              },
+              {
+                label: 'Offchain',
                 to: '/category/offchain',
               }
             ],

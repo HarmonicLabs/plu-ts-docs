@@ -1,5 +1,6 @@
 ---
-sidebar_position: 8
+sidebar_position: 2
+sidebar_label: Contract Statements
 ---
 
 # Contract
@@ -29,14 +30,23 @@ contract ContractName {
 
 Inside a contract, Pebble automatically provides a context binding called `context`. This represents the current script execution context and gives access to transaction information.
 
+
+:::info
+`context` is not a normal variable, it is a special keyword. It’s a synthetic binding automatically injected by the compiler to let you access the current validator execution environment.
+
+The compiler internally uses a construct called contextVarsMapping to resolve the fields that can be extracted from context.
+
+You cannot reassign or shadow it — it’s purely a read-only view into the validator’s execution context.
+:::
+
 The shape of context depends on the validator purpose.
 
 
 Inside each validator, a context object provides:
 
-- Transaction (tx)
-- Purpose reference (spendingInputRef, etc.)
-- Datum, redeemer, optional fields
+- `tx` : Transaction
+- `purpose` : Purpose reference depending on the validator kind (`spendingInputRef`, `mintingPolicyHash` etc.)
+- `datum`, `redeemer` - optional fields
 
 Each validator function inside a contract is independent — compilation produces one Plutus script per validator.
 
@@ -55,7 +65,9 @@ contract OnlySpend {
     }
 }
 ```
-Here, the contract is `OnlySpend`. It has a single `spend` validator `allowSpending`. In the contract body, the `context` is destructured to access the transaction and spending input.
+Here, the contract is `OnlySpend`. It has a single `spend` validator `allowSpending`. `context` is a keyword bound to the spending validator context. 
+
+In the contract body, the `context` is destructured to access the transaction (`tx`) and spending input (`spendingInputRef`).
 
 
 

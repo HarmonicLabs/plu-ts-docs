@@ -1,9 +1,10 @@
 ---
 sidebar_position: 1
+sidebar_label: Introduction
 slug: /
 ---
 
-# pebble
+# Pebble
 
 Built with ❤️ by [Harmonic Laboratories](https://www.harmoniclabs.tech/)
 

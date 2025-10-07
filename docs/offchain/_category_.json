@@ -1,8 +1,8 @@
 {
   "label": "Offchain",
-  "position": 4,
+  "position": 7,
   "link": {
     "type": "generated-index",
-    "description": "Cardano ledger types implementation and the \"TxBuilder\" API. Refer - https://github.com/HarmonicLabs/buildooor-docs."
+    "description": "Cardano ledger types implementation and the \"TxBuilder\" API. Refer https://github.com/HarmonicLabs/buildooor-docs."
   }
 }

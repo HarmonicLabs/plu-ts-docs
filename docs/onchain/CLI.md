@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 # CLI
@@ -89,4 +89,3 @@ pebble compile --config ./pebble.config.json
 # or with explicit entry and output
 pebble compile --entry ./src/contracts/MyContract.pebble -o ./build/MyContract.uplc
 ```
-
