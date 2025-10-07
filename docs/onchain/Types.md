@@ -94,49 +94,11 @@ if (signed && tx.outputs.length() > 0) {
 
 ## Cardano-Specific
 
-### `Address`
+See [`Types`](./API/types) for all cardano specific types supported in Pebble.
 
-Represents a destination for outputs.
-
-```pebble
-const addr: Address = tx.outputs[0].address;
-```
-
-### `Credential`
-
-Identifies who can spend from an address.
-
-- `PubKeyHash{ hash }`
-- `Validator{ hash }`
-
-```pebble
-assert case ownerCred
-    is PubKeyHash{ hash } => tx.signatories.includes(hash)
-    is Validator{ hash }  => true;
-```
-
-### `PubKeyHash`
-
-A public key hash, usually checked against transaction signatories.
-
-```pebble
-assert tx.signatories.includes(myKeyHash);
-```
-
-### `Value`
-
-Represents multi-asset ledger values.
-```pebble
-const val: Value = tx.outputs[0].value;
-```
+Refer [stdScope.ts](pebble/src/compiler/tir/program/stdScope/stdScope.ts) for details regarding their definition.
 
 
-### `Tx` 
-### `TxInput`
-### `TxOutput`
-### `DatumHash`
-### `InlineDatum`
-### `ScriptContext` (implicit root context)
 
 ## Optional / Sum Types
 
