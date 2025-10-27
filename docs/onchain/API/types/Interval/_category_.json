@@ -1,8 +1,7 @@
 {
-    "label": "Onchain",
-    "position": 6,
+    "label": "Interval",
+    "position": 0,
     "link": {
       "type": "generated-index"
     }
-  }
-  
+}
