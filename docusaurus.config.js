@@ -119,7 +119,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'Introduction',
+            docId: 'Welcome to Pebble',
             position: 'left',
             label: 'Docs',
           },
@@ -145,7 +145,7 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Introduction',
+                label: 'Welcome to Pebble',
                 to: '/',
               },
               {
