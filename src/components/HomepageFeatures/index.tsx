@@ -12,7 +12,7 @@ type FeatureItem = {
 
 const attribStyle: React.CSSProperties = {
   fontSize: "0.7em",
-  color: "var(--icon-link-color)"
+  color: "let(--icon-link-color)"
 } 
 
 const FeatureList: FeatureItem[] = [

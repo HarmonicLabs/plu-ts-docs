@@ -49,7 +49,7 @@ for (let i = 0; i < tx.inputs.length(); i = i + 1) {
 Pebble also supports `while` loops are also supported
 
 ```pebble
-var i = 0;
+let i = 0;
 while (i < tx.outputs.length()) {
     trace(tx.outputs[i]);
     i = i + 1;

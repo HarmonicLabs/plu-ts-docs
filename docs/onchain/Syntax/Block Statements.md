@@ -10,16 +10,16 @@ They control variable bindings, runtime assertions, failure modes, and debugging
 
 ## Variable and Constant Declarations
 
-Pebble supports both **mutable** (`var`) and **immutable** (`const`) bindings.
+Pebble supports both **mutable** (`let`) and **immutable** (`const`) bindings.
 
 ```pebble
 const threshold = 100;
-var counter = tx.inputs.length();
+let counter = tx.inputs.length();
 ```
 
 - `const` values cannot be reassigned
 
-- `var` values can be mutated (though mutation in Pebble compiles into SSA-style assignments internally)
+- `let` values can be mutated (though mutation in Pebble compiles into SSA-style assignments internally)
 
 ## Assert
 

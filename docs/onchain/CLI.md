@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 15
 ---
 
 # CLI
@@ -20,7 +20,6 @@ pebble <command>
 
 # or, use `npx` / direct node invocation if you prefer not to install globally
 npx pebble <command>     # if the package is published that way
-node ./node_modules/.bin/pebble <command>  # local install usage
 ```
 
 ## Commands
@@ -87,5 +86,5 @@ Alternative: `--output`
 pebble compile --config ./pebble.config.json
 
 # or with explicit entry and output
-pebble compile --entry ./src/contracts/MyContract.pebble -o ./build/MyContract.uplc
+pebble compile --entry ./src/contracts/MyContract.pebble -o ./build/MyContract.flat
 ```

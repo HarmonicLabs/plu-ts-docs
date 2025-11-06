@@ -1,6 +1,6 @@
 {
     "label": "API",
-    "position": 7,
+    "position": 2,
     "link": {
       "type": "generated-index",
       "description": "Smart contracts have to use a standard API to be sure the cardano-node evaluates them correctly; this section defines and exports all the necessary to make sure the standard is respected"

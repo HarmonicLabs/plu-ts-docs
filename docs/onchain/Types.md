@@ -1,12 +1,13 @@
 ---
 sidebar_position: 1
+sidebar_label: Standard types
 ---
 
 # Types
 
-Pebble supports a variety of built-in and user-defined types. 
+Pebble supports a few built-in types.
 
-Each Pebble type maps to a corresponding Plutus type under the hood.
+Each of these builtin types maps directly a corresponding UPLC type under the hood.
 
 ## Primitives
 
@@ -27,7 +28,7 @@ Backed by Plutus `Integer`.
 #### Example
 ```pebble
 const supply: int = 1_000_000;
-var spent: int = 500;
+let spent: int = 500;
 
 assert (supply - spent) >= 0;
 ```

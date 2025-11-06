@@ -113,8 +113,8 @@ const config = {
       navbar: {
         title: 'pebble',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/plu-ts.svg',
+          alt: 'Pebble Logo',
+          src: 'img/PebbleRound.png',
         },
         items: [
           {
@@ -124,7 +124,13 @@ const config = {
             label: 'Docs',
           },
           {
-            href: 'https://github.com/HarmonicLabs/plu-ts',
+            type: 'doc',
+            docId: 'Playground',
+            position: 'left',
+            label: 'Playground',
+          },
+          {
+            href: 'https://github.com/HarmonicLabs/pebble',
             label: 'GitHub ⭐',
             position: 'right',
           },
