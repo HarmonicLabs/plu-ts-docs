@@ -15,19 +15,17 @@ struct VestingDatum {
 
 contract Vesting
 {
-    spend unlock(inputIdx: int)
+    spend unlock()
     {
-        const { tx, spendingRef } = context;
-        const { resolved: spendingInput, ref: inputSpendingRef } = tx.inputs[inputIdx];
-
-        assert inputSpendingRef === spendingRef;
-
-        const InlineDatum{
-        datum: {
-                beneficiary,
-                deadline
-            } as VestingDatum
-        } = spendingInput.datum;
+        const {
+            tx,
+            optionalDatum: Some{
+                value: {
+                    beneficiary,
+                    deadline
+                } as VestingDatum
+            }
+        } = context;
         
         assert tx.requiredSigners.includes( beneficiary );
         
