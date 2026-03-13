@@ -1,6 +1,6 @@
-# plu-ts-docs
+# pebble-docs
 
-Documentation for the [`plu-ts`](https://github.com/HarmonicLabs/plu-ts) library
+Documentation for the [`pebble`](https://github.com/HarmonicLabs/pebble) library
 
 ### Installing
 ```

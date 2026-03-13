@@ -29,7 +29,7 @@ To sum it all up, `pebble` is a first-class language with its own syntax and com
 
 # Getting started
 
-See [Getting Started](./Getting%20Started) to begin your journey in pebble
+See [Installation](./Installation) to begin your journey in pebble
 
 ## Why Pebble?
 

@@ -95,11 +95,9 @@ if (signed && tx.outputs.length() > 0) {
 
 ## Cardano-Specific
 
-See [`Types`](./API/types) for all cardano specific types supported in Pebble.
+See [`Types`](../category/types) for all cardano-specific types supported in Pebble.
 
-Refer [stdScope.ts](pebble/src/compiler/tir/program/stdScope/stdScope.ts) for details regarding their definition.
-
-
+Refer [stdScope.ts](https://github.com/HarmonicLabs/pebble/blob/302786a75c231648b375e91ae7253c293284a2da/packages/pebble/src/compiler/tir/program/stdScope/stdScope.ts#L34) for details regarding their definition.
 
 ## Optional / Sum Types
 
@@ -118,8 +116,8 @@ const maybeDatum: Option<int> = Some{ value: 10 };
 
 ```pebble
 match maybeDatum {
-    Some{ value } => trace(value),
-    None          => fail "missing datum"
+    Some{ value }: trace(value),
+    None{}       : fail "missing datum"
 }
 ```
 

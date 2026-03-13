@@ -21,7 +21,7 @@ const FeatureList: FeatureItem[] = [
     imgSrc: 'img/shield.png',
     description: (
       <>
-        <code>plu-ts</code> runs in Javascript but implements its own type system;
+        <code>pebble</code> runs in Javascript but implements its own type system;
         this way you can be sure about that what you are using is what you are expecting.
       </>
     ),
@@ -32,7 +32,7 @@ const FeatureList: FeatureItem[] = [
     imgSrc: 'img/speedometer.svg',
     description: (
       <>
-        <code>plu-ts</code> gives you full controll so that you can minimize both size and script execution costs.
+        <code>pebble</code> gives you full controll so that you can minimize both size and script execution costs.
 
       </>
     ),

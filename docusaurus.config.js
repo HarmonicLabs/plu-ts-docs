@@ -2,15 +2,12 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 import {themes as prismThemes} from 'prism-react-renderer';
-import { config as dotenvConfing } from "dotenv";
-
-dotenvConfing();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Pebble',
   tagline: 'A standalone language for building Cardano dApps',
-  favicon: 'img/plu-ts.svg',
+  favicon: 'img/pebble.svg',
 
   // Set the production url of your site here
   url: 'https://www.harmoniclabs.tech/',
@@ -21,7 +18,7 @@ const config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'Harmonic Laboratories', // Usually your GitHub org/user name.
-  projectName: 'plu-ts', // Usually your repo name.
+  projectName: 'pebble', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -43,13 +40,13 @@ const config = {
           routeBasePath: '/', // Serve the docs at the site's root
           sidebarPath: require.resolve('./sidebars.js'),
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/HarmonicLabs/plu-ts-docs',
+          editUrl: 'https://github.com/HarmonicLabs/pebble-docs',
         },
         blog: false,
         /*{
           showReadingTime: true,
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/HarmonicLabs/plu-ts-docs',
+          editUrl: 'https://github.com/HarmonicLabs/pebble-docs',
         },*/
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -109,7 +106,7 @@ const config = {
         },
       },
       // Replace with your project's social card
-      image: 'img/plu-ts.svg',
+      image: 'img/pebble.svg',
       navbar: {
         title: 'pebble',
         logo: {
@@ -124,8 +121,7 @@ const config = {
             label: 'Docs',
           },
           {
-            type: 'doc',
-            docId: 'Playground',
+            to: '/playground',
             position: 'left',
             label: 'Playground',
           },
@@ -160,12 +156,8 @@ const config = {
               },
               {
                 label: 'Onchain',
-                to: '/category/offchain',
+                to: '/category/onchain',
               },
-              {
-                label: 'Offchain',
-                to: '/category/offchain',
-              }
             ],
           },
           {
@@ -187,7 +179,7 @@ const config = {
             items: [
               {
                 label: 'GitHub',
-                href: 'https://github.com/HarmonicLabs/plu-ts',
+                href: 'https://github.com/HarmonicLabs/pebble',
               },
               {
                 label: 'Harmonic Labs',
@@ -198,12 +190,6 @@ const config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Harmonic Laboratories LTD.`,
       },
-      algolia: {
-        appId: process.env.ALGOLIA_APP_ID,
-        apiKey: process.env.ALGOLIA_API_KEY,
-        indexName: process.env.ALGOLIA_INDEX_NAME,
-        contextualSearch: false
-      }
     })
 };
 
