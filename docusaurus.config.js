@@ -106,7 +106,7 @@ const config = {
         },
       },
       // Replace with your project's social card
-      image: 'img/pebble.svg',
+      image: 'img/header.png',
       navbar: {
         title: 'pebble',
         logo: {

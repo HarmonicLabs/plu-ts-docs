@@ -14,6 +14,12 @@ This documentation is for `pebble`. Feel free to ask for help in the [Harmonic L
 
 Pebble is a **strongly-typed domain-specific language (DSL)** for writing **Cardano smart contracts**. A simple, yet rock solid, functional language with an imperative bias, targeting UPLC.
 
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const n = 10;\n\nlet result = 0;\nfor( let i = 0; i <= n; i++ ) {\n    result += i;\n}\n\ntrace result;`}
+height="250px"
+/>
 
 At its heart, Pebble is:
 
@@ -37,8 +43,7 @@ Cardano contracts require precision, and writing them directly in Plutus Core or
 
 Pebble takes the next step:  
 
-- **Readable syntax** → close to common programming languages  
-- **Strong typing** → prevents subtle runtime bugs  
-- **Composable abstractions** → through structs, options, pattern matching  
+- **Readable syntax** → close to common c-like programming languages  
+- **Composable abstractions** → structs, options, pattern matching  
 - **Direct blockchain access** → via on-chain types (Tx, ScriptContext, PubKeyHash, etc.)  
 - **Modern tooling** → integrated CLI, compilation, and test workflows  
