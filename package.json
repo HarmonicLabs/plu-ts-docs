@@ -6,8 +6,10 @@
     "postinstall": "rm -rf static/vs && cp -r node_modules/@harmoniclabs/monaco-editor/out/monaco-editor/dev/vs static/vs",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
+    "dev": "npm run start",
     "build": "docusaurus build",
     "copy-build-output": "npm run build && cp -r ./build/* ../pebble-docs-build/",
+    "deploy-build-output": "npm run copy-build-output && cd ../pebble-docs-build && git add . && git commit -m 'Deploy new docs' && git push",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -20,13 +22,13 @@
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/preset-classic": "^3.9.2",
     "@docusaurus/theme-live-codeblock": "^3.9.2",
-    "@harmoniclabs/pebble": "0.1.3-dev3",
+    "@harmoniclabs/pebble": "0.1.3-dev4",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "prism-react-renderer": "^2.3.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-pebble-editor": "^0.0.1-dev3"
+    "react-pebble-editor": "^0.0.1-dev4"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.2",
