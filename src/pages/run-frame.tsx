@@ -1,4 +1,10 @@
-import { Compiler, createMemoryCompilerIoApi, fromUtf8 } from '@harmoniclabs/pebble';
+import {
+  Compiler,
+  createMemoryCompilerIoApi,
+  defaultOptions,
+  COMPILER_VERSION,
+  fromUtf8,
+} from '@harmoniclabs/pebble';
 import React, { useEffect } from 'react';
 
 export default function RunFrame() {
@@ -10,7 +16,8 @@ export default function RunFrame() {
         sources.set('main.pebble', fromUtf8(e.data.source));
         const outputs = new Map<string, Uint8Array>();
         const io = createMemoryCompilerIoApi({ sources, outputs });
-        const compiler = new Compiler(io);
+        // pebble ≥ 0.2.0: CompilerOptions is mandatory; compilerVersion is policed at runtime.
+        const compiler = new Compiler(io, { ...defaultOptions, compilerVersion: COMPILER_VERSION });
         const result = await compiler.run({ entry: 'main.pebble', root: '/' });
         window.parent.postMessage({
           type: 'run-result',
