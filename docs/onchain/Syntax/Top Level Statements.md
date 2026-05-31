@@ -30,7 +30,7 @@ Structs are *first-class citizens* in Pebble, and can be passed around, stored i
 
 ### Syntax
 
-```pebble
+```ts
 struct StructName {
     field1: Type1,
     field2: Type2,
@@ -39,7 +39,7 @@ struct StructName {
 ```
 
 ### Example 
-```pebble
+```ts
 struct Order {
     ownerPaymentCreds: Credential,
     policy: bytes,
@@ -51,6 +51,6 @@ struct Order {
 
 You can use destructuring when working with struct values:
 
-```pebble
+```ts
 const { ownerPaymentCreds, minReceiveAmount } as Order = myDatum;
 ```

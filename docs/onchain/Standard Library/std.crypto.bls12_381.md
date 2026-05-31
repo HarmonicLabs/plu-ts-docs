@@ -1,0 +1,108 @@
+---
+sidebar_position: 2
+sidebar_label: std.crypto.bls12_381
+---
+
+# `std.crypto.bls12_381`
+
+*Pebble 0.3.0 · all symbols on this page are stable.*
+
+BLS12-381 pairing-friendly curve operations. Use this namespace for zero-knowledge proofs, BLS signatures, and any protocol that needs efficient bilinear pairings on-chain.
+
+```ts
+using { G1, G2, MlResult, g1Add, millerLoop, finalVerify } = std.crypto.bls12_381;
+```
+
+The three native types — `G1`, `G2`, `MlResult` — are exported **only** through this namespace. Either fully qualify them or pull them into scope with `using`.
+
+## Types
+
+| Type        | Description                                                        |
+|-------------|--------------------------------------------------------------------|
+| `G1`        | A point on the G1 subgroup (the "fast" group, 48-byte compressed). |
+| `G2`        | A point on the G2 subgroup (96-byte compressed).                   |
+| `MlResult`  | A result of `millerLoop`; an element of the target group `GT`.     |
+
+## G1 operations
+
+| Function                                                | Returns | Description                                                  |
+|---------------------------------------------------------|---------|--------------------------------------------------------------|
+| `g1Add(a: G1, b: G1): G1`                               | `G1`    | Group addition (curve point addition).                       |
+| `g1Neg(a: G1): G1`                                      | `G1`    | Negation: returns `-a`.                                      |
+| `g1ScalarMul(k: int, p: G1): G1`                        | `G1`    | Scalar multiplication: `k · p`.                              |
+| `g1Equal(a: G1, b: G1): bool`                           | `bool`  | Point equality.                                              |
+| `g1HashToGroup(msg: bytes, dst: bytes): G1`             | `G1`    | Hash-to-curve with domain-separation tag `dst`.              |
+| `g1Compress(p: G1): bytes`                              | `bytes` | Serialize to 48-byte compressed form.                        |
+| `g1Uncompress(b: bytes): G1`                            | `G1`    | Parse a 48-byte compressed point. Fails if not on-curve.     |
+
+## G2 operations
+
+Same shape as G1 but over the G2 subgroup. Compressed form is 96 bytes.
+
+| Function                                                | Returns | Description                              |
+|---------------------------------------------------------|---------|------------------------------------------|
+| `g2Add(a: G2, b: G2): G2`                               | `G2`    | Group addition.                          |
+| `g2Neg(a: G2): G2`                                      | `G2`    | Negation.                                |
+| `g2ScalarMul(k: int, p: G2): G2`                        | `G2`    | Scalar multiplication.                   |
+| `g2Equal(a: G2, b: G2): bool`                           | `bool`  | Point equality.                          |
+| `g2HashToGroup(msg: bytes, dst: bytes): G2`             | `G2`    | Hash-to-curve with domain-separation tag.|
+| `g2Compress(p: G2): bytes`                              | `bytes` | Serialize to 96-byte compressed form.    |
+| `g2Uncompress(b: bytes): G2`                            | `G2`    | Parse a 96-byte compressed point.        |
+
+## Pairing operations
+
+| Function                                                | Returns      | Description                                                          |
+|---------------------------------------------------------|--------------|----------------------------------------------------------------------|
+| `millerLoop(g1: G1, g2: G2): MlResult`                  | `MlResult`   | Compute the Miller loop. The result lives in the target group.       |
+| `mulMlResult(a: MlResult, b: MlResult): MlResult`       | `MlResult`   | Multiplication in the target group.                                  |
+| `finalVerify(a: MlResult, b: MlResult): bool`           | `bool`       | Final exponentiation + equality check. The terminal step of a pairing-equation verification. |
+
+## Example: BLS signature verification
+
+```ts
+using { G1, G2, MlResult, millerLoop, mulMlResult, finalVerify, g1Neg } = std.crypto.bls12_381;
+
+const lhs: MlResult = millerLoop(signature, hashedMsgG2);
+const rhs: MlResult = millerLoop(g1Neg(generatorG1), pubKeyG2);
+assert finalVerify(mulMlResult(lhs, rhs), oneMlResult);
+```
+
+## Examples
+
+```ts
+using {
+    G1, G2, MlResult,
+    g1Add, g1Neg, g1ScalarMul, g1Equal, g1HashToGroup, g1Compress, g1Uncompress,
+    g2Add, g2Neg, g2ScalarMul, g2Equal, g2HashToGroup, g2Compress, g2Uncompress,
+    millerLoop, mulMlResult, finalVerify
+} = std.crypto.bls12_381;
+
+// G1 ops
+const sum1:        G1    = g1Add(p1, q1);
+const neg1:        G1    = g1Neg(p1);
+const scaled1:     G1    = g1ScalarMul(7, p1);
+const same1:       bool  = g1Equal(p1, q1);
+const hashed1:     G1    = g1HashToGroup(msg, #426c734457535431);  // "BlsDWST1"
+const c1:          bytes = g1Compress(p1);
+const back1:       G1    = g1Uncompress(c1);
+
+// G2 ops
+const sum2:        G2    = g2Add(p2, q2);
+const neg2:        G2    = g2Neg(p2);
+const scaled2:     G2    = g2ScalarMul(7, p2);
+const same2:       bool  = g2Equal(p2, q2);
+const hashed2:     G2    = g2HashToGroup(msg, #426c734457535432);
+const c2:          bytes = g2Compress(p2);
+const back2:       G2    = g2Uncompress(c2);
+
+// Pairing
+const ml1:         MlResult = millerLoop(p1, p2);
+const ml2:         MlResult = millerLoop(q1, q2);
+const product:     MlResult = mulMlResult(ml1, ml2);
+const verified:    bool     = finalVerify(product, identityMl);
+```
+
+## See also
+
+- [`std.crypto`](./std.crypto.md) — non-pairing cryptographic primitives
+- [`std.builtins`](./std.builtins.md) — `serialiseData` and byte-level helpers used to prepare messages

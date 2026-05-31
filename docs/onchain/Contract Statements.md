@@ -12,7 +12,7 @@ It defines one or more **validators** (entry points), which are compiled into Pl
 Contracts are declared using the `contract` keyword. Inside a contract you declare **validators** — functions that define the on-chain logic.
 
 Syntax:
-```pebble
+```ts
 contract ContractName {
     // one or more validator statements
     spend validatorName(...) { ... }
@@ -55,7 +55,7 @@ Context is immutable — you can destructure it, but not reassign.
 The available fields in context vary depending on the validator purpose. Pebble enforces correct context usage at compile time.
 
 #### Example:
-```pebble
+```ts
 contract OnlySpend {
     spend allowSpending() {
         const { tx, spendingInputRef } = context;
@@ -78,7 +78,7 @@ These are values that are **fixed at contract instantiation** and become part of
 
 This is useful when you want to bind a contract to a specific constant, like an owner’s public key or a fixed configuration (e.g., fee rate)
 
-```pebble
+```ts
 contract ContractName(param1: Type, param2: Type, ...) {
     // validator definitions
 }

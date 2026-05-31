@@ -40,7 +40,7 @@ Rules:
 
 When a contract declares exactly one `state`, the compiler enables the `shortcutSingleConstructor` lowering: the datum on-chain is the **raw record** (not wrapped in a `Constr(0, ...)` tag). This saves a few bytes per UTxO at the CBOR level.
 
-```pebble
+```ts
 contract HelloWorld {
     state Locked {
         owner: PubKeyHash
@@ -60,7 +60,7 @@ The on-chain datum here is simply `B <owner-bytes>` (no constructor wrapper).
 
 When a contract declares two or more `state` blocks, the compiler emits an explicit sum type — one CBOR `Constr` constructor per state, in declaration order. The off-chain transaction that creates the UTxO picks which constructor to encode.
 
-```pebble
+```ts
 contract SimpleOrderBook {
     state Simple {
         ownerHash: bytes
@@ -92,7 +92,7 @@ At dispatch time, the compiler inserts a `match purpose, datum` over the script 
 
 Inside any `spend` method declared on a state, `context.state` is bound to the state's record type:
 
-```pebble
+```ts
 state Live {
     counter: int
     owner: PubKeyHash
@@ -111,7 +111,7 @@ The `state` field of `context` is **statically narrowed** to `Live` here — the
 
 A contract can mix state-scoped `spend` methods with bare ones at the contract level. The bare `spend` is a **fallback** — it runs when the script is invoked with a datum that doesn't match any declared state's constructor, OR with no datum at all.
 
-```pebble
+```ts
 contract SimpleOrderBook {
     state Simple { /* ... */ }
     state Partial { /* ... */ }

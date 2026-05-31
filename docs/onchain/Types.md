@@ -26,7 +26,7 @@ Arbitrary-precision signed integer.
 Backed by Plutus `Integer`.
 
 #### Example
-```pebble
+```ts
 const supply: int = 1_000_000;
 let spent: int = 500;
 
@@ -44,7 +44,7 @@ Raw byte arrays.
 Commonly used for hashes, policy IDs, token names, and low-level identifiers.
 
 #### Example
-```pebble
+```ts
 const policy: bytes = #deadbeef;
 const token: bytes = "MyToken".toBytes();
 
@@ -66,7 +66,7 @@ Primarily for logging and off-chain metadata.
 Avoid storing large strings on-chain due to cost.
 
 #### Example
-```pebble
+```ts
 const msg: string = "Order filled";
 trace(msg);
 ```
@@ -77,10 +77,10 @@ Logical true/false values.
 Derived from comparisons or logical expressions.
 
 #### Example
-```pebble
+```ts
 const signed: bool = tx.signatories.includes(ownerHash);
 
-if (signed && tx.outputs.length() > 0) {
+if( signed && tx.outputs.length() > 0 ) {
     trace("Valid transaction");
 } else {
     fail "Unauthorized";
@@ -107,14 +107,14 @@ Refer [stdScope.ts](https://github.com/HarmonicLabs/pebble/blob/302786a75c231648
 Use `Option<T>` to represent values that may or may not exist.
 
 #### Example 
-```pebble
+```ts
 const maybeDatum: Option<int> = Some{ value: 10 };
 ```
 
 ### `case`/`match` used for destructuring
 
 
-```pebble
+```ts
 match maybeDatum {
     Some{ value }: trace(value),
     None{}       : fail "missing datum"
@@ -123,7 +123,7 @@ match maybeDatum {
 
 Destructuring - 
 
-```pebble
+```ts
 const InlineDatum{ datum: { owner, token, minAmount } as Order } = spendingInput.datum;
 ```
 
@@ -134,7 +134,7 @@ Defined using `struct` declarations.
 
 `struct` defines custom composite type with named fields.
 
-```pebble
+```ts
 struct Order {
     ownerPaymentCreds: Credential,
     policy: bytes,

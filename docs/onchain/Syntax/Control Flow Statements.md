@@ -12,8 +12,8 @@ They allow expressing branching logic, looping, and pattern matching directly in
 
 Standard conditional branching:
 
-```pebble
-if (amount > minReceiveAmount) {
+```ts
+if( amount > minReceiveAmount ) {
     trace("Valid amount");
 } else {
     fail "Amount too low";
@@ -25,7 +25,7 @@ Internally, this compiles to conditional UPLC expressions.
 
 Pattern matching is a core feature in Pebble, especially for Cardano-specific types like `Credential`, `Option`, or `Datum`.
 
-```pebble
+```ts
 assert case ownerPaymentCreds
     is PubKeyHash{ hash } => tx.signatories.includes(hash)
     is Validator{ hash }  => tx.inputs.some(({ resolved }) =>
@@ -38,8 +38,8 @@ assert case ownerPaymentCreds
 Pebble allows imperative `for` loops.
 They are compiled into functional recursion under the hood.
 
-```pebble
-for (let i = 0; i < tx.inputs.length(); i = i + 1) {
+```ts
+for( let i = 0; i < tx.inputs.length(); i = i + 1 ) {
     trace(tx.inputs[i]);
 }
 ```
@@ -48,9 +48,9 @@ for (let i = 0; i < tx.inputs.length(); i = i + 1) {
 
 Pebble also supports `while` loops are also supported
 
-```pebble
+```ts
 let i = 0;
-while (i < tx.outputs.length()) {
+while( i < tx.outputs.length() ) {
     trace(tx.outputs[i]);
     i = i + 1;
 }

@@ -1,0 +1,282 @@
+---
+sidebar_position: 3
+sidebar_label: std.builtins
+---
+
+# `std.builtins`
+
+*Pebble 0.3.0 · all symbols on this page are stable.*
+
+Direct exposure of Plutus Core builtins, plus a handful of polymorphic intrinsics. Prefer the per-type namespaces ([`std.int`](./std.int.md), [`std.bytes`](./std.bytes.md), etc.) or operator forms (`+`, `==`, ...) for everyday code — `std.builtins` is for when you need a Plutus-Core-shaped function as a value, or when only the raw builtin gives you the semantics you want (e.g. `quotientInteger` vs `divideInteger` rounding).
+
+## Type exports
+
+### `RawConstr`
+
+The shape returned by `unConstrData`: a pair `(index: int, fields: List<data>)`. Field access is `.index` and `.fields`.
+
+```ts
+const { unConstrData } = std.builtins;
+
+const RawConstr{ index, fields } = unConstrData(d);
+match index {
+    0: trace("Some"),
+    1: trace("None"),
+    _: fail "unknown constructor"
+}
+```
+
+## Integer arithmetic and comparison
+
+| Function                                            | Description                                                          |
+|-----------------------------------------------------|----------------------------------------------------------------------|
+| `addInteger(a: int, b: int): int`                   | `a + b`.                                                             |
+| `subtractInteger(a: int, b: int): int`              | `a - b`.                                                             |
+| `multiplyInteger(a: int, b: int): int`              | `a * b`.                                                             |
+| `divideInteger(a: int, b: int): int`                | Floor division. `divideInteger(-7, 2) == -4`.                        |
+| `quotientInteger(a: int, b: int): int`              | Truncated division (rounds toward zero). `quotientInteger(-7, 2) == -3`. |
+| `remainderInteger(a: int, b: int): int`             | Remainder paired with `quotientInteger`. Sign matches `a`.           |
+| `modInteger(a: int, b: int): int`                   | Modulo paired with `divideInteger`. Sign matches `b`.                |
+| `equalsInteger(a: int, b: int): bool`               | `a == b`.                                                            |
+| `lessThanInteger(a: int, b: int): bool`             | `a < b`.                                                             |
+| `lessThanEqualInteger(a: int, b: int): bool`        | `a <= b`.                                                            |
+| `expModInteger(base: int, exp: int, m: int): int`   | Modular exponentiation `base^exp mod m`.                             |
+
+## Byte-string operations
+
+| Function                                                              | Description                                                                |
+|-----------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `appendByteString(a: bytes, b: bytes): bytes`                         | Concatenate.                                                                |
+| `consByteString(byteVal: int, b: bytes): bytes`                       | Prepend a single byte (0–255). Fails if `byteVal` is out of range.          |
+| `sliceByteString(start: int, len: int, b: bytes): bytes`              | Sub-string. Out-of-range indices are clipped.                               |
+| `lengthOfByteString(b: bytes): int`                                   | Length in bytes.                                                            |
+| `indexByteString(b: bytes, i: int): int`                              | Byte at index `i` as an int 0–255. Fails on out-of-range.                   |
+| `equalsByteString(a: bytes, b: bytes): bool`                          | Equality.                                                                   |
+| `lessThanByteString(a: bytes, b: bytes): bool`                        | Lexicographic less-than.                                                    |
+| `lessThanEqualsByteString(a: bytes, b: bytes): bool`                  | Lexicographic less-than-or-equal.                                           |
+
+## Byte-string bitwise (Plutus V3)
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `andByteString(padShorter: bool, a: bytes, b: bytes): bytes`                   | Bitwise AND. `padShorter=true` zero-pads the shorter; `false` truncates.   |
+| `orByteString(padShorter: bool, a: bytes, b: bytes): bytes`                    | Bitwise OR.                                                                |
+| `xorByteString(padShorter: bool, a: bytes, b: bytes): bytes`                   | Bitwise XOR.                                                               |
+| `complementByteString(b: bytes): bytes`                                        | Bitwise NOT.                                                               |
+| `readBit(b: bytes, bitIdx: int): bool`                                         | Read a single bit at `bitIdx` (MSB-of-byte 0).                             |
+| `writeBits(b: bytes, positions: List<int>, value: bool): bytes`                | Set or clear every bit in `positions` to `value`.                          |
+| `replicateByte(n: int, byteVal: int): bytes`                                   | A byte string of `n` copies of `byteVal`.                                  |
+| `shiftByteString(b: bytes, k: int): bytes`                                     | Bit shift; positive `k` shifts left, negative right.                       |
+| `rotateByteString(b: bytes, k: int): bytes`                                    | Bit rotation.                                                              |
+| `countSetBits(b: bytes): int`                                                  | Population count.                                                          |
+| `findFirstSetBit(b: bytes): int`                                               | Index of the first 1-bit, or -1 if `b` is all zero.                        |
+
+## Int ↔ bytes conversion
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `integerToByteString(bigEndian: bool, size: int, n: int): bytes`               | Encode `n` to a `size`-byte string. `size=0` means "smallest fit".         |
+| `byteStringToInteger(bigEndian: bool, b: bytes): int`                          | Decode a byte string as an unsigned integer.                               |
+
+## String operations
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `appendString(a: string, b: string): string`                                   | Concatenate.                                                                |
+| `equalsString(a: string, b: string): bool`                                     | Equality.                                                                   |
+| `encodeUtf8(s: string): bytes`                                                 | Serialize a string to UTF-8 bytes.                                          |
+| `decodeUtf8(b: bytes): string`                                                 | Parse UTF-8 bytes. Fails on invalid encoding.                               |
+
+## Data constructors
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `constrData(idx: int, fields: List<data>): data`                               | Construct a `Constr` data value.                                            |
+| `mapData(m: LinearMap<data, data>): data`                                      | Wrap an association list as a `Map` data value.                             |
+| `listData(xs: List<data>): data`                                               | Wrap a list as `List` data.                                                 |
+| `iData(n: int): data`                                                          | Wrap an int as `I` data.                                                    |
+| `bData(b: bytes): data`                                                        | Wrap bytes as `B` data.                                                     |
+| `mkNilData(): List<data>`                                                      | The empty `List<data>` literal.                                             |
+
+## Data destructors
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `unConstrData(d: data): RawConstr`                                             | Decompose `Constr` data. Fails on the wrong shape.                          |
+| `unMapData(d: data): LinearMap<data, data>`                                    | Extract the underlying assoc-list of a `Map` data value.                    |
+| `unListData(d: data): List<data>`                                              | Extract a `List` data.                                                      |
+| `unIData(d: data): int`                                                        | Extract an `I` data.                                                        |
+| `unBData(d: data): bytes`                                                      | Extract a `B` data.                                                         |
+| `equalsData(a: data, b: data): bool`                                           | Structural equality.                                                        |
+| `serialiseData(d: data): bytes`                                                | CBOR-encode.                                                                |
+
+## Native `Value` operations
+
+These work on the native `Value` type (see [Value](../Prelude/Value.md)). They're aliased into [`std.value`](./std.value.md) with friendlier names.
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `insertCoin(policy: bytes, name: bytes, amount: int, v: Value): Value`         | Set the amount of `(policy, name)` in `v`.                                  |
+| `lookupCoin(policy: bytes, name: bytes, v: Value): int`                        | Read the amount of `(policy, name)`. Returns 0 if absent.                   |
+| `unionValue(a: Value, b: Value): Value`                                        | Add two values.                                                             |
+| `valueContains(a: Value, b: Value): bool`                                      | True iff `a ≥ b` for every asset.                                           |
+| `valueData(v: Value): data`                                                    | Serialize `Value` to `data`.                                                |
+| `unValueData(d: data): Value`                                                  | Parse `data` as `Value`. Fails on the wrong shape.                          |
+| `scaleValue(k: int, v: Value): Value`                                          | Multiply every amount in `v` by `k`.                                        |
+
+## Polymorphic intrinsics
+
+| Function                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `trace<T>(msg: bytes, x: T): T`                                                | Emit `msg` to the trace log, then return `x`. Strict in `x`.               |
+| `ifThenElse<T>(cond: bool, then: T, else: T): T`                               | Strict if-then-else. Both branches are evaluated.                          |
+| `chooseUnit<T>(u: void, x: T): T`                                              | Force evaluation of `u`, then return `x`.                                  |
+| `mkCons<T>(head: T, tail: List<T>): List<T>`                                   | Prepend; the underlying `MkCons` builtin.                                  |
+| `headList<T>(xs: List<T>): T`                                                  | First element. Fails on empty.                                             |
+| `tailList<T>(xs: List<T>): List<T>`                                            | Everything after the head. Fails on empty.                                 |
+| `nullList<T>(xs: List<T>): bool`                                               | True iff `xs` is empty.                                                    |
+| `chooseList<A, B>(xs: List<A>, caseNil: B, caseCons: B): B`                    | Pattern match a list. The cons branch does **not** bind head/tail.         |
+| `chooseData<T>(d: data, caseConstr: T, caseMap: T, caseList: T, caseI: T, caseB: T): T` | Pattern match a `data` value by constructor tag.               |
+
+## Examples
+
+### Integer arithmetic & comparison
+```ts
+using {
+    addInteger, subtractInteger, multiplyInteger, divideInteger,
+    quotientInteger, remainderInteger, modInteger,
+    equalsInteger, lessThanInteger, lessThanEqualInteger, expModInteger
+} = std.builtins;
+
+const s:   int  = addInteger(2, 3);            // 5
+const d:   int  = subtractInteger(5, 2);       // 3
+const p:   int  = multiplyInteger(4, 3);       // 12
+const q:   int  = divideInteger(-7, 2);        // -4 (floor)
+const qt:  int  = quotientInteger(-7, 2);      // -3 (toward zero)
+const r:   int  = remainderInteger(-7, 2);     // -1
+const m:   int  = modInteger(-7, 2);           //  1
+const eq:  bool = equalsInteger(3, 3);         // true
+const lt:  bool = lessThanInteger(2, 3);       // true
+const le:  bool = lessThanEqualInteger(3, 3);  // true
+const mp:  int  = expModInteger(5, 3, 13);     // 5^3 mod 13 = 8
+```
+
+### Byte-string operations
+```ts
+using {
+    appendByteString, consByteString, sliceByteString,
+    lengthOfByteString, indexByteString,
+    equalsByteString, lessThanByteString, lessThanEqualsByteString
+} = std.builtins;
+
+const cat:  bytes = appendByteString(#ab, #cd);            // #abcd
+const cons: bytes = consByteString(0xff, #00);             // #ff00
+const sub:  bytes = sliceByteString(1, 2, #aabbccdd);      // #bbcc
+const len:  int   = lengthOfByteString(#aabbcc);           // 3
+const at:   int   = indexByteString(#aabbcc, 1);           // 187 (0xbb)
+const bEq:  bool  = equalsByteString(#ab, #ab);            // true
+const bLt:  bool  = lessThanByteString(#ab, #cd);          // true
+const bLe:  bool  = lessThanEqualsByteString(#ab, #ab);    // true
+```
+
+### Byte-string bitwise (v3)
+```ts
+using {
+    andByteString, orByteString, xorByteString, complementByteString,
+    readBit, writeBits, replicateByte,
+    shiftByteString, rotateByteString, countSetBits, findFirstSetBit
+} = std.builtins;
+
+const a:   bytes = andByteString(true, #f0, #0f);          // #00
+const o:   bytes = orByteString(true, #f0, #0f);           // #ff
+const x:   bytes = xorByteString(true, #f0, #ff);          // #0f
+const inv: bytes = complementByteString(#0f);              // #f0
+const bit: bool  = readBit(#80, 0);                        // true (MSB-of-byte 0)
+const w:   bytes = writeBits(#00, [1, 3, 5], true);        // set bits 1,3,5
+const rep: bytes = replicateByte(4, 0xab);                 // #abababab
+const sh:  bytes = shiftByteString(#01, 4);                // shift left 4 bits
+const ro:  bytes = rotateByteString(#01020304, 8);         // rotate left 8 bits
+const cnt: int   = countSetBits(#ff00);                    // 8
+const fst: int   = findFirstSetBit(#0f);                   // 4
+```
+
+### Int ↔ bytes
+```ts
+using { integerToByteString, byteStringToInteger } = std.builtins;
+
+const enc: bytes = integerToByteString(true, 4, 1234);     // 4-byte BE
+const dec: int   = byteStringToInteger(true, #04d2);       // 1234
+```
+
+### Strings
+```ts
+using { appendString, equalsString, encodeUtf8, decodeUtf8 } = std.builtins;
+
+const greet: string = appendString("Hello, ", "world");    // "Hello, world"
+const same:  bool   = equalsString("ok", "ok");            // true
+const u8:    bytes  = encodeUtf8("café");                  // UTF-8 bytes
+const back:  string = decodeUtf8(u8);                      // "café"
+```
+
+### `data` constructors
+```ts
+using { constrData, mapData, listData, iData, bData, mkNilData } = std.builtins;
+
+const dI:    data            = iData(42);
+const dB:    data            = bData(#cafe);
+const dL:    data            = listData([iData(1), iData(2)]);
+const dC:    data            = constrData(0, [dI, dB]);
+const nilD:  List<data>      = mkNilData();
+const dM:    data            = mapData({ dI: dB });
+```
+
+### `data` destructors
+```ts
+using { unConstrData, unMapData, unListData, unIData, unBData,
+        equalsData, serialiseData } = std.builtins;
+
+const RawConstr{ index, fields } = unConstrData(dC);       // index=0, fields=[dI,dB]
+const m_kv:    LinearMap<data, data> = unMapData(dM);
+const xs:      List<data>            = unListData(dL);
+const n:       int                   = unIData(dI);        // 42
+const bs:      bytes                 = unBData(dB);        // #cafe
+const dEq:     bool                  = equalsData(dI, iData(42));   // true
+const cbor:    bytes                 = serialiseData(dC);
+```
+
+### Native `Value`
+```ts
+using { expModInteger, insertCoin, lookupCoin, unionValue,
+        valueContains, valueData, unValueData, scaleValue } = std.builtins;
+
+const v1: Value = insertCoin(myPolicy, myToken, 5, emptyValue);
+const n:  int   = lookupCoin(myPolicy, myToken, v1);       // 5
+const v2: Value = unionValue(v1, v1);                      // 2× v1
+const ok: bool  = valueContains(v2, v1);                   // true
+const d:  data  = valueData(v1);
+const v3: Value = unValueData(d);
+const v4: Value = scaleValue(3, v1);                       // 3× v1
+const m:  int   = expModInteger(2, 10, 1000);              // 1024 mod 1000 = 24
+```
+
+### Polymorphic intrinsics
+```ts
+using { trace, ifThenElse, chooseUnit, mkCons, headList, tailList,
+        nullList, chooseList, chooseData } = std.builtins;
+
+const traced: int          = trace(#6f6b, 42);             // logs "ok", returns 42
+const pick:   int          = ifThenElse(true, 1, 2);       // 1 (strict)
+const after:  int          = chooseUnit((), 100);          // 100
+const xs:     List<int>    = mkCons(0, [1, 2, 3]);         // [0,1,2,3]
+const h:      int          = headList(xs);                 // 0
+const t:      List<int>    = tailList(xs);                 // [1,2,3]
+const empty:  bool         = nullList(xs);                 // false
+const which:  string       = chooseList(xs, "empty", "has values");
+const tag:    string       = chooseData(dC, "Constr", "Map", "List", "I", "B");
+```
+
+## See also
+
+- [`std.int`](./std.int.md), [`std.bytes`](./std.bytes.md), [`std.boolean`](./std.boolean.md), [`std.data`](./std.data.md) — friendlier-named monomorphic equivalents
+- [`std.list`](./std.list.md), [`std.linearMap`](./std.linearMap.md), [`std.array`](./std.array.md) — polymorphic container helpers
+- [`std (top-level)`](./std.md) — `id` and `equals`

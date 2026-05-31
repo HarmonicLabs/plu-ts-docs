@@ -19,7 +19,7 @@ Every literal form Pebble's tokenizer and parser recognise, plus the small set o
 
 All resolve to type [`int`](./Prelude/Int.md).
 
-```pebble
+```ts
 const big: int = 1_000_000;
 const hex: int = 0xCAFE;
 const neg: int = -7;
@@ -35,7 +35,7 @@ const neg: int = -7;
 
 All resolve to type [`bytes`](./Prelude/Bytes.md).
 
-```pebble
+```ts
 const policy: PolicyId = #cafedead;
 const empty:  bytes    = #"";
 const utf8:   bytes    = "hello".toBytes();
@@ -45,7 +45,7 @@ const utf8:   bytes    = "hello".toBytes();
 
 Double-quoted UTF-8 text. Strings exist primarily for [`trace`](./Syntax/Control%20Flow%20Statements.md) messages and `fail` reasons — avoid storing large strings on-chain (every byte costs CPU and memory in the script budget).
 
-```pebble
+```ts
 const msg: string = "Order filled";
 trace(msg);
 ```
@@ -56,7 +56,7 @@ Escapes (`\n`, `\t`, `\"`, `\\`, etc.) are recognised inside double quotes. Ther
 
 `true`, `false` — type [`bool`](./Prelude/Boolean.md).
 
-```pebble
+```ts
 const ok: bool = true;
 if( ok ) { trace("ok"); }
 ```
@@ -65,7 +65,7 @@ if( ok ) { trace("ok"); }
 
 `()` is the canonical inhabitant of `void`. Most users never need to spell it explicitly; it appears as the return type of statement-like expressions (`trace(...)`, `assert ...`).
 
-```pebble
+```ts
 const nothing: void = ();
 ```
 
@@ -73,7 +73,7 @@ const nothing: void = ();
 
 Square-bracketed comma-separated elements:
 
-```pebble
+```ts
 const empty: List<int> = [];
 const xs:    List<int> = [1, 2, 3];
 const nested: List<List<int>> = [[1, 2], [3, 4]];
@@ -87,7 +87,7 @@ These produce values of type [`List<T>`](./Prelude/List.md). To get an [`Array<T
 
 Brace-enclosed `key: value` pairs:
 
-```pebble
+```ts
 const empty: LinearMap<bytes, int> = {};
 const m:     LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
@@ -98,7 +98,7 @@ Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.md). Order of entries is pres
 
 Named constructors use `Name{ field: value, … }`:
 
-```pebble
+```ts
 struct Order {
     owner: PubKeyHash,
     policy: PolicyId,
@@ -114,7 +114,7 @@ const o: Order = Order{
 
 For enums and sum types (including `Optional`), name the specific variant:
 
-```pebble
+```ts
 const some: Optional<int> = Some{ value: 42 };
 const none: Optional<int> = None{};
 ```
@@ -129,7 +129,7 @@ The compiler injects two implicit names into the body of any `contract` method (
 
 The full script context for the current invocation. Destructure it for the fields you actually need:
 
-```pebble
+```ts
 spend handler() {
     const { tx, purpose, redeemer } = context;
     // tx       — the full Tx
@@ -158,7 +158,7 @@ Reserved for future use in method-on-type forms (e.g. user-defined `impl Foo { .
 
 `fail` is both a statement and an expression. As a statement it aborts the script unconditionally with an optional trace message:
 
-```pebble
+```ts
 fail;                                 // bare abort
 fail "missing datum";                 // abort with a string message in the trace
 fail "expected: " + expected.show();  // abort with a dynamic message

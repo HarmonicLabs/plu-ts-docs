@@ -12,7 +12,7 @@ They control variable bindings, runtime assertions, failure modes, and debugging
 
 Pebble supports both **mutable** (`let`) and **immutable** (`const`) bindings.
 
-```pebble
+```ts
 const threshold = 100;
 let counter = tx.inputs.length();
 ```
@@ -26,7 +26,7 @@ let counter = tx.inputs.length();
 `assert` checks a condition at runtime.
 If it fails, the transaction is invalid.
 
-```pebble
+```ts
 assert userOutput.value.amountOf(policy, tokenName) >= minReceiveAmount;
 ```
 
@@ -36,7 +36,7 @@ Assertions are the _primary way to enforce validator rules_ in Pebble.
 
 `fail` immediately aborts execution with an error.
 
-```pebble
+```ts
 fail "Insufficient token balance";
 ```
 
@@ -47,7 +47,7 @@ Useful when explicit error reporting is preferable to silent assertion failures.
 `trace` allows _debug logging_ during simulation.
 (Traces are generally stripped or limited in on-chain execution.)
 
-```pebble
+```ts
 trace("Processing order...");
 trace(userOutput.address);
 ```
