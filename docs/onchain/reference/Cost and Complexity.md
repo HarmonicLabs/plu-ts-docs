@@ -100,7 +100,7 @@ In hot paths, prefer the short-circuit operators. Reach for the strict forms onl
 
 ## When you can ignore cost
 
-- **Constructor parameters** are baked in at compile time. `contract Foo(seedRef: TxOutRef)` doesn't cost anything per call — the value lives in the script body as a constant.
+- **Contract parameters** are baked in at compile time. `param seedRef: TxOutRef;` inside a contract body doesn't cost anything per call — the value lives in the script as a constant.
 - **Pattern-matching a `state`** is a fixed-shape destructure. Field access is O(1) per field once the state is bound.
 - **`hash`, `equality`, and signature verification** are O(n) in the input length, not in any data structure depth. Even with a 32-byte input, that's a few hundred CPU units — usually negligible.
 

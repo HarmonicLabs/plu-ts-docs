@@ -79,12 +79,16 @@ These are values that are **fixed at contract instantiation** and become part of
 This is useful when you want to bind a contract to a specific constant, like an owner’s public key or a fixed configuration (e.g., fee rate)
 
 ```ts
-contract ContractName(param1: Type, param2: Type, ...) {
+contract ContractName {
+    param param1: Type;
+    param param2: Type;
+    // ...
+
     // validator definitions
 }
 ```
 
-Parameters are declared in the contract header. They are available inside all validators of the contract.
+Each parameter is declared on its own line inside the contract body using the `param` keyword, followed by a name, a `:` type, and a terminating `;`. Parameters must appear before the validator (`spend` / `mint` / etc.) declarations. They are available inside every validator of the contract.
 
 Parameters are immutable once compiled, i.e. they cannot be changed without recompiling the contract.
 

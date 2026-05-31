@@ -25,8 +25,11 @@ The body is empty: no `assert`, no `fail`, so the script always succeeds. Anyone
 ### OneShot (parameterised by a UTxO ref)
 
 ```ts
-contract OneShot(seedRef: TxOutRef, tokenName: TokenName)
+contract OneShot
 {
+    param seedRef: TxOutRef;
+    param tokenName: TokenName;
+
     mint mintOnce()
     {
         const { tx, purpose } = context;

@@ -14,7 +14,9 @@ In Pebble, you don't write the validator function directly — you write a `cont
 A Pebble file like:
 
 ```ts
-contract Vault(owner: PubKeyHash) {
+contract Vault {
+    param owner: PubKeyHash;
+
     spend withdraw() {
         const { tx } = context;
         assert tx.signatories.includes(owner);

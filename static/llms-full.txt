@@ -2,7 +2,7 @@
 
 > This file is the concatenation of every public docs page. It exists for LLM ingestion. For a curated short index see llms.txt; for the rendered site see harmoniclabs.tech.
 
-Generated: 2026-05-31T00:57:58Z
+Generated: 2026-05-31T01:01:05Z
 
 ---
 
@@ -157,8 +157,11 @@ The body is empty: no `assert`, no `fail`, so the script always succeeds. Anyone
 ### OneShot (parameterised by a UTxO ref)
 
 ```ts
-contract OneShot(seedRef: TxOutRef, tokenName: TokenName)
+contract OneShot
 {
+    param seedRef: TxOutRef;
+    param tokenName: TokenName;
+
     mint mintOnce()
     {
         const { tx, purpose } = context;
@@ -2333,7 +2336,9 @@ In Pebble, you don't write the validator function directly — you write a `cont
 A Pebble file like:
 
 ```ts
-contract Vault(owner: PubKeyHash) {
+contract Vault {
+    param owner: PubKeyHash;
+
     spend withdraw() {
         const { tx } = context;
         assert tx.signatories.includes(owner);
@@ -2517,12 +2522,16 @@ These are values that are **fixed at contract instantiation** and become part of
 This is useful when you want to bind a contract to a specific constant, like an owner’s public key or a fixed configuration (e.g., fee rate)
 
 ```ts
-contract ContractName(param1: Type, param2: Type, ...) {
+contract ContractName {
+    param param1: Type;
+    param param2: Type;
+    // ...
+
     // validator definitions
 }
 ```
 
-Parameters are declared in the contract header. They are available inside all validators of the contract.
+Each parameter is declared on its own line inside the contract body using the `param` keyword, followed by a name, a `:` type, and a terminating `;`. Parameters must appear before the validator (`spend` / `mint` / etc.) declarations. They are available inside every validator of the contract.
 
 Parameters are immutable once compiled, i.e. they cannot be changed without recompiling the contract.
 
@@ -3406,7 +3415,7 @@ In hot paths, prefer the short-circuit operators. Reach for the strict forms onl
 
 ## When you can ignore cost
 
-- **Constructor parameters** are baked in at compile time. `contract Foo(seedRef: TxOutRef)` doesn't cost anything per call — the value lives in the script body as a constant.
+- **Contract parameters** are baked in at compile time. `param seedRef: TxOutRef;` inside a contract body doesn't cost anything per call — the value lives in the script as a constant.
 - **Pattern-matching a `state`** is a fixed-shape destructure. Field access is O(1) per field once the state is bound.
 - **`hash`, `equality`, and signature verification** are O(n) in the input length, not in any data structure depth. Even with a 32-byte input, that's a few hundred CPU units — usually negligible.
 
