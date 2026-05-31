@@ -1,54 +1,54 @@
 {
-  "name": "pebble-docs",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "postinstall": "rm -rf static/vs && cp -r node_modules/@harmoniclabs/monaco-editor/out/monaco-editor/dev/vs static/vs",
-    "docusaurus": "docusaurus",
-    "start": "docusaurus start",
-    "dev": "npm run start",
-    "build": "npm run llms && docusaurus build",
-    "llms": "bash scripts/build-llms.sh",
-    "copy-build-output": "npm run build && cp -r ./build/* ../pebble-docs-build/",
-    "deploy-build-output": "npm run copy-build-output && cd ../pebble-docs-build && git add . && git commit -m 'Deploy new docs' && git push",
-    "swizzle": "docusaurus swizzle",
-    "deploy": "docusaurus deploy",
-    "clear": "docusaurus clear",
-    "serve": "docusaurus serve",
-    "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
-  },
-  "dependencies": {
-    "@docusaurus/core": "^3.9.2",
-    "@docusaurus/preset-classic": "^3.9.2",
-    "@docusaurus/theme-live-codeblock": "^3.9.2",
-    "@harmoniclabs/pebble": "0.3.0",
-    "@mdx-js/react": "^3.0.0",
-    "clsx": "^2.0.0",
-    "prism-react-renderer": "^2.3.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-pebble-editor": "^0.3.0"
-  },
-  "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.9.2",
-    "@docusaurus/types": "^3.9.2",
-    "typescript": "^4.7.4"
-  },
-  "browserslist": {
-    "production": [
-      ">0.5%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 3 chrome version",
-      "last 3 firefox version",
-      "last 5 safari version"
-    ]
-  },
-  "engines": {
-    "node": ">=18.0"
-  }
+    "name": "pebble-docs",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "postinstall": "rm -rf static/vs && cp -r node_modules/@harmoniclabs/monaco-editor/out/monaco-editor/dev/vs static/vs",
+        "docusaurus": "docusaurus",
+        "start": "docusaurus start",
+        "dev": "npm run start",
+        "build": "npm run llms && docusaurus build",
+        "llms": "bash scripts/build-llms.sh",
+        "copy-build-output": "npm run build && cp -r ./build/* ../pebble-docs-build/",
+        "deploy-build-output": "npm run copy-build-output && cd ../pebble-docs-build && git add . && git commit -m 'Deploy new docs' && git push",
+        "swizzle": "docusaurus swizzle",
+        "deploy": "docusaurus deploy",
+        "clear": "docusaurus clear",
+        "serve": "docusaurus serve",
+        "write-translations": "docusaurus write-translations",
+        "write-heading-ids": "docusaurus write-heading-ids",
+        "typecheck": "tsc"
+    },
+    "dependencies": {
+        "@docusaurus/core": "^3.9.2",
+        "@docusaurus/preset-classic": "^3.9.2",
+        "@docusaurus/theme-live-codeblock": "^3.9.2",
+        "@harmoniclabs/pebble": "0.3.0",
+        "@mdx-js/react": "^3.0.0",
+        "clsx": "^2.0.0",
+        "prism-react-renderer": "^2.3.1",
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0",
+        "react-pebble-editor": "^0.3.1"
+    },
+    "devDependencies": {
+        "@docusaurus/module-type-aliases": "^3.9.2",
+        "@docusaurus/types": "^3.9.2",
+        "typescript": "^4.7.4"
+    },
+    "browserslist": {
+        "production": [
+            ">0.5%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 3 chrome version",
+            "last 3 firefox version",
+            "last 5 safari version"
+        ]
+    },
+    "engines": {
+        "node": ">=18.0"
+    }
 }
