@@ -10,7 +10,7 @@ The Pebble compiler reads its options from a `pebble.config.json` file at the ro
 
 ```json
 {
-  "compilerVersion": "^0.2.0",
+  "compilerVersion": "^0.3.1",
   "entry": "./src/index.pebble",
   "outDir": "./out",
   "removeTraces": true
@@ -28,7 +28,7 @@ The Pebble compiler reads its options from a `pebble.config.json` file at the ro
 The compiler validates this range against its own version at startup and throws if it does not satisfy it. A missing or empty value is treated as invalid.
 
 ```json
-{ "compilerVersion": "^0.2.0" }
+{ "compilerVersion": "^0.3.1" }
 ```
 
 See [Supported semver syntax](#supported-semver-syntax) below for the accepted range forms.
@@ -122,6 +122,40 @@ The other flags fall back to their defaults.
 Type: `boolean`. Default: `true`.
 
 When `true`, the compiler emits a script marker (used by tooling to identify Pebble-generated scripts). Disable for size-sensitive deployments where the marker is not needed.
+
+### `targetPlutusVersion`
+
+*Since 0.5.0.* `"v3" | "v4"` — default `"v3"`. Case-insensitive.
+
+Decides which Plutus ledger-API family the **unsuffixed** prelude type
+names (`ScriptContext`, `Tx`, `TxIn`, `TxOut`, `Address`, `ScriptInfo`,
+`ScriptPurpose`) resolve to:
+
+- `"v3"` — the stable Conway-era types: what runs on-chain today
+  (protocol version 11 executes PlutusV3 scripts).
+- `"v4"` — the Dijkstra-era types, mirroring plutus-ledger-api 1.68.0.0
+  (nested-transaction guards, accounts, the 4-field script context).
+  The Dijkstra hard fork has not happened yet and CIP-0118 is still
+  Proposed, so these shapes may track upstream changes.
+
+The suffixed names (`ScriptContextV3`, `ScriptContextV4`, `TxV3`,
+`TxV4`, ...) are **always** available under both targets, so mixed code
+can stay explicit and a project can flip the target without touching
+code written against the plain names.
+
+```json
+{
+  "compilerVersion": "^0.5.0",
+  "targetPlutusVersion": "v4"
+}
+```
+
+:::caution
+`contract` declarations derive their entry point from the V3 script
+context and are rejected under `"v4"` with a located diagnostic — write
+plain exported validators (`( ctx: data ) => void`) against
+`ScriptContextV4` until the sugar supports the Dijkstra shapes.
+:::
 
 ## Supported semver syntax
 
