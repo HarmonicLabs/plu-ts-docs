@@ -78,23 +78,66 @@ When a property test fails, the output reports the iteration index, the seed, an
 
 ### Supported parameter types
 
-The built-in fuzzer currently supports:
+The built-in fuzzers cover every practical parameter type (since 0.5.0):
 
-- `int`
-- `bool`
+- `int`, `bool`, `bytes`, `string`, `data` and enums;
+- `Optional<T>` (both encodings), `List<T>`, `LinearMap<K, V>`, `Value`;
+- `data` structs — inputs are generated from the struct's constructors and
+  field types, so a multi-constructor datum shape exercises every branch;
+- `runtime` (sum-of-products) structs.
 
-Other parameter types are reported as unsupported at compile time.
+Generators are seeded, deterministic, and biased toward edge values
+(zero / ±1 / integer bounds, empty and hash-length byte strings, empty and
+singleton collections). A type without a generator (e.g. a function-typed
+parameter, or a `List` of runtime structs) is reported as a skipped test
+with a reason.
 
-### `via` — custom fuzzers (experimental)
+### Shrinking
 
-The grammar reserves the `via <expr>` syntax so you can supply your own fuzzer for a parameter:
+When a property test fails, the runner **minimizes the failing inputs**
+before reporting: integers converge toward the smallest counterexample,
+byte strings / strings / lists / maps shrink structurally. The report shows
+both the original failing inputs and the minimal ones:
+
+```text
+  FAIL  always_small  (failed at iteration 12, seed=0)
+        inputs: n=4611686018427387904
+        minimal inputs (after 63 shrink steps): n=100
+        error:  too big
+```
+
+Shrink evaluations do not count toward the reported cpu/mem budget.
+
+### `via` — custom fuzzers
+
+`via <expr>` supplies your own fuzzer for a parameter. The expression is
+compiled and executed **on the CEK machine**, once per iteration, with a
+fresh pseudo-random seed. Two shapes are accepted:
+
+- a function `( seed: int ) => T` — called with the iteration seed;
+- a plain `T` value — a degenerate constant fuzzer (every iteration gets
+  the same value), e.g. `via 42`.
 
 ```ts
-test inRange( n: int via smallInts() ) {
+function smallInt( seed: int ): int {
+    return seed % 100;
+}
+
+test inRange( n: int via smallInt ) {
     assert n >= 0 && n < 100;
+}
+
+test lambdaFuzzer( n: int via ( seed: int ) => seed % 10 ) {
+    assert n < 10;
 }
 ```
 
-:::caution Experimental
-The `via` syntax is parsed but not yet executable. Using it currently raises a compile-time "fuzzer not implemented" diagnostic. The shape shown here is the planned API; the syntax may evolve before it lands.
-:::
+The fuzzed value must be constant-representable (ints, bools, bytes,
+strings, `data` and data-encoded structs); a fuzzer producing a runtime
+(SoP) value is reported with a located reason.
+
+### Machine-readable output
+
+- `--json` — emit the full results (per-test pass/fail, budgets, inputs,
+  traces) as JSON on stdout, for CI pipelines and reports.
+- `--bail` — stop after the first failing test file.
