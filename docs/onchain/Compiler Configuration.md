@@ -127,9 +127,10 @@ When `true`, the compiler emits a script marker (used by tooling to identify Peb
 
 *Since 0.5.0.* `"v3" | "experimental-v4"` — default `"v3"`. Case-insensitive.
 
-Decides which Plutus ledger-API family the **unsuffixed** prelude type
-names (`ScriptContext`, `Tx`, `TxIn`, `TxOut`, `Address`, `ScriptInfo`,
-`ScriptPurpose`) resolve to:
+The context type names never change — `ScriptContext`, `Tx`, `TxIn`,
+`TxOut`, `Address`, `ScriptInfo`, `ScriptPurpose` — this option decides
+which Plutus ledger-API family **defines** them (exactly one family
+exists per compilation; there are no suffixed variants and no mixing):
 
 - `"v3"` — the stable Conway-era types: what runs on-chain today
   (protocol version 11 executes PlutusV3 scripts).
@@ -142,10 +143,10 @@ names (`ScriptContext`, `Tx`, `TxIn`, `TxOut`, `Address`, `ScriptInfo`,
   rejected with guidance; once the fork lands it becomes the name (and
   `"experimental-v4"` will keep working as an alias).
 
-The suffixed names (`ScriptContextV3`, `ScriptContextV4`, `TxV3`,
-`TxV4`, ...) are **always** available under both targets, so mixed code
-can stay explicit and a project can flip the target without touching
-code written against the plain names.
+Flipping the target re-types the same source against the other context
+shape — code that only touches fields both families share keeps
+compiling, and anything version-specific surfaces as a normal type
+error.
 
 ```json
 {
@@ -158,7 +159,7 @@ code written against the plain names.
 `contract` declarations derive their entry point from the V3 script
 context and are rejected under `"experimental-v4"` with a located
 diagnostic — write plain exported validators (`( ctx: data ) => void`)
-against `ScriptContextV4` until the sugar supports the Dijkstra shapes.
+against `ScriptContext` until the sugar supports the Dijkstra shapes.
 :::
 
 ## Supported semver syntax
