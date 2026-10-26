@@ -224,6 +224,7 @@ guard is executing inside a sub-transaction. `guard` methods are rejected
 under the default `"v3"` target with a diagnostic naming the option, and
 are not allowed inside `state` blocks.
 
+<!-- target: experimental-v4 -->
 ```ts
 contract Batch {
     guard check() {
@@ -245,6 +246,7 @@ With nested transactions (CIP-0118) a script may run in the **top-level**
 transaction of a batch or **inside a sub-transaction**. Every contract
 method declares the level it is valid at by prefixing the purpose keyword:
 
+<!-- no-compile -->
 ```ts
 contract Escrow {
     top spend settle() { ... }        // valid only in the top-level transaction

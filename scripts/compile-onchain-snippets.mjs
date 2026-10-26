@@ -59,6 +59,9 @@ function extractFences( text ) {
                 lang: m[1].toLowerCase(),
                 start: i + 1,
                 skip: i > 0 && /<!--\s*no-compile/.test( lines[i - 1] ),
+                // `<!-- target: experimental-v4 -->` compiles the snippet
+                // for that `targetPlutusVersion` instead of the default
+                target: i > 0 ? lines[i - 1].match( /<!--\s*target:\s*([\w-]+)\s*-->/ )?.[1] : undefined,
                 bodyLines: [],
             };
             else {
@@ -68,6 +71,7 @@ function extractFences( text ) {
                     lang: open.lang,
                     start: open.start,
                     skip: open.skip,
+                    target: open.target,
                     fileName: nameMatch?.[1],
                     body,
                 });
@@ -113,7 +117,11 @@ for await ( const file of walk( DOCS_DIR ) ) {
             sources,
             useConsoleAsOutput: false,
         });
-        const compiler = new Compiler( ioApi, { ...testOptions, compilerVersion: COMPILER_VERSION } );
+        const compiler = new Compiler( ioApi, {
+            ...testOptions,
+            compilerVersion: COMPILER_VERSION,
+            ...( fence.target ? { targetPlutusVersion: fence.target } : {} )
+        } );
         let errors = [];
         try {
             await compiler.check({ entry: entryName, root: "/" });
