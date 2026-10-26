@@ -2,7 +2,7 @@
 
 > This file is the concatenation of every public docs page. It exists for LLM ingestion. For a curated short index see llms.txt; for the rendered site see harmoniclabs.tech.
 
-Generated: 2026-05-31T01:01:05Z
+Generated: 2026-07-22T23:43:37Z
 
 ---
 
@@ -118,7 +118,7 @@ async function greet({ lockedUtxo, ownerWallet, ownerPrivateKey, scriptRefUtxo }
 
 - [`contract`](../onchain/Contract%20Statements.md), [`state`](../onchain/State.md), [`spend`](../onchain/concepts/Validators%20101.md)
 - [`assert`](../onchain/Syntax/Control%20Flow%20Statements.md), `tx.signatories.includes(...)`
-- [`string.toBytes`](../onchain/Prelude/String.md), `bytes` equality via `==`
+- [`string.toBytes`](../onchain/Prelude/String.mdx), `bytes` equality via `==`
 - buildooor: `TxBuilder.buildSync`, `DataConstr`, `DataB`, `Credential.script`
 
 ## See also
@@ -267,8 +267,8 @@ To burn, mint a **negative** quantity. The policy script runs the same `mintOnce
 
 - [`contract`](../onchain/Contract%20Statements.md) with parameters, `mint` method-kind
 - `purpose` destructuring via [`Mint{ policyId }`](../onchain/API/types/ScriptContext/ScriptPurpose.md)
-- [`List<T>.some`](../onchain/Prelude/List.md), [`Value.amountOf`](../onchain/Prelude/Value.md)
-- [`Optional`](../onchain/Prelude/Optional.md) match on a `LinearMap.lookup` result
+- [`List<T>.some`](../onchain/Prelude/List.mdx), [`Value.amountOf`](../onchain/Prelude/Value.mdx)
+- [`Optional`](../onchain/Prelude/Optional.mdx) match on a `LinearMap.lookup` result
 - buildooor: `mints` field of `buildSync`, `Value.singleAsset`, `Value.merge`, `Value.lovelaces`
 
 ## See also
@@ -318,14 +318,14 @@ contract SimpleOrderBook
         {
             const {
                 tx,
-                spendingInputRef: purposeRef,
+                spendingRef: purposeRef,
                 state: { ownerHash, policy, tokenName, minReceiveAmount }
             } = context;
 
             // The input named in the redeemer is this script's invocation
-            const { ref: spendingInputRef, resolved: spendingInput } =
+            const { ref: inputRef, resolved: spendingInput } =
                 tx.inputs[inputIdx];
-            assert purposeRef == spendingInputRef;
+            assert purposeRef == inputRef;
 
             const ownAddr = spendingInput.address;
             const ownScriptHash = ownAddr.credential.hash();
@@ -529,9 +529,9 @@ Pebble symbols this example exercises:
 - `contract`, `state`, `spend` — see [Contract Statements](../onchain/Contract%20Statements.md), [State](../onchain/State.md)
 - [`tx.inputs`](../onchain/API/types/Tx/TxIn.md), [`tx.outputs`](../onchain/API/types/Tx/TxOut.md), `tx.signatories`
 - [`Address`](../onchain/API/types/Address/Address.md), [`Credential`](../onchain/API/types/Address/Credential.md)
-- [`Value.amountOf`](../onchain/Prelude/Value.md)
-- [`List<T>.filter`](../onchain/Prelude/List.md), [`List<T>.length`](../onchain/Prelude/List.md)
-- [`spendingInputRef`](../onchain/concepts/Validators%20101.md)
+- [`Value.amountOf`](../onchain/Prelude/Value.mdx)
+- [`List<T>.filter`](../onchain/Prelude/List.mdx), [`List<T>.length`](../onchain/Prelude/List.mdx)
+- [`spendingRef`](../onchain/concepts/Validators%20101.md)
 - [Pitfalls — Double-satisfaction](../onchain/reference/Pitfalls.md)
 
 Buildooor APIs used:
@@ -752,6 +752,39 @@ if the build was successful, you should see an executable at the `out/pebble` pa
 
 :::
 
+## Editor support — `Pebble Language` extension
+
+The official VS Code extension ships syntax highlighting, on-save type checking, and Language-Server-Protocol features (go-to-definition, hover types, diagnostics) for `.pebble` files.
+
+### From inside VS Code
+
+1. Open the Extensions view: `Ctrl+Shift+X` (or `Cmd+Shift+X` on macOS).
+2. Search for **`Pebble Language`**.
+3. Install the entry published by `HarmonicLabs`.
+
+### From the command line
+
+```bash
+code --install-extension HarmonicLabs.pebble-lsp
+```
+
+Or, for VS Codium / OSS builds that use the Open VSX registry:
+
+```bash
+codium --install-extension HarmonicLabs.pebble-lsp
+```
+
+### Marketplace links
+
+- VS Code Marketplace: [`HarmonicLabs.pebble-lsp`](https://marketplace.visualstudio.com/items?itemName=HarmonicLabs.pebble-lsp)
+- Open VSX (VS Codium, Cursor, etc.): [`HarmonicLabs/pebble-lsp`](https://open-vsx.org/extension/HarmonicLabs/pebble-lsp)
+
+:::info `pebble` on `PATH` recommended
+
+The extension's LSP shells out to the `pebble` CLI for compilation diagnostics. Install it first (see the section at the top of this page) so the editor can drive real type-checks rather than just colourise the file.
+
+:::
+
 ## Sanity check
 
 If everything proceeded smoothly, you should have the `pebble` command available in your terminal.
@@ -765,9 +798,9 @@ pebble --version
 which should output something like
 
 ```
-pebble-cli version:      0.1.2
-pebble language version: 0.1.2
-commit hash:             40887038e5d00f171e4684f4c456ffd468008445
+pebble-cli version:      0.3.1
+pebble language version: 0.3.1
+commit hash:             c991db9a357a7d214a7a17f867047ab7a3418e2f
 ```
 
 you can also run
@@ -1399,7 +1432,7 @@ Represents a transaction input.
 
 | Field    | Description                     |
 | -------- | ------------------------------- |
-| `txOutRef` | Reference to the previous TxOut |
+| `ref`      | Reference to the previous TxOut (a `TxOutRef`) |
 | `resolved` | The resolved TxOut being spent  |
 
 
@@ -1471,7 +1504,7 @@ sidebar_label: Builtin Interfaces
 
 # Builtin Interfaces
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Pebble's type-class machinery is exposed via **interfaces** — sets of methods a type can implement. Two are built into the prelude and auto-derived for every type that supports them. User-defined interfaces use the same dispatch mechanism but require explicit `implements` blocks.
 
@@ -1620,8 +1653,8 @@ This means **user impls always win** over the built-in derivation. If you write 
 
 ## See also
 
-- [`data`](./Prelude/Data.md) — the type `ToData` produces
-- [`std.builtins`](./Standard%20Library/std.builtins.md) — the underlying data constructors (`constrData`, `iData`, `bData`, …)
+- [`data`](./Prelude/Data.mdx) — the type `ToData` produces
+- [`std.builtins`](./Standard%20Library/std.builtins.mdx) — the underlying data constructors (`constrData`, `iData`, `bData`, …)
 - [Datum & Redeemer Flow](./concepts/Datum%20and%20Redeemer%20Flow.md) — when and where `ToData` is invoked at the on-chain ↔ off-chain boundary
 
 
@@ -1634,7 +1667,7 @@ sidebar_label: Builtin Values and Literals
 
 # Builtin Values and Literals
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Every literal form Pebble's tokenizer and parser recognise, plus the small set of implicit bindings the compiler injects into method bodies.
 
@@ -1646,7 +1679,7 @@ Every literal form Pebble's tokenizer and parser recognise, plus the small set o
 | Underscore separator | `1_000_000`     | Cosmetic; ignored at parse time.                   |
 | Hexadecimal          | `0xCAFE`        | Case-insensitive after `0x`.                       |
 
-All resolve to type [`int`](./Prelude/Int.md).
+All resolve to type [`int`](./Prelude/Int.mdx).
 
 ```ts
 const big: int = 1_000_000;
@@ -1660,9 +1693,9 @@ const neg: int = -7;
 |--------------|-----------------|------------------------------------------------------------------|
 | Hex literal  | `#deadbeef`     | Each pair of hex digits is one byte. Case-insensitive after `#`. |
 | Empty        | `#""`           | Zero-length byte string.                                         |
-| From string  | `"x".toBytes()` | UTF-8 encode a `string` literal (via the [`string`](./Prelude/String.md) method). |
+| From string  | `"x".toBytes()` | UTF-8 encode a `string` literal (via the [`string`](./Prelude/String.mdx) method). |
 
-All resolve to type [`bytes`](./Prelude/Bytes.md).
+All resolve to type [`bytes`](./Prelude/Bytes.mdx).
 
 ```ts
 const policy: PolicyId = #cafedead;
@@ -1683,7 +1716,7 @@ Escapes (`\n`, `\t`, `\"`, `\\`, etc.) are recognised inside double quotes. Ther
 
 ## Boolean literals
 
-`true`, `false` — type [`bool`](./Prelude/Boolean.md).
+`true`, `false` — type [`bool`](./Prelude/Boolean.mdx).
 
 ```ts
 const ok: bool = true;
@@ -1710,7 +1743,7 @@ const nested: List<List<int>> = [[1, 2], [3, 4]];
 
 The element type is inferred from the declared type, or from the first element if it's unambiguous. An empty literal `[]` requires an explicit type annotation.
 
-These produce values of type [`List<T>`](./Prelude/List.md). To get an [`Array<T>`](./Prelude/Array.md) (the random-access form), pass a list through [`std.array.fromList`](./Standard%20Library/std.array.md).
+These produce values of type [`List<T>`](./Prelude/List.mdx). To get an [`Array<T>`](./Prelude/Array.mdx) (the random-access form), pass a list through [`std.array.fromList`](./Standard%20Library/std.array.mdx).
 
 ## Map literals
 
@@ -1721,11 +1754,11 @@ const empty: LinearMap<bytes, int> = {};
 const m:     LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
 
-Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.md). Order of entries is preserved; duplicates are allowed (matching the underlying assoc-list semantics).
+Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.mdx). Order of entries is preserved; duplicates are allowed (matching the underlying assoc-list semantics).
 
 ## Struct / variant constructors
 
-Named constructors use `Name{ field: value, … }`:
+Construction always uses the **qualified** form `Type.Constructor{ field: value, … }` — for a single-constructor struct the constructor has the struct's own name:
 
 ```ts
 struct Order {
@@ -1734,21 +1767,32 @@ struct Order {
     amount: int,
 }
 
-const o: Order = Order{
+const o: Order = Order.Order{
     owner: #cafedead,
     policy: #beef1234,
     amount: 100,
 };
 ```
 
-For enums and sum types (including `Optional`), name the specific variant:
+For multi-constructor structs, qualify the specific variant:
 
 ```ts
-const some: Optional<int> = Some{ value: 42 };
-const none: Optional<int> = None{};
+struct Shape {
+    Circle { r: int }
+    Rect { w: int, h: int }
+}
+
+const s: Shape = Shape.Circle{ r: 2 };
 ```
 
-`Some{ value }` shorthand (where the variable `value` is in scope) works inside both expressions and `match`-arm patterns.
+:::caution bare constructor names are patterns, not expressions
+`Order{ … }`, `Circle{ … }`, `Some{ … }` **fail to resolve in expression
+position** — bare constructor names exist only as *patterns* (in `match`
+arms and `const` destructuring). `Optional` has no constructor expression at
+all: `Some` values are produced by stdlib operations (`lookup`, `find`, …)
+and the empty optional is the literal `undefined` (with an explicit
+`Optional` annotation).
+:::
 
 ## Implicit bindings inside method bodies
 
@@ -1773,7 +1817,7 @@ For `spend` methods, additional fields are available:
 |--------------------|-----------------------|----------------------------------------------------------|
 | `tx`               | `Tx`                  | The full transaction.                                    |
 | `purpose`          | `ScriptPurpose`       | `Spend{ ref: TxOutRef }` for `spend` methods.            |
-| `spendingInputRef` | `TxOutRef`            | The reference of the UTxO being spent (purpose-ref).     |
+| `spendingRef`      | `TxOutRef`            | The reference of the UTxO being spent (purpose-ref).     |
 | `optionalDatum`    | `Optional<data>`      | The raw datum, when no `state` is in scope.              |
 | `state`            | `<sum of states>`     | Present only inside a `spend` method declared on a [`state`](./State.md). |
 
@@ -1942,7 +1986,7 @@ The Pebble compiler reads its options from a `pebble.config.json` file at the ro
 
 ```json
 {
-  "compilerVersion": "^0.2.0",
+  "compilerVersion": "^0.3.1",
   "entry": "./src/index.pebble",
   "outDir": "./out",
   "removeTraces": true
@@ -1960,7 +2004,7 @@ The Pebble compiler reads its options from a `pebble.config.json` file at the ro
 The compiler validates this range against its own version at startup and throws if it does not satisfy it. A missing or empty value is treated as invalid.
 
 ```json
-{ "compilerVersion": "^0.2.0" }
+{ "compilerVersion": "^0.3.1" }
 ```
 
 See [Supported semver syntax](#supported-semver-syntax) below for the accepted range forms.
@@ -2152,6 +2196,28 @@ then off-chain you pick:
 
 The constructor index is the **method's declaration order** for that script purpose.
 
+### This wrapper is present even with a single method
+
+The `Constr(methodIndex, [...])` selector is **always** there — including when a
+purpose has exactly one method. A lone
+
+```ts
+spend edit(redeemer: data) { /* ... */ }
+```
+
+does **not** receive the raw redeemer as `redeemer`. The on-chain redeemer must
+be `Constr(0, [ <your data> ])`, and the method parameter `redeemer` is bound to
+field `0` of that constructor:
+
+- ✅ `DataConstr(0, [ myData ])` → `edit` runs with `redeemer == myData`
+- ❌ `myData` (unwrapped) → fails to decode (`"Expected the Constr constructor"`)
+
+This is intentional: it keeps an existing method's encoding stable when a second
+method is added later (its `Constr(0, ...)` shape doesn't change). Note the
+asymmetry with the **datum**, which is *not* method-tagged — a datum is a single
+value, read raw (`value as MyDatum`), whereas the redeemer always carries the
+method selector.
+
 ## Building these in buildooor
 
 Given a Pebble method like
@@ -2255,10 +2321,10 @@ Cardano's ledger is a set of **unspent transaction outputs (UTxOs)**. A transact
 |------------|---------------------|-------------------------------------------------------------------------------|
 | Address    | `Address`           | Where the funds live. Determines who can spend.                                |
 | Value      | `Value`             | What's in the UTxO — ADA, native tokens, NFTs.                                 |
-| Datum      | `Optional<data>`    | Arbitrary data attached to the output. Required for scripts; nil for wallets.  |
-| Reference script | `Optional<bytes>` | A script stored inline so callers don't have to attach it themselves.       |
+| Datum      | `OutputDatum`       | Optional Datum, can be either missing, a hash of the datum (backwards compatibility only), or inline with the actual data present, effectively acts as a `Optional<data>` although with different contstructors |
+| Reference script | `Optional<bytes>` | If present (`Some` constructor) it specifies the 28-length hash of the ref script attached to the utxo |
 
-Outputs that pay to a **script address** (an address whose payment credential is a `ScriptHash`) must carry a datum — that's how the script knows what state it's guarding.
+Outputs that pay to a **script address** (an address whose payment credential is a `ScriptHash`) typically carry a datum — that's how the script remembers what state it's guarding across transactions. Since Plutus V3, the datum is no longer mandatory: a spend script can validate a UTxO with `NoDatum` provided its logic doesn't need any persisted state (for instance, when the decision depends only on the current transaction's inputs, outputs, and signatories). When a datum *is* present, the validator is responsible for treating it as input that must be checked, not as a trusted fact — past validation only guarantees the datum was accepted by whichever script wrote it.
 
 ## What spending looks like
 
@@ -2270,7 +2336,7 @@ A transaction `tx` has:
 - `signatories: List<PubKeyHash>` — who has signed.
 - ... plus fees, validity interval, certificates, governance, etc.
 
-The transaction is **valid** iff:
+The transaction is **valid** if:
 1. Every script protecting an input or controlling a mint approves it.
 2. The values balance: `sum(inputs.value) + mint == sum(outputs.value) + fee`.
 3. Other ledger rules (signatures, time, slot limits, ...) are satisfied.
@@ -2396,7 +2462,7 @@ spend handler() {
 
 For `spend` methods, `context` also exposes:
 
-- `spendingInputRef: TxOutRef` — the reference of the UTxO being spent (the "purpose ref").
+- `spendingRef: TxOutRef` — the reference of the UTxO being spent (the "purpose ref").
 - `optionalDatum: Optional<data>` — the datum on that UTxO, if any.
 - For stateful contracts, `state` — the typed datum (see [State](../State.md)).
 
@@ -2414,7 +2480,7 @@ means "this script expects a redeemer that decodes as a two-field record `(int, 
 
 ## What "returning" means
 
-A Pebble method returns `void`. The validator accepts iff every `assert` in the method passes and no `fail` is hit. There's no return value to inspect — the contract is "succeeded" or "failed".
+A Pebble method returns `void`. The validator accepts if every `assert` in the method passes and no `fail` is hit. There's no return value to inspect — the contract is "succeeded" or "failed".
 
 This is unlike Plutus's older "true/false" convention. Pebble is closer to "throw on rejection".
 
@@ -2488,8 +2554,8 @@ The shape of context depends on the validator purpose.
 Inside each validator, a context object provides:
 
 - `tx` : Transaction
-- `purpose` : Purpose reference depending on the validator kind (`spendingInputRef`, `mintingPolicyHash` etc.)
-- `datum`, `redeemer` - optional fields
+- purpose-specific fields (`spendingRef` for `spend`, `policy` for `mint`, etc. — see below)
+- for `spend` validators: `optionalDatum` (and `state` inside [`state`](./State.md) blocks)
 
 Each validator function inside a contract is independent — compilation produces one Plutus script per validator.
 
@@ -2501,7 +2567,7 @@ The available fields in context vary depending on the validator purpose. Pebble 
 ```ts
 contract OnlySpend {
     spend allowSpending() {
-        const { tx, spendingInputRef } = context;
+        const { tx, spendingRef } = context;
 
         // simple always-valid contract
         assert true;
@@ -2510,7 +2576,7 @@ contract OnlySpend {
 ```
 Here, the contract is `OnlySpend`. It has a single `spend` validator `allowSpending`. `context` is a keyword bound to the spending validator context. 
 
-In the contract body, the `context` is destructured to access the transaction (`tx`) and spending input (`spendingInputRef`).
+In the contract body, the `context` is destructured to access the transaction (`tx`) and the reference of the input being spent (`spendingRef`).
 
 
 
@@ -2539,6 +2605,38 @@ Hence, it is ideal to use parameters for constants known at deployment time, and
 
 Contract parameters are especially useful for  Single-owner scripts (binding a contract to a fixed PubKeyHash), Policy scripts (tying to a fixed minting policy).
 
+### Applying parameters off-chain (the parameter ABI)
+
+The compiled script is a function of its parameters: apply them as UPLC
+constants (in declaration order, before the script context) to obtain the
+deployable script.
+
+Each parameter must be applied as its **runtime representation**:
+
+| param type | apply as |
+|---|---|
+| `int` | a UPLC **integer** constant |
+| `bytes` | a UPLC **bytestring** constant |
+| `boolean` | a UPLC **bool** constant |
+| data-encoded types (`Address`, `TxOutRef`, structs, `data`, ...) | a UPLC **data** constant |
+
+:::caution scalars are NOT wrapped in Data
+Most Cardano tooling (`applyParamsToScript` in Lucid, MeshJS, Aiken's
+`apply`, ...) wraps **every** parameter as Plutus Data. Pebble scalars are
+native constants instead: wrapping a `bytes` param in `DataB` (or an `int`
+in `DataI`) produces a script that **fails at a distance** during phase-2
+validation — e.g. `lengthOfByteString :: not BS` the first time the
+parameter is used — because the validator reads the parameter as its
+native type without decoding.
+
+```ts
+// off-chain (buildooor / @harmoniclabs/uplc), for
+// `param owner: bytes; param genesisUtxo: TxOutRef;`
+body = new Application( body, UPLCConst.byteString( ownerHash ) );    // bytes -> native
+body = new Application( body, UPLCConst.data( txOutRefData( ref ) ) ); // struct -> data
+```
+:::
+
 
 
 ## Validators 
@@ -2561,12 +2659,16 @@ Supported validator types:
 
 The shape of `context depends on the validator purpose:
 
+The **redeemer** never appears in `context`: a validator's redeemer fields are its
+**method parameters**.
+
 ### For `spend` validators
 ```ts
 {
     tx: Tx,
-    spendingInputRef: TxInputRef,
-    optionalDatum: Option<Data>
+    spendingRef: TxOutRef,          // reference of the input being spent
+    optionalDatum: Optional<data>,
+    state: /* the matched state */  // only inside `state` blocks
 }
 ```
 
@@ -2574,7 +2676,7 @@ The shape of `context depends on the validator purpose:
 ```ts
 {
     tx: Tx,
-    mintingPolicyHash: MintingPolicyHash
+    policy: bytes   // this script's minting policy hash
 }
 ```
 
@@ -2582,6 +2684,7 @@ The shape of `context depends on the validator purpose:
 ```ts
 {
     tx: Tx,
+    certificateIndex: int,
     certificate: Certificate
 }
 ```
@@ -2590,22 +2693,232 @@ The shape of `context depends on the validator purpose:
 ```ts
 {
     tx: Tx,
-    withdrawal: Withdrawal
+    policy: bytes   // the withdrawing (script) credential hash
 }
 ```
 
-### For `propose` and `vote` validators (used in governance features):
+### For `propose` validators:
 ```ts
 {
     tx: Tx,
-    proposal: Proposal,
-    vote: Vote
+    proposalIndex: int,
+    proposal: ProposalProcedure
+}
+```
+
+### For `vote` validators:
+```ts
+{
+    tx: Tx,
+    voter: Voter
 }
 ```
 
 
+## Method names
 
-=== onchain/Prelude/Array.md ===
+All validators declared **directly** in the contract body share one redeemer union (one constructor per method), so their names must be **unique across all purposes** — `spend foo` and `mint foo` in the same contract is a compile error. Methods inside a [`state`](./State.md) block only need unique names within their own state.
+
+## Exporting a contract
+
+Since `0.3.7` a contract can be exported:
+
+```ts
+export contract Vault { ... }
+```
+
+This exports the contract's **type-level symbols** — its state-datum union (`Vault`, `Vault.SomeState`) and its redeemer unions (`redeemerof Vault`, `redeemerof Vault.SomeState`) — so *other* contracts can decode its datums and redeemers. No code is exported, and the validator bodies of an imported contract are never compiled.
+
+See [Cross-Contract Types](./Cross-Contract%20Types.md) for the full picture.
+
+
+=== onchain/Cross-Contract Types.md ===
+
+---
+sidebar_position: 6
+sidebar_label: Cross-Contract Types
+---
+
+# Cross-contract types — `export contract` and `redeemerof`
+
+*Available since compiler `0.3.7`.*
+
+A validator often needs to inspect **another contract's** UTxOs or redeemers: checking that an output sits at a partner script with a well-formed datum, or that a reference input's state matches an expectation. To do that safely you need the other contract's **data shapes** — its datum and redeemer types — without copy-pasting mirror structs by hand.
+
+Pebble exposes them through two pieces:
+
+- `export contract` makes a contract's **type-level symbols** importable;
+- the `redeemerof` type operator names its **redeemer unions**.
+
+## Exporting a contract
+
+```ts
+// vault.pebble
+export contract Vault {
+    state Locked {
+        owner: bytes
+        amount: int
+
+        spend withdraw( part: int ) { /* ... */ }
+        spend close() { /* ... */ }
+    }
+    state Idle {
+        owner: bytes
+    }
+
+    mint open( amount: int ) { /* ... */ }
+    mint burn() { /* ... */ }
+}
+```
+
+`export contract` does **not** export any code. It exports the contract's *types*, derived from its **method signatures only**:
+
+| symbol | what it is |
+|---|---|
+| `Vault` | the **state-datum union**: one constructor per `state`, fields = the state's fields |
+| `Vault.Locked` | the union **narrowed** to one state (decoding checks that state's constructor tag) |
+| `redeemerof Vault` | the union of the contract's **direct methods** (see below) |
+| `redeemerof Vault.Locked` | the union of that **state's `spend` methods** |
+
+Because only signatures are read, importing a contract never compiles its validator bodies — cross-contract type access adds nothing to your script and nothing of yours to theirs.
+
+A contract **without** `export` stays completely opaque: it cannot be imported, and none of the symbols above exist for it.
+
+:::info stateless contracts
+A contract with no `state` blocks has no datum type: using its name in type position is a compile error (`30206`). Its `redeemerof` union still works.
+:::
+
+## Importing and using the datum types
+
+```ts
+// main.pebble
+import { Vault } from "./vault.pebble";
+
+contract Main {
+    spend s( redeemer: data ) {
+        const { tx } = context;
+        const InlineDatum{ datum: od } = tx.outputs[0].datum;
+
+        // whole union: match over the states
+        match ( od as Vault ) {
+            when Locked{ owner, amount }: { assert amount > 0; }
+            when Idle{ owner }: { assert owner.length() == 28; }
+        }
+
+        // or decode ONE state directly — the constructor tag is checked,
+        // decoding a different state fails at runtime
+        const Locked{ owner, amount } = od as Vault.Locked;
+    }
+}
+```
+
+`import * as lib from "./vault.pebble";` works too: `lib.Vault`, `lib.Vault.Locked`, `redeemerof lib.Vault`.
+
+## `redeemerof`
+
+```ts
+import { Vault } from "./vault.pebble";
+
+// the direct-methods union: one constructor per method,
+// fields = the method's parameters
+match ( rdmr as redeemerof Vault ) {
+    when open{ amount }: { /* ... */ }
+    when burn{}: { /* ... */ }
+}
+
+// a state's spend-methods union
+match ( rdmr as redeemerof Vault.Locked ) {
+    when withdraw{ part }: { /* ... */ }
+    when close{}: { /* ... */ }
+}
+```
+
+`redeemerof` applies to a **contract** or a **contract state** — never to a single method. A method is one *constructor* of the union, so "the redeemer of `withdraw`" is spelled by matching (or destructuring) that constructor:
+
+```ts
+const withdraw{ part } = rdmr as redeemerof Vault.Locked;
+```
+
+`redeemerof C.method` is a dedicated compile error (`30205`).
+
+:::info contextual keyword
+`redeemerof` is only special in type position when followed by a name — a user type actually called `redeemerof` keeps working.
+:::
+
+### Naming the result
+
+`redeemerof` produces an ordinary (data-encoded) struct type; name it with a **`type` alias**:
+
+```ts
+type VaultRedeemer  = redeemerof Vault;
+type LockedRedeemer = redeemerof Vault.Locked;
+
+// behaves like any struct type from here on:
+struct Wrapped { W { inner: VaultRedeemer } }
+
+const open{ amount } = d as VaultRedeemer.open;   // constructor narrowing
+```
+
+`using X = ...` is a **namespace** alias and cannot name a type — use `type`.
+
+## Method names and redeemer encoding
+
+All of a contract's **direct** methods (declared straight in the contract body, any purpose) share **one** redeemer union. Two consequences:
+
+1. **Direct method names must be unique across all purposes** — `spend foo` and `mint foo` in one contract is a compile error (`30200`). State `spend` methods only need uniqueness *within their own state* (each state has its own union), so a state method may share a name with a direct method or with another state's method.
+
+2. The union's constructor tags follow the order **spend, mint, withdraw, certify, propose, vote** (declaration order within each purpose). A contract whose direct methods live under a **single purpose** — the common case — keeps exactly the same on-chain encoding as before `0.3.7`.
+
+:::caution encoding change in 0.3.7
+Contracts with direct methods under **multiple purposes** changed their on-chain redeemer encoding in `0.3.7`: previously each purpose had its own union with tags restarting at 0; now the tags are unique across all direct methods. Redeploy such contracts and update their off-chain code. Single-purpose contracts and per-state redeemers are byte-identical.
+:::
+
+As with all data-encoded unions, a **single-method** contract (or single-`spend`-method state) uses the untagged shortcut encoding: the redeemer is the bare field list.
+
+## Circular imports
+
+Two contracts that validate *each other's* UTxOs need to import each other — a cycle. This is allowed as long as only **types and contracts** cross the cycle:
+
+```ts
+// a.pebble                                // b.pebble
+import { B } from "./b.pebble";            import { A } from "./a.pebble";
+
+export contract A {                        export contract B {
+    state Holding {                            state Pending {
+        owner: bytes                               n: int
+        spend release( amount: int ) {             spend accept() {
+            /* decodes B.Pending */                    /* decodes A.Holding */
+        }                                          }
+    }                                          }
+}                                          }
+```
+
+Under the hood, a file inside a cycle first runs a *types-only* pass (types, `type` aliases, interfaces, exported-contract symbols) so its cycle mates can bind those; its functions and constants compile when its own turn comes. Importing a **function or constant** from a module that is still mid-cycle is a compile error (`6056`: *"circular import may only reference types and contracts"*).
+
+Mutually-recursive **struct field** definitions across a cycle are not supported.
+
+## Diagnostics reference
+
+| code | meaning |
+|---|---|
+| `30200` | duplicate method name across purposes (or within one state) |
+| `30201` | `redeemerof` applied to something that is not an (exported) contract |
+| `30202` | contract has no direct methods → no `redeemerof C` |
+| `30203` | `redeemerof C.State`: no such state |
+| `30204` | `redeemerof C.State`: state has no `spend` methods |
+| `30205` | `redeemerof` applied to a method (or deeper path) |
+| `30206` | stateless contract used as a datum type |
+| `6056` | value (function/const) imported across a circular back edge |
+
+## See also
+
+- [Contract Statements](./Contract%20Statements.md) — the `contract` declaration itself
+- [`state`](./State.md) — state blocks and their datum encoding
+- [Datum & Redeemer Flow](./concepts/Datum%20and%20Redeemer%20Flow.md) — how datums and redeemers cross the on-chain boundary
+- [Top-Level Statements](./Syntax/Top%20Level%20Statements.md) — imports, exports and `type` aliases
+
+
+=== onchain/Prelude/Array.mdx ===
 
 ---
 sidebar_position: 7
@@ -2614,11 +2927,11 @@ sidebar_label: Array<T>
 
 # `Array<T>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-A fixed-size, indexed container. Built from a `List<T>` via [`std.array.fromList`](../Standard%20Library/std.array.md) and consumed via `at(i)` or the index operator.
+A fixed-size, indexed container. Built from a `List<T>` via [`std.array.fromList`](../Standard%20Library/std.array.mdx) and consumed via `at(i)` or the index operator.
 
-`Array<T>` is **not** the right answer to "I need fast indexed reads on a `List<T>`". The on-chain cost model bills [`List<T>` indexing](./List.md) as effectively constant for practical indices, and `std.array.fromList` itself is O(n) in the list length — so the conversion almost always costs more than the reads you were optimising. See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
+`Array<T>` is **not** the right answer to "I need fast indexed reads on a `List<T>`". The on-chain cost model bills [`List<T>` indexing](./List.mdx) as effectively constant for practical indices, and `std.array.fromList` itself is O(n) in the list length — so the conversion almost always costs more than the reads you were optimising. See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
 
 Reach for `Array<T>` only when:
 - You receive one from elsewhere (an external API, a builtin) and need to read it.
@@ -2626,13 +2939,12 @@ Reach for `Array<T>` only when:
 
 For sequential traversal (`map`, `foldl`, `filter`, ...), use `List<T>` directly.
 
-```ts
-using { fromList } = std.array;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const xs: Array<int> = fromList([10, 20, 30, 40]);
-assert xs.at(2) == 30;
-assert xs[2] == 30;   // same thing
-```
+<RunnableExample
+initialCode={`const xs: Array<int> = std.array.fromList([10, 20, 30, 40]);\n\nassert std.array.length(xs) == 4 else "wrong length";\nassert std.array.at(xs, 2)  == 30 else "at(2) wrong";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -2663,12 +2975,12 @@ const xs: Array<int> = std.array.fromList([1, 2, 3]);
 
 ## See also
 
-- [`std.array`](../Standard%20Library/std.array.md) — function-call surface
-- [`List<T>`](./List.md) — what most pipelines operate on. Indexed reads on a list are already cheap; don't convert unless you have a specific reason
+- [`std.array`](../Standard%20Library/std.array.mdx) — function-call surface
+- [`List<T>`](./List.mdx) — what most pipelines operate on. Indexed reads on a list are already cheap; don't convert unless you have a specific reason
 - [Cost and Complexity](../reference/Cost%20and%20Complexity.md) — measured numbers for list-vs-array access
 
 
-=== onchain/Prelude/Boolean.md ===
+=== onchain/Prelude/Boolean.mdx ===
 
 ---
 sidebar_position: 4
@@ -2677,7 +2989,7 @@ sidebar_label: bool
 
 # `bool`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Logical truth value: `true` or `false`. Maps to Plutus Core `Bool`.
 
@@ -2703,20 +3015,20 @@ if( signed && tx.outputs.length() > 0 ) {
 | Equality    | `==`, `!=`                                                               |
 
 :::tip Short-circuit vs strict
-`&&` and `\|\|` are short-circuit: the right operand is only evaluated if the left doesn't decide the result. If you need strict evaluation (rare — usually for higher-order use), see [`std.boolean.strictAnd`](../Standard%20Library/std.boolean.md) and `strictOr`.
+`&&` and `\|\|` are short-circuit: the right operand is only evaluated if the left doesn't decide the result. If you need strict evaluation (rare — usually for higher-order use), see [`std.boolean.strictAnd`](../Standard%20Library/std.boolean.mdx) and `strictOr`.
 :::
 
 ## Methods
 
-`bool` has no method-call surface. Use operators or the [`std.boolean`](../Standard%20Library/std.boolean.md) namespace.
+`bool` has no method-call surface. Use operators or the [`std.boolean`](../Standard%20Library/std.boolean.mdx) namespace.
 
 ## See also
 
-- [`std.boolean`](../Standard%20Library/std.boolean.md) — function-call surface
-- [`std.builtins`](../Standard%20Library/std.builtins.md#polymorphic-intrinsics) — `ifThenElse<T>` is the strict polymorphic conditional
+- [`std.boolean`](../Standard%20Library/std.boolean.mdx) — function-call surface
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#polymorphic-intrinsics) — `ifThenElse<T>` is the strict polymorphic conditional
 
 
-=== onchain/Prelude/Bytes.md ===
+=== onchain/Prelude/Bytes.mdx ===
 
 ---
 sidebar_position: 2
@@ -2725,14 +3037,16 @@ sidebar_label: bytes
 
 # `bytes`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Raw byte string. Maps to Plutus Core `ByteString`. Used for hashes, policy IDs, token names, signatures, and anything else that's "just bytes on the wire".
 
-```ts
-const policy: bytes = #deadbeef;
-const tokenName: bytes = "MyToken".toBytes();
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const policy:    bytes = #deadbeef;\nconst tokenName: bytes = #4d79546f6b656e;\n\nassert std.bytes.length(policy) == 4         else "wrong width";\nassert std.bytes.slice(1, 2, policy) == #adbe else "slice off";\nassert tokenName == #4d79546f6b656e            else "utf-8 off";`}
+height="240px"
+/>
 
 ## Literals
 
@@ -2801,12 +3115,12 @@ These are aliases, not nominal types — you can freely pass a `bytes` where any
 
 ## See also
 
-- [`std.bytes`](../Standard%20Library/std.bytes.md) — function-call surface
-- [`std.crypto`](../Standard%20Library/std.crypto.md) — hash functions produce `bytes`
-- [`std.builtins`](../Standard%20Library/std.builtins.md) — bitwise operations and `consByteString`, `replicateByte`, etc.
+- [`std.bytes`](../Standard%20Library/std.bytes.mdx) — function-call surface
+- [`std.crypto`](../Standard%20Library/std.crypto.mdx) — hash functions produce `bytes`
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx) — bitwise operations and `consByteString`, `replicateByte`, etc.
 
 
-=== onchain/Prelude/Data.md ===
+=== onchain/Prelude/Data.mdx ===
 
 ---
 sidebar_position: 5
@@ -2815,7 +3129,7 @@ sidebar_label: data
 
 # `data`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 The Plutus Core `Data` type: a serialization format that every on-chain type can be encoded into and decoded from. Datums, redeemers, and the script context all flow through `data` at the system boundary.
 
@@ -2825,11 +3139,11 @@ You rarely write `data` directly; the compiler does it for you whenever you use 
 
 | Constructor | Shape                                  | Builtin builder                                 |
 |-------------|----------------------------------------|-------------------------------------------------|
-| Constr      | `(index: int, fields: List<data>)`     | [`std.builtins.constrData`](../Standard%20Library/std.builtins.md) |
-| Map         | `LinearMap<data, data>`                | [`std.builtins.mapData`](../Standard%20Library/std.builtins.md)   |
-| List        | `List<data>`                           | [`std.builtins.listData`](../Standard%20Library/std.builtins.md)  |
-| I (integer) | `int`                                  | [`std.builtins.iData`](../Standard%20Library/std.builtins.md)     |
-| B (bytes)   | `bytes`                                | [`std.builtins.bData`](../Standard%20Library/std.builtins.md)     |
+| Constr      | `(index: int, fields: List<data>)`     | [`std.builtins.constrData`](../Standard%20Library/std.builtins.mdx) |
+| Map         | `LinearMap<data, data>`                | [`std.builtins.mapData`](../Standard%20Library/std.builtins.mdx)   |
+| List        | `List<data>`                           | [`std.builtins.listData`](../Standard%20Library/std.builtins.mdx)  |
+| I (integer) | `int`                                  | [`std.builtins.iData`](../Standard%20Library/std.builtins.mdx)     |
+| B (bytes)   | `bytes`                                | [`std.builtins.bData`](../Standard%20Library/std.builtins.mdx)     |
 
 ## Operators
 
@@ -2860,13 +3174,13 @@ For most use cases prefer the `.toData()` method (via the [`ToData`](../Builtin%
 
 ## See also
 
-- [`std.builtins`](../Standard%20Library/std.builtins.md) — `data` constructors and destructors, `serialiseData`, `equalsData`
-- [`std.data`](../Standard%20Library/std.data.md) — `string ↔ data` helpers
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx) — `data` constructors and destructors, `serialiseData`, `equalsData`
+- [`std.data`](../Standard%20Library/std.data.mdx) — `string ↔ data` helpers
 - [`ToData`](../Builtin%20Interfaces.md#todata) — auto-derived `.toData()` for every encodable type
-- [`LinearMap<K, V>`](./LinearMap.md), [`List<T>`](./List.md) — the containers `data` is built from
+- [`LinearMap<K, V>`](./LinearMap.mdx), [`List<T>`](./List.mdx) — the containers `data` is built from
 
 
-=== onchain/Prelude/Int.md ===
+=== onchain/Prelude/Int.mdx ===
 
 ---
 sidebar_position: 1
@@ -2875,15 +3189,16 @@ sidebar_label: int
 
 # `int`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Arbitrary-precision signed integer. Maps to Plutus Core's `Integer`. Does not overflow.
 
-```ts
-const supply: int = 1_000_000;
-let spent: int = 500;
-assert (supply - spent) >= 0;
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const supply: int = 1_000_000;\nlet   spent:  int = 500;\n\nconst left = supply - spent;\nassert left >= 0       else "underflow";\nassert left == 999_500 else "math off";`}
+height="220px"
+/>
 
 ## Literals
 
@@ -2902,31 +3217,31 @@ assert (supply - spent) >= 0;
 | Unary       | `-` (negation)                                                           |
 
 :::note Division semantics
-`/` and `%` round toward **negative infinity** (matching `std.int.divide` / `std.int.mod`). For C-style truncated division (toward zero), use [`std.int.quotient`](../Standard%20Library/std.int.md) / [`std.int.remainder`](../Standard%20Library/std.int.md).
+`/` and `%` round toward **negative infinity** (matching `std.int.divide` / `std.int.mod`). For C-style truncated division (toward zero), use [`std.int.quotient`](../Standard%20Library/std.int.mdx) / [`std.int.remainder`](../Standard%20Library/std.int.mdx).
 :::
 
 ## Methods
 
-`int` has no method-call surface. All operations are via operators or the [`std.int`](../Standard%20Library/std.int.md) namespace.
+`int` has no method-call surface. All operations are via operators or the [`std.int`](../Standard%20Library/std.int.mdx) namespace.
 
 Common idioms:
 
 | Want…                              | Use                                                                       |
 |------------------------------------|---------------------------------------------------------------------------|
-| Modular exponentiation             | [`std.builtins.expModInteger(base, exp, m)`](../Standard%20Library/std.builtins.md) |
-| `int → bytes` (smallest fit)       | [`std.bytes.fromInt(n)`](../Standard%20Library/std.bytes.md)             |
-| `int → bytes` (fixed width)        | [`std.builtins.integerToByteString(true, size, n)`](../Standard%20Library/std.builtins.md) |
-| `int → bool`                       | [`std.int.toBoolean(n)`](../Standard%20Library/std.int.md)               |
+| Modular exponentiation             | [`std.builtins.expModInteger(base, exp, m)`](../Standard%20Library/std.builtins.mdx) |
+| `int → bytes` (smallest fit)       | [`std.bytes.fromInt(n)`](../Standard%20Library/std.bytes.mdx)             |
+| `int → bytes` (fixed width)        | [`std.builtins.integerToByteString(true, size, n)`](../Standard%20Library/std.builtins.mdx) |
+| `int → bool`                       | [`std.int.toBoolean(n)`](../Standard%20Library/std.int.mdx)               |
 | Encoded as `data`                  | `n.toData()` ([`ToData`](../Builtin%20Interfaces.md#todata)) — uses `iData` |
 
 ## See also
 
-- [`std.int`](../Standard%20Library/std.int.md) — function-call surface
-- [`bytes`](./Bytes.md) — conversion target
+- [`std.int`](../Standard%20Library/std.int.mdx) — function-call surface
+- [`bytes`](./Bytes.mdx) — conversion target
 - [`ToData`](../Builtin%20Interfaces.md#todata) — auto-derived `.toData()`
 
 
-=== onchain/Prelude/LinearMap.md ===
+=== onchain/Prelude/LinearMap.mdx ===
 
 ---
 sidebar_position: 8
@@ -2935,7 +3250,7 @@ sidebar_label: LinearMap<K, V>
 
 # `LinearMap<K, V>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 An association list — Cardano's on-chain "map". Structurally a `List<LinearMapEntry<K, V>>` where each entry is a `(K, V)` pair. Lookups are O(n); choose it because the underlying Plutus representation is what the chain speaks, not because it's fast.
 
@@ -2956,6 +3271,27 @@ const m: LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
 
 The key/value types are inferred from context.
+
+## In type position
+
+Since `0.3.6`, `LinearMap<K, V>` is a first-class type everywhere a type can
+appear — struct fields, `type` alias targets, annotations:
+
+```ts
+// e.g. CIP-68 metadata
+struct RootNft {
+    metadata: LinearMap<bytes, bytes>,
+    version: int,
+    extra: data
+}
+```
+
+Entries are `data`-encoded on-chain regardless of `K`/`V`; typed maps
+convert at the boundaries automatically. In particular `lookup` encodes a
+typed key for the underlying `equalsData` comparison (since `0.3.7`), so
+`dd.metadata.lookup( #6d6564696154797065 )` works exactly like a lookup on
+a `LinearMap<data, data>` obtained from
+[`unMapData`](../Standard%20Library/std.builtins.mdx#data-destructors).
 
 ## Methods
 
@@ -2990,8 +3326,14 @@ The entry returned by `head()`. Has two fields:
 
 | Field    | Type | Description       |
 |----------|------|-------------------|
-| `fst`    | `K`  | The key.          |
-| `snd`    | `V`  | The value.        |
+| `key`    | `K`  | The key.          |
+| `value`  | `V`  | The value.        |
+
+Access them by **destructuring**:
+
+```ts
+const { key, value } = m.head();
+```
 
 ## Iteration
 
@@ -2999,19 +3341,20 @@ The entry returned by `head()`. Has two fields:
 
 ```ts
 for( const entry of m ) {
-    trace(entry.fst);
-    trace(entry.snd);
+    const { key, value } = entry;
+    trace(key);
+    trace(value);
 }
 ```
 
 ## See also
 
-- [`std.linearMap`](../Standard%20Library/std.linearMap.md) — function-call surface
-- [`List<T>`](./List.md) — structural relative
-- [`std.builtins`](../Standard%20Library/std.builtins.md#data-destructors) — `mapData` / `unMapData`
+- [`std.linearMap`](../Standard%20Library/std.linearMap.mdx) — function-call surface
+- [`List<T>`](./List.mdx) — structural relative
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#data-destructors) — `mapData` / `unMapData`
 
 
-=== onchain/Prelude/List.md ===
+=== onchain/Prelude/List.mdx ===
 
 ---
 sidebar_position: 6
@@ -3020,17 +3363,18 @@ sidebar_label: List<T>
 
 # `List<T>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 A singly-linked list of elements of type `T`. Maps to Plutus Core's built-in list.
 
-Despite being a cons list at the interpreter level, **indexed access `xs[i]` is essentially free in the on-chain cost model**: it lowers to `headList (dropList i xs)`, and `dropList` is billed by the bit-width of `i` (constant for any practical index), not by how many cons cells get walked. So unlike with arrays in other languages, you don't need to convert to [`Array<T>`](./Array.md) for cheap indexed reads — see [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
+Despite being a cons list at the interpreter level, **indexed access `xs[i]` is essentially free in the on-chain cost model**: it lowers to `headList (dropList i xs)`, and `dropList` is billed by the bit-width of `i` (constant for any practical index), not by how many cons cells get walked. So unlike with arrays in other languages, you don't need to convert to [`Array<T>`](./Array.mdx) for cheap indexed reads — see [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
 
-```ts
-const xs: List<int> = [1, 2, 3, 4, 5];
-const doubled = xs.map((n) => n * 2);
-const total   = xs.foldl((acc, n) => acc + n, 0);
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const xs: List<int> = [1, 2, 3, 4, 5];\n\nconst total = std.list.foldl((acc, n) => acc + n, 0, xs);\nconst evens = std.list.filter((n) => n % 2 == 0, xs);\n\nassert total == 15                    else "sum wrong";\nassert std.list.length(evens) == 2    else "filter wrong";`}
+height="280px"
+/>
 
 ## Literals
 
@@ -3046,7 +3390,7 @@ The element type is inferred from context (or from the first element if obvious)
 | Method                                                                         | Description                                                                |
 |--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | `length(): int`                                                                | Element count. Walks the spine; O(n) in actual work, charged O(n) by the cost model. |
-| `isEmpty(): bool`                                                              | True iff the list has zero elements.                                       |
+| `isEmpty(): bool`                                                              | True if the list has zero elements.                                       |
 | `head(): T`                                                                    | First element. Fails on empty.                                             |
 | `tail(): List<T>`                                                              | Everything after the head. Fails on empty.                                 |
 | `prepend(x: T): List<T>`                                                       | New list with `x` at the front.                                            |
@@ -3055,8 +3399,8 @@ The element type is inferred from context (or from the first element if obvious)
 | `filter(p: (T) -> bool): List<T>`                                              | Keep only elements satisfying `p`.                                         |
 | `foldr<A>(f: (T, A) -> A, init: A): A`                                         | Right fold.                                                                |
 | `foldl<A>(f: (A, T) -> A, init: A): A`                                         | Left fold. Tail-recursive; prefer for large lists.                         |
-| `some(p: (T) -> bool): bool`                                                   | True iff any element satisfies `p`. Short-circuits.                        |
-| `every(p: (T) -> bool): bool`                                                  | True iff all elements satisfy `p`. Short-circuits.                         |
+| `some(p: (T) -> bool): bool`                                                   | True if any element satisfies `p`. Short-circuits.                        |
+| `every(p: (T) -> bool): bool`                                                  | True if all elements satisfy `p`. Short-circuits.                         |
 | `find(p: (T) -> bool): Optional<T>`                                            | First match wrapped in `Some`, or `None`.                                  |
 | `equals(eq: (T, T) -> bool, other: List<T>): bool`                             | Element-wise equality using `eq`.                                          |
 
@@ -3107,13 +3451,13 @@ See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measu
 
 ## See also
 
-- [`std.list`](../Standard%20Library/std.list.md) — function-call surface
-- [`Array<T>`](./Array.md) — random-access counterpart
-- [`LinearMap<K, V>`](./LinearMap.md) — structurally a `List<LinearMapEntry<K, V>>`
-- [`std.builtins`](../Standard%20Library/std.builtins.md#polymorphic-intrinsics) — `mkCons`, `headList`, `tailList`, `nullList`, `chooseList`
+- [`std.list`](../Standard%20Library/std.list.mdx) — function-call surface
+- [`Array<T>`](./Array.mdx) — random-access counterpart
+- [`LinearMap<K, V>`](./LinearMap.mdx) — structurally a `List<LinearMapEntry<K, V>>`
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#polymorphic-intrinsics) — `mkCons`, `headList`, `tailList`, `nullList`, `chooseList`
 
 
-=== onchain/Prelude/Optional.md ===
+=== onchain/Prelude/Optional.mdx ===
 
 ---
 sidebar_position: 9
@@ -3122,7 +3466,7 @@ sidebar_label: Optional<T>
 
 # `Optional<T>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 A value that may be absent. Two constructors:
 
@@ -3140,14 +3484,22 @@ match maybe {
 }
 ```
 
-`Optional` is returned by every "lookup-shaped" operation in the standard library: [`List.find`](./List.md), [`LinearMap.lookup`](./LinearMap.md), and so on.
+`Optional` is returned by every "lookup-shaped" operation in the standard library: [`List.find`](./List.mdx), [`LinearMap.lookup`](./LinearMap.mdx), and so on.
 
 ## Constructing
 
 ```ts
-const present: Optional<int> = Some{ value: 7 };
-const absent:  Optional<int> = None{};
+const absent: Optional<int> = undefined;
 ```
+
+:::note optionals are produced, not constructed
+The only `Optional` literal is **`undefined`** — the empty optional (an
+explicit `Optional` type annotation is required). There is **no expression
+form for `Some`**: `Some{ … }` / `None{}` / `Optional.Some{ … }` do not
+resolve as expressions. `Some` values come from the standard library
+(`lookup`, `find`, …); `Some{ value }` and `None{}` exist only as
+*patterns* in `match` arms and destructuring.
+:::
 
 ## Destructuring with `match`
 
@@ -3174,11 +3526,11 @@ This compiles to an assertion: if `maybe` is `None{}` at runtime, the script fai
 
 ## See also
 
-- [`List<T>.find`](./List.md), [`LinearMap<K, V>.lookup`](./LinearMap.md) — produce `Optional`
+- [`List<T>.find`](./List.mdx), [`LinearMap<K, V>.lookup`](./LinearMap.mdx) — produce `Optional`
 - [Builtin Values and Literals](../Builtin%20Values%20and%20Literals.md) — pattern-matching syntax
 
 
-=== onchain/Prelude/String.md ===
+=== onchain/Prelude/String.mdx ===
 
 ---
 sidebar_position: 3
@@ -3187,7 +3539,7 @@ sidebar_label: string
 
 # `string`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 UTF-8 text. Maps to Plutus Core `String`. Primarily for logging via `trace` and for `fail` messages. Avoid storing large strings on-chain — every character costs CPU/memory in the script budget.
 
@@ -3214,9 +3566,9 @@ trace(msg);
 
 | Method                       | Description                                                  |
 |------------------------------|--------------------------------------------------------------|
-| `toBytes(): bytes`           | UTF-8 encode. Equivalent to [`std.builtins.encodeUtf8`](../Standard%20Library/std.builtins.md). |
+| `toBytes(): bytes`           | UTF-8 encode. Equivalent to [`std.builtins.encodeUtf8`](../Standard%20Library/std.builtins.mdx). |
 
-To go from `bytes` back to `string`, use [`std.builtins.decodeUtf8`](../Standard%20Library/std.builtins.md) (it fails on invalid UTF-8).
+To go from `bytes` back to `string`, use [`std.builtins.decodeUtf8`](../Standard%20Library/std.builtins.mdx) (it fails on invalid UTF-8).
 
 ## Examples
 
@@ -3234,12 +3586,12 @@ assert full == "hello, world";
 
 ## See also
 
-- [`std.builtins`](../Standard%20Library/std.builtins.md) — `appendString`, `equalsString`, `encodeUtf8`, `decodeUtf8`
-- [`std.data`](../Standard%20Library/std.data.md) — `strToData` / `strFromData`
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx) — `appendString`, `equalsString`, `encodeUtf8`, `decodeUtf8`
+- [`std.data`](../Standard%20Library/std.data.mdx) — `strToData` / `strFromData`
 - [`Show`](../Builtin%20Interfaces.md#show) — interface every type can implement to produce a `string` representation
 
 
-=== onchain/Prelude/Value.md ===
+=== onchain/Prelude/Value.mdx ===
 
 ---
 sidebar_position: 10
@@ -3248,7 +3600,7 @@ sidebar_label: Value
 
 # `Value`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 A multi-asset bundle: zero or more `(PolicyId, TokenName) → amount` entries. Maps to Plutus Core's native value type. ADA appears under a special "ada/lovelace" policy.
 
@@ -3274,7 +3626,9 @@ assert out.value.amountOf(myPolicy, myToken) == 1;
 
 ### Examples (one per method)
 ```ts
-const v: Value = mempty.insert(myPolicy, myToken, 5);
+// there is no `mempty`: get an empty Value by zero-scaling any Value in scope
+const empty: Value = tx.mint.scale(0);
+const v: Value = empty.insert(myPolicy, myToken, 5);
 
 const a:  int   = v.amountOf(myPolicy, myToken);           // 5
 const l:  int   = tx.outputs[0].value.lovelaces();         // ADA in lovelace
@@ -3287,7 +3641,7 @@ const d:  data  = v.toData();
 
 ### Bundled example
 ```ts
-const need = mempty
+const need = tx.mint.scale(0)
     .insert(myPolicy, myToken, 1)
     .insert(adaPolicy, adaName, 2_000_000);
 
@@ -3302,12 +3656,12 @@ assert tx.outputs[0].value.contains(need);
 
 ## Building values
 
-There's no `Value` literal — build values up from an empty starting point (`mempty` from the prelude) using `insert` and `union`, or destructure them out of a `TxOut`. The underlying primitives are in [`std.builtins`](../Standard%20Library/std.builtins.md#native-value-operations) (`insertCoin`, `unionValue`, etc.); the friendlier names live in [`std.value`](../Standard%20Library/std.value.md).
+There's no `Value` literal (and no `mempty`) — get an empty starting point by zero-scaling any `Value` already in scope (`tx.mint.scale(0)` is the usual choice; containment-style comparisons ignore any zero entries it may keep), then build up with `insert` and `union`, or destructure values out of a `TxOut`. The underlying primitives are in [`std.builtins`](../Standard%20Library/std.builtins.mdx#native-value-operations) (`insertCoin`, `unionValue`, etc.); the friendlier names live in [`std.value`](../Standard%20Library/std.value.mdx).
 
 ## See also
 
-- [`std.value`](../Standard%20Library/std.value.md) — function-call surface
-- [`PolicyId`, `TokenName`](./Bytes.md#type-aliases) — the keys into a `Value`
+- [`std.value`](../Standard%20Library/std.value.mdx) — function-call surface
+- [`PolicyId`, `TokenName`](./Bytes.mdx#type-aliases) — the keys into a `Value`
 - [`TxOut`](../API/types/Tx/TxOut.md) — the canonical place a `Value` shows up
 
 
@@ -3630,7 +3984,7 @@ byteStringToInteger(true, integerToByteString(true, 0, n)) == n
 std.bytes.toInt(std.bytes.fromInt(n)) == n          for all int n >= 0
 ```
 
-For fixed-width encodings, the round trip holds **iff** the integer fits in the chosen width:
+For fixed-width encodings, the round trip holds **if** the integer fits in the chosen width:
 
 ```
 byteStringToInteger(true, integerToByteString(true, size, n)) == n
@@ -3640,11 +3994,11 @@ byteStringToInteger(true, integerToByteString(true, size, n)) == n
 ## Equality and hashing
 
 ```
-equalsData(a, b)     == true     iff a and b have the same CBOR encoding
+equalsData(a, b)     == true     if a and b have the same CBOR encoding
 equalsByteString     == ==        as operator
 equalsInteger        == ==        as operator
 equalsString         == ==        as operator
-std.equals<T>(a, b)  == true     iff a and b are equal under T's natural equality
+std.equals<T>(a, b)  == true     if a and b are equal under T's natural equality
 ```
 
 A `bytes` digest from a deterministic hash is itself in canonical big-endian:
@@ -3660,7 +4014,7 @@ ripemd_160(b).length()  == 20
 
 ## `Value` algebra
 
-`Value` forms a commutative monoid under `union`, with `mempty` as the identity:
+`Value` forms a commutative monoid under `union`, with the empty value as identity. (`mempty` below is *notation* for the empty `Value` — it is **not** a language identifier; in code obtain it as `anyValue.scale(0)`, e.g. `tx.mint.scale(0)`.)
 
 ```
 v.union(mempty)       == v
@@ -3736,8 +4090,8 @@ match Some{ value: x } { Some{ value: y }: y, None{}: _ } == x
 `find` produces an `Optional`:
 
 ```
-xs.find(p) == Some{ value: x }   iff there exists x in xs with p(x), and x is the first such element
-xs.find(p) == None{}             iff no element satisfies p
+xs.find(p) == Some{ value: x }   if there exists x in xs with p(x), and x is the first such element
+xs.find(p) == None{}             if no element satisfies p
 ```
 
 ## `LinearMap<K, V>` laws
@@ -3826,7 +4180,7 @@ const half = -7 / 2;   // expected -3, but this is -4
 
 **Why** — `/` and `%` round toward **negative infinity** (matching `std.int.divide` / `std.int.mod`). For negative numerators this differs from C-style truncated division.
 
-**Better** — use [`std.int.quotient`](../Standard%20Library/std.int.md) / [`std.int.remainder`](../Standard%20Library/std.int.md) when you want truncation toward zero.
+**Better** — use [`std.int.quotient`](../Standard%20Library/std.int.mdx) / [`std.int.remainder`](../Standard%20Library/std.int.mdx) when you want truncation toward zero.
 
 ## Using `strictAnd` / `strictOr` where you meant `&&` / `||`
 
@@ -3855,7 +4209,7 @@ if( m.lookup(k) == None{} ) { /* "key is unique" */ }
 
 **Better** — enforce uniqueness at insertion time, or scan with `every`:
 ```ts
-const isUnique = m.every((entry) => entry.fst != k);
+const isUnique = m.every((entry) => { const { key, value } = entry; return key != k; });
 ```
 
 ## `xs[i]` inside a loop
@@ -4005,7 +4359,7 @@ const myInput = tx.inputs[0];   // assume the first input is mine
 
 **Better** — match on `purposeRef`:
 ```ts
-const { tx, spendingInputRef: purposeRef } = context;
+const { tx, spendingRef: purposeRef } = context;
 const myInput = tx.inputs.find((i) => i.ref == purposeRef);
 match myInput {
     Some{ value: input }: useIt(input),
@@ -4049,7 +4403,7 @@ assert got <= 200;
 
 **Smell**
 ```ts
-const totalForKey = m.foldl((acc, e) => if e.fst == target { acc + e.snd } else { acc }, 0);
+const totalForKey = m.foldl((acc, e) => { const { key, value } = e; return key == target ? acc + value : acc; }, 0);
 // ... then assert totalForKey == ...
 ```
 
@@ -4057,9 +4411,9 @@ const totalForKey = m.foldl((acc, e) => if e.fst == target { acc + e.snd } else 
 
 **Better** — first check uniqueness, then read a single value:
 ```ts
-const matches = m.filter((e) => e.fst == target);
+const matches = m.filter((e) => { const { key, value } = e; return key == target; });
 assert matches.length() == 1;
-const value = matches.head().snd;
+const { key: _k, value } = matches.head();
 ```
 
 ## See also
@@ -4068,7 +4422,7 @@ const value = matches.head().snd;
 - [Laws](./Laws.md) — the identities you can lean on to refactor
 
 
-=== onchain/Standard Library/std.array.md ===
+=== onchain/Standard Library/std.array.mdx ===
 
 ---
 sidebar_position: 6
@@ -4077,19 +4431,18 @@ sidebar_label: std.array
 
 # `std.array`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Polymorphic helpers over `Array<T>` — the native, random-access variant of a list. Unlike `List<T>`, `Array<T>` supports O(1) indexed access via `at`.
 
 Use `std.array.fromList` to convert a `List<T>` once and then index into the result repeatedly.
 
-```ts
-using { fromList, at, length } = std.array;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const xs = fromList([10, 20, 30]);
-assert at(xs, 1) == 20;
-assert length(xs) == 3;
-```
+<RunnableExample
+initialCode={`using { fromList, at, length } = std.array;\n\nconst xs = fromList([10, 20, 30]);\n\nassert at(xs, 1)   == 20 else "at wrong";\nassert length(xs)  == 3  else "length wrong";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -4111,11 +4464,11 @@ const v:  int        = at(xs, 1);                  // 20
 
 ## See also
 
-- [`Array<T>`](../Prelude/Array.md) — method-call surface (`xs.at(i)`, `xs.length()`)
-- [`std.list`](./std.list.md) — most transformations live on `List<T>`; convert with `fromList` when you need random access
+- [`Array<T>`](../Prelude/Array.mdx) — method-call surface (`xs.at(i)`, `xs.length()`)
+- [`std.list`](./std.list.mdx) — most transformations live on `List<T>`; convert with `fromList` when you need random access
 
 
-=== onchain/Standard Library/std.boolean.md ===
+=== onchain/Standard Library/std.boolean.mdx ===
 
 ---
 sidebar_position: 9
@@ -4124,15 +4477,16 @@ sidebar_label: std.boolean
 
 # `std.boolean`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Monomorphic helpers over `bool`. Prefer the operator forms (`&&`, `||`, `!`) in regular code — these exist for partial application and higher-order use.
 
-```ts
-using { strictAnd } = std.boolean;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const allPositive: bool = std.list.foldl(strictAnd, true, signs);
-```
+<RunnableExample
+initialCode={`const signs: List<boolean> = [true, true, true, false];\n\nconst allPositive: boolean = std.list.foldl(std.boolean.strictAnd, true, signs);\nassert !allPositive else "expected one false";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -4162,11 +4516,11 @@ const i:  int  = toInt(true);                // 1
 
 ## See also
 
-- [`bool`](../Prelude/Boolean.md) — operator forms
-- [`std.builtins`](./std.builtins.md#polymorphic-intrinsics) — `ifThenElse` is the strict polymorphic conditional
+- [`bool`](../Prelude/Boolean.mdx) — operator forms
+- [`std.builtins`](./std.builtins.mdx#polymorphic-intrinsics) — `ifThenElse` is the strict polymorphic conditional
 
 
-=== onchain/Standard Library/std.builtins.md ===
+=== onchain/Standard Library/std.builtins.mdx ===
 
 ---
 sidebar_position: 3
@@ -4175,9 +4529,9 @@ sidebar_label: std.builtins
 
 # `std.builtins`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-Direct exposure of Plutus Core builtins, plus a handful of polymorphic intrinsics. Prefer the per-type namespaces ([`std.int`](./std.int.md), [`std.bytes`](./std.bytes.md), etc.) or operator forms (`+`, `==`, ...) for everyday code — `std.builtins` is for when you need a Plutus-Core-shaped function as a value, or when only the raw builtin gives you the semantics you want (e.g. `quotientInteger` vs `divideInteger` rounding).
+Direct exposure of Plutus Core builtins, plus a handful of polymorphic intrinsics. Prefer the per-type namespaces ([`std.int`](./std.int.mdx), [`std.bytes`](./std.bytes.mdx), etc.) or operator forms (`+`, `==`, ...) for everyday code — `std.builtins` is for when you need a Plutus-Core-shaped function as a value, or when only the raw builtin gives you the semantics you want (e.g. `quotientInteger` vs `divideInteger` rounding).
 
 ## Type exports
 
@@ -4282,7 +4636,7 @@ match index {
 
 ## Native `Value` operations
 
-These work on the native `Value` type (see [Value](../Prelude/Value.md)). They're aliased into [`std.value`](./std.value.md) with friendlier names.
+These work on the native `Value` type (see [Value](../Prelude/Value.mdx)). They're aliased into [`std.value`](./std.value.mdx) with friendlier names.
 
 | Function                                                                       | Description                                                                |
 |--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
@@ -4447,12 +4801,12 @@ const tag:    string       = chooseData(dC, "Constr", "Map", "List", "I", "B");
 
 ## See also
 
-- [`std.int`](./std.int.md), [`std.bytes`](./std.bytes.md), [`std.boolean`](./std.boolean.md), [`std.data`](./std.data.md) — friendlier-named monomorphic equivalents
-- [`std.list`](./std.list.md), [`std.linearMap`](./std.linearMap.md), [`std.array`](./std.array.md) — polymorphic container helpers
-- [`std (top-level)`](./std.md) — `id` and `equals`
+- [`std.int`](./std.int.mdx), [`std.bytes`](./std.bytes.mdx), [`std.boolean`](./std.boolean.mdx), [`std.data`](./std.data.mdx) — friendlier-named monomorphic equivalents
+- [`std.list`](./std.list.mdx), [`std.linearMap`](./std.linearMap.mdx), [`std.array`](./std.array.mdx) — polymorphic container helpers
+- [`std (top-level)`](./std.mdx) — `id` and `equals`
 
 
-=== onchain/Standard Library/std.bytes.md ===
+=== onchain/Standard Library/std.bytes.mdx ===
 
 ---
 sidebar_position: 7
@@ -4461,17 +4815,16 @@ sidebar_label: std.bytes
 
 # `std.bytes`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Monomorphic helpers over `bytes`, exposing every byte-string operation as a first-class function. Use these for partial application or as arguments to higher-order code; prefer operator forms (`==`, `<`, `+`) and methods (`b.length()`) in regular code.
 
-```ts
-using { length, slice, prepend, concat, equals } = std.bytes;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const head = slice(0, 4, payload);
-const tail = slice(4, length(payload) - 4, payload);
-const out  = concat(head, tail);
-```
+<RunnableExample
+initialCode={`const payload: bytes = #deadbeefcafe;\n\nconst head = std.bytes.slice(0, 4, payload);\nconst tail = std.bytes.slice(4, std.bytes.length(payload) - 4, payload);\nconst out  = std.bytes.concat(head, tail);\n\nassert out == payload else "round-trip failed";`}
+height="280px"
+/>
 
 ## Methods
 
@@ -4515,12 +4868,12 @@ const enc:  bytes = fromInt(1234);                         // #04d2
 
 ## See also
 
-- [`bytes`](../Prelude/Bytes.md) — method-call form
-- [`std.builtins`](./std.builtins.md) — finer-grained byte string and bitwise builtins
-- [`std.crypto`](./std.crypto.md) — hash functions consume `bytes`
+- [`bytes`](../Prelude/Bytes.mdx) — method-call form
+- [`std.builtins`](./std.builtins.mdx) — finer-grained byte string and bitwise builtins
+- [`std.crypto`](./std.crypto.mdx) — hash functions consume `bytes`
 
 
-=== onchain/Standard Library/std.crypto.bls12_381.md ===
+=== onchain/Standard Library/std.crypto.bls12_381.mdx ===
 
 ---
 sidebar_position: 2
@@ -4529,13 +4882,16 @@ sidebar_label: std.crypto.bls12_381
 
 # `std.crypto.bls12_381`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 BLS12-381 pairing-friendly curve operations. Use this namespace for zero-knowledge proofs, BLS signatures, and any protocol that needs efficient bilinear pairings on-chain.
 
-```ts
-using { G1, G2, MlResult, g1Add, millerLoop, finalVerify } = std.crypto.bls12_381;
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const p      = std.crypto.bls12_381.g1HashToGroup(#68656c6c6f, #424c535f5349475f445354);\nconst pPlusP = std.crypto.bls12_381.g1Add(p, p);\nconst twoP   = std.crypto.bls12_381.g1ScalarMul(2, p);\n\nassert std.crypto.bls12_381.g1Equal(pPlusP, twoP) else "2*P != P+P";`}
+height="280px"
+/>
 
 The three native types — `G1`, `G2`, `MlResult` — are exported **only** through this namespace. Either fully qualify them or pull them into scope with `using`.
 
@@ -4628,11 +4984,11 @@ const verified:    bool     = finalVerify(product, identityMl);
 
 ## See also
 
-- [`std.crypto`](./std.crypto.md) — non-pairing cryptographic primitives
-- [`std.builtins`](./std.builtins.md) — `serialiseData` and byte-level helpers used to prepare messages
+- [`std.crypto`](./std.crypto.mdx) — non-pairing cryptographic primitives
+- [`std.builtins`](./std.builtins.mdx) — `serialiseData` and byte-level helpers used to prepare messages
 
 
-=== onchain/Standard Library/std.crypto.md ===
+=== onchain/Standard Library/std.crypto.mdx ===
 
 ---
 sidebar_position: 1
@@ -4641,16 +4997,16 @@ sidebar_label: std.crypto
 
 # `std.crypto`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Cryptographic hashes and signature verification primitives. Every function maps one-to-one to a Plutus Core builtin and costs the script's CPU/memory budget accordingly.
 
-```ts
-using { sha2_256, verifyEd25519Signature } = std.crypto;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const digest: bytes = sha2_256(payload);
-assert verifyEd25519Signature(pubKey, payload, sig);
-```
+<RunnableExample
+initialCode={`const payload: bytes = #68656c6c6f;\n\nconst d1 = std.crypto.sha2_256(payload);\nconst d2 = std.crypto.sha3_256(payload);\nconst d3 = std.crypto.blake2b_256(payload);\n\nassert std.bytes.length(d1) == 32 else "sha2 width wrong";\nassert std.bytes.length(d2) == 32 else "sha3 width wrong";\nassert std.bytes.length(d3) == 32 else "blake2b width wrong";`}
+height="300px"
+/>
 
 ## Hash functions
 
@@ -4718,11 +5074,11 @@ const ok_schnorr:  bool = verifySchnorrSecp256k1Signature(pubKey, msg, sig);
 
 ## See also
 
-- [`std.crypto.bls12_381`](./std.crypto.bls12_381.md) — pairing-friendly curve operations
-- [`std.builtins`](./std.builtins.md) — `serialiseData`, `encodeUtf8`, byte-level helpers commonly chained with these functions
+- [`std.crypto.bls12_381`](./std.crypto.bls12_381.mdx) — pairing-friendly curve operations
+- [`std.builtins`](./std.builtins.mdx) — `serialiseData`, `encodeUtf8`, byte-level helpers commonly chained with these functions
 
 
-=== onchain/Standard Library/std.data.md ===
+=== onchain/Standard Library/std.data.mdx ===
 
 ---
 sidebar_position: 10
@@ -4731,17 +5087,16 @@ sidebar_label: std.data
 
 # `std.data`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-Helpers for converting between `data` and the Pebble-level `string` type. For converting other types to and from `data`, use the built-in [`ToData`](../Builtin%20Interfaces.md#todata) interface (`.toData()` method) and the destructors in [`std.builtins`](./std.builtins.md#data-destructors).
+Helpers for converting between `data` and the Pebble-level `string` type. For converting other types to and from `data`, use the built-in [`ToData`](../Builtin%20Interfaces.md#todata) interface (`.toData()` method) and the destructors in [`std.builtins`](./std.builtins.mdx#data-destructors).
 
-```ts
-using { strToData, strFromData } = std.data;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const d: data = strToData("hello");
-const s: string = strFromData(d);
-assert s == "hello";
-```
+<RunnableExample
+initialCode={`const txt:  string = std.builtins.decodeUtf8(#68656c6c6f);\nconst d:    data   = std.data.strToData(txt);\nconst back: string = std.data.strFromData(d);\n\nassert std.builtins.encodeUtf8(back) == std.builtins.encodeUtf8(txt) else "round-trip failed";`}
+height="280px"
+/>
 
 ## Methods
 
@@ -4752,12 +5107,12 @@ assert s == "hello";
 
 ## See also
 
-- [`data`](../Prelude/Data.md) — the type itself
-- [`std.builtins`](./std.builtins.md) — `constrData`, `mapData`, `listData`, `iData`, `bData` and their destructors
+- [`data`](../Prelude/Data.mdx) — the type itself
+- [`std.builtins`](./std.builtins.mdx) — `constrData`, `mapData`, `listData`, `iData`, `bData` and their destructors
 - [`ToData`](../Builtin%20Interfaces.md#todata) — the auto-implemented interface every encodable type satisfies
 
 
-=== onchain/Standard Library/std.int.md ===
+=== onchain/Standard Library/std.int.mdx ===
 
 ---
 sidebar_position: 8
@@ -4766,18 +5121,18 @@ sidebar_label: std.int
 
 # `std.int`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Monomorphic helpers over `int`. Use these when you need an `int`-shaped function as a value — for instance `xs.some(std.int.isZero)` is cleaner than constructing a one-off lambda.
 
 `int` is arbitrary-precision signed; none of these operations overflow.
 
-```ts
-using { add, isZero, exponentiate } = std.int;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const total = std.list.foldl(add, 0, amounts);
-assert isZero(total - expected);
-```
+<RunnableExample
+initialCode={`const amounts:  List<int> = [10, 20, 30, 40];\nconst expected: int       = 100;\n\nconst total = std.list.foldl(std.int.add, 0, amounts);\nassert std.int.isZero(total - expected) else "sum off";`}
+height="240px"
+/>
 
 ## Arithmetic
 
@@ -4848,11 +5203,11 @@ const b:  bool = toBoolean(0);               // false
 
 ## See also
 
-- [`int`](../Prelude/Int.md) — operator forms and method-call surface
-- [`std.builtins`](./std.builtins.md) — the underlying `addInteger`, `expModInteger`, etc.
+- [`int`](../Prelude/Int.mdx) — operator forms and method-call surface
+- [`std.builtins`](./std.builtins.mdx) — the underlying `addInteger`, `expModInteger`, etc.
 
 
-=== onchain/Standard Library/std.linearMap.md ===
+=== onchain/Standard Library/std.linearMap.mdx ===
 
 ---
 sidebar_position: 5
@@ -4861,11 +5216,13 @@ sidebar_label: std.linearMap
 
 # `std.linearMap`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Polymorphic helpers over `LinearMap<K, V>` — Cardano's on-chain "association list" representation of a map (an ordered list of `(K, V)` pairs). Lookups are O(n); choose `LinearMap` over a hash map because the underlying representation is what Plutus speaks.
 
-Every function here is also available as a method (`m.lookup(k)`, `m.prepend(k, v)`, ...) — see [`LinearMap<K, V>`](../Prelude/LinearMap.md).
+Every function here is also available as a method (`m.lookup(k)`, `m.prepend(k, v)`, ...) — see [`LinearMap<K, V>`](../Prelude/LinearMap.mdx).
+
+import RunnableExample from '@site/src/components/RunnableExample';
 
 ```ts
 using { lookup, prepend } = std.linearMap;
@@ -4907,12 +5264,12 @@ const m2:   LinearMap<bytes, int>        = prepend(#03, 30, m);  // { #03:30, #0
 
 ## See also
 
-- [`LinearMap<K, V>`](../Prelude/LinearMap.md) — method-call surface
-- [`std.list`](./std.list.md) — `LinearMap` is structurally a `List<LinearMapEntry<K, V>>`
+- [`LinearMap<K, V>`](../Prelude/LinearMap.mdx) — method-call surface
+- [`std.list`](./std.list.mdx) — `LinearMap` is structurally a `List<LinearMapEntry<K, V>>`
 - [`ToData`](../Builtin%20Interfaces.md#todata) — the constraint required by `prepend`
 
 
-=== onchain/Standard Library/std.list.md ===
+=== onchain/Standard Library/std.list.mdx ===
 
 ---
 sidebar_position: 4
@@ -4921,18 +5278,18 @@ sidebar_label: std.list
 
 # `std.list`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Polymorphic helpers over `List<T>`. Everything here is also available as a method (`xs.length()`, `xs.map(f)`, etc.) — use the namespace form when you need to pass the helper itself as a value, e.g. `std.list.some(std.int.isZero, xs)`.
 
-See [`List<T>`](../Prelude/List.md) for the method-call surface (which additionally includes `map`, intentionally omitted here — see note at the bottom).
+See [`List<T>`](../Prelude/List.mdx) for the method-call surface (which additionally includes `map`, intentionally omitted here — see note at the bottom).
 
-```ts
-using { length, foldl, filter, find } = std.list;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const evens = filter((n) => n % 2 == 0, [1, 2, 3, 4, 5]);
-const sum   = foldl((acc, n) => acc + n, 0, evens);
-```
+<RunnableExample
+initialCode={`using { foldl, filter } = std.list;\n\nconst evens = filter((n) => n % 2 == 0, [1, 2, 3, 4, 5]);\nconst sum   = foldl((acc, n) => acc + n, 0, evens);\n\nassert sum == 6 else "expected 2+4 = 6";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -4983,12 +5340,12 @@ const same: bool         = equals(std.int.equals, xs, xs);   // true
 
 ## See also
 
-- [`List<T>`](../Prelude/List.md) — method-call form including `map`
-- [`std.linearMap`](./std.linearMap.md) — analogous helpers over association lists
-- [`std.array`](./std.array.md) — `Array<T>` is the random-access cousin (but `xs[i]` on a list is already cheap; see [Cost and Complexity](../reference/Cost%20and%20Complexity.md))
+- [`List<T>`](../Prelude/List.mdx) — method-call form including `map`
+- [`std.linearMap`](./std.linearMap.mdx) — analogous helpers over association lists
+- [`std.array`](./std.array.mdx) — `Array<T>` is the random-access cousin (but `xs[i]` on a list is already cheap; see [Cost and Complexity](../reference/Cost%20and%20Complexity.md))
 
 
-=== onchain/Standard Library/std.md ===
+=== onchain/Standard Library/std.mdx ===
 
 ---
 sidebar_position: 12
@@ -4998,16 +5355,16 @@ slug: /onchain/standard-library/std
 
 # `std` (top level)
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-A handful of polymorphic helpers live directly on the `std` namespace itself, alongside the sub-namespaces ([`std.crypto`](./std.crypto.md), [`std.list`](./std.list.md), etc.).
+A handful of polymorphic helpers live directly on the `std` namespace itself, alongside the sub-namespaces ([`std.crypto`](./std.crypto.mdx), [`std.list`](./std.list.mdx), etc.).
 
-```ts
-using { id, equals } = std;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const f = id;            // polymorphic identity
-const same: bool = equals(a, b);
-```
+<RunnableExample
+initialCode={`const a: int = 42;\nconst b: int = 42;\n\nconst same: boolean = std.equals(a, b);\nassert same                  else "equals failed";\nassert std.id(a) == 42       else "id failed";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -5022,11 +5379,11 @@ const same: bool = equals(a, b);
 
 ## See also
 
-- [`std.builtins`](./std.builtins.md) — the underlying `equalsInteger`, `equalsByteString`, `equalsData`
-- The sub-namespaces — [`crypto`](./std.crypto.md), [`builtins`](./std.builtins.md), [`list`](./std.list.md), [`linearMap`](./std.linearMap.md), [`array`](./std.array.md), [`bytes`](./std.bytes.md), [`int`](./std.int.md), [`boolean`](./std.boolean.md), [`data`](./std.data.md), [`value`](./std.value.md)
+- [`std.builtins`](./std.builtins.mdx) — the underlying `equalsInteger`, `equalsByteString`, `equalsData`
+- The sub-namespaces — [`crypto`](./std.crypto.mdx), [`builtins`](./std.builtins.mdx), [`list`](./std.list.mdx), [`linearMap`](./std.linearMap.mdx), [`array`](./std.array.mdx), [`bytes`](./std.bytes.mdx), [`int`](./std.int.mdx), [`boolean`](./std.boolean.mdx), [`data`](./std.data.mdx), [`value`](./std.value.mdx)
 
 
-=== onchain/Standard Library/std.value.md ===
+=== onchain/Standard Library/std.value.mdx ===
 
 ---
 sidebar_position: 11
@@ -5035,15 +5392,17 @@ sidebar_label: std.value, std.valueMap, std.credential
 
 # `std.value`, `std.valueMap`, `std.credential`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-Function-shaped views of the methods on the native [`Value`](../Prelude/Value.md), the legacy `ValueMap` representation, and `Credential`. The method-call forms (`v.amountOf(...)`, `cred.hash()`) are what you'll use day-to-day — these namespaces exist so the same operations can be passed as values.
+Function-shaped views of the methods on the native [`Value`](../Prelude/Value.mdx), the legacy `ValueMap` representation, and `Credential`. The method-call forms (`v.amountOf(...)`, `cred.hash()`) are what you'll use day-to-day — these namespaces exist so the same operations can be passed as values.
+
+import RunnableExample from '@site/src/components/RunnableExample';
 
 ```ts
 using { amountOf, lovelaces, union } = std.value;
 
 const adaPaid = lovelaces(tx.outputs[0].value);
-const totalOut = std.list.foldl(union, mempty, tx.outputs.map((o) => o.value));
+const totalOut = std.list.foldl(union, tx.mint.scale(0), tx.outputs.map((o) => o.value)); // no `mempty`: zero-scale for an empty Value
 ```
 
 ## `std.value`
@@ -5079,7 +5438,7 @@ Methods on the legacy `ValueMap` representation (an assoc-list of assoc-lists, u
 ```ts
 using { amountOf, lovelaces, insert, union, contains, scale, toData } = std.value;
 
-const v:  Value = insert(myPolicy, myToken, 5, mempty);    // {myPolicy/myToken: 5}
+const v:  Value = insert(myPolicy, myToken, 5, tx.mint.scale(0)); // {myPolicy/myToken: 5}
 const a:  int   = amountOf(myPolicy, myToken, v);          // 5
 const l:  int   = lovelaces(tx.outputs[0].value);          // ADA in lovelace
 const u:  Value = union(v, v);                             // 2× v
@@ -5105,9 +5464,9 @@ const h: bytes = hash(tx.outputs[0].address.paymentCredential);
 
 ## See also
 
-- [`Value`](../Prelude/Value.md) — method-call surface and the type definition
+- [`Value`](../Prelude/Value.mdx) — method-call surface and the type definition
 - [`Address`](../API/types/Address/Address.md), [`Credential`](../API/types/Address/Credential.md) — the structures that carry a `Credential`
-- [`std.builtins`](./std.builtins.md#native-value-operations) — the underlying `insertCoin`, `lookupCoin`, `unionValue`, etc.
+- [`std.builtins`](./std.builtins.mdx#native-value-operations) — the underlying `insertCoin`, `lookupCoin`, `unionValue`, etc.
 
 
 === onchain/State.md ===
@@ -5119,7 +5478,7 @@ sidebar_label: State
 
 # `state`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 The `state` keyword introduces a **typed datum** inside a `contract` declaration. Each `state` block defines one variant of an on-chain sum type whose underlying CBOR encoding is what the contract's UTxOs carry as their datum. Inside a `spend` method declared on a state, `context.state` is destructured to a strongly-typed record of that state's fields — you never write `unConstrData` or `fromData` by hand.
 
@@ -5278,16 +5637,28 @@ const partialDatum = new DataConstr(1, [
 ]);
 ```
 
-For a single-state contract (where the `shortcutSingleConstructor` optimisation kicks in), the datum is the **raw fields** — no `DataConstr` wrapper:
+A **single-state** contract's datum is the same shape with constructor
+index `0` — the fields are still wrapped:
 
 ```ts
-// HelloWorld.Locked (single state)
-const lockedDatum = new DataB(ownerPubKeyHash.toBuffer());
+// HelloWorld.Locked (single state):  Constr 0 [ fields... ]
+const lockedDatum = new DataConstr(0, [ new DataB(ownerPubKeyHash.toBuffer()) ]);
 ```
+
+:::caution single-state datums are wrapped
+Under the default `encodingStrategy` the `shortcutSingleConstructor`
+optimisation encodes single-constructor records as `Constr 0 [ fields ]` —
+**not** as bare fields. The spend dispatch and the `as Contract` union cast
+both use this wrapped shape; a bare-fields datum fails phase-2 validation
+with `unConstrData :: not a data constructor`. Note also that each field is
+encoded per **its own** type: a struct-typed field (e.g.
+`coords: Coordinates`) is itself a nested `Constr 0 [ ... ]`.
+:::
 
 ## See also
 
 - [Contract Statements](./Contract%20Statements.md) — the `contract` declaration that hosts `state` blocks
+- [Cross-Contract Types](./Cross-Contract%20Types.md) — exporting states as types (`C.State`, `redeemerof C.State`) for other contracts to decode
 - [Validators 101](./concepts/Validators%20101.md) — how `spend` methods dispatch
 - [Datum & Redeemer Flow](./concepts/Datum%20and%20Redeemer%20Flow.md) — the encoding rules for crossing the on-chain / off-chain boundary
 - [Simple Order Book DEX](../examples/Simple%20order%20book%20DEX.md) — a multi-state worked example
@@ -5599,6 +5970,21 @@ It is expected to allow:
 
 - Bringing in common utility structs or functions
 
+
+## Export Statements
+
+Top-level declarations become importable when prefixed with `export`:
+
+```ts
+export function fee( n: int ): int { return n / 100; }
+export const MAX = 100;            // since 0.3.6
+export struct Order { ... }
+export contract Vault { ... }      // since 0.3.7
+```
+
+`export contract` is special: it exports the contract's **type-level symbols only** (its state-datum union and, via the `redeemerof` operator, its redeemer unions) so other contracts can decode its data — no code is exported. See [Cross-Contract Types](../Cross-Contract%20Types.md).
+
+Import **cycles** are allowed when only types and contracts cross the cycle-closing edge; importing a function or constant from a module that is still mid-cycle is a compile error (`6056`).
 
 ## Struct Declaration
 
@@ -5934,7 +6320,7 @@ Pebble is a **strongly-typed domain-specific language (DSL)** for writing **Card
 import RunnableExample from '@site/src/components/RunnableExample';
 
 <RunnableExample
-initialCode={`const n = 10;\n\nlet result = 0;\nfor( let i = 0; i <= n; i++ ) {\n    result += i;\n}\n\ntrace result;`}
+initialCode={`const n = 10;\n\nlet result = 0;\nfor( let i = 0; i <= n; i++ ) {\n    result += i;\n}\n\n/*\ntrace result;\n/*/\nassert result === 55 else "boom";\n//*/`}
 height="250px"
 />
 
