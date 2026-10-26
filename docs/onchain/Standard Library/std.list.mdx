@@ -1,0 +1,82 @@
+---
+sidebar_position: 4
+sidebar_label: std.list
+---
+
+# `std.list`
+
+*Pebble 0.3.1 · all symbols on this page are stable.*
+
+Polymorphic helpers over `List<T>`. Everything here is also available as a method (`xs.length()`, `xs.map(f)`, etc.) — use the namespace form when you need to pass the helper itself as a value, e.g. `std.list.some(std.int.isZero, xs)`.
+
+See [`List<T>`](../Prelude/List.mdx) for the method-call surface (which additionally includes `map`, intentionally omitted here — see note at the bottom).
+
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`using { foldl, filter } = std.list;\n\nconst evens = filter((n) => n % 2 == 0, [1, 2, 3, 4, 5]);\nconst sum   = foldl((acc, n) => acc + n, 0, evens);\n\nassert sum == 6 else "expected 2+4 = 6";`}
+height="240px"
+/>
+
+## Methods
+
+| Function                                                                                                 | Description                                                                |
+|----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `length<T>(xs: List<T>): int`                                                                            | Number of elements. Walks the list — O(n).                                 |
+| `isEmpty<T>(xs: List<T>): bool`                                                                          | True iff `xs` has zero elements.                                           |
+| `head<T>(xs: List<T>): T`                                                                                | First element. Fails on empty.                                             |
+| `tail<T>(xs: List<T>): List<T>`                                                                          | Everything after the head. Fails on empty.                                 |
+| `prepend<T>(x: T, xs: List<T>): List<T>`                                                                 | New list with `x` at the front.                                            |
+| `drop<T>(n: int, xs: List<T>): List<T>`                                                                  | List with the first `n` elements removed. Returns empty if `n >= length`.  |
+| `foldr<T, A>(f: (T, A) -> A, init: A, xs: List<T>): A`                                                   | Right fold. `foldr(f, z, [a, b, c]) = f(a, f(b, f(c, z)))`.                |
+| `foldl<T, A>(f: (A, T) -> A, init: A, xs: List<T>): A`                                                   | Left fold. Tail-recursive; preferred for large lists.                      |
+| `filter<T>(p: (T) -> bool, xs: List<T>): List<T>`                                                        | Keep elements where `p` returns true.                                      |
+| `some<T>(p: (T) -> bool, xs: List<T>): bool`                                                             | True iff any element satisfies `p`. Short-circuits.                        |
+| `every<T>(p: (T) -> bool, xs: List<T>): bool`                                                            | True iff all elements satisfy `p`. Short-circuits.                         |
+| `find<T>(p: (T) -> bool, xs: List<T>): Optional<T>`                                                      | First matching element wrapped in `Some`, or `None`.                       |
+| `equals<T>(eq: (T, T) -> bool, a: List<T>, b: List<T>): bool`                                            | Element-wise equality using `eq`.                                          |
+
+:::note `map` is method-only
+`xs.map(f)` is available as a method on every `List<T>`, but is intentionally **not** exposed in `std.list`. The namespace-level form would need TIR-level composition (constructing a nil literal of the target element type) that the namespace helpers don't currently support. Keep using `xs.map(f)`.
+:::
+
+## Examples
+
+```ts
+using {
+    length, isEmpty, head, tail, prepend, drop,
+    foldr, foldl, filter, some, every, find, equals
+} = std.list;
+
+const xs: List<int> = [1, 2, 3, 4, 5];
+
+const n:    int          = length(xs);                       // 5
+const e:    bool         = isEmpty(xs);                      // false
+const h:    int          = head(xs);                         // 1
+const rest: List<int>    = tail(xs);                         // [2,3,4,5]
+const cons: List<int>    = prepend(0, xs);                   // [0,1,2,3,4,5]
+const dr:   List<int>    = drop(2, xs);                      // [3,4,5]
+const sumR: int          = foldr((a, acc) => a + acc, 0, xs);// 15
+const sumL: int          = foldl((acc, a) => acc + a, 0, xs);// 15
+const ev:   List<int>    = filter((n) => n % 2 == 0, xs);    // [2,4]
+const any:  bool         = some((n) => n > 4, xs);           // true
+const all:  bool         = every((n) => n > 0, xs);          // true
+const got:  Optional<int>= find((n) => n == 3, xs);          // Some{ value: 3 }
+const same: bool         = equals(std.int.equals, xs, xs);   // true
+```
+
+## See also
+
+- [`List<T>`](../Prelude/List.mdx) — method-call form including `map`
+- [`std.linearMap`](./std.linearMap.mdx) — analogous helpers over association lists
+- [`std.array`](./std.array.mdx) — `Array<T>` is the random-access cousin (but `xs[i]` on a list is already cheap; see [Cost and Complexity](../reference/Cost%20and%20Complexity.md))
+
+## Added in 0.5.0
+
+| Function                                                            | Description                                                                  |
+|---------------------------------------------------------------------|------------------------------------------------------------------------------|
+| `at(i: int, xs: List<T>): Optional<T>`                              | The element at index `i`, `None` when out of range.                          |
+| `concat(xs: List<T>, ys: List<T>): List<T>`                         | `xs` followed by `ys`.                                                       |
+| `reverse(xs: List<T>): List<T>`                                     | Reversed list.                                                               |
+| `sum(xs: List<int>): int`                                           | Sum of the elements (`0` for the empty list).                                |
+| `count(pred: (x: T) => bool, xs: List<T>): int`                     | Number of elements satisfying `pred`.                                        |

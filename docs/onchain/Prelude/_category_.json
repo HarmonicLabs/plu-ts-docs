@@ -1,0 +1,8 @@
+{
+    "label": "Prelude Types",
+    "position": 4,
+    "link": {
+        "type": "generated-index",
+        "description": "Every type available without an import, with its method-call surface. The function-call equivalents live under the `std.*` namespaces."
+    }
+}

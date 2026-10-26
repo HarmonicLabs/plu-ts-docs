@@ -5,11 +5,11 @@ sidebar_label: Builtin Interfaces
 
 # Builtin Interfaces
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Pebble's type-class machinery is exposed via **interfaces** — sets of methods a type can implement. Two are built into the prelude and auto-derived for every type that supports them. User-defined interfaces use the same dispatch mechanism but require explicit `implements` blocks.
 
-```pebble
+```ts
 type Foo implements Show {
     show( self ): bytes {
         return "Foo".toBytes();
@@ -23,7 +23,7 @@ The compiler resolves interface methods at **monomorphisation time** — when a 
 
 Defines the canonical conversion of a value to Plutus `data`. Every concrete Pebble type that can be encoded as `data` automatically has a `ToData` impl — primitives, `List<T>`, `Array<T>`, `LinearMap<K, V>` (when K and V are themselves `ToData`), `Optional<T>`, structs and enums, and the native `Value`.
 
-```pebble
+```ts
 interface ToData {
     toData( self ): data;
 }
@@ -47,7 +47,7 @@ The auto-derivation is provided by the compiler's built-in factory in [`populate
 
 Every value has a `.toData()` method:
 
-```pebble
+```ts
 const n: int = 42;
 const d: data = n.toData();   // iData(42)
 
@@ -59,7 +59,7 @@ const dl: data = xs.toData(); // listData([iData(1), iData(2), iData(3)])
 
 Most user types don't need a hand-rolled `ToData` — the auto-derivation covers them. Reach for an explicit impl only when you need a non-canonical encoding (e.g. a legacy on-chain shape from a previous protocol version).
 
-```pebble
+```ts
 struct LegacyRecord {
     a: int,
     b: bytes,
@@ -80,7 +80,7 @@ type LegacyRecord implements ToData {
 
 Stdlib generics that need to encode `T` use a `T: ToData` constraint. `std.linearMap.prepend` is the canonical example:
 
-```pebble
+```ts
 // signature:  prepend<K: ToData, V: ToData>(k: K, v: V, m: LinearMap<K, V>): LinearMap<K, V>
 const m: LinearMap<bytes, int> = {};
 const m2 = std.linearMap.prepend(#01, 100, m);
@@ -90,7 +90,7 @@ const m2 = std.linearMap.prepend(#01, 100, m);
 
 Defines a human-readable byte representation. Built-in for primitives; user-overridable.
 
-```pebble
+```ts
 interface Show {
     show( self ): bytes;
 }
@@ -105,7 +105,7 @@ interface Show {
 
 ### Calling it
 
-```pebble
+```ts
 const n: int = 42;
 trace(n.show());           // emits "42" to the trace log
 ```
@@ -114,7 +114,7 @@ trace(n.show());           // emits "42" to the trace log
 
 Useful for adding debug-friendly trace output without writing a hand-rolled formatter every time:
 
-```pebble
+```ts
 struct Account {
     name: bytes,
     balance: int,
@@ -135,7 +135,7 @@ trace(a.show());   // "alice: 100"
 
 If you write a generic helper that traces its argument:
 
-```pebble
+```ts
 function debugIdentity<T: Show>( x: T ): T {
     trace(x.show());
     return x;
@@ -154,6 +154,6 @@ This means **user impls always win** over the built-in derivation. If you write 
 
 ## See also
 
-- [`data`](./Prelude/Data.md) — the type `ToData` produces
-- [`std.builtins`](./Standard%20Library/std.builtins.md) — the underlying data constructors (`constrData`, `iData`, `bData`, …)
+- [`data`](./Prelude/Data.mdx) — the type `ToData` produces
+- [`std.builtins`](./Standard%20Library/std.builtins.mdx) — the underlying data constructors (`constrData`, `iData`, `bData`, …)
 - [Datum & Redeemer Flow](./concepts/Datum%20and%20Redeemer%20Flow.md) — when and where `ToData` is invoked at the on-chain ↔ off-chain boundary

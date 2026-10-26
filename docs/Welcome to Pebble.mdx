@@ -17,7 +17,7 @@ Pebble is a **strongly-typed domain-specific language (DSL)** for writing **Card
 import RunnableExample from '@site/src/components/RunnableExample';
 
 <RunnableExample
-initialCode={`const n = 10;\n\nlet result = 0;\nfor( let i = 0; i <= n; i++ ) {\n    result += i;\n}\n\ntrace result;`}
+initialCode={`const n = 10;\n\nlet result = 0;\nfor( let i = 0; i <= n; i++ ) {\n    result += i;\n}\n\n/*\ntrace result;\n/*/\nassert result === 55 else "boom";\n//*/`}
 height="250px"
 />
 

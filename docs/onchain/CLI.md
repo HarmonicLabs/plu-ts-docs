@@ -80,6 +80,8 @@ The entry file path (a `.pebble` file). Used only if it is missing from the conf
 The output file path. Used only if it is missing from the configuration. Default: `./out.flat`.
 Alternative: `--output`
 
+See [Compiler Configuration](./Compiler%20Configuration.md) for the full `pebble.config.json` schema.
+
 #### Example 
 
 ```bash
@@ -88,3 +90,29 @@ pebble compile --config ./pebble.config.json
 # or with explicit entry and output
 pebble compile --entry ./src/contracts/MyContract.pebble -o ./build/MyContract.flat
 ```
+
+### `test`
+
+Run all tests in the project.
+
+#### Usage
+
+```bash
+pebble test [options]
+```
+
+#### Options
+
+- `--config <path>` : The config file path. Default: `./pebble.config.json`.
+- `--testPathPattern <regex>` : Only run files whose path matches the regex.
+- `--testNamePattern <regex>` : Only run tests whose name matches the regex.
+- `--property-runs <N>` : Iterations per property-based test. Default: `100`.
+- `--seed <S>` : Seed for the property-based PRNG. Default: `0`.
+
+#### Example
+
+```bash
+pebble test --testNamePattern "add" --property-runs 1000 --seed 42
+```
+
+See [Testing](./Testing.md) for how to write unit and property-based tests.

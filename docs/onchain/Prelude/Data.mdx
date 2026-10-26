@@ -1,0 +1,56 @@
+---
+sidebar_position: 5
+sidebar_label: data
+---
+
+# `data`
+
+*Pebble 0.3.1 · all symbols on this page are stable.*
+
+The Plutus Core `Data` type: a serialization format that every on-chain type can be encoded into and decoded from. Datums, redeemers, and the script context all flow through `data` at the system boundary.
+
+You rarely write `data` directly; the compiler does it for you whenever you use `.toData()` or pattern-match a datum. Reach for raw `data` only when you need to construct or inspect the CBOR shape yourself.
+
+`data` has five constructors (CBOR major types in parentheses):
+
+| Constructor | Shape                                  | Builtin builder                                 |
+|-------------|----------------------------------------|-------------------------------------------------|
+| Constr      | `(index: int, fields: List<data>)`     | [`std.builtins.constrData`](../Standard%20Library/std.builtins.mdx) |
+| Map         | `LinearMap<data, data>`                | [`std.builtins.mapData`](../Standard%20Library/std.builtins.mdx)   |
+| List        | `List<data>`                           | [`std.builtins.listData`](../Standard%20Library/std.builtins.mdx)  |
+| I (integer) | `int`                                  | [`std.builtins.iData`](../Standard%20Library/std.builtins.mdx)     |
+| B (bytes)   | `bytes`                                | [`std.builtins.bData`](../Standard%20Library/std.builtins.mdx)     |
+
+## Operators
+
+| Category | Operators       |
+|----------|-----------------|
+| Equality | `==`, `!=`      |
+
+Equality is structural CBOR equality, implemented by `equalsData`.
+
+## Working with `data`
+
+```ts
+using { constrData, unConstrData, iData, bData, listData } = std.builtins;
+using { strToData } = std.data;
+
+// Build:
+const d: data = constrData(0, [iData(42), bData(#cafe)]);
+
+// Destructure:
+const RawConstr{ index, fields } = unConstrData(d);
+match index {
+    0: trace("Some"),
+    _: fail "unknown constructor"
+}
+```
+
+For most use cases prefer the `.toData()` method (via the [`ToData`](../Builtin%20Interfaces.md#todata) interface) and pattern-matching on the typed value, rather than touching raw `data`.
+
+## See also
+
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx) — `data` constructors and destructors, `serialiseData`, `equalsData`
+- [`std.data`](../Standard%20Library/std.data.mdx) — `string ↔ data` helpers
+- [`ToData`](../Builtin%20Interfaces.md#todata) — auto-derived `.toData()` for every encodable type
+- [`LinearMap<K, V>`](./LinearMap.mdx), [`List<T>`](./List.mdx) — the containers `data` is built from

@@ -1,0 +1,34 @@
+---
+sidebar_position: 12
+sidebar_label: std (top-level)
+slug: /onchain/standard-library/std
+---
+
+# `std` (top level)
+
+*Pebble 0.3.1 · all symbols on this page are stable.*
+
+A handful of polymorphic helpers live directly on the `std` namespace itself, alongside the sub-namespaces ([`std.crypto`](./std.crypto.mdx), [`std.list`](./std.list.mdx), etc.).
+
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const a: int = 42;\nconst b: int = 42;\n\nconst same: boolean = std.equals(a, b);\nassert same                  else "equals failed";\nassert std.id(a) == 42       else "id failed";`}
+height="240px"
+/>
+
+## Methods
+
+| Function                                              | Description                                                                |
+|-------------------------------------------------------|----------------------------------------------------------------------------|
+| `id<T>(x: T): T`                                      | The polymorphic identity. Useful as a default callback or "do-nothing" higher-order argument. |
+| `equals<T>(a: T, b: T): bool`                         | Compile-time-dispatched equality. The compiler picks `equalsInteger`, `equalsByteString`, `equalsData`, etc. based on the instantiation of `T`. For data-encoded structs and most non-primitive types, falls back to `equalsData` (structural CBOR equality). |
+
+:::tip Polymorphic equality vs `==`
+`equals<T>` exists for higher-order use (`xs.some((x) => equals(x, target))`). In direct code, the `==` operator already dispatches the same way and is more readable.
+:::
+
+## See also
+
+- [`std.builtins`](./std.builtins.mdx) — the underlying `equalsInteger`, `equalsByteString`, `equalsData`
+- The sub-namespaces — [`crypto`](./std.crypto.mdx), [`builtins`](./std.builtins.mdx), [`list`](./std.list.mdx), [`linearMap`](./std.linearMap.mdx), [`array`](./std.array.mdx), [`bytes`](./std.bytes.mdx), [`int`](./std.int.mdx), [`boolean`](./std.boolean.mdx), [`data`](./std.data.mdx), [`value`](./std.value.mdx)

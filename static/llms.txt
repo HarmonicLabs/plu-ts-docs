@@ -1,0 +1,87 @@
+# Pebble
+
+> Pebble is a standalone smart-contract language for Cardano, targeting Untyped Plutus Core (UPLC). It compiles `contract` declarations (with optional `state` variants) into validators that fit the script-purpose dispatch model (`spend` / `mint` / `certify` / `withdraw` / `propose` / `vote`).
+
+This index points at the canonical reference pages. Each page is short, self-contained markdown.
+
+## Language
+
+- [Welcome to Pebble](/Welcome%20to%20Pebble): tagline, audience layering, entry points
+- [Installation](/Installation): toolchain setup
+- [Project Setup](/Project%20Setup): scaffolding a new project
+- [Syntax / Top Level Statements](/onchain/Syntax/Top%20Level%20Statements): module-level declarations
+- [Syntax / Block Statements](/onchain/Syntax/Block%20Statements): inside-function constructs
+- [Syntax / Control Flow Statements](/onchain/Syntax/Control%20Flow%20Statements): `if`, `match`, `for`, `while`, `return`, `break`, `continue`, `assert`, `trace`, `fail`
+- [Syntax / Namespaces](/onchain/Syntax/Namespaces): `using` and qualified access
+- [Contract Statements](/onchain/Contract%20Statements): the `contract` declaration in full
+- [State](/onchain/State): the `state` keyword (stateful UTxO contracts)
+- [Builtin Values and Literals](/onchain/Builtin%20Values%20and%20Literals): integer/byte/string/array/struct literals, `context`, `fail`
+- [Builtin Interfaces](/onchain/Builtin%20Interfaces): `ToData`, `Show`
+
+## Prelude types
+
+Every type available without an import, with operator and method-call surface.
+
+- [int](/onchain/Prelude/Int): arbitrary-precision signed integers
+- [bytes](/onchain/Prelude/Bytes): raw byte strings + `Hash28`/`Hash32`/`PolicyId`/`TokenName`/`PubKeyHash`/`ScriptHash`/`TxHash` aliases
+- [string](/onchain/Prelude/String): UTF-8 text
+- [bool](/onchain/Prelude/Boolean): truth values
+- [data](/onchain/Prelude/Data): Plutus Data; five constructors (`Constr` / `Map` / `List` / `I` / `B`)
+- [List\<T\>](/onchain/Prelude/List): linked list; O(n) indexing
+- [Array\<T\>](/onchain/Prelude/Array): random-access counterpart of `List<T>`
+- [LinearMap\<K, V\>](/onchain/Prelude/LinearMap): association-list "map"
+- [Optional\<T\>](/onchain/Prelude/Optional): `Some{ value: T }` / `None{}`
+- [Value](/onchain/Prelude/Value): native multi-asset bundle
+
+## Standard library — `std`
+
+Function-shaped equivalents of every method, plus crypto and low-level builtins.
+
+- [std.crypto](/onchain/Standard%20Library/std.crypto): hashes (`sha2_256`, `sha3_256`, `blake2b_256`/`224`, `keccak_256`, `ripemd_160`), signature verifiers (Ed25519, ECDSA secp256k1, Schnorr secp256k1)
+- [std.crypto.bls12_381](/onchain/Standard%20Library/std.crypto.bls12_381): G1/G2/MlResult pairing primitives
+- [std.builtins](/onchain/Standard%20Library/std.builtins): Plutus Core builtins (arithmetic, bytestring, bitwise v3, encoding, data ctors/dtors, native value ops, polymorphic intrinsics `trace`/`ifThenElse`/`mkCons`/`chooseList`/`chooseData`)
+- [std.list](/onchain/Standard%20Library/std.list): `List<T>` helpers
+- [std.linearMap](/onchain/Standard%20Library/std.linearMap): `LinearMap<K, V>` helpers
+- [std.array](/onchain/Standard%20Library/std.array): `Array<T>` helpers
+- [std.bytes](/onchain/Standard%20Library/std.bytes): `bytes` helpers
+- [std.int](/onchain/Standard%20Library/std.int): `int` helpers
+- [std.boolean](/onchain/Standard%20Library/std.boolean): `bool` helpers
+- [std.data](/onchain/Standard%20Library/std.data): `string ↔ data`
+- [std.value, std.valueMap, std.credential](/onchain/Standard%20Library/std.value): `Value` operations + legacy `ValueMap` + `Credential.hash`
+- [std (top-level)](/onchain/Standard%20Library/std): polymorphic `id<T>` and `equals<T>`
+
+## Reference machinery (use these for code generation)
+
+- [Failures](/onchain/reference/Failures): every condition under which a builtin or method aborts the script
+- [Laws and Invariants](/onchain/reference/Laws): round-trip identities and algebraic properties to lean on when generating code or tests
+- [Pitfalls](/onchain/reference/Pitfalls): anti-patterns and common mistakes, organized by symptom
+- [Cost and Complexity](/onchain/reference/Cost%20and%20Complexity): how to read `complexity` fields in symbols.json, and the cost classes that matter on-chain
+- [`/symbols.json`](/symbols.json): machine-readable per-symbol index (signatures, `fails_when`, `complexity`, `since`, `stability`)
+
+## Conceptual primers
+
+- [Validators 101](/onchain/concepts/Validators%20101): script-purpose dispatch, what `context` carries, how a `contract` lowers to a validator
+- [UTxO Model](/onchain/concepts/UTxO%20Model): inputs, outputs, datums, redeemers, reference inputs
+
+## Cardano-specific structures (`onchain/API/types`)
+
+- Address, Credential, StakeCredential
+- Tx, TxIn, TxOut, TxOutRef, OutputDatum
+- ScriptContext, ScriptInfo, ScriptPurpose
+- Interval, ExtendedInteger, IntervalBoundary
+- Certificate, Delegatee
+- Governance: GovernanceAction, ProposalProcedure, ProtocolVersion, Rational, Vote, Voter
+- Value (the multi-asset bundle; reference doc at `/onchain/Prelude/Value`)
+
+## End-to-end examples
+
+- [Hello World](/examples/Hello%20World)
+- [Vesting](/examples/Vesting)
+- [Simple minting policy](/examples/Simple%20minting%20policy)
+- [Simple Order Book DEX](/examples/Simple%20order%20book%20DEX): on-chain `contract` + `state` declaration with off-chain transactions via `@harmoniclabs/buildooor`
+
+## Out-of-band
+
+- Source repo: https://github.com/HarmonicLabs/pebble
+- Offchain transaction builder: https://github.com/HarmonicLabs/buildooor (`@harmoniclabs/buildooor`)
+- Compiler internals (for contributors, not users): `internal_docs/` in the repo

@@ -5,7 +5,7 @@ sidebar_label: State
 
 # `state`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 The `state` keyword introduces a **typed datum** inside a `contract` declaration. Each `state` block defines one variant of an on-chain sum type whose underlying CBOR encoding is what the contract's UTxOs carry as their datum. Inside a `spend` method declared on a state, `context.state` is destructured to a strongly-typed record of that state's fields — you never write `unConstrData` or `fromData` by hand.
 
@@ -13,6 +13,7 @@ A contract may declare zero or more `state` blocks. If at least one `state` exis
 
 ## Grammar
 
+<!-- no-compile: grammar skeleton, not a compilable contract -->
 ```
 contract Name [( params… )] {
     state Variant {
@@ -38,17 +39,17 @@ Rules:
 
 ## Single-state contracts
 
-When a contract declares exactly one `state`, the compiler enables the `shortcutSingleConstructor` lowering: the datum on-chain is the **raw record** (not wrapped in a `Constr(0, ...)` tag). This saves a few bytes per UTxO at the CBOR level.
+A contract that declares exactly one `state` still encodes its datum as a constructor: `Constr 0 [ fields... ]`, the same shape a multi-state contract uses for its first state.
 
-```pebble
+```ts
 contract HelloWorld {
     state Locked {
         owner: PubKeyHash
 
         spend greet(message: bytes) {
             const { tx, state: { owner } } = context;
-            assert tx.signatories.includes(owner);
-            assert message == "Hello pebble".toBytes();
+            assert tx.requiredSigners.includes(owner);
+            assert message == "Hello pebble"; // double-quoted literals are bytes (utf-8)
         }
     }
 }
@@ -60,7 +61,8 @@ The on-chain datum here is simply `B <owner-bytes>` (no constructor wrapper).
 
 When a contract declares two or more `state` blocks, the compiler emits an explicit sum type — one CBOR `Constr` constructor per state, in declaration order. The off-chain transaction that creates the UTxO picks which constructor to encode.
 
-```pebble
+<!-- no-compile: method bodies elided -->
+```ts
 contract SimpleOrderBook {
     state Simple {
         ownerHash: bytes
@@ -92,14 +94,14 @@ At dispatch time, the compiler inserts a `match purpose, datum` over the script 
 
 Inside any `spend` method declared on a state, `context.state` is bound to the state's record type:
 
-```pebble
+```ts
 state Live {
     counter: int
     owner: PubKeyHash
 
     spend bump() {
         const { tx, state: { counter, owner } } = context;
-        assert tx.signatories.includes(owner);
+        assert tx.requiredSigners.includes(owner);
         trace(counter);
     }
 }
@@ -109,16 +111,25 @@ The `state` field of `context` is **statically narrowed** to `Live` here — the
 
 ## Combining `state` with bare `spend` methods
 
-A contract can mix state-scoped `spend` methods with bare ones at the contract level. The bare `spend` is a **fallback** — it runs when the script is invoked with a datum that doesn't match any declared state's constructor, OR with no datum at all.
+A contract can mix state-scoped `spend` methods with bare ones at the contract level. The bare `spend` is a **fallback** — it runs when the script is invoked with a datum that doesn't match any declared state's constructor, OR with no datum at all. Because there is no matched state, **`state` is NOT available** inside a bare `spend`; put owner checks (and anything else that reads state fields) in state-scoped methods, and keep the fallback datum-independent:
 
-```pebble
+```ts
 contract SimpleOrderBook {
-    state Simple { /* ... */ }
-    state Partial { /* ... */ }
+    param operator: PubKeyHash;
 
-    spend cancelOrder() {
-        const { tx, state: { ownerHash } } = context;   // ← `state` here is the union; narrow with match
-        assert tx.signatories.includes(ownerHash);
+    state Simple {
+        ownerHash: bytes
+
+        spend cancelOrder() {
+            const { tx, state: { ownerHash } } = context;
+            assert tx.requiredSigners.includes(ownerHash);
+        }
+    }
+
+    // fallback: an unknown datum can only be swept by the operator
+    spend sweepUnknown() {
+        const { tx } = context;
+        assert tx.requiredSigners.includes(this.operator);
     }
 }
 ```
@@ -164,16 +175,31 @@ const partialDatum = new DataConstr(1, [
 ]);
 ```
 
-For a single-state contract (where the `shortcutSingleConstructor` optimisation kicks in), the datum is the **raw fields** — no `DataConstr` wrapper:
+A **single-state** contract's datum is the same shape with constructor
+index `0` — the fields are still wrapped:
 
 ```ts
-// HelloWorld.Locked (single state)
-const lockedDatum = new DataB(ownerPubKeyHash.toBuffer());
+// HelloWorld.Locked (single state):  Constr 0 [ fields... ]
+const lockedDatum = new DataConstr(0, [ new DataB(ownerPubKeyHash.toBuffer()) ]);
 ```
+
+:::caution single-state datums are wrapped
+A contract's datum is always `Constr idx [ fields ]`, whatever the
+`encodingStrategy` — **not** bare fields. The spend dispatch and the
+`as Contract` union cast both use this wrapped shape; a bare-fields datum
+fails phase-2 validation with `unConstrData :: not a data constructor`.
+
+Each field is encoded per **its own** type. A struct-typed field follows
+that struct's declaration: `coords: Coordinates` is a nested **list** if
+`Coordinates` is declared in the shortcut form (the default since 0.5.0),
+and a nested `Constr 0 [ ... ]` if it is declared in the explicit form.
+See [Types](./Types.md#on-chain-encoding).
+:::
 
 ## See also
 
 - [Contract Statements](./Contract%20Statements.md) — the `contract` declaration that hosts `state` blocks
+- [Cross-Contract Types](./Cross-Contract%20Types.md) — exporting states as types (`C.State`, `redeemerof C.State`) for other contracts to decode
 - [Validators 101](./concepts/Validators%20101.md) — how `spend` methods dispatch
 - [Datum & Redeemer Flow](./concepts/Datum%20and%20Redeemer%20Flow.md) — the encoding rules for crossing the on-chain / off-chain boundary
 - [Simple Order Book DEX](../examples/Simple%20order%20book%20DEX.md) — a multi-state worked example

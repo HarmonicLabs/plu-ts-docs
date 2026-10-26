@@ -1,0 +1,99 @@
+---
+sidebar_position: 6
+sidebar_label: List<T>
+---
+
+# `List<T>`
+
+*Pebble 0.3.1 · all symbols on this page are stable.*
+
+A singly-linked list of elements of type `T`. Maps to Plutus Core's built-in list.
+
+Despite being a cons list at the interpreter level, **indexed access `xs[i]` is essentially free in the on-chain cost model**: it lowers to `headList (dropList i xs)`, and `dropList` is billed by the bit-width of `i` (constant for any practical index), not by how many cons cells get walked. So unlike with arrays in other languages, you don't need to convert to [`Array<T>`](./Array.mdx) for cheap indexed reads — see [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
+
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const xs: List<int> = [1, 2, 3, 4, 5];\n\nconst total = std.list.foldl((acc, n) => acc + n, 0, xs);\nconst evens = std.list.filter((n) => n % 2 == 0, xs);\n\nassert total == 15                    else "sum wrong";\nassert std.list.length(evens) == 2    else "filter wrong";`}
+height="280px"
+/>
+
+## Literals
+
+```ts
+const empty: List<int> = [];
+const xs: List<int>    = [1, 2, 3];
+```
+
+The element type is inferred from context (or from the first element if obvious).
+
+## Methods
+
+| Method                                                                         | Description                                                                |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `length(): int`                                                                | Element count. Walks the spine; O(n) in actual work, charged O(n) by the cost model. |
+| `isEmpty(): bool`                                                              | True if the list has zero elements.                                       |
+| `head(): T`                                                                    | First element. Fails on empty.                                             |
+| `tail(): List<T>`                                                              | Everything after the head. Fails on empty.                                 |
+| `prepend(x: T): List<T>`                                                       | New list with `x` at the front.                                            |
+| `drop(n: int): List<T>`                                                        | List with the first `n` elements removed.                                  |
+| `map<A>(f: (T) -> A): List<A>`                                                 | Transform every element. Method-only — there's no `std.list.map`.          |
+| `filter(p: (T) -> bool): List<T>`                                              | Keep only elements satisfying `p`.                                         |
+| `foldr<A>(f: (T, A) -> A, init: A): A`                                         | Right fold.                                                                |
+| `foldl<A>(f: (A, T) -> A, init: A): A`                                         | Left fold. Tail-recursive; prefer for large lists.                         |
+| `some(p: (T) -> bool): bool`                                                   | True if any element satisfies `p`. Short-circuits.                        |
+| `every(p: (T) -> bool): bool`                                                  | True if all elements satisfy `p`. Short-circuits.                         |
+| `find(p: (T) -> bool): Optional<T>`                                            | First match wrapped in `Some`, or `None`.                                  |
+| `equals(eq: (T, T) -> bool, other: List<T>): bool`                             | Element-wise equality using `eq`.                                          |
+
+### Examples (one per method)
+```ts
+const xs: List<int> = [1, 2, 3, 4, 5];
+
+const n:    int        = xs.length();                       // 5
+const e:    bool       = xs.isEmpty();                      // false
+const h:    int        = xs.head();                         // 1
+const t:    List<int>  = xs.tail();                         // [2,3,4,5]
+const ys:   List<int>  = xs.prepend(0);                     // [0,1,2,3,4,5]
+const dr:   List<int>  = xs.drop(2);                        // [3,4,5]
+const dbl:  List<int>  = xs.map((n) => n * 2);              // [2,4,6,8,10]
+const ev:   List<int>  = xs.filter((n) => n % 2 == 0);      // [2,4]
+const sumR: int        = xs.foldr((a, acc) => a + acc, 0);  // 15
+const sumL: int        = xs.foldl((acc, a) => acc + a, 0);  // 15
+const any:  bool       = xs.some((n) => n > 4);             // true
+const all:  bool       = xs.every((n) => n > 0);            // true
+const got:  Optional<int> = xs.find((n) => n == 3);         // Some{ value: 3 }
+const same: bool       = xs.equals(std.int.equals, xs);     // true
+```
+
+### Pipeline example
+```ts
+struct Input { policy: bytes, name: bytes, amount: int }
+
+const inputs: List<Input> = [/* ... */];
+
+const total = inputs
+    .filter((i) => i.policy == myPolicy)
+    .foldl((acc, i) => acc + i.amount, 0);
+
+assert total > 0;
+```
+
+## Indexing
+
+`xs[i]` is sugar for accessing the i-th element. It lowers to `headList(dropList(i, xs))`. The interpreter does O(i) work walking the spine, but the **on-chain cost model bills `dropList` by the bit-width of `i`**, so for any practical index the charged cost is essentially constant. **Don't convert to `Array<T>` just for indexed reads** — `std.array.fromList` itself is linear in the list length, and that conversion is almost always more expensive than however many list-indexing reads you were trying to optimise. Reserve the conversion for scenarios where you genuinely need many random-access reads against the *same* compact buffer.
+
+See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
+
+## Operators
+
+| Category | Operators                                            |
+|----------|------------------------------------------------------|
+| Equality | `==`, `!=` (when `T` implements equality)            |
+
+## See also
+
+- [`std.list`](../Standard%20Library/std.list.mdx) — function-call surface
+- [`Array<T>`](./Array.mdx) — random-access counterpart
+- [`LinearMap<K, V>`](./LinearMap.mdx) — structurally a `List<LinearMapEntry<K, V>>`
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#polymorphic-intrinsics) — `mkCons`, `headList`, `tailList`, `nullList`, `chooseList`

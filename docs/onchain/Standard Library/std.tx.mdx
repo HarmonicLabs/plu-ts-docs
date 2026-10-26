@@ -1,0 +1,62 @@
+---
+sidebar_position: 12
+sidebar_label: std.tx, std.interval
+---
+
+# `std.tx`, `std.interval`
+
+*Pebble 0.5.0 · all symbols on this page are stable.*
+
+Script-context helpers: the checks almost every validator hand-rolls —
+signature presence, own-input lookup, per-address payment sums, inline
+datums, and validity-interval reasoning. Everything here is also available
+as a **method** on the corresponding prelude type (`tx.signedBy(pkh)`,
+`interval.contains(t)`, `txOut.inlineDatum()`); the namespaces exist so the
+same operations can be passed as values.
+
+```ts
+contract Vault {
+    param owner: PubKeyHash;
+
+    spend withdraw() {
+        const { tx, spendingRef } = context;
+
+        assert tx.signedBy( this.owner ) else "owner must sign";
+
+        const Some{ value: ownInput } = tx.findInput( spendingRef );
+        const paidBack = tx.valuePaidTo( ownInput.resolved.address );
+        assert paidBack.lovelaces() >= 2000000 else "min continuing value";
+    }
+}
+```
+
+## `std.tx` — methods on `Tx` / `TxOut`
+
+| Function                                                                | Description                                                                                             |
+|-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `signedBy(tx: Tx, pkh: PubKeyHash): bool`                               | True iff `pkh` is among `tx.requiredSigners`.                                                           |
+| `findInput(tx: Tx, ref: TxOutRef): Optional<TxIn>`                      | The input spending `ref` — pass `context.spendingRef` to find the validator's own input.                |
+| `outputsToCredential(tx: Tx, c: Credential): List<TxOut>`               | Every output whose **payment** credential is `c` (stake parts ignored — the double-satisfaction guard). |
+| `inputsFromCredential(tx: Tx, c: Credential): List<TxIn>`               | Every input held by payment credential `c` — e.g. assert exactly one script input.                      |
+| `valuePaidTo(tx: Tx, addr: Address): Value`                             | Asset-wise sum of every output to exactly `addr` (payment **and** stake part).                          |
+| `inlineDatum(o: TxOut): Optional<data>`                                 | The output's datum when it is inline, `None` for `NoDatum` / datum hashes. Decode with `as`.            |
+
+## `std.interval` — methods on `Interval`
+
+The tx validity interval proves *bounds* on when the transaction can be
+on-chain: read the **lower** bound to prove time has passed, the **upper**
+bound to prove a deadline has not.
+
+| Function                                                                | Description                                                                                       |
+|-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| `lowerBoundFinite(i: Interval): Optional<int>`                          | The finite lower bound, `None` on `-∞`.                                                           |
+| `upperBoundFinite(i: Interval): Optional<int>`                          | The finite upper bound, `None` on `+∞`.                                                           |
+| `contains(i: Interval, t: int): bool`                                   | True iff `t` lies inside the interval (inclusivity respected).                                    |
+| `isEntirelyAfter(i: Interval, t: int): bool`                            | The whole interval lies strictly after `t` — "at least `t` has certainly passed".                 |
+| `isEntirelyBefore(i: Interval, t: int): bool`                           | The whole interval lies strictly before `t` — "the tx can certainly not land at or after `t`".    |
+
+:::note Ledger bool encoding
+These helpers read the interval's `isInclusive` flags with the **ledger**
+data encoding of booleans (PlutusTx: `False = Constr 0`, `True = Constr 1`),
+matching the script contexts the ledger actually provides.
+:::

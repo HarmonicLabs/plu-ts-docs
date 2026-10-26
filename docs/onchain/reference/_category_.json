@@ -1,0 +1,8 @@
+{
+    "label": "Reference",
+    "position": 10,
+    "link": {
+        "type": "generated-index",
+        "description": "Cross-cutting reference pages: failure conditions, algebraic laws, and pitfalls. Optimised for code-generation tools that need to ground their output in machine-verifiable facts."
+    }
+}

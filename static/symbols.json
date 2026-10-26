@@ -1,0 +1,354 @@
+{
+  "version": "0.3.0",
+  "generated_from": "packages/pebble/src/compiler/tir/program/stdScope/populateStdNamespace.ts and packages/pebble/src/compiler/tir/types/TirNativeType/native/",
+  "schema_version": 1,
+  "schema": {
+    "function": "{ name, signature, namespace, kind: 'function'|'method'|'constructor', polymorphic: bool, returns_optional: bool, fails_when: string[], complexity: string, since: string, stability: 'stable'|'unstable'|'experimental', doc: string }",
+    "type":     "{ name, kind: 'primitive'|'native'|'alias'|'struct'|'sum', generic_params: int, see: string, since: string }"
+  },
+  "prelude_types": [
+    { "name": "int",          "kind": "primitive", "generic_params": 0, "see": "/onchain/Prelude/Int",       "since": "0.1.0" },
+    { "name": "bytes",        "kind": "primitive", "generic_params": 0, "see": "/onchain/Prelude/Bytes",     "since": "0.1.0" },
+    { "name": "string",       "kind": "primitive", "generic_params": 0, "see": "/onchain/Prelude/String",    "since": "0.1.0" },
+    { "name": "bool",         "kind": "primitive", "generic_params": 0, "see": "/onchain/Prelude/Boolean",   "since": "0.1.0" },
+    { "name": "data",         "kind": "primitive", "generic_params": 0, "see": "/onchain/Prelude/Data",      "since": "0.1.0" },
+    { "name": "void",         "kind": "primitive", "generic_params": 0, "see": "/onchain/Prelude/Boolean",   "since": "0.1.0" },
+    { "name": "List",         "kind": "native",    "generic_params": 1, "see": "/onchain/Prelude/List",      "since": "0.1.0" },
+    { "name": "Array",        "kind": "native",    "generic_params": 1, "see": "/onchain/Prelude/Array",     "since": "0.3.0" },
+    { "name": "LinearMap",    "kind": "native",    "generic_params": 2, "see": "/onchain/Prelude/LinearMap", "since": "0.1.0" },
+    { "name": "Optional",     "kind": "sum",       "generic_params": 1, "see": "/onchain/Prelude/Optional",  "since": "0.1.0" },
+    { "name": "Value",        "kind": "native",    "generic_params": 0, "see": "/onchain/Prelude/Value",     "since": "0.3.0" }
+  ],
+  "type_aliases": [
+    { "name": "Hash28",     "underlying": "bytes",                                          "size": 28,    "since": "0.1.0" },
+    { "name": "Hash32",     "underlying": "bytes",                                          "size": 32,    "since": "0.1.0" },
+    { "name": "PubKeyHash", "underlying": "bytes",                                          "size": 28,    "since": "0.1.0" },
+    { "name": "ScriptHash", "underlying": "bytes",                                          "size": 28,    "since": "0.1.0" },
+    { "name": "TxHash",     "underlying": "bytes",                                          "size": 32,    "since": "0.1.0" },
+    { "name": "PolicyId",   "underlying": "bytes",                                          "size": 28,    "since": "0.1.0" },
+    { "name": "TokenName",  "underlying": "bytes",                                          "size_max": 32, "since": "0.1.0" },
+    { "name": "ChangedParameters", "underlying": "LinearMap<int, data>",                                    "since": "0.3.0" },
+    { "name": "ValueMap",   "underlying": "LinearMap<PolicyId, LinearMap<TokenName, int>>",                 "since": "0.1.0" }
+  ],
+  "bls_types": [
+    { "name": "G1",       "kind": "native", "namespace": "std.crypto.bls12_381", "since": "0.2.0" },
+    { "name": "G2",       "kind": "native", "namespace": "std.crypto.bls12_381", "since": "0.2.0" },
+    { "name": "MlResult", "kind": "native", "namespace": "std.crypto.bls12_381", "since": "0.2.0" }
+  ],
+  "builtin_interfaces": [
+    { "name": "ToData", "method": "toData(self): data",  "auto_derived_for": "every data-encodable type",      "since": "0.1.0", "see": "/onchain/Builtin%20Interfaces#todata" },
+    { "name": "Show",   "method": "show(self): bytes",   "auto_derived_for": "primitives; user-overridable", "since": "0.2.0", "see": "/onchain/Builtin%20Interfaces#show" }
+  ],
+  "methods": {
+    "int": [],
+    "bytes": [
+      { "name": "length",            "signature": "bytes.length(): int",                                     "fails_when": [], "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+      { "name": "slice",             "signature": "bytes.slice(start: int, len: int): bytes",                "fails_when": [], "complexity": "O(len)", "since": "0.1.0", "stability": "stable" },
+      { "name": "prepend",           "signature": "bytes.prepend(byteVal: int): bytes",                      "fails_when": ["byteVal < 0", "byteVal > 255"], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "concat",            "signature": "bytes.concat(other: bytes): bytes",                       "fails_when": [], "complexity": "O(n+m)", "since": "0.1.0", "stability": "stable" },
+      { "name": "indexAt",           "signature": "bytes.indexAt(i: int): int",                              "fails_when": ["i < 0", "i >= length()"], "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+      { "name": "equals",            "signature": "bytes.equals(other: bytes): bool",                        "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "lessThan",          "signature": "bytes.lessThan(other: bytes): bool",                      "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "lessThanEquals",    "signature": "bytes.lessThanEquals(other: bytes): bool",                "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "greaterThan",       "signature": "bytes.greaterThan(other: bytes): bool",                   "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "greaterThanEquals", "signature": "bytes.greaterThanEquals(other: bytes): bool",             "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "toInt",             "signature": "bytes.toInt(): int",                                      "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" }
+    ],
+    "string": [
+      { "name": "toBytes", "signature": "string.toBytes(): bytes", "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" }
+    ],
+    "List<T>": [
+      { "name": "length",   "signature": "List<T>.length(): int",                                                          "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "isEmpty",  "signature": "List<T>.isEmpty(): bool",                                                        "fails_when": [],                  "complexity": "O(1)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "head",     "signature": "List<T>.head(): T",                                                              "fails_when": ["list is empty"],   "complexity": "O(1)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "tail",     "signature": "List<T>.tail(): List<T>",                                                        "fails_when": ["list is empty"],   "complexity": "O(1)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "prepend",  "signature": "List<T>.prepend(x: T): List<T>",                                                 "fails_when": [],                  "complexity": "O(1)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "drop",     "signature": "List<T>.drop(n: int): List<T>",                                                  "fails_when": [],                  "complexity": "model: O(log n) in size of n; interpreter: O(n)", "notes": "lowers to dropList builtin; cost is billed by the bit-width of n, not by spine length",  "since": "0.1.0", "stability": "stable" },
+      { "name": "map",      "signature": "List<T>.map<A>(f: (T) -> A): List<A>",                                           "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable", "method_only": true },
+      { "name": "filter",   "signature": "List<T>.filter(p: (T) -> bool): List<T>",                                        "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "foldr",    "signature": "List<T>.foldr<A>(f: (T, A) -> A, init: A): A",                                   "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "foldl",    "signature": "List<T>.foldl<A>(f: (A, T) -> A, init: A): A",                                   "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "some",     "signature": "List<T>.some(p: (T) -> bool): bool",                                             "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "every",    "signature": "List<T>.every(p: (T) -> bool): bool",                                            "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+      { "name": "find",     "signature": "List<T>.find(p: (T) -> bool): Optional<T>",                                      "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable", "returns_optional": true },
+      { "name": "equals",   "signature": "List<T>.equals(eq: (T, T) -> bool, other: List<T>): bool",                       "fails_when": [],                  "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" }
+    ],
+    "Array<T>": [
+      { "name": "length", "signature": "Array<T>.length(): int", "fails_when": [],                  "complexity": "O(1)", "since": "0.3.0", "stability": "stable" },
+      { "name": "at",     "signature": "Array<T>.at(i: int): T", "fails_when": ["i < 0", "i >= length()"], "complexity": "O(1)", "since": "0.3.0", "stability": "stable" }
+    ],
+    "LinearMap<K,V>": [
+      { "name": "length",  "signature": "LinearMap<K,V>.length(): int",                                  "fails_when": [],                  "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+      { "name": "isEmpty", "signature": "LinearMap<K,V>.isEmpty(): bool",                                "fails_when": [],                  "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+      { "name": "head",    "signature": "LinearMap<K,V>.head(): LinearMapEntry<K,V>",                    "fails_when": ["map is empty"],    "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+      { "name": "tail",    "signature": "LinearMap<K,V>.tail(): LinearMap<K,V>",                         "fails_when": ["map is empty"],    "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+      { "name": "lookup",  "signature": "LinearMap<K,V>.lookup(k: K): Optional<V>",                      "fails_when": [],                  "complexity": "O(n)", "since": "0.1.0", "stability": "stable", "returns_optional": true },
+      { "name": "prepend", "signature": "LinearMap<K,V>.prepend(k: K, v: V): LinearMap<K,V>",            "fails_when": [],                  "complexity": "O(1)", "since": "0.1.0", "stability": "stable", "constraints": ["K: ToData", "V: ToData"] }
+    ],
+    "Value": [
+      { "name": "amountOf",   "signature": "Value.amountOf(policy: PolicyId, name: TokenName): int", "fails_when": [],                "complexity": "O(n)", "since": "0.3.0", "stability": "stable" },
+      { "name": "lovelaces",  "signature": "Value.lovelaces(): int",                                  "fails_when": [],                "complexity": "O(n)", "since": "0.3.0", "stability": "stable" },
+      { "name": "insert",     "signature": "Value.insert(policy: PolicyId, name: TokenName, amount: int): Value", "fails_when": [],   "complexity": "O(n)", "since": "0.3.0", "stability": "stable" },
+      { "name": "union",      "signature": "Value.union(other: Value): Value",                        "fails_when": [],                "complexity": "O(n+m)", "since": "0.3.0", "stability": "stable" },
+      { "name": "contains",   "signature": "Value.contains(other: Value): bool",                      "fails_when": [],                "complexity": "O(n+m)", "since": "0.3.0", "stability": "stable" },
+      { "name": "scale",      "signature": "Value.scale(k: int): Value",                              "fails_when": [],                "complexity": "O(n)", "since": "0.3.0", "stability": "stable" },
+      { "name": "toData",     "signature": "Value.toData(): data",                                    "fails_when": [],                "complexity": "O(n)", "since": "0.3.0", "stability": "stable" }
+    ]
+  },
+  "namespaces": {
+    "std": {
+      "doc": "Polymorphic helpers at the top level of the standard library.",
+      "functions": [
+        { "name": "id",     "signature": "id<T>(x: T): T",         "fails_when": [], "complexity": "O(1)", "since": "0.2.0", "stability": "stable", "polymorphic": true },
+        { "name": "equals", "signature": "equals<T>(a: T, b: T): bool", "fails_when": [], "complexity": "depends on T", "since": "0.2.0", "stability": "stable", "polymorphic": true }
+      ]
+    },
+    "std.crypto": {
+      "doc": "Cryptographic hashes and signature verification primitives.",
+      "functions": [
+        { "name": "sha2_256",                          "signature": "sha2_256(b: bytes): bytes",                                 "output_size": 32, "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "sha3_256",                          "signature": "sha3_256(b: bytes): bytes",                                 "output_size": 32, "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "blake2b_256",                       "signature": "blake2b_256(b: bytes): bytes",                              "output_size": 32, "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "blake2b_224",                       "signature": "blake2b_224(b: bytes): bytes",                              "output_size": 28, "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "keccak_256",                        "signature": "keccak_256(b: bytes): bytes",                               "output_size": 32, "fails_when": [], "since": "0.2.0", "stability": "stable" },
+        { "name": "ripemd_160",                        "signature": "ripemd_160(b: bytes): bytes",                               "output_size": 20, "fails_when": [], "since": "0.2.0", "stability": "stable" },
+        { "name": "verifyEd25519Signature",            "signature": "verifyEd25519Signature(pubKey: bytes, msg: bytes, sig: bytes): bool",            "fails_when": [], "non_aborting": true, "since": "0.1.0", "stability": "stable" },
+        { "name": "verifyEcdsaSecp256k1Signature",     "signature": "verifyEcdsaSecp256k1Signature(pubKey: bytes, msg: bytes, sig: bytes): bool",     "fails_when": [], "non_aborting": true, "since": "0.2.0", "stability": "stable" },
+        { "name": "verifySchnorrSecp256k1Signature",   "signature": "verifySchnorrSecp256k1Signature(pubKey: bytes, msg: bytes, sig: bytes): bool",   "fails_when": [], "non_aborting": true, "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.crypto.bls12_381": {
+      "doc": "BLS12-381 pairing-friendly curve operations.",
+      "functions": [
+        { "name": "g1Add",         "signature": "g1Add(a: G1, b: G1): G1",                              "since": "0.2.0", "stability": "stable" },
+        { "name": "g1Neg",         "signature": "g1Neg(a: G1): G1",                                     "since": "0.2.0", "stability": "stable" },
+        { "name": "g1ScalarMul",   "signature": "g1ScalarMul(k: int, p: G1): G1",                       "since": "0.2.0", "stability": "stable" },
+        { "name": "g1Equal",       "signature": "g1Equal(a: G1, b: G1): bool",                          "since": "0.2.0", "stability": "stable" },
+        { "name": "g1HashToGroup", "signature": "g1HashToGroup(msg: bytes, dst: bytes): G1",            "since": "0.2.0", "stability": "stable" },
+        { "name": "g1Compress",    "signature": "g1Compress(p: G1): bytes",                             "output_size": 48, "since": "0.2.0", "stability": "stable" },
+        { "name": "g1Uncompress",  "signature": "g1Uncompress(b: bytes): G1",                           "fails_when": ["b is not a valid 48-byte compressed G1 point"], "since": "0.2.0", "stability": "stable" },
+        { "name": "g2Add",         "signature": "g2Add(a: G2, b: G2): G2",                              "since": "0.2.0", "stability": "stable" },
+        { "name": "g2Neg",         "signature": "g2Neg(a: G2): G2",                                     "since": "0.2.0", "stability": "stable" },
+        { "name": "g2ScalarMul",   "signature": "g2ScalarMul(k: int, p: G2): G2",                       "since": "0.2.0", "stability": "stable" },
+        { "name": "g2Equal",       "signature": "g2Equal(a: G2, b: G2): bool",                          "since": "0.2.0", "stability": "stable" },
+        { "name": "g2HashToGroup", "signature": "g2HashToGroup(msg: bytes, dst: bytes): G2",            "since": "0.2.0", "stability": "stable" },
+        { "name": "g2Compress",    "signature": "g2Compress(p: G2): bytes",                             "output_size": 96, "since": "0.2.0", "stability": "stable" },
+        { "name": "g2Uncompress",  "signature": "g2Uncompress(b: bytes): G2",                           "fails_when": ["b is not a valid 96-byte compressed G2 point"], "since": "0.2.0", "stability": "stable" },
+        { "name": "millerLoop",    "signature": "millerLoop(g1: G1, g2: G2): MlResult",                 "since": "0.2.0", "stability": "stable" },
+        { "name": "mulMlResult",   "signature": "mulMlResult(a: MlResult, b: MlResult): MlResult",      "since": "0.2.0", "stability": "stable" },
+        { "name": "finalVerify",   "signature": "finalVerify(a: MlResult, b: MlResult): bool",          "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.builtins": {
+      "doc": "Direct exposure of Plutus Core builtins. Prefer per-type namespaces or operators in everyday code.",
+      "type_exports": ["RawConstr"],
+      "functions": [
+        { "name": "addInteger",            "signature": "addInteger(a: int, b: int): int",                  "fails_when": [],                    "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+        { "name": "subtractInteger",       "signature": "subtractInteger(a: int, b: int): int",             "fails_when": [],                    "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+        { "name": "multiplyInteger",       "signature": "multiplyInteger(a: int, b: int): int",             "fails_when": [],                    "complexity": "O(n*m)", "since": "0.1.0", "stability": "stable" },
+        { "name": "divideInteger",         "signature": "divideInteger(a: int, b: int): int",               "fails_when": ["b == 0"],            "complexity": "O(n*m)", "since": "0.1.0", "stability": "stable", "rounding": "floor" },
+        { "name": "quotientInteger",       "signature": "quotientInteger(a: int, b: int): int",             "fails_when": ["b == 0"],            "complexity": "O(n*m)", "since": "0.1.0", "stability": "stable", "rounding": "truncate-toward-zero" },
+        { "name": "remainderInteger",      "signature": "remainderInteger(a: int, b: int): int",            "fails_when": ["b == 0"],            "complexity": "O(n*m)", "since": "0.1.0", "stability": "stable" },
+        { "name": "modInteger",            "signature": "modInteger(a: int, b: int): int",                  "fails_when": ["b == 0"],            "complexity": "O(n*m)", "since": "0.1.0", "stability": "stable" },
+        { "name": "equalsInteger",         "signature": "equalsInteger(a: int, b: int): bool",              "fails_when": [],                    "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+        { "name": "lessThanInteger",       "signature": "lessThanInteger(a: int, b: int): bool",            "fails_when": [],                    "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+        { "name": "lessThanEqualInteger",  "signature": "lessThanEqualInteger(a: int, b: int): bool",       "fails_when": [],                    "complexity": "O(n)",  "since": "0.1.0", "stability": "stable" },
+        { "name": "expModInteger",         "signature": "expModInteger(base: int, exp: int, m: int): int",  "fails_when": ["m == 0"],            "complexity": "O(log(exp) * n^2)", "since": "0.3.0", "stability": "stable" },
+
+        { "name": "appendByteString",        "signature": "appendByteString(a: bytes, b: bytes): bytes",                      "fails_when": [], "complexity": "O(n+m)", "since": "0.1.0", "stability": "stable" },
+        { "name": "consByteString",          "signature": "consByteString(byteVal: int, b: bytes): bytes",                    "fails_when": ["byteVal < 0", "byteVal > 255"], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+        { "name": "sliceByteString",         "signature": "sliceByteString(start: int, len: int, b: bytes): bytes",           "fails_when": [], "complexity": "O(len)", "since": "0.1.0", "stability": "stable" },
+        { "name": "lengthOfByteString",      "signature": "lengthOfByteString(b: bytes): int",                                "fails_when": [], "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+        { "name": "indexByteString",         "signature": "indexByteString(b: bytes, i: int): int",                           "fails_when": ["i < 0", "i >= length(b)"], "complexity": "O(1)", "since": "0.1.0", "stability": "stable" },
+        { "name": "equalsByteString",        "signature": "equalsByteString(a: bytes, b: bytes): bool",                       "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+        { "name": "lessThanByteString",      "signature": "lessThanByteString(a: bytes, b: bytes): bool",                     "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+        { "name": "lessThanEqualsByteString","signature": "lessThanEqualsByteString(a: bytes, b: bytes): bool",                "fails_when": [], "complexity": "O(n)", "since": "0.1.0", "stability": "stable" },
+
+        { "name": "andByteString",        "signature": "andByteString(padShorter: bool, a: bytes, b: bytes): bytes",        "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "orByteString",         "signature": "orByteString(padShorter: bool, a: bytes, b: bytes): bytes",         "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "xorByteString",        "signature": "xorByteString(padShorter: bool, a: bytes, b: bytes): bytes",        "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "complementByteString", "signature": "complementByteString(b: bytes): bytes",                              "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "readBit",              "signature": "readBit(b: bytes, bitIdx: int): bool",                                "fails_when": ["bitIdx out of range"], "since": "0.3.0", "stability": "stable" },
+        { "name": "writeBits",            "signature": "writeBits(b: bytes, positions: List<int>, value: bool): bytes",       "fails_when": ["any position out of range"], "since": "0.3.0", "stability": "stable" },
+        { "name": "replicateByte",        "signature": "replicateByte(n: int, byteVal: int): bytes",                          "fails_when": ["n < 0", "byteVal < 0", "byteVal > 255"], "since": "0.3.0", "stability": "stable" },
+        { "name": "shiftByteString",      "signature": "shiftByteString(b: bytes, k: int): bytes",                            "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "rotateByteString",     "signature": "rotateByteString(b: bytes, k: int): bytes",                           "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "countSetBits",         "signature": "countSetBits(b: bytes): int",                                         "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "findFirstSetBit",      "signature": "findFirstSetBit(b: bytes): int",                                      "fails_when": [], "since": "0.3.0", "stability": "stable" },
+
+        { "name": "integerToByteString",  "signature": "integerToByteString(bigEndian: bool, size: int, n: int): bytes",      "fails_when": ["n < 0", "n doesn't fit in `size` bytes when size > 0"], "since": "0.3.0", "stability": "stable" },
+        { "name": "byteStringToInteger",  "signature": "byteStringToInteger(bigEndian: bool, b: bytes): int",                 "fails_when": [], "since": "0.3.0", "stability": "stable" },
+
+        { "name": "appendString", "signature": "appendString(a: string, b: string): string", "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "equalsString", "signature": "equalsString(a: string, b: string): bool",   "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "encodeUtf8",   "signature": "encodeUtf8(s: string): bytes",                "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "decodeUtf8",   "signature": "decodeUtf8(b: bytes): string",                "fails_when": ["b is not valid UTF-8"], "since": "0.1.0", "stability": "stable" },
+
+        { "name": "constrData", "signature": "constrData(idx: int, fields: List<data>): data",            "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "mapData",    "signature": "mapData(m: LinearMap<data, data>): data",                   "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "listData",   "signature": "listData(xs: List<data>): data",                            "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "iData",      "signature": "iData(n: int): data",                                       "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "bData",      "signature": "bData(b: bytes): data",                                     "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "mkNilData",  "signature": "mkNilData(): List<data>",                                   "fails_when": [], "since": "0.1.0", "stability": "stable" },
+
+        { "name": "unConstrData", "signature": "unConstrData(d: data): RawConstr",                        "fails_when": ["d is not a Constr"], "since": "0.1.0", "stability": "stable" },
+        { "name": "unMapData",    "signature": "unMapData(d: data): LinearMap<data, data>",               "fails_when": ["d is not a Map"],    "since": "0.1.0", "stability": "stable" },
+        { "name": "unListData",   "signature": "unListData(d: data): List<data>",                         "fails_when": ["d is not a List"],   "since": "0.1.0", "stability": "stable" },
+        { "name": "unIData",      "signature": "unIData(d: data): int",                                   "fails_when": ["d is not an I"],     "since": "0.1.0", "stability": "stable" },
+        { "name": "unBData",      "signature": "unBData(d: data): bytes",                                 "fails_when": ["d is not a B"],      "since": "0.1.0", "stability": "stable" },
+        { "name": "equalsData",   "signature": "equalsData(a: data, b: data): bool",                      "fails_when": [], "since": "0.1.0", "stability": "stable" },
+        { "name": "serialiseData","signature": "serialiseData(d: data): bytes",                           "fails_when": [], "since": "0.1.0", "stability": "stable" },
+
+        { "name": "insertCoin",    "signature": "insertCoin(policy: bytes, name: bytes, amount: int, v: Value): Value",        "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "lookupCoin",    "signature": "lookupCoin(policy: bytes, name: bytes, v: Value): int",                       "fails_when": [], "non_aborting": true, "since": "0.3.0", "stability": "stable" },
+        { "name": "unionValue",    "signature": "unionValue(a: Value, b: Value): Value",                                       "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "valueContains", "signature": "valueContains(a: Value, b: Value): bool",                                     "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "valueData",     "signature": "valueData(v: Value): data",                                                   "fails_when": [], "since": "0.3.0", "stability": "stable" },
+        { "name": "unValueData",   "signature": "unValueData(d: data): Value",                                                 "fails_when": ["d is not a valid Value shape"], "since": "0.3.0", "stability": "stable" },
+        { "name": "scaleValue",    "signature": "scaleValue(k: int, v: Value): Value",                                         "fails_when": [], "since": "0.3.0", "stability": "stable" },
+
+        { "name": "trace",      "signature": "trace<T>(msg: bytes, x: T): T",                                                   "fails_when": [], "polymorphic": true, "strict": true,  "since": "0.1.0", "stability": "stable" },
+        { "name": "ifThenElse", "signature": "ifThenElse<T>(cond: bool, then: T, else: T): T",                                  "fails_when": [], "polymorphic": true, "strict": true,  "since": "0.1.0", "stability": "stable" },
+        { "name": "chooseUnit", "signature": "chooseUnit<T>(u: void, x: T): T",                                                 "fails_when": [], "polymorphic": true,                  "since": "0.1.0", "stability": "stable" },
+        { "name": "mkCons",     "signature": "mkCons<T>(head: T, tail: List<T>): List<T>",                                      "fails_when": [], "polymorphic": true,                  "since": "0.1.0", "stability": "stable" },
+        { "name": "headList",   "signature": "headList<T>(xs: List<T>): T",                                                     "fails_when": ["list is empty"], "polymorphic": true,    "since": "0.1.0", "stability": "stable" },
+        { "name": "tailList",   "signature": "tailList<T>(xs: List<T>): List<T>",                                               "fails_when": ["list is empty"], "polymorphic": true,    "since": "0.1.0", "stability": "stable" },
+        { "name": "nullList",   "signature": "nullList<T>(xs: List<T>): bool",                                                  "fails_when": [], "polymorphic": true,                  "since": "0.1.0", "stability": "stable" },
+        { "name": "chooseList", "signature": "chooseList<A,B>(xs: List<A>, caseNil: B, caseCons: B): B",                        "fails_when": [], "polymorphic": true,                  "since": "0.1.0", "stability": "stable" },
+        { "name": "chooseData", "signature": "chooseData<T>(d: data, caseConstr: T, caseMap: T, caseList: T, caseI: T, caseB: T): T", "fails_when": [], "polymorphic": true,         "since": "0.1.0", "stability": "stable" }
+      ]
+    },
+    "std.list": {
+      "doc": "Polymorphic helpers over List<T>. See methods table for List<T> for the method-call dual.",
+      "method_dual_of": "List<T>",
+      "functions": [
+        { "name": "length",  "signature": "length<T>(xs: List<T>): int",                                                          "since": "0.2.0", "stability": "stable" },
+        { "name": "isEmpty", "signature": "isEmpty<T>(xs: List<T>): bool",                                                        "since": "0.2.0", "stability": "stable" },
+        { "name": "head",    "signature": "head<T>(xs: List<T>): T",                                                              "fails_when": ["xs is empty"], "since": "0.2.0", "stability": "stable" },
+        { "name": "tail",    "signature": "tail<T>(xs: List<T>): List<T>",                                                        "fails_when": ["xs is empty"], "since": "0.2.0", "stability": "stable" },
+        { "name": "prepend", "signature": "prepend<T>(x: T, xs: List<T>): List<T>",                                               "since": "0.2.0", "stability": "stable" },
+        { "name": "drop",    "signature": "drop<T>(n: int, xs: List<T>): List<T>",                                                "complexity": "model: O(log n) in size of n; interpreter: O(n)", "notes": "lowers to dropList builtin; cost is billed by the bit-width of n, not by spine length",  "since": "0.2.0", "stability": "stable" },
+        { "name": "foldr",   "signature": "foldr<T,A>(f: (T,A) -> A, init: A, xs: List<T>): A",                                   "since": "0.2.0", "stability": "stable" },
+        { "name": "foldl",   "signature": "foldl<T,A>(f: (A,T) -> A, init: A, xs: List<T>): A",                                   "since": "0.2.0", "stability": "stable" },
+        { "name": "filter",  "signature": "filter<T>(p: (T) -> bool, xs: List<T>): List<T>",                                      "since": "0.2.0", "stability": "stable" },
+        { "name": "some",    "signature": "some<T>(p: (T) -> bool, xs: List<T>): bool",                                           "since": "0.2.0", "stability": "stable" },
+        { "name": "every",   "signature": "every<T>(p: (T) -> bool, xs: List<T>): bool",                                          "since": "0.2.0", "stability": "stable" },
+        { "name": "find",    "signature": "find<T>(p: (T) -> bool, xs: List<T>): Optional<T>",                                    "returns_optional": true, "since": "0.2.0", "stability": "stable" },
+        { "name": "equals",  "signature": "equals<T>(eq: (T,T) -> bool, a: List<T>, b: List<T>): bool",                           "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.linearMap": {
+      "doc": "Polymorphic helpers over LinearMap<K,V>.",
+      "method_dual_of": "LinearMap<K,V>",
+      "functions": [
+        { "name": "length",  "signature": "length<K,V>(m: LinearMap<K,V>): int",                                                  "since": "0.2.0", "stability": "stable" },
+        { "name": "isEmpty", "signature": "isEmpty<K,V>(m: LinearMap<K,V>): bool",                                                "since": "0.2.0", "stability": "stable" },
+        { "name": "head",    "signature": "head<K,V>(m: LinearMap<K,V>): LinearMapEntry<K,V>",                                    "fails_when": ["m is empty"], "since": "0.2.0", "stability": "stable" },
+        { "name": "tail",    "signature": "tail<K,V>(m: LinearMap<K,V>): LinearMap<K,V>",                                         "fails_when": ["m is empty"], "since": "0.2.0", "stability": "stable" },
+        { "name": "lookup",  "signature": "lookup<K,V>(k: K, m: LinearMap<K,V>): Optional<V>",                                    "returns_optional": true, "since": "0.2.0", "stability": "stable" },
+        { "name": "prepend", "signature": "prepend<K,V>(k: K, v: V, m: LinearMap<K,V>): LinearMap<K,V>",                          "constraints": ["K: ToData", "V: ToData"], "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.array": {
+      "doc": "Polymorphic helpers over Array<T>.",
+      "method_dual_of": "Array<T>",
+      "functions": [
+        { "name": "length",   "signature": "length<T>(xs: Array<T>): int",          "since": "0.3.0", "stability": "stable" },
+        { "name": "at",       "signature": "at<T>(xs: Array<T>, i: int): T",         "fails_when": ["i < 0", "i >= length(xs)"], "since": "0.3.0", "stability": "stable" },
+        { "name": "fromList", "signature": "fromList<T>(xs: List<T>): Array<T>",     "since": "0.3.0", "stability": "stable" }
+      ]
+    },
+    "std.bytes": {
+      "doc": "Monomorphic helpers over bytes.",
+      "method_dual_of": "bytes",
+      "functions": [
+        { "name": "length",            "signature": "length(b: bytes): int",                                       "since": "0.2.0", "stability": "stable" },
+        { "name": "slice",             "signature": "slice(start: int, len: int, b: bytes): bytes",                "since": "0.2.0", "stability": "stable" },
+        { "name": "prepend",           "signature": "prepend(byteVal: int, b: bytes): bytes",                       "fails_when": ["byteVal < 0", "byteVal > 255"], "since": "0.2.0", "stability": "stable" },
+        { "name": "concat",            "signature": "concat(a: bytes, b: bytes): bytes",                            "since": "0.2.0", "stability": "stable" },
+        { "name": "indexAt",           "signature": "indexAt(b: bytes, i: int): int",                               "fails_when": ["i < 0", "i >= length(b)"], "since": "0.2.0", "stability": "stable" },
+        { "name": "equals",            "signature": "equals(a: bytes, b: bytes): bool",                             "since": "0.2.0", "stability": "stable" },
+        { "name": "lessThan",          "signature": "lessThan(a: bytes, b: bytes): bool",                           "since": "0.2.0", "stability": "stable" },
+        { "name": "lessThanEquals",    "signature": "lessThanEquals(a: bytes, b: bytes): bool",                     "since": "0.2.0", "stability": "stable" },
+        { "name": "greaterThan",       "signature": "greaterThan(a: bytes, b: bytes): bool",                        "since": "0.2.0", "stability": "stable" },
+        { "name": "greaterThanEquals", "signature": "greaterThanEquals(a: bytes, b: bytes): bool",                  "since": "0.2.0", "stability": "stable" },
+        { "name": "toInt",             "signature": "toInt(b: bytes): int",                                         "since": "0.2.0", "stability": "stable" },
+        { "name": "fromInt",           "signature": "fromInt(n: int): bytes",                                       "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.int": {
+      "doc": "Monomorphic helpers over int. Operator forms exist for all of these — these are for partial application.",
+      "functions": [
+        { "name": "add",                 "signature": "add(a: int, b: int): int",                            "since": "0.2.0", "stability": "stable" },
+        { "name": "subtract",            "signature": "subtract(a: int, b: int): int",                       "since": "0.2.0", "stability": "stable" },
+        { "name": "multiply",            "signature": "multiply(a: int, b: int): int",                       "since": "0.2.0", "stability": "stable" },
+        { "name": "divide",              "signature": "divide(a: int, b: int): int",                         "fails_when": ["b == 0"], "rounding": "floor",                "since": "0.2.0", "stability": "stable" },
+        { "name": "quotient",            "signature": "quotient(a: int, b: int): int",                       "fails_when": ["b == 0"], "rounding": "truncate-toward-zero", "since": "0.2.0", "stability": "stable" },
+        { "name": "remainder",           "signature": "remainder(a: int, b: int): int",                      "fails_when": ["b == 0"], "since": "0.2.0", "stability": "stable" },
+        { "name": "mod",                 "signature": "mod(a: int, b: int): int",                            "fails_when": ["b == 0"], "since": "0.2.0", "stability": "stable" },
+        { "name": "negate",              "signature": "negate(n: int): int",                                 "since": "0.2.0", "stability": "stable" },
+        { "name": "increment",           "signature": "increment(n: int): int",                              "since": "0.2.0", "stability": "stable" },
+        { "name": "decrement",           "signature": "decrement(n: int): int",                              "since": "0.2.0", "stability": "stable" },
+        { "name": "exponentiate",        "signature": "exponentiate(base: int, exp: int): int",              "fails_when": ["exp < 0"], "since": "0.2.0", "stability": "stable" },
+        { "name": "equals",              "signature": "equals(a: int, b: int): bool",                        "since": "0.2.0", "stability": "stable" },
+        { "name": "lessThan",            "signature": "lessThan(a: int, b: int): bool",                      "since": "0.2.0", "stability": "stable" },
+        { "name": "lessThanEquals",      "signature": "lessThanEquals(a: int, b: int): bool",                "since": "0.2.0", "stability": "stable" },
+        { "name": "greaterThan",         "signature": "greaterThan(a: int, b: int): bool",                   "since": "0.2.0", "stability": "stable" },
+        { "name": "greaterThanEquals",   "signature": "greaterThanEquals(a: int, b: int): bool",             "since": "0.2.0", "stability": "stable" },
+        { "name": "isZero",              "signature": "isZero(n: int): bool",                                "since": "0.2.0", "stability": "stable" },
+        { "name": "toBoolean",           "signature": "toBoolean(n: int): bool",                             "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.boolean": {
+      "doc": "Monomorphic helpers over bool. Operator forms (&&, ||, !) are preferred in regular code.",
+      "functions": [
+        { "name": "not",       "signature": "not(b: bool): bool",                          "since": "0.2.0", "stability": "stable" },
+        { "name": "strictAnd", "signature": "strictAnd(a: bool, b: bool): bool",           "strict": true, "since": "0.2.0", "stability": "stable" },
+        { "name": "strictOr",  "signature": "strictOr(a: bool, b: bool): bool",            "strict": true, "since": "0.2.0", "stability": "stable" },
+        { "name": "equals",    "signature": "equals(a: bool, b: bool): bool",              "since": "0.2.0", "stability": "stable" },
+        { "name": "toInt",     "signature": "toInt(b: bool): int",                         "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.data": {
+      "doc": "string <-> data conversion.",
+      "functions": [
+        { "name": "strToData",   "signature": "strToData(s: string): data",   "since": "0.2.0", "stability": "stable" },
+        { "name": "strFromData", "signature": "strFromData(d: data): string", "fails_when": ["d is not a B", "B's bytes are not valid UTF-8"], "since": "0.2.0", "stability": "stable" }
+      ]
+    },
+    "std.value": {
+      "doc": "Method-shaped operations on the native Value.",
+      "method_dual_of": "Value",
+      "functions": [
+        { "name": "amountOf",  "signature": "amountOf(policy: PolicyId, name: TokenName, v: Value): int",                     "non_aborting": true, "since": "0.3.0", "stability": "stable" },
+        { "name": "lovelaces", "signature": "lovelaces(v: Value): int",                                                       "since": "0.3.0", "stability": "stable" },
+        { "name": "insert",    "signature": "insert(policy: PolicyId, name: TokenName, amount: int, v: Value): Value",        "since": "0.3.0", "stability": "stable" },
+        { "name": "union",     "signature": "union(a: Value, b: Value): Value",                                               "since": "0.3.0", "stability": "stable" },
+        { "name": "contains",  "signature": "contains(a: Value, b: Value): bool",                                             "since": "0.3.0", "stability": "stable" },
+        { "name": "scale",     "signature": "scale(k: int, v: Value): Value",                                                 "since": "0.3.0", "stability": "stable" },
+        { "name": "toData",    "signature": "toData(v: Value): data",                                                         "since": "0.3.0", "stability": "stable" }
+      ]
+    },
+    "std.valueMap": {
+      "doc": "Operations on the legacy LinearMap-of-LinearMap value representation. Use std.value on new code.",
+      "functions": [
+        { "name": "amountOf",  "signature": "amountOf(policy: PolicyId, name: TokenName, vm: ValueMap): int", "non_aborting": true, "since": "0.1.0", "stability": "stable" },
+        { "name": "lovelaces", "signature": "lovelaces(vm: ValueMap): int",                                                          "since": "0.1.0", "stability": "stable" }
+      ]
+    },
+    "std.credential": {
+      "doc": "Method on Credential.",
+      "functions": [
+        { "name": "hash", "signature": "hash(c: Credential): bytes", "since": "0.1.0", "stability": "stable" }
+      ]
+    }
+  },
+  "purposes": [
+    { "name": "Spend",    "method_kind": "spend",    "context_extras": ["spendingInputRef", "optionalDatum", "state (if contract has state)"], "since": "0.1.0" },
+    { "name": "Mint",     "method_kind": "mint",     "context_extras": ["purpose carries the minting PolicyId"],                                "since": "0.1.0" },
+    { "name": "Certify",  "method_kind": "certify",  "context_extras": ["purpose carries the certificate"],                                     "since": "0.1.0" },
+    { "name": "Withdraw", "method_kind": "withdraw", "context_extras": ["purpose carries the withdrawing credential"],                          "since": "0.1.0" },
+    { "name": "Propose",  "method_kind": "propose",  "context_extras": ["purpose carries the proposal"],                                        "since": "0.3.0" },
+    { "name": "Vote",     "method_kind": "vote",     "context_extras": ["purpose carries the vote"],                                            "since": "0.3.0" }
+  ]
+}
