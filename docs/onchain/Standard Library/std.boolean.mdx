@@ -5,15 +5,16 @@ sidebar_label: std.boolean
 
 # `std.boolean`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Monomorphic helpers over `bool`. Prefer the operator forms (`&&`, `||`, `!`) in regular code — these exist for partial application and higher-order use.
 
-```ts
-using { strictAnd } = std.boolean;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const allPositive: bool = std.list.foldl(strictAnd, true, signs);
-```
+<RunnableExample
+initialCode={`const signs: List<boolean> = [true, true, true, false];\n\nconst allPositive: boolean = std.list.foldl(std.boolean.strictAnd, true, signs);\nassert !allPositive else "expected one false";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -43,5 +44,5 @@ const i:  int  = toInt(true);                // 1
 
 ## See also
 
-- [`bool`](../Prelude/Boolean.md) — operator forms
-- [`std.builtins`](./std.builtins.md#polymorphic-intrinsics) — `ifThenElse` is the strict polymorphic conditional
+- [`bool`](../Prelude/Boolean.mdx) — operator forms
+- [`std.builtins`](./std.builtins.mdx#polymorphic-intrinsics) — `ifThenElse` is the strict polymorphic conditional

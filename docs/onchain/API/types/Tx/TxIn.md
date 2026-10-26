@@ -6,5 +6,5 @@ Represents a transaction input.
 
 | Field    | Description                     |
 | -------- | ------------------------------- |
-| `txOutRef` | Reference to the previous TxOut |
+| `ref`      | Reference to the previous TxOut (a `TxOutRef`) |
 | `resolved` | The resolved TxOut being spent  |

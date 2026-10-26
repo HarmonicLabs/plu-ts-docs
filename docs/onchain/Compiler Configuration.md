@@ -123,6 +123,30 @@ Type: `boolean`. Default: `true`.
 
 When `true`, the compiler emits a script marker (used by tooling to identify Pebble-generated scripts). Disable for size-sensitive deployments where the marker is not needed.
 
+### `encodingStrategy`
+
+`"minimal" | "legacy"` — default `"minimal"` *(since 0.5.0)*.
+
+Picks the data encoding of single-constructor structs declared in the
+**shortcut** form (`struct S { a: int }`):
+
+- `"minimal"` — a list of fields, `List [ … ]`.
+- `"legacy"` — `Constr 0 [ … ]`, as every compiler up to 0.4.x did. Set
+  this to recompile an already-deployed contract to the same bytes.
+
+The option only decides the default. In the source, the explicit form
+(`struct S { S { a: int } }`) is always `Constr 0 [ … ]` and the
+`untagged` keyword always gives the list; see
+[Types](./Types.md#on-chain-encoding). `"default"`, the pre-0.5.0
+spelling of `"legacy"`, is still accepted.
+
+```json
+{
+  "compilerVersion": "^0.5.0",
+  "encodingStrategy": "legacy"
+}
+```
+
 ### `targetPlutusVersion`
 
 *Since 0.5.0.* `"v3" | "experimental-v4"` — default `"v3"`. Case-insensitive.
@@ -135,8 +159,9 @@ exists per compilation; there are no suffixed variants and no mixing):
 - `"v3"` — the stable Conway-era types: what runs on-chain today
   (protocol version 11 executes PlutusV3 scripts).
 - `"experimental-v4"` — the Dijkstra-era types, mirroring
-  plutus-ledger-api 1.68.0.0 (nested-transaction guards, accounts, the
-  4-field script context). The Dijkstra hard fork has not happened yet
+  plutus-ledger-api 1.71.0.0 (nested-transaction guards, accounts, the
+  4-field script context, and product types encoded as a list of fields
+  instead of `Constr 0`). The Dijkstra hard fork has not happened yet
   and CIP-0118 is still Proposed, so these shapes may track upstream
   changes — the `experimental-` prefix is deliberate. The plain `"v4"`
   spelling is reserved until Plutus V4 is active on mainnet and is
@@ -156,10 +181,10 @@ error.
 ```
 
 :::caution
-`contract` declarations derive their entry point from the V3 script
-context and are rejected under `"experimental-v4"` with a located
-diagnostic — write plain exported validators (`( ctx: data ) => void`)
-against `ScriptContext` until the sugar supports the Dijkstra shapes.
+No public network runs Plutus V4 scripts yet, so nothing compiled with
+`"experimental-v4"` can be deployed. The shapes have already changed
+twice between upstream releases (1.68 to 1.69, then 1.71) and may change again
+before the hard fork.
 :::
 
 ## Supported semver syntax

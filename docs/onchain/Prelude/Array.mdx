@@ -5,11 +5,11 @@ sidebar_label: Array<T>
 
 # `Array<T>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-A fixed-size, indexed container. Built from a `List<T>` via [`std.array.fromList`](../Standard%20Library/std.array.md) and consumed via `at(i)` or the index operator.
+A fixed-size, indexed container. Built from a `List<T>` via [`std.array.fromList`](../Standard%20Library/std.array.mdx) and consumed via `at(i)` or the index operator.
 
-`Array<T>` is **not** the right answer to "I need fast indexed reads on a `List<T>`". The on-chain cost model bills [`List<T>` indexing](./List.md) as effectively constant for practical indices, and `std.array.fromList` itself is O(n) in the list length — so the conversion almost always costs more than the reads you were optimising. See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
+`Array<T>` is **not** the right answer to "I need fast indexed reads on a `List<T>`". The on-chain cost model bills [`List<T>` indexing](./List.mdx) as effectively constant for practical indices, and `std.array.fromList` itself is O(n) in the list length — so the conversion almost always costs more than the reads you were optimising. See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
 
 Reach for `Array<T>` only when:
 - You receive one from elsewhere (an external API, a builtin) and need to read it.
@@ -17,13 +17,12 @@ Reach for `Array<T>` only when:
 
 For sequential traversal (`map`, `foldl`, `filter`, ...), use `List<T>` directly.
 
-```ts
-using { fromList } = std.array;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const xs: Array<int> = fromList([10, 20, 30, 40]);
-assert xs.at(2) == 30;
-assert xs[2] == 30;   // same thing
-```
+<RunnableExample
+initialCode={`const xs: Array<int> = std.array.fromList([10, 20, 30, 40]);\n\nassert std.array.length(xs) == 4 else "wrong length";\nassert std.array.at(xs, 2)  == 30 else "at(2) wrong";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -54,6 +53,6 @@ const xs: Array<int> = std.array.fromList([1, 2, 3]);
 
 ## See also
 
-- [`std.array`](../Standard%20Library/std.array.md) — function-call surface
-- [`List<T>`](./List.md) — what most pipelines operate on. Indexed reads on a list are already cheap; don't convert unless you have a specific reason
+- [`std.array`](../Standard%20Library/std.array.mdx) — function-call surface
+- [`List<T>`](./List.mdx) — what most pipelines operate on. Indexed reads on a list are already cheap; don't convert unless you have a specific reason
 - [Cost and Complexity](../reference/Cost%20and%20Complexity.md) — measured numbers for list-vs-array access

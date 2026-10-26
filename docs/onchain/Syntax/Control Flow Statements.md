@@ -27,7 +27,7 @@ Pattern matching is a core feature in Pebble, especially for Cardano-specific ty
 
 ```ts
 assert case ownerPaymentCreds
-    is PubKeyHash{ hash } => tx.signatories.includes(hash)
+    is PubKeyHash{ hash } => tx.requiredSigners.includes(hash)
     is Validator{ hash }  => tx.inputs.some(({ resolved }) =>
         resolved.credential.hash() === hash
     );

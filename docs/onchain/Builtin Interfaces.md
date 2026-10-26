@@ -5,7 +5,7 @@ sidebar_label: Builtin Interfaces
 
 # Builtin Interfaces
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Pebble's type-class machinery is exposed via **interfaces** — sets of methods a type can implement. Two are built into the prelude and auto-derived for every type that supports them. User-defined interfaces use the same dispatch mechanism but require explicit `implements` blocks.
 
@@ -154,6 +154,6 @@ This means **user impls always win** over the built-in derivation. If you write 
 
 ## See also
 
-- [`data`](./Prelude/Data.md) — the type `ToData` produces
-- [`std.builtins`](./Standard%20Library/std.builtins.md) — the underlying data constructors (`constrData`, `iData`, `bData`, …)
+- [`data`](./Prelude/Data.mdx) — the type `ToData` produces
+- [`std.builtins`](./Standard%20Library/std.builtins.mdx) — the underlying data constructors (`constrData`, `iData`, `bData`, …)
 - [Datum & Redeemer Flow](./concepts/Datum%20and%20Redeemer%20Flow.md) — when and where `ToData` is invoked at the on-chain ↔ off-chain boundary

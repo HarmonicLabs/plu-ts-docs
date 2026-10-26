@@ -5,7 +5,7 @@ sidebar_label: Value
 
 # `Value`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 A multi-asset bundle: zero or more `(PolicyId, TokenName) → amount` entries. Maps to Plutus Core's native value type. ADA appears under a special "ada/lovelace" policy.
 
@@ -31,7 +31,9 @@ assert out.value.amountOf(myPolicy, myToken) == 1;
 
 ### Examples (one per method)
 ```ts
-const v: Value = mempty.insert(myPolicy, myToken, 5);
+// there is no `mempty`: get an empty Value by zero-scaling any Value in scope
+const empty: Value = tx.mint.scale(0);
+const v: Value = empty.insert(myPolicy, myToken, 5);
 
 const a:  int   = v.amountOf(myPolicy, myToken);           // 5
 const l:  int   = tx.outputs[0].value.lovelaces();         // ADA in lovelace
@@ -44,7 +46,7 @@ const d:  data  = v.toData();
 
 ### Bundled example
 ```ts
-const need = mempty
+const need = tx.mint.scale(0)
     .insert(myPolicy, myToken, 1)
     .insert(adaPolicy, adaName, 2_000_000);
 
@@ -59,10 +61,10 @@ assert tx.outputs[0].value.contains(need);
 
 ## Building values
 
-There's no `Value` literal — build values up from an empty starting point (`mempty` from the prelude) using `insert` and `union`, or destructure them out of a `TxOut`. The underlying primitives are in [`std.builtins`](../Standard%20Library/std.builtins.md#native-value-operations) (`insertCoin`, `unionValue`, etc.); the friendlier names live in [`std.value`](../Standard%20Library/std.value.md).
+There's no `Value` literal (and no `mempty`) — get an empty starting point by zero-scaling any `Value` already in scope (`tx.mint.scale(0)` is the usual choice; containment-style comparisons ignore any zero entries it may keep), then build up with `insert` and `union`, or destructure values out of a `TxOut`. The underlying primitives are in [`std.builtins`](../Standard%20Library/std.builtins.mdx#native-value-operations) (`insertCoin`, `unionValue`, etc.); the friendlier names live in [`std.value`](../Standard%20Library/std.value.mdx).
 
 ## See also
 
-- [`std.value`](../Standard%20Library/std.value.md) — function-call surface
-- [`PolicyId`, `TokenName`](./Bytes.md#type-aliases) — the keys into a `Value`
+- [`std.value`](../Standard%20Library/std.value.mdx) — function-call surface
+- [`PolicyId`, `TokenName`](./Bytes.mdx#type-aliases) — the keys into a `Value`
 - [`TxOut`](../API/types/Tx/TxOut.md) — the canonical place a `Value` shows up

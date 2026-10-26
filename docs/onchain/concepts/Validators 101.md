@@ -19,7 +19,7 @@ contract Vault {
 
     spend withdraw() {
         const { tx } = context;
-        assert tx.signatories.includes(owner);
+        assert tx.requiredSigners.includes(this.owner);
     }
 }
 ```
@@ -33,7 +33,7 @@ func main(owner: PubKeyHash, context: ScriptContext): void {
         when Spend{}: {
             const { /* redeemer fields */ } = redeemer;
             const tx_local = context.tx;
-            assert tx_local.signatories.includes(owner);
+            assert tx_local.requiredSigners.includes(owner);
         }
         else: fail;
     }
@@ -74,7 +74,7 @@ spend handler() {
 
 For `spend` methods, `context` also exposes:
 
-- `spendingInputRef: TxOutRef` — the reference of the UTxO being spent (the "purpose ref").
+- `spendingRef: TxOutRef` — the reference of the UTxO being spent (the "purpose ref").
 - `optionalDatum: Optional<data>` — the datum on that UTxO, if any.
 - For stateful contracts, `state` — the typed datum (see [State](../State.md)).
 
@@ -92,7 +92,7 @@ means "this script expects a redeemer that decodes as a two-field record `(int, 
 
 ## What "returning" means
 
-A Pebble method returns `void`. The validator accepts iff every `assert` in the method passes and no `fail` is hit. There's no return value to inspect — the contract is "succeeded" or "failed".
+A Pebble method returns `void`. The validator accepts if every `assert` in the method passes and no `fail` is hit. There's no return value to inspect — the contract is "succeeded" or "failed".
 
 This is unlike Plutus's older "true/false" convention. Pebble is closer to "throw on rejection".
 

@@ -21,7 +21,7 @@ const half = -7 / 2;   // expected -3, but this is -4
 
 **Why** — `/` and `%` round toward **negative infinity** (matching `std.int.divide` / `std.int.mod`). For negative numerators this differs from C-style truncated division.
 
-**Better** — use [`std.int.quotient`](../Standard%20Library/std.int.md) / [`std.int.remainder`](../Standard%20Library/std.int.md) when you want truncation toward zero.
+**Better** — use [`std.int.quotient`](../Standard%20Library/std.int.mdx) / [`std.int.remainder`](../Standard%20Library/std.int.mdx) when you want truncation toward zero.
 
 ## Using `strictAnd` / `strictOr` where you meant `&&` / `||`
 
@@ -50,7 +50,7 @@ if( m.lookup(k) == None{} ) { /* "key is unique" */ }
 
 **Better** — enforce uniqueness at insertion time, or scan with `every`:
 ```ts
-const isUnique = m.every((entry) => entry.fst != k);
+const isUnique = m.every((entry) => { const { key, value } = entry; return key != k; });
 ```
 
 ## `xs[i]` inside a loop
@@ -142,6 +142,7 @@ const descriptionHash: bytes = #cafedead...;
 ## Forgetting that script `purpose` must be matched
 
 **Smell**
+<!-- no-compile: intentionally incomplete smell example -->
 ```ts
 contract Foo {
     spend bar() { ... }
@@ -200,7 +201,7 @@ const myInput = tx.inputs[0];   // assume the first input is mine
 
 **Better** — match on `purposeRef`:
 ```ts
-const { tx, spendingInputRef: purposeRef } = context;
+const { tx, spendingRef: purposeRef } = context;
 const myInput = tx.inputs.find((i) => i.ref == purposeRef);
 match myInput {
     Some{ value: input }: useIt(input),
@@ -244,7 +245,7 @@ assert got <= 200;
 
 **Smell**
 ```ts
-const totalForKey = m.foldl((acc, e) => if e.fst == target { acc + e.snd } else { acc }, 0);
+const totalForKey = m.foldl((acc, e) => { const { key, value } = e; return key == target ? acc + value : acc; }, 0);
 // ... then assert totalForKey == ...
 ```
 
@@ -252,9 +253,9 @@ const totalForKey = m.foldl((acc, e) => if e.fst == target { acc + e.snd } else 
 
 **Better** — first check uniqueness, then read a single value:
 ```ts
-const matches = m.filter((e) => e.fst == target);
+const matches = m.filter((e) => { const { key, value } = e; return key == target; });
 assert matches.length() == 1;
-const value = matches.head().snd;
+const { key: _k, value } = matches.head();
 ```
 
 ## See also

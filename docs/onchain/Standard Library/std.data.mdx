@@ -1,0 +1,30 @@
+---
+sidebar_position: 10
+sidebar_label: std.data
+---
+
+# `std.data`
+
+*Pebble 0.3.1 · all symbols on this page are stable.*
+
+Helpers for converting between `data` and the Pebble-level `string` type. For converting other types to and from `data`, use the built-in [`ToData`](../Builtin%20Interfaces.md#todata) interface (`.toData()` method) and the destructors in [`std.builtins`](./std.builtins.mdx#data-destructors).
+
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const txt:  string = std.builtins.decodeUtf8(#68656c6c6f);\nconst d:    data   = std.data.strToData(txt);\nconst back: string = std.data.strFromData(d);\n\nassert std.builtins.encodeUtf8(back) == std.builtins.encodeUtf8(txt) else "round-trip failed";`}
+height="280px"
+/>
+
+## Methods
+
+| Function                                              | Description                                                                |
+|-------------------------------------------------------|----------------------------------------------------------------------------|
+| `strToData(s: string): data`                          | Encode a UTF-8 string as `data` (via `encodeUtf8` and then `bData`).        |
+| `strFromData(d: data): string`                        | Decode `data` containing UTF-8 bytes back to a string. Fails on bad input.  |
+
+## See also
+
+- [`data`](../Prelude/Data.mdx) — the type itself
+- [`std.builtins`](./std.builtins.mdx) — `constrData`, `mapData`, `listData`, `iData`, `bData` and their destructors
+- [`ToData`](../Builtin%20Interfaces.md#todata) — the auto-implemented interface every encodable type satisfies

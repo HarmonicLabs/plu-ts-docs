@@ -5,15 +5,16 @@ sidebar_label: int
 
 # `int`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Arbitrary-precision signed integer. Maps to Plutus Core's `Integer`. Does not overflow.
 
-```ts
-const supply: int = 1_000_000;
-let spent: int = 500;
-assert (supply - spent) >= 0;
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const supply: int = 1_000_000;\nlet   spent:  int = 500;\n\nconst left = supply - spent;\nassert left >= 0       else "underflow";\nassert left == 999_500 else "math off";`}
+height="220px"
+/>
 
 ## Literals
 
@@ -32,25 +33,25 @@ assert (supply - spent) >= 0;
 | Unary       | `-` (negation)                                                           |
 
 :::note Division semantics
-`/` and `%` round toward **negative infinity** (matching `std.int.divide` / `std.int.mod`). For C-style truncated division (toward zero), use [`std.int.quotient`](../Standard%20Library/std.int.md) / [`std.int.remainder`](../Standard%20Library/std.int.md).
+`/` and `%` round toward **negative infinity** (matching `std.int.divide` / `std.int.mod`). For C-style truncated division (toward zero), use [`std.int.quotient`](../Standard%20Library/std.int.mdx) / [`std.int.remainder`](../Standard%20Library/std.int.mdx).
 :::
 
 ## Methods
 
-`int` has no method-call surface. All operations are via operators or the [`std.int`](../Standard%20Library/std.int.md) namespace.
+`int` has no method-call surface. All operations are via operators or the [`std.int`](../Standard%20Library/std.int.mdx) namespace.
 
 Common idioms:
 
 | Want…                              | Use                                                                       |
 |------------------------------------|---------------------------------------------------------------------------|
-| Modular exponentiation             | [`std.builtins.expModInteger(base, exp, m)`](../Standard%20Library/std.builtins.md) |
-| `int → bytes` (smallest fit)       | [`std.bytes.fromInt(n)`](../Standard%20Library/std.bytes.md)             |
-| `int → bytes` (fixed width)        | [`std.builtins.integerToByteString(true, size, n)`](../Standard%20Library/std.builtins.md) |
-| `int → bool`                       | [`std.int.toBoolean(n)`](../Standard%20Library/std.int.md)               |
+| Modular exponentiation             | [`std.builtins.expModInteger(base, exp, m)`](../Standard%20Library/std.builtins.mdx) |
+| `int → bytes` (smallest fit)       | [`std.bytes.fromInt(n)`](../Standard%20Library/std.bytes.mdx)             |
+| `int → bytes` (fixed width)        | [`std.builtins.integerToByteString(true, size, n)`](../Standard%20Library/std.builtins.mdx) |
+| `int → bool`                       | [`std.int.toBoolean(n)`](../Standard%20Library/std.int.mdx)               |
 | Encoded as `data`                  | `n.toData()` ([`ToData`](../Builtin%20Interfaces.md#todata)) — uses `iData` |
 
 ## See also
 
-- [`std.int`](../Standard%20Library/std.int.md) — function-call surface
-- [`bytes`](./Bytes.md) — conversion target
+- [`std.int`](../Standard%20Library/std.int.mdx) — function-call surface
+- [`bytes`](./Bytes.mdx) — conversion target
 - [`ToData`](../Builtin%20Interfaces.md#todata) — auto-derived `.toData()`

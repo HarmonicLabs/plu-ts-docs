@@ -5,13 +5,16 @@ sidebar_label: std.crypto.bls12_381
 
 # `std.crypto.bls12_381`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 BLS12-381 pairing-friendly curve operations. Use this namespace for zero-knowledge proofs, BLS signatures, and any protocol that needs efficient bilinear pairings on-chain.
 
-```ts
-using { G1, G2, MlResult, g1Add, millerLoop, finalVerify } = std.crypto.bls12_381;
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const p      = std.crypto.bls12_381.g1HashToGroup(#68656c6c6f, #424c535f5349475f445354);\nconst pPlusP = std.crypto.bls12_381.g1Add(p, p);\nconst twoP   = std.crypto.bls12_381.g1ScalarMul(2, p);\n\nassert std.crypto.bls12_381.g1Equal(pPlusP, twoP) else "2*P != P+P";`}
+height="280px"
+/>
 
 The three native types — `G1`, `G2`, `MlResult` — are exported **only** through this namespace. Either fully qualify them or pull them into scope with `using`.
 
@@ -104,5 +107,5 @@ const verified:    bool     = finalVerify(product, identityMl);
 
 ## See also
 
-- [`std.crypto`](./std.crypto.md) — non-pairing cryptographic primitives
-- [`std.builtins`](./std.builtins.md) — `serialiseData` and byte-level helpers used to prepare messages
+- [`std.crypto`](./std.crypto.mdx) — non-pairing cryptographic primitives
+- [`std.builtins`](./std.builtins.mdx) — `serialiseData` and byte-level helpers used to prepare messages

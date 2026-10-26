@@ -17,8 +17,8 @@ contract HelloWorld
         spend greet(message: bytes)
         {
             const { tx, state: { owner } } = context;
-            assert tx.signatories.includes(owner);
-            assert message == "Hello pebble".toBytes();
+            assert tx.requiredSigners.includes(owner);
+            assert message == "Hello pebble"; // double-quoted literals are bytes (utf-8)
         }
     }
 }
@@ -96,7 +96,7 @@ async function greet({ lockedUtxo, ownerWallet, ownerPrivateKey, scriptRefUtxo }
         ],
         collaterals:     [ ownerWallet.utxos[0] ],
         changeAddress:   ownerWallet.address,
-        requiredSigners: [ ownerWallet.pkh ],  // satisfies tx.signatories.includes(owner)
+        requiredSigners: [ ownerWallet.pkh ],  // satisfies tx.requiredSigners.includes(owner)
     });
     tx.signWith(ownerPrivateKey);
     return await provider.submitTx(tx);
@@ -106,8 +106,8 @@ async function greet({ lockedUtxo, ownerWallet, ownerPrivateKey, scriptRefUtxo }
 ## Uses
 
 - [`contract`](../onchain/Contract%20Statements.md), [`state`](../onchain/State.md), [`spend`](../onchain/concepts/Validators%20101.md)
-- [`assert`](../onchain/Syntax/Control%20Flow%20Statements.md), `tx.signatories.includes(...)`
-- [`string.toBytes`](../onchain/Prelude/String.md), `bytes` equality via `==`
+- [`assert`](../onchain/Syntax/Control%20Flow%20Statements.md), `tx.requiredSigners.includes(...)`
+- [`string.toBytes`](../onchain/Prelude/String.mdx), `bytes` equality via `==`
 - buildooor: `TxBuilder.buildSync`, `DataConstr`, `DataB`, `Credential.script`
 
 ## See also

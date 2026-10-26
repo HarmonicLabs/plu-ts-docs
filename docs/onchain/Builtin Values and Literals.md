@@ -5,7 +5,7 @@ sidebar_label: Builtin Values and Literals
 
 # Builtin Values and Literals
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Every literal form Pebble's tokenizer and parser recognise, plus the small set of implicit bindings the compiler injects into method bodies.
 
@@ -17,7 +17,7 @@ Every literal form Pebble's tokenizer and parser recognise, plus the small set o
 | Underscore separator | `1_000_000`     | Cosmetic; ignored at parse time.                   |
 | Hexadecimal          | `0xCAFE`        | Case-insensitive after `0x`.                       |
 
-All resolve to type [`int`](./Prelude/Int.md).
+All resolve to type [`int`](./Prelude/Int.mdx).
 
 ```ts
 const big: int = 1_000_000;
@@ -31,9 +31,9 @@ const neg: int = -7;
 |--------------|-----------------|------------------------------------------------------------------|
 | Hex literal  | `#deadbeef`     | Each pair of hex digits is one byte. Case-insensitive after `#`. |
 | Empty        | `#""`           | Zero-length byte string.                                         |
-| From string  | `"x".toBytes()` | UTF-8 encode a `string` literal (via the [`string`](./Prelude/String.md) method). |
+| From string  | `"x".toBytes()` | UTF-8 encode a `string` literal (via the [`string`](./Prelude/String.mdx) method). |
 
-All resolve to type [`bytes`](./Prelude/Bytes.md).
+All resolve to type [`bytes`](./Prelude/Bytes.mdx).
 
 ```ts
 const policy: PolicyId = #cafedead;
@@ -54,7 +54,7 @@ Escapes (`\n`, `\t`, `\"`, `\\`, etc.) are recognised inside double quotes. Ther
 
 ## Boolean literals
 
-`true`, `false` — type [`bool`](./Prelude/Boolean.md).
+`true`, `false` — type [`bool`](./Prelude/Boolean.mdx).
 
 ```ts
 const ok: bool = true;
@@ -81,7 +81,7 @@ const nested: List<List<int>> = [[1, 2], [3, 4]];
 
 The element type is inferred from the declared type, or from the first element if it's unambiguous. An empty literal `[]` requires an explicit type annotation.
 
-These produce values of type [`List<T>`](./Prelude/List.md). To get an [`Array<T>`](./Prelude/Array.md) (the random-access form), pass a list through [`std.array.fromList`](./Standard%20Library/std.array.md).
+These produce values of type [`List<T>`](./Prelude/List.mdx). To get an [`Array<T>`](./Prelude/Array.mdx) (the random-access form), pass a list through [`std.array.fromList`](./Standard%20Library/std.array.mdx).
 
 ## Map literals
 
@@ -92,11 +92,11 @@ const empty: LinearMap<bytes, int> = {};
 const m:     LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
 
-Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.md). Order of entries is preserved; duplicates are allowed (matching the underlying assoc-list semantics).
+Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.mdx). Order of entries is preserved; duplicates are allowed (matching the underlying assoc-list semantics).
 
 ## Struct / variant constructors
 
-Named constructors use `Name{ field: value, … }`:
+Construction always uses the **qualified** form `Type.Constructor{ field: value, … }` — for a single-constructor struct the constructor has the struct's own name:
 
 ```ts
 struct Order {
@@ -105,21 +105,32 @@ struct Order {
     amount: int,
 }
 
-const o: Order = Order{
+const o: Order = Order.Order{
     owner: #cafedead,
     policy: #beef1234,
     amount: 100,
 };
 ```
 
-For enums and sum types (including `Optional`), name the specific variant:
+For multi-constructor structs, qualify the specific variant:
 
 ```ts
-const some: Optional<int> = Some{ value: 42 };
-const none: Optional<int> = None{};
+struct Shape {
+    Circle { r: int }
+    Rect { w: int, h: int }
+}
+
+const s: Shape = Shape.Circle{ r: 2 };
 ```
 
-`Some{ value }` shorthand (where the variable `value` is in scope) works inside both expressions and `match`-arm patterns.
+:::caution bare constructor names are patterns, not expressions
+`Order{ … }`, `Circle{ … }`, `Some{ … }` **fail to resolve in expression
+position** — bare constructor names exist only as *patterns* (in `match`
+arms and `const` destructuring). `Optional` has no constructor expression at
+all: `Some` values are produced by stdlib operations (`lookup`, `find`, …)
+and the empty optional is the literal `undefined` (with an explicit
+`Optional` annotation).
+:::
 
 ## Implicit bindings inside method bodies
 
@@ -144,7 +155,7 @@ For `spend` methods, additional fields are available:
 |--------------------|-----------------------|----------------------------------------------------------|
 | `tx`               | `Tx`                  | The full transaction.                                    |
 | `purpose`          | `ScriptPurpose`       | `Spend{ ref: TxOutRef }` for `spend` methods.            |
-| `spendingInputRef` | `TxOutRef`            | The reference of the UTxO being spent (purpose-ref).     |
+| `spendingRef`      | `TxOutRef`            | The reference of the UTxO being spent (purpose-ref).     |
 | `optionalDatum`    | `Optional<data>`      | The raw datum, when no `state` is in scope.              |
 | `state`            | `<sum of states>`     | Present only inside a `spend` method declared on a [`state`](./State.md). |
 

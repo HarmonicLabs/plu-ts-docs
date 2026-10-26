@@ -5,17 +5,16 @@ sidebar_label: std.bytes
 
 # `std.bytes`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Monomorphic helpers over `bytes`, exposing every byte-string operation as a first-class function. Use these for partial application or as arguments to higher-order code; prefer operator forms (`==`, `<`, `+`) and methods (`b.length()`) in regular code.
 
-```ts
-using { length, slice, prepend, concat, equals } = std.bytes;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const head = slice(0, 4, payload);
-const tail = slice(4, length(payload) - 4, payload);
-const out  = concat(head, tail);
-```
+<RunnableExample
+initialCode={`const payload: bytes = #deadbeefcafe;\n\nconst head = std.bytes.slice(0, 4, payload);\nconst tail = std.bytes.slice(4, std.bytes.length(payload) - 4, payload);\nconst out  = std.bytes.concat(head, tail);\n\nassert out == payload else "round-trip failed";`}
+height="280px"
+/>
 
 ## Methods
 
@@ -59,6 +58,6 @@ const enc:  bytes = fromInt(1234);                         // #04d2
 
 ## See also
 
-- [`bytes`](../Prelude/Bytes.md) — method-call form
-- [`std.builtins`](./std.builtins.md) — finer-grained byte string and bitwise builtins
-- [`std.crypto`](./std.crypto.md) — hash functions consume `bytes`
+- [`bytes`](../Prelude/Bytes.mdx) — method-call form
+- [`std.builtins`](./std.builtins.mdx) — finer-grained byte string and bitwise builtins
+- [`std.crypto`](./std.crypto.mdx) — hash functions consume `bytes`

@@ -5,9 +5,9 @@ sidebar_label: std.builtins
 
 # `std.builtins`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-Direct exposure of Plutus Core builtins, plus a handful of polymorphic intrinsics. Prefer the per-type namespaces ([`std.int`](./std.int.md), [`std.bytes`](./std.bytes.md), etc.) or operator forms (`+`, `==`, ...) for everyday code — `std.builtins` is for when you need a Plutus-Core-shaped function as a value, or when only the raw builtin gives you the semantics you want (e.g. `quotientInteger` vs `divideInteger` rounding).
+Direct exposure of Plutus Core builtins, plus a handful of polymorphic intrinsics. Prefer the per-type namespaces ([`std.int`](./std.int.mdx), [`std.bytes`](./std.bytes.mdx), etc.) or operator forms (`+`, `==`, ...) for everyday code — `std.builtins` is for when you need a Plutus-Core-shaped function as a value, or when only the raw builtin gives you the semantics you want (e.g. `quotientInteger` vs `divideInteger` rounding).
 
 ## Type exports
 
@@ -112,7 +112,7 @@ match index {
 
 ## Native `Value` operations
 
-These work on the native `Value` type (see [Value](../Prelude/Value.md)). They're aliased into [`std.value`](./std.value.md) with friendlier names.
+These work on the native `Value` type (see [Value](../Prelude/Value.mdx)). They're aliased into [`std.value`](./std.value.mdx) with friendlier names.
 
 | Function                                                                       | Description                                                                |
 |--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
@@ -277,6 +277,6 @@ const tag:    string       = chooseData(dC, "Constr", "Map", "List", "I", "B");
 
 ## See also
 
-- [`std.int`](./std.int.md), [`std.bytes`](./std.bytes.md), [`std.boolean`](./std.boolean.md), [`std.data`](./std.data.md) — friendlier-named monomorphic equivalents
-- [`std.list`](./std.list.md), [`std.linearMap`](./std.linearMap.md), [`std.array`](./std.array.md) — polymorphic container helpers
-- [`std (top-level)`](./std.md) — `id` and `equals`
+- [`std.int`](./std.int.mdx), [`std.bytes`](./std.bytes.mdx), [`std.boolean`](./std.boolean.mdx), [`std.data`](./std.data.mdx) — friendlier-named monomorphic equivalents
+- [`std.list`](./std.list.mdx), [`std.linearMap`](./std.linearMap.mdx), [`std.array`](./std.array.mdx) — polymorphic container helpers
+- [`std (top-level)`](./std.mdx) — `id` and `equals`

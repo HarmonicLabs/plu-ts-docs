@@ -6,16 +6,16 @@ slug: /onchain/standard-library/std
 
 # `std` (top level)
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
-A handful of polymorphic helpers live directly on the `std` namespace itself, alongside the sub-namespaces ([`std.crypto`](./std.crypto.md), [`std.list`](./std.list.md), etc.).
+A handful of polymorphic helpers live directly on the `std` namespace itself, alongside the sub-namespaces ([`std.crypto`](./std.crypto.mdx), [`std.list`](./std.list.mdx), etc.).
 
-```ts
-using { id, equals } = std;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const f = id;            // polymorphic identity
-const same: bool = equals(a, b);
-```
+<RunnableExample
+initialCode={`const a: int = 42;\nconst b: int = 42;\n\nconst same: boolean = std.equals(a, b);\nassert same                  else "equals failed";\nassert std.id(a) == 42       else "id failed";`}
+height="240px"
+/>
 
 ## Methods
 
@@ -30,5 +30,5 @@ const same: bool = equals(a, b);
 
 ## See also
 
-- [`std.builtins`](./std.builtins.md) — the underlying `equalsInteger`, `equalsByteString`, `equalsData`
-- The sub-namespaces — [`crypto`](./std.crypto.md), [`builtins`](./std.builtins.md), [`list`](./std.list.md), [`linearMap`](./std.linearMap.md), [`array`](./std.array.md), [`bytes`](./std.bytes.md), [`int`](./std.int.md), [`boolean`](./std.boolean.md), [`data`](./std.data.md), [`value`](./std.value.md)
+- [`std.builtins`](./std.builtins.mdx) — the underlying `equalsInteger`, `equalsByteString`, `equalsData`
+- The sub-namespaces — [`crypto`](./std.crypto.mdx), [`builtins`](./std.builtins.mdx), [`list`](./std.list.mdx), [`linearMap`](./std.linearMap.mdx), [`array`](./std.array.mdx), [`bytes`](./std.bytes.mdx), [`int`](./std.int.mdx), [`boolean`](./std.boolean.mdx), [`data`](./std.data.mdx), [`value`](./std.value.mdx)

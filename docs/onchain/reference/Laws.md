@@ -54,7 +54,7 @@ byteStringToInteger(true, integerToByteString(true, 0, n)) == n
 std.bytes.toInt(std.bytes.fromInt(n)) == n          for all int n >= 0
 ```
 
-For fixed-width encodings, the round trip holds **iff** the integer fits in the chosen width:
+For fixed-width encodings, the round trip holds **if** the integer fits in the chosen width:
 
 ```
 byteStringToInteger(true, integerToByteString(true, size, n)) == n
@@ -64,11 +64,11 @@ byteStringToInteger(true, integerToByteString(true, size, n)) == n
 ## Equality and hashing
 
 ```
-equalsData(a, b)     == true     iff a and b have the same CBOR encoding
+equalsData(a, b)     == true     if a and b have the same CBOR encoding
 equalsByteString     == ==        as operator
 equalsInteger        == ==        as operator
 equalsString         == ==        as operator
-std.equals<T>(a, b)  == true     iff a and b are equal under T's natural equality
+std.equals<T>(a, b)  == true     if a and b are equal under T's natural equality
 ```
 
 A `bytes` digest from a deterministic hash is itself in canonical big-endian:
@@ -84,7 +84,7 @@ ripemd_160(b).length()  == 20
 
 ## `Value` algebra
 
-`Value` forms a commutative monoid under `union`, with `mempty` as the identity:
+`Value` forms a commutative monoid under `union`, with the empty value as identity. (`mempty` below is *notation* for the empty `Value` — it is **not** a language identifier; in code obtain it as `anyValue.scale(0)`, e.g. `tx.mint.scale(0)`.)
 
 ```
 v.union(mempty)       == v
@@ -160,8 +160,8 @@ match Some{ value: x } { Some{ value: y }: y, None{}: _ } == x
 `find` produces an `Optional`:
 
 ```
-xs.find(p) == Some{ value: x }   iff there exists x in xs with p(x), and x is the first such element
-xs.find(p) == None{}             iff no element satisfies p
+xs.find(p) == Some{ value: x }   if there exists x in xs with p(x), and x is the first such element
+xs.find(p) == None{}             if no element satisfies p
 ```
 
 ## `LinearMap<K, V>` laws

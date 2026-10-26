@@ -5,7 +5,7 @@ sidebar_label: Optional<T>
 
 # `Optional<T>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 A value that may be absent. Two constructors:
 
@@ -23,14 +23,22 @@ match maybe {
 }
 ```
 
-`Optional` is returned by every "lookup-shaped" operation in the standard library: [`List.find`](./List.md), [`LinearMap.lookup`](./LinearMap.md), and so on.
+`Optional` is returned by every "lookup-shaped" operation in the standard library: [`List.find`](./List.mdx), [`LinearMap.lookup`](./LinearMap.mdx), and so on.
 
 ## Constructing
 
 ```ts
-const present: Optional<int> = Some{ value: 7 };
-const absent:  Optional<int> = None{};
+const absent: Optional<int> = undefined;
 ```
+
+:::note optionals are produced, not constructed
+The only `Optional` literal is **`undefined`** — the empty optional (an
+explicit `Optional` type annotation is required). There is **no expression
+form for `Some`**: `Some{ … }` / `None{}` / `Optional.Some{ … }` do not
+resolve as expressions. `Some` values come from the standard library
+(`lookup`, `find`, …); `Some{ value }` and `None{}` exist only as
+*patterns* in `match` arms and destructuring.
+:::
 
 ## Destructuring with `match`
 
@@ -57,5 +65,5 @@ This compiles to an assertion: if `maybe` is `None{}` at runtime, the script fai
 
 ## See also
 
-- [`List<T>.find`](./List.md), [`LinearMap<K, V>.lookup`](./LinearMap.md) — produce `Optional`
+- [`List<T>.find`](./List.mdx), [`LinearMap<K, V>.lookup`](./LinearMap.mdx) — produce `Optional`
 - [Builtin Values and Literals](../Builtin%20Values%20and%20Literals.md) — pattern-matching syntax

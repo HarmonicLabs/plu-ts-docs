@@ -24,7 +24,7 @@ contract Vesting
         {
             const { tx, state: { beneficiary, deadline } } = context;
 
-            assert tx.signatories.includes(beneficiary);
+            assert tx.requiredSigners.includes(beneficiary);
 
             // tx.validityInterval.from.boundary is the earliest the tx is
             // allowed to be on-chain. If the lower bound is >= deadline,
@@ -139,7 +139,7 @@ async function claimVesting({
 
 - [`contract`](../onchain/Contract%20Statements.md), [`state`](../onchain/State.md), `spend`
 - [`Finite`](../onchain/API/types/Interval/IntervalBoundary.md), [`Interval`](../onchain/API/types/Interval/Interval.md), `tx.validityInterval`
-- `tx.signatories`
+- `tx.requiredSigners`
 - buildooor: `TxBuilder.posixToSlot`, `invalidBefore`, `DataConstr`, `DataB`, `DataI`
 
 ## See also

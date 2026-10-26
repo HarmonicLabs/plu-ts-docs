@@ -73,6 +73,28 @@ then off-chain you pick:
 
 The constructor index is the **method's declaration order** for that script purpose.
 
+### This wrapper is present even with a single method
+
+The `Constr(methodIndex, [...])` selector is **always** there — including when a
+purpose has exactly one method. A lone
+
+```ts
+spend edit(redeemer: data) { /* ... */ }
+```
+
+does **not** receive the raw redeemer as `redeemer`. The on-chain redeemer must
+be `Constr(0, [ <your data> ])`, and the method parameter `redeemer` is bound to
+field `0` of that constructor:
+
+- ✅ `DataConstr(0, [ myData ])` → `edit` runs with `redeemer == myData`
+- ❌ `myData` (unwrapped) → fails to decode (`"Expected the Constr constructor"`)
+
+This is intentional: it keeps an existing method's encoding stable when a second
+method is added later (its `Constr(0, ...)` shape doesn't change). Note the
+asymmetry with the **datum**, which is *not* method-tagged — a datum is a single
+value, read raw (`value as MyDatum`), whereas the redeemer always carries the
+method selector.
+
 ## Building these in buildooor
 
 Given a Pebble method like
@@ -116,7 +138,7 @@ contract Counter
         spend increment(by: int)
         {
             const { tx, state: { count, owner } } = context;
-            assert tx.signatories.includes(owner);
+            assert tx.requiredSigners.includes(owner);
             assert by > 0;
             // (a fuller example would also assert that the continuing output
             //  carries the updated state datum and the same value)

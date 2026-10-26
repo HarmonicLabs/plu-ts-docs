@@ -78,7 +78,7 @@ Derived from comparisons or logical expressions.
 
 #### Example
 ```ts
-const signed: bool = tx.signatories.includes(ownerHash);
+const signed: bool = tx.requiredSigners.includes(ownerHash);
 
 if( signed && tx.outputs.length() > 0 ) {
     trace("Valid transaction");
@@ -142,3 +142,55 @@ struct Order {
     minReceiveAmount: int
 }
 ```
+
+### On-chain encoding
+
+*Since 0.5.0.* The **form** of the declaration picks how a
+single-constructor struct is encoded as `data`:
+
+```ts
+// shortcut form: fields directly in the struct body
+struct ListEncoded {
+    a: int
+}
+// on chain: List [ I a ]
+
+// explicit form: a named constructor holding the fields
+struct SingleConstrEncoded {
+    SingleConstrEncoded { a: int }
+}
+// on chain: Constr 0 [ I a ]
+```
+
+| declaration | encoding | off-chain (`@harmoniclabs/plutus-data`) |
+|---|---|---|
+| `struct S { a: int }` | list of fields | `new DataList([ new DataI( a ) ])` |
+| `struct S { S { a: int } }` | constructor `0` | `new DataConstr( 0, [ new DataI( a ) ] )` |
+| `struct S { A { … } B { … } }` | constructor index = declaration order | `new DataConstr( idx, [ … ] )` |
+
+The list encoding is one constructor tag smaller and cheaper to decode,
+and it is the encoding Plutus V4 uses for the product types of the ledger
+API. Use the explicit form when the value must match a `Constr 0` that
+something else produces or expects — an existing datum, another
+language's type, a CIP that fixes the shape.
+
+Both forms are constructed and read the same way in Pebble
+(`S{ a: 1 }`, `s.a`, `const S{ a } = s`); only the bytes differ. Because
+they are different values on chain, a cast between two structs of the
+same shape but different encoding is a compile error.
+
+The `untagged` keyword forces the list encoding regardless of the
+[`encodingStrategy`](./Compiler%20Configuration.md#encodingstrategy)
+option: `untagged struct S { a: int }`.
+
+:::caution encoding change in 0.5.0
+Up to 0.4.x the shortcut form was encoded as `Constr 0 [ fields ]`.
+Recompiling a contract that declares shortcut structs with 0.5.0 changes
+its script bytes (hence its address) and the encoding of those values in
+datums and redeemers. To keep an already-deployed contract byte-identical
+set `"encodingStrategy": "legacy"` in `pebble.config.json`, or rewrite
+the affected structs in the explicit form.
+
+A `contract`'s own datum and redeemer (its `state`s and methods) are
+**not** affected: they stay constructor-encoded.
+:::

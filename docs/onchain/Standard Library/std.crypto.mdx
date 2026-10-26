@@ -5,16 +5,16 @@ sidebar_label: std.crypto
 
 # `std.crypto`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Cryptographic hashes and signature verification primitives. Every function maps one-to-one to a Plutus Core builtin and costs the script's CPU/memory budget accordingly.
 
-```ts
-using { sha2_256, verifyEd25519Signature } = std.crypto;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const digest: bytes = sha2_256(payload);
-assert verifyEd25519Signature(pubKey, payload, sig);
-```
+<RunnableExample
+initialCode={`const payload: bytes = #68656c6c6f;\n\nconst d1 = std.crypto.sha2_256(payload);\nconst d2 = std.crypto.sha3_256(payload);\nconst d3 = std.crypto.blake2b_256(payload);\n\nassert std.bytes.length(d1) == 32 else "sha2 width wrong";\nassert std.bytes.length(d2) == 32 else "sha3 width wrong";\nassert std.bytes.length(d3) == 32 else "blake2b width wrong";`}
+height="300px"
+/>
 
 ## Hash functions
 
@@ -82,5 +82,5 @@ const ok_schnorr:  bool = verifySchnorrSecp256k1Signature(pubKey, msg, sig);
 
 ## See also
 
-- [`std.crypto.bls12_381`](./std.crypto.bls12_381.md) — pairing-friendly curve operations
-- [`std.builtins`](./std.builtins.md) — `serialiseData`, `encodeUtf8`, byte-level helpers commonly chained with these functions
+- [`std.crypto.bls12_381`](./std.crypto.bls12_381.mdx) — pairing-friendly curve operations
+- [`std.builtins`](./std.builtins.mdx) — `serialiseData`, `encodeUtf8`, byte-level helpers commonly chained with these functions

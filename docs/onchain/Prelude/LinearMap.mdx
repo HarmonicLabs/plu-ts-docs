@@ -5,7 +5,7 @@ sidebar_label: LinearMap<K, V>
 
 # `LinearMap<K, V>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 An association list — Cardano's on-chain "map". Structurally a `List<LinearMapEntry<K, V>>` where each entry is a `(K, V)` pair. Lookups are O(n); choose it because the underlying Plutus representation is what the chain speaks, not because it's fast.
 
@@ -26,6 +26,27 @@ const m: LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
 
 The key/value types are inferred from context.
+
+## In type position
+
+Since `0.3.6`, `LinearMap<K, V>` is a first-class type everywhere a type can
+appear — struct fields, `type` alias targets, annotations:
+
+```ts
+// e.g. CIP-68 metadata
+struct RootNft {
+    metadata: LinearMap<bytes, bytes>,
+    version: int,
+    extra: data
+}
+```
+
+Entries are `data`-encoded on-chain regardless of `K`/`V`; typed maps
+convert at the boundaries automatically. In particular `lookup` encodes a
+typed key for the underlying `equalsData` comparison (since `0.3.7`), so
+`dd.metadata.lookup( #6d6564696154797065 )` works exactly like a lookup on
+a `LinearMap<data, data>` obtained from
+[`unMapData`](../Standard%20Library/std.builtins.mdx#data-destructors).
 
 ## Methods
 
@@ -60,8 +81,14 @@ The entry returned by `head()`. Has two fields:
 
 | Field    | Type | Description       |
 |----------|------|-------------------|
-| `fst`    | `K`  | The key.          |
-| `snd`    | `V`  | The value.        |
+| `key`    | `K`  | The key.          |
+| `value`  | `V`  | The value.        |
+
+Access them by **destructuring**:
+
+```ts
+const { key, value } = m.head();
+```
 
 ## Iteration
 
@@ -69,13 +96,14 @@ The entry returned by `head()`. Has two fields:
 
 ```ts
 for( const entry of m ) {
-    trace(entry.fst);
-    trace(entry.snd);
+    const { key, value } = entry;
+    trace(key);
+    trace(value);
 }
 ```
 
 ## See also
 
-- [`std.linearMap`](../Standard%20Library/std.linearMap.md) — function-call surface
-- [`List<T>`](./List.md) — structural relative
-- [`std.builtins`](../Standard%20Library/std.builtins.md#data-destructors) — `mapData` / `unMapData`
+- [`std.linearMap`](../Standard%20Library/std.linearMap.mdx) — function-call surface
+- [`List<T>`](./List.mdx) — structural relative
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#data-destructors) — `mapData` / `unMapData`

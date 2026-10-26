@@ -32,26 +32,20 @@ contract OneShot
 
     mint mintOnce()
     {
-        const { tx, purpose } = context;
+        const { tx, policy: ownPolicy } = context;
 
         // 1. The "seed" UTxO must be one of the transaction's inputs.
         //    Once it's spent, the same transaction can never be replayed,
         //    so the mint can never happen again.
-        assert tx.inputs.some((i) => i.ref == seedRef);
+        assert tx.inputs.some((i) => i.ref == this.seedRef);
 
-        // 2. Exactly one mint entry: this policy, our token name, amount = 1.
-        const Mint{ policyId: ownPolicy } = purpose;
-        assert tx.mint.amountOf(ownPolicy, tokenName) == 1;
-
-        // 3. No other asset under this policy is minted.
-        //    (Defends against minting an extra side-token in the same tx.)
-        const mintedUnderUs = tx.mint
-            .toMap()
-            .lookup(ownPolicy);
-        match mintedUnderUs {
-            Some{ value: assets }: assert assets.length() == 1,
-            None{}: fail "policy missing from mint map"
-        }
+        // 2. EXACT mint: this policy, our token name, amount = 1 — and
+        //    nothing else (defends against minting an extra side-token in
+        //    the same tx). Values are canonically normalized, so data
+        //    equality is order-independent.
+        const expectedMint = std.value.zero
+            .insert( ownPolicy, this.tokenName, 1 );
+        assert tx.mint.toData() == expectedMint.toData();
     }
 }
 ```
@@ -59,7 +53,7 @@ contract OneShot
 ### Why this shape
 
 - **`OneShot(seedRef, tokenName)` takes contract parameters.** At compile time you bake in the specific UTxO that gates the mint; the resulting validator has a unique policy hash. See [Contract Statements](../onchain/Contract%20Statements.md).
-- **`purpose` carries the policy ID** when the script runs as a mint. Destructure with `match purpose` or `const Mint{ policyId } = purpose`.
+- **`policy` carries the policy ID** in a `mint` method's `context`. Contract `param`s are read through `this.` (`this.seedRef`, `this.tokenName`).
 - **Both checks together** (input present + exactly one mint entry) make this an **NFT primitive**: minting can happen at most once, and only the named token is created.
 
 ## Off-chain: TypeScript with `@harmoniclabs/buildooor`
@@ -135,8 +129,8 @@ To burn, mint a **negative** quantity. The policy script runs the same `mintOnce
 
 - [`contract`](../onchain/Contract%20Statements.md) with parameters, `mint` method-kind
 - `purpose` destructuring via [`Mint{ policyId }`](../onchain/API/types/ScriptContext/ScriptPurpose.md)
-- [`List<T>.some`](../onchain/Prelude/List.md), [`Value.amountOf`](../onchain/Prelude/Value.md)
-- [`Optional`](../onchain/Prelude/Optional.md) match on a `LinearMap.lookup` result
+- [`List<T>.some`](../onchain/Prelude/List.mdx), [`Value.amountOf`](../onchain/Prelude/Value.mdx)
+- [`Optional`](../onchain/Prelude/Optional.mdx) match on a `LinearMap.lookup` result
 - buildooor: `mints` field of `buildSync`, `Value.singleAsset`, `Value.merge`, `Value.lovelaces`
 
 ## See also

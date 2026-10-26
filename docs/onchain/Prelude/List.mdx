@@ -5,17 +5,18 @@ sidebar_label: List<T>
 
 # `List<T>`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 A singly-linked list of elements of type `T`. Maps to Plutus Core's built-in list.
 
-Despite being a cons list at the interpreter level, **indexed access `xs[i]` is essentially free in the on-chain cost model**: it lowers to `headList (dropList i xs)`, and `dropList` is billed by the bit-width of `i` (constant for any practical index), not by how many cons cells get walked. So unlike with arrays in other languages, you don't need to convert to [`Array<T>`](./Array.md) for cheap indexed reads — see [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
+Despite being a cons list at the interpreter level, **indexed access `xs[i]` is essentially free in the on-chain cost model**: it lowers to `headList (dropList i xs)`, and `dropList` is billed by the bit-width of `i` (constant for any practical index), not by how many cons cells get walked. So unlike with arrays in other languages, you don't need to convert to [`Array<T>`](./Array.mdx) for cheap indexed reads — see [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measured numbers.
 
-```ts
-const xs: List<int> = [1, 2, 3, 4, 5];
-const doubled = xs.map((n) => n * 2);
-const total   = xs.foldl((acc, n) => acc + n, 0);
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const xs: List<int> = [1, 2, 3, 4, 5];\n\nconst total = std.list.foldl((acc, n) => acc + n, 0, xs);\nconst evens = std.list.filter((n) => n % 2 == 0, xs);\n\nassert total == 15                    else "sum wrong";\nassert std.list.length(evens) == 2    else "filter wrong";`}
+height="280px"
+/>
 
 ## Literals
 
@@ -31,7 +32,7 @@ The element type is inferred from context (or from the first element if obvious)
 | Method                                                                         | Description                                                                |
 |--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
 | `length(): int`                                                                | Element count. Walks the spine; O(n) in actual work, charged O(n) by the cost model. |
-| `isEmpty(): bool`                                                              | True iff the list has zero elements.                                       |
+| `isEmpty(): bool`                                                              | True if the list has zero elements.                                       |
 | `head(): T`                                                                    | First element. Fails on empty.                                             |
 | `tail(): List<T>`                                                              | Everything after the head. Fails on empty.                                 |
 | `prepend(x: T): List<T>`                                                       | New list with `x` at the front.                                            |
@@ -40,8 +41,8 @@ The element type is inferred from context (or from the first element if obvious)
 | `filter(p: (T) -> bool): List<T>`                                              | Keep only elements satisfying `p`.                                         |
 | `foldr<A>(f: (T, A) -> A, init: A): A`                                         | Right fold.                                                                |
 | `foldl<A>(f: (A, T) -> A, init: A): A`                                         | Left fold. Tail-recursive; prefer for large lists.                         |
-| `some(p: (T) -> bool): bool`                                                   | True iff any element satisfies `p`. Short-circuits.                        |
-| `every(p: (T) -> bool): bool`                                                  | True iff all elements satisfy `p`. Short-circuits.                         |
+| `some(p: (T) -> bool): bool`                                                   | True if any element satisfies `p`. Short-circuits.                        |
+| `every(p: (T) -> bool): bool`                                                  | True if all elements satisfy `p`. Short-circuits.                         |
 | `find(p: (T) -> bool): Optional<T>`                                            | First match wrapped in `Some`, or `None`.                                  |
 | `equals(eq: (T, T) -> bool, other: List<T>): bool`                             | Element-wise equality using `eq`.                                          |
 
@@ -92,7 +93,7 @@ See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measu
 
 ## See also
 
-- [`std.list`](../Standard%20Library/std.list.md) — function-call surface
-- [`Array<T>`](./Array.md) — random-access counterpart
-- [`LinearMap<K, V>`](./LinearMap.md) — structurally a `List<LinearMapEntry<K, V>>`
-- [`std.builtins`](../Standard%20Library/std.builtins.md#polymorphic-intrinsics) — `mkCons`, `headList`, `tailList`, `nullList`, `chooseList`
+- [`std.list`](../Standard%20Library/std.list.mdx) — function-call surface
+- [`Array<T>`](./Array.mdx) — random-access counterpart
+- [`LinearMap<K, V>`](./LinearMap.mdx) — structurally a `List<LinearMapEntry<K, V>>`
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#polymorphic-intrinsics) — `mkCons`, `headList`, `tailList`, `nullList`, `chooseList`

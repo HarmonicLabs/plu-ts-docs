@@ -13,10 +13,10 @@ Cardano's ledger is a set of **unspent transaction outputs (UTxOs)**. A transact
 |------------|---------------------|-------------------------------------------------------------------------------|
 | Address    | `Address`           | Where the funds live. Determines who can spend.                                |
 | Value      | `Value`             | What's in the UTxO — ADA, native tokens, NFTs.                                 |
-| Datum      | `Optional<data>`    | Arbitrary data attached to the output. Required for scripts; nil for wallets.  |
-| Reference script | `Optional<bytes>` | A script stored inline so callers don't have to attach it themselves.       |
+| Datum      | `OutputDatum`       | Optional Datum, can be either missing, a hash of the datum (backwards compatibility only), or inline with the actual data present, effectively acts as a `Optional<data>` although with different contstructors |
+| Reference script | `Optional<bytes>` | If present (`Some` constructor) it specifies the 28-length hash of the ref script attached to the utxo |
 
-Outputs that pay to a **script address** (an address whose payment credential is a `ScriptHash`) must carry a datum — that's how the script knows what state it's guarding.
+Outputs that pay to a **script address** (an address whose payment credential is a `ScriptHash`) typically carry a datum — that's how the script remembers what state it's guarding across transactions. Since Plutus V3, the datum is no longer mandatory: a spend script can validate a UTxO with `NoDatum` provided its logic doesn't need any persisted state (for instance, when the decision depends only on the current transaction's inputs, outputs, and requiredSigners). When a datum *is* present, the validator is responsible for treating it as input that must be checked, not as a trusted fact — past validation only guarantees the datum was accepted by whichever script wrote it.
 
 ## What spending looks like
 
@@ -25,10 +25,10 @@ A transaction `tx` has:
 - `inputs: List<TxIn>` — UTxOs being consumed, by reference.
 - `outputs: List<TxOut>` — fresh UTxOs being produced.
 - `mint: Value` — tokens being minted or burned.
-- `signatories: List<PubKeyHash>` — who has signed.
+- `requiredSigners: List<PubKeyHash>` — who has signed.
 - ... plus fees, validity interval, certificates, governance, etc.
 
-The transaction is **valid** iff:
+The transaction is **valid** if:
 1. Every script protecting an input or controlling a mint approves it.
 2. The values balance: `sum(inputs.value) + mint == sum(outputs.value) + fee`.
 3. Other ledger rules (signatures, time, slot limits, ...) are satisfied.

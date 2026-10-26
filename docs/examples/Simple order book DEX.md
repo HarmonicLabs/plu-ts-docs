@@ -16,7 +16,7 @@ Three actions on each order UTxO:
 2. **Fill** — anyone spends the order, sending the requested payment to the order's owner.
 3. **Cancel** — the owner spends the order back to themselves.
 
-The contract has a single `state` (`Simple`) whose fields capture the order's terms. The `spend fill(...)` method enforces the fill rules; a fallback `spend cancelOrder()` outside the state block handles cancellation.
+The contract has a single `state` (`Simple`) whose fields capture the order's terms. The `spend fill(...)` method enforces the fill rules; a second `spend cancelOrder()` method on the same state handles cancellation.
 
 ## On-chain: `simple_order_book.pebble`
 
@@ -36,37 +36,37 @@ contract SimpleOrderBook
         {
             const {
                 tx,
-                spendingInputRef: purposeRef,
+                spendingRef: purposeRef,
                 state: { ownerHash, policy, tokenName, minReceiveAmount }
             } = context;
 
             // The input named in the redeemer is this script's invocation
-            const { ref: spendingInputRef, resolved: spendingInput } =
+            const { ref: inputRef, resolved: spendingInput } =
                 tx.inputs[inputIdx];
-            assert purposeRef == spendingInputRef;
+            assert purposeRef == inputRef;
 
             const ownAddr = spendingInput.address;
-            const ownScriptHash = ownAddr.credential.hash();
+            const ownScriptHash = ownAddr.payment.hash();
 
             // Prevent double satisfaction: at most one of *this script's*
             // UTxOs may be spent in the same transaction.
             const ownInputs = tx.inputs.filter(
-                (i) => i.resolved.address.credential.hash() == ownScriptHash
+                (i) => i.resolved.address.payment.hash() == ownScriptHash
             );
             assert ownInputs.length() == 1;
 
             // The named output must pay the owner the agreed token amount,
             // routed to an address that pays to `ownerHash`.
             const userOutput = tx.outputs[outputIdx];
-            assert userOutput.address.credential.hash() == ownerHash;
+            assert userOutput.address.payment.hash() == ownerHash;
             assert userOutput.value.amountOf(policy, tokenName) >= minReceiveAmount;
         }
-    }
 
-    spend cancelOrder()
-    {
-        const { tx, state: { ownerHash } } = context;
-        assert tx.signatories.includes(ownerHash);
+        spend cancelOrder()
+        {
+            const { tx, state: { ownerHash } } = context;
+            assert tx.requiredSigners.includes(ownerHash);
+        }
     }
 }
 ```
@@ -75,7 +75,7 @@ contract SimpleOrderBook
 
 - **`state Simple { ... }`** declares a datum type. The compiler synthesizes a sum-type with one constructor for `Simple`; the order's UTxO carries a CBOR-encoded `Simple{ ownerHash, policy, tokenName, minReceiveAmount }` as its datum.
 - **`spend fill` inside the state** binds `state` automatically — every state field is in scope after destructuring `context`.
-- **`spend cancelOrder` outside the state** is the fallback path. When the redeemer doesn't match `fill`, the contract falls through to `cancelOrder`. See [Contract Statements](../onchain/Contract%20Statements.md) for the dispatch rules.
+- **`spend cancelOrder` on the same state** is the cancellation path; the redeemer selects which method runs. See [Contract Statements](../onchain/Contract%20Statements.md) for the dispatch rules.
 - **Double-satisfaction defence**: `tx.inputs.filter(...).length() == 1` ensures one fill output can't satisfy two orders. See [Pitfalls — Double-satisfaction](../onchain/reference/Pitfalls.md).
 
 ## Off-chain: TypeScript with `@harmoniclabs/buildooor`
@@ -232,7 +232,7 @@ async function cancelOrder({
         ],
         collaterals:        [ ownerWallet.utxos[0] ],
         changeAddress:      ownerWallet.address,
-        requiredSigners:    [ ownerWallet.pkh ],   // satisfies `tx.signatories.includes(ownerHash)`
+        requiredSigners:    [ ownerWallet.pkh ],   // satisfies `tx.requiredSigners.includes(ownerHash)`
     });
 
     tx.signWith(ownerPrivateKey);
@@ -245,11 +245,11 @@ async function cancelOrder({
 Pebble symbols this example exercises:
 
 - `contract`, `state`, `spend` — see [Contract Statements](../onchain/Contract%20Statements.md), [State](../onchain/State.md)
-- [`tx.inputs`](../onchain/API/types/Tx/TxIn.md), [`tx.outputs`](../onchain/API/types/Tx/TxOut.md), `tx.signatories`
+- [`tx.inputs`](../onchain/API/types/Tx/TxIn.md), [`tx.outputs`](../onchain/API/types/Tx/TxOut.md), `tx.requiredSigners`
 - [`Address`](../onchain/API/types/Address/Address.md), [`Credential`](../onchain/API/types/Address/Credential.md)
-- [`Value.amountOf`](../onchain/Prelude/Value.md)
-- [`List<T>.filter`](../onchain/Prelude/List.md), [`List<T>.length`](../onchain/Prelude/List.md)
-- [`spendingInputRef`](../onchain/concepts/Validators%20101.md)
+- [`Value.amountOf`](../onchain/Prelude/Value.mdx)
+- [`List<T>.filter`](../onchain/Prelude/List.mdx), [`List<T>.length`](../onchain/Prelude/List.mdx)
+- [`spendingRef`](../onchain/concepts/Validators%20101.md)
 - [Pitfalls — Double-satisfaction](../onchain/reference/Pitfalls.md)
 
 Buildooor APIs used:

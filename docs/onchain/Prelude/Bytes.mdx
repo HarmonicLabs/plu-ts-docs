@@ -5,14 +5,16 @@ sidebar_label: bytes
 
 # `bytes`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Raw byte string. Maps to Plutus Core `ByteString`. Used for hashes, policy IDs, token names, signatures, and anything else that's "just bytes on the wire".
 
-```ts
-const policy: bytes = #deadbeef;
-const tokenName: bytes = "MyToken".toBytes();
-```
+import RunnableExample from '@site/src/components/RunnableExample';
+
+<RunnableExample
+initialCode={`const policy:    bytes = #deadbeef;\nconst tokenName: bytes = #4d79546f6b656e;\n\nassert std.bytes.length(policy) == 4         else "wrong width";\nassert std.bytes.slice(1, 2, policy) == #adbe else "slice off";\nassert tokenName == #4d79546f6b656e            else "utf-8 off";`}
+height="240px"
+/>
 
 ## Literals
 
@@ -81,6 +83,6 @@ These are aliases, not nominal types — you can freely pass a `bytes` where any
 
 ## See also
 
-- [`std.bytes`](../Standard%20Library/std.bytes.md) — function-call surface
-- [`std.crypto`](../Standard%20Library/std.crypto.md) — hash functions produce `bytes`
-- [`std.builtins`](../Standard%20Library/std.builtins.md) — bitwise operations and `consByteString`, `replicateByte`, etc.
+- [`std.bytes`](../Standard%20Library/std.bytes.mdx) — function-call surface
+- [`std.crypto`](../Standard%20Library/std.crypto.mdx) — hash functions produce `bytes`
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx) — bitwise operations and `consByteString`, `replicateByte`, etc.

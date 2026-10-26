@@ -5,18 +5,18 @@ sidebar_label: std.int
 
 # `std.int`
 
-*Pebble 0.3.0 · all symbols on this page are stable.*
+*Pebble 0.3.1 · all symbols on this page are stable.*
 
 Monomorphic helpers over `int`. Use these when you need an `int`-shaped function as a value — for instance `xs.some(std.int.isZero)` is cleaner than constructing a one-off lambda.
 
 `int` is arbitrary-precision signed; none of these operations overflow.
 
-```ts
-using { add, isZero, exponentiate } = std.int;
+import RunnableExample from '@site/src/components/RunnableExample';
 
-const total = std.list.foldl(add, 0, amounts);
-assert isZero(total - expected);
-```
+<RunnableExample
+initialCode={`const amounts:  List<int> = [10, 20, 30, 40];\nconst expected: int       = 100;\n\nconst total = std.list.foldl(std.int.add, 0, amounts);\nassert std.int.isZero(total - expected) else "sum off";`}
+height="240px"
+/>
 
 ## Arithmetic
 
@@ -87,5 +87,5 @@ const b:  bool = toBoolean(0);               // false
 
 ## See also
 
-- [`int`](../Prelude/Int.md) — operator forms and method-call surface
-- [`std.builtins`](./std.builtins.md) — the underlying `addInteger`, `expModInteger`, etc.
+- [`int`](../Prelude/Int.mdx) — operator forms and method-call surface
+- [`std.builtins`](./std.builtins.mdx) — the underlying `addInteger`, `expModInteger`, etc.

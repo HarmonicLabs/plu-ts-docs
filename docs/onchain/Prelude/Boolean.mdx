@@ -1,0 +1,44 @@
+---
+sidebar_position: 4
+sidebar_label: bool
+---
+
+# `bool`
+
+*Pebble 0.3.1 · all symbols on this page are stable.*
+
+Logical truth value: `true` or `false`. Maps to Plutus Core `Bool`.
+
+```ts
+const signed: bool = tx.requiredSigners.includes(ownerHash);
+
+if( signed && tx.outputs.length() > 0 ) {
+    trace("OK");
+} else {
+    fail "Unauthorized";
+}
+```
+
+## Literals
+
+`true`, `false`.
+
+## Operators
+
+| Category    | Operators                                                                |
+|-------------|--------------------------------------------------------------------------|
+| Logical     | `&&` (short-circuit AND), `\|\|` (short-circuit OR), `!` (NOT)           |
+| Equality    | `==`, `!=`                                                               |
+
+:::tip Short-circuit vs strict
+`&&` and `\|\|` are short-circuit: the right operand is only evaluated if the left doesn't decide the result. If you need strict evaluation (rare — usually for higher-order use), see [`std.boolean.strictAnd`](../Standard%20Library/std.boolean.mdx) and `strictOr`.
+:::
+
+## Methods
+
+`bool` has no method-call surface. Use operators or the [`std.boolean`](../Standard%20Library/std.boolean.mdx) namespace.
+
+## See also
+
+- [`std.boolean`](../Standard%20Library/std.boolean.mdx) — function-call surface
+- [`std.builtins`](../Standard%20Library/std.builtins.mdx#polymorphic-intrinsics) — `ifThenElse<T>` is the strict polymorphic conditional
