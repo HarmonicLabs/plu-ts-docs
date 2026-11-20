@@ -35,6 +35,24 @@ function useAdd( a: int, b: int ): int {
 }
 ```
 
+`using` binds the names in the **block** it appears in — a function body, a method body, a nested
+block. *Since 0.6.0* it works inside a function or a method for any namespace's functions and
+constants (it used to fail in the backend), and a namespace's members can use the functions and
+constants of their module.
+
+```ts
+contract Vault {
+    spend spend() {
+        using { g1HashToGroup, g1Compress } = std.crypto.bls12_381;
+        const p = g1HashToGroup( #00, #01 );
+        trace( g1Compress( p ) );
+    }
+}
+```
+
+A `using` at **file scope** is accepted by the parser but does not bring names into a function's
+body: put it inside the function or method that uses them.
+
 ## `using` — aliasing
 
 `using` can also create a shorter alias for the whole namespace.

@@ -117,6 +117,7 @@ export default function RunnableExample({ initialCode, height = '200px' }: Runna
       <div ref={editorContainerRef} style={{ height }}>
         <PebbleEditor
           value={initialCode}
+          mode="script"
           onChange={(v) => { contentRef.current = v; }}
         />
       </div>

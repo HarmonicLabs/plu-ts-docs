@@ -5,7 +5,7 @@ sidebar_label: bool
 
 # `bool`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 Logical truth value: `true` or `false`. Maps to Plutus Core `Bool`.
 
@@ -37,6 +37,37 @@ if( signed && tx.outputs.length() > 0 ) {
 ## Methods
 
 `bool` has no method-call surface. Use operators or the [`std.boolean`](../Standard%20Library/std.boolean.mdx) namespace.
+
+## On-chain encoding
+
+A `bool` converted to `data` — `.toData()`, a field of a datum, a redeemer — is `Constr 0 []` for
+`false` and `Constr 1 []` for `true`.
+
+```ts
+function encoding(): bool {
+    using { constrData } = std.builtins;
+    assert true.toData()  == constrData( 1, [] );
+    assert false.toData() == constrData( 0, [] );
+    return true;
+}
+```
+
+| value   | `data`        | off-chain (`@harmoniclabs/plutus-data`) |
+|---------|---------------|------------------------------------------|
+| `false` | `Constr 0 []` | `new DataConstr( 0, [] )`                |
+| `true`  | `Constr 1 []` | `new DataConstr( 1, [] )`                |
+
+:::caution breaking change in 0.6.0
+Up to 0.5.0 the two were the other way round. Consequences of the fix:
+
+- A contract with a `boolean` in a datum, a redeemer, or any value it serialises or compares as
+  data has a **new hash**, and reads the booleans of UTxOs created for the old script inverted.
+  Contracts with no boolean crossing data are unchanged, byte for byte.
+- A boolean of the ledger's is read correctly: `tx.validityInterval.from.isInclusive` is `true` for
+  a closed bound (`false` before). The `std.interval` helpers read the constructor themselves and
+  were already right.
+- A datum or redeemer built off-chain from the encoding above is now read as written.
+:::
 
 ## See also
 

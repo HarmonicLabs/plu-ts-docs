@@ -5,7 +5,7 @@ sidebar_label: bytes
 
 # `bytes`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 Raw byte string. Maps to Plutus Core `ByteString`. Used for hashes, policy IDs, token names, signatures, and anything else that's "just bytes on the wire".
 
@@ -22,15 +22,18 @@ height="240px"
 |---------------------|------------------------|-------------------------------------------------------------|
 | Hex literal         | `#1a2b3c`              | Each pair of hex digits is one byte. Case-insensitive.      |
 | Empty               | `#""`                  | Zero-length byte string.                                    |
-| From string         | `"MyToken".toBytes()`  | UTF-8 encode a string literal.                              |
+| Double-quoted       | `"MyToken"`            | Its UTF-8 bytes — a `bytes` literal, not a `string`.        |
 
 ## Operators
 
-| Category    | Operators                            |
-|-------------|--------------------------------------|
-| Equality    | `==`, `!=`                           |
-| Concatenation | `+`                                |
-| Ordering    | `<`, `<=`, `>`, `>=` (lexicographic) |
+| Category      | Operators                            |
+|---------------|--------------------------------------|
+| Equality      | `==`, `!=`                           |
+| Concatenation | `+` (`#dead + #beef`), and `+=`      |
+| Ordering      | `<`, `<=`, `>`, `>=` (lexicographic) |
+
+`+` concatenates two byte strings (and two string literals, which are byte strings). `+=` adds
+whatever `+` adds, so `acc += #ff;` on a `bytes` variable works — before 0.6.0 `+=` was ints only.
 
 ## Methods
 

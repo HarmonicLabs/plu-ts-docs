@@ -5,7 +5,7 @@ sidebar_label: data
 
 # `data`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 The Plutus Core `Data` type: a serialization format that every on-chain type can be encoded into and decoded from. Datums, redeemers, and the script context all flow through `data` at the system boundary.
 
@@ -32,17 +32,44 @@ Equality is structural CBOR equality, implemented by `equalsData`.
 ## Working with `data`
 
 ```ts
-using { constrData, unConstrData, iData, bData, listData } = std.builtins;
-using { strToData } = std.data;
+function shape( d: data ): int {
+    using { constrData, unConstrData, iData, bData } = std.builtins;
 
-// Build:
-const d: data = constrData(0, [iData(42), bData(#cafe)]);
+    // Build:
+    const built: data = constrData(0, [iData(42), bData(#cafe)]);
 
-// Destructure:
-const RawConstr{ index, fields } = unConstrData(d);
-match index {
-    0: trace("Some"),
-    _: fail "unknown constructor"
+    // Destructure a constructor:
+    const RawConstr{ index, fields } = unConstrData( d );
+
+    if( index == 0 ) { trace("Some"); }
+    else { fail "unknown constructor"; }
+
+    return index;
+}
+```
+
+`unConstrData` returns a `RawConstr` with two fields, `index: int` and `fields: List<data>`; both
+can be destructured in one `const`, as above, and `fields` can be destructured further. *Since
+0.6.0* the destructuring works with one property, without the type name, and inside a map entry
+(`value: RawConstr{ index }`).
+
+`using { … } = std.builtins;` binds the names in the **block** it appears in — here, the function
+body. Put it inside the function or method that uses them; a `using` at file scope is accepted by
+the parser but does not bring names into a function's body.
+
+### `Optional<T>.toData()`
+
+An `Optional<T>` has `.toData()` like every other encodable type: `Some{ value: v }` is
+`Constr 0 [ v ]`, `None{}` is `Constr 1 []` — the encoding a struct field of that type has.
+
+```ts
+function encoding(): bool {
+    using { constrData, iData } = std.builtins;
+    const some: Optional<int> = Some{ value: 7 };
+    const none: Optional<int> = undefined;
+    assert some.toData() == constrData( 0, [ iData( 7 ) ] );
+    assert none.toData() == constrData( 1, [] );
+    return true;
 }
 ```
 

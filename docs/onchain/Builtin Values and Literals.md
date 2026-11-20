@@ -5,7 +5,7 @@ sidebar_label: Builtin Values and Literals
 
 # Builtin Values and Literals
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 Every literal form Pebble's tokenizer and parser recognise, plus the small set of implicit bindings the compiler injects into method bodies.
 
@@ -27,30 +27,35 @@ const neg: int = -7;
 
 ## Byte-string literals
 
-| Form         | Example         | Notes                                                            |
-|--------------|-----------------|------------------------------------------------------------------|
-| Hex literal  | `#deadbeef`     | Each pair of hex digits is one byte. Case-insensitive after `#`. |
-| Empty        | `#""`           | Zero-length byte string.                                         |
-| From string  | `"x".toBytes()` | UTF-8 encode a `string` literal (via the [`string`](./Prelude/String.mdx) method). |
+| Form           | Example        | Notes                                                            |
+|----------------|----------------|------------------------------------------------------------------|
+| Hex literal    | `#deadbeef`    | Each pair of hex digits is one byte. Case-insensitive after `#`. |
+| Empty          | `#""`          | Zero-length byte string.                                         |
+| Double-quoted  | `"hello"`      | Its UTF-8 bytes: `#68656c6c6f`. A `bytes` literal, not a `string`. |
 
 All resolve to type [`bytes`](./Prelude/Bytes.mdx).
 
 ```ts
 const policy: PolicyId = #cafedead;
 const empty:  bytes    = #"";
-const utf8:   bytes    = "hello".toBytes();
+const utf8:   bytes    = "hello";        // #68656c6c6f
 ```
 
 ## String literals
 
-Double-quoted UTF-8 text. Strings exist primarily for [`trace`](./Syntax/Control%20Flow%20Statements.md) messages and `fail` reasons — avoid storing large strings on-chain (every byte costs CPU and memory in the script budget).
+A quoted literal is **`bytes`**, not `string`. A `string` value comes from
+[`std.builtins.decodeUtf8`](./Standard%20Library/std.builtins.mdx), and `trace` and `fail` accept
+either.
 
 ```ts
-const msg: string = "Order filled";
+const msg: string = std.builtins.decodeUtf8( "Order filled" );
 trace(msg);
 ```
 
 Escapes (`\n`, `\t`, `\"`, `\\`, etc.) are recognised inside double quotes. There are **no** template strings — concatenate with `+`.
+
+Strings exist primarily for `trace` messages and `fail` reasons — avoid storing large strings
+on-chain (every byte costs CPU and memory in the script budget).
 
 ## Boolean literals
 
@@ -61,12 +66,18 @@ const ok: bool = true;
 if( ok ) { trace("ok"); }
 ```
 
-## Void / unit literal
+## Void
 
-`()` is the canonical inhabitant of `void`. Most users never need to spell it explicitly; it appears as the return type of statement-like expressions (`trace(...)`, `assert ...`).
+`void` is the type of a value that carries nothing: a function that only asserts or traces, and
+the statement-like expressions `trace(...)` and `assert ...`. There is **no literal** for it —
+`()` is not a value — so a `void` value is the call itself:
 
 ```ts
-const nothing: void = ();
+function check( amount: int ): void {
+    assert amount > 0 else "amount";
+}
+
+const nothing: void = check( 1 );
 ```
 
 ## Array (list) literals
@@ -92,11 +103,11 @@ const empty: LinearMap<bytes, int> = {};
 const m:     LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
 
-Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.mdx). Order of entries is preserved; duplicates are allowed (matching the underlying assoc-list semantics).
+Produces a [`LinearMap<K, V>`](./Prelude/LinearMap.mdx). Order of entries is preserved; duplicates are allowed (matching the underlying assoc-list semantics). A key is any expression except a **bare identifier**: `{ a: 1 }` is a struct's field, so a variable used as a key is written `{ (a): 1 }` (error 30212 otherwise). Without an expected type, the first entry gives the map's type.
 
 ## Struct / variant constructors
 
-Construction always uses the **qualified** form `Type.Constructor{ field: value, … }` — for a single-constructor struct the constructor has the struct's own name:
+Construction uses the constructor's name, bare or qualified — for a single-constructor struct the constructor has the struct's own name:
 
 ```ts
 struct Order {
@@ -112,7 +123,7 @@ const o: Order = Order.Order{
 };
 ```
 
-For multi-constructor structs, qualify the specific variant:
+For multi-constructor structs, name the variant:
 
 ```ts
 struct Shape {
@@ -123,14 +134,9 @@ struct Shape {
 const s: Shape = Shape.Circle{ r: 2 };
 ```
 
-:::caution bare constructor names are patterns, not expressions
-`Order{ … }`, `Circle{ … }`, `Some{ … }` **fail to resolve in expression
-position** — bare constructor names exist only as *patterns* (in `match`
-arms and `const` destructuring). `Optional` has no constructor expression at
-all: `Some` values are produced by stdlib operations (`lookup`, `find`, …)
-and the empty optional is the literal `undefined` (with an explicit
-`Optional` annotation).
-:::
+The bare form resolves too when the constructor name is unambiguous (`Circle{ r: 2 }`,
+`Order{ owner: …, … }`). `Some{ value: 1 }` and `None{}` are expressions, like any other
+constructor: `Optional` has no qualifier (`Optional.Some{ … }` does not resolve).
 
 ## Implicit bindings inside method bodies
 
@@ -141,21 +147,26 @@ The compiler injects two implicit names into the body of any `contract` method (
 The full script context for the current invocation. Destructure it for the fields you actually need:
 
 ```ts
-spend handler() {
-    const { tx, purpose, redeemer } = context;
-    // tx       — the full Tx
-    // purpose  — the ScriptPurpose discriminator
-    // redeemer — this invocation's redeemer (typed to the method's params)
+contract Vault {
+    spend handler( amount: int ) {
+        const { tx, spendingRef, optionalDatum } = context;
+        // tx            — the full Tx
+        // spendingRef   — the TxOutRef of the input being spent
+        // optionalDatum — the raw datum of that input
+        assert amount > 0;
+    }
 }
 ```
+
+The redeemer is **not** in `context`: a method's parameters are its redeemer fields. `purpose` is
+not available either (error 294): the purpose is the method you are in.
 
 For `spend` methods, additional fields are available:
 
 | Field              | Type                  | Notes                                                    |
 |--------------------|-----------------------|----------------------------------------------------------|
 | `tx`               | `Tx`                  | The full transaction.                                    |
-| `purpose`          | `ScriptPurpose`       | `Spend{ ref: TxOutRef }` for `spend` methods.            |
-| `spendingRef`      | `TxOutRef`            | The reference of the UTxO being spent (purpose-ref).     |
+| `spendingRef`      | `TxOutRef`            | The reference of the UTxO being spent.                   |
 | `optionalDatum`    | `Optional<data>`      | The raw datum, when no `state` is in scope.              |
 | `state`            | `<sum of states>`     | Present only inside a `spend` method declared on a [`state`](./State.md). |
 

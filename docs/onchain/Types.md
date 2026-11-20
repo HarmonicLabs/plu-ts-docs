@@ -28,15 +28,21 @@ Backed by Plutus `Integer`.
 #### Example
 ```ts
 const supply: int = 1_000_000;
-let spent: int = 500;
 
-assert (supply - spent) >= 0;
+function remaining( spent: int ): int {
+    let left: int = supply;
+    left -= spent;
+    return left;
+}
 ```
 
 #### Operators
 
 - Arithmetic: `+`, `-`, `*`, `/`, `%`
 - Comparison: `<`, `<=`, `>`, `>=`, `==`, `!=`
+
+`/` and `%` cost what a node at protocol version 11 charges (quadratic in the operands' sizes);
+see [Cost and Complexity](./reference/Cost%20and%20Complexity.md#division-and-modulo).
 
 ### `bytes`
 
@@ -46,28 +52,30 @@ Commonly used for hashes, policy IDs, token names, and low-level identifiers.
 #### Example
 ```ts
 const policy: bytes = #deadbeef;
-const token: bytes = "MyToken".toBytes();
+const token: bytes = #4d79546f6b656e;
 
-assert tx.outputs[0].value.amountOf(policy, token) > 0;
+assert policy.length() == 4;
 ```
-Pebble represents token names as bytes `const token: bytes = "MyToken".toBytes()`. This ensures compatibility with Plutus, where token names are byte arrays.
 
+A **double-quoted literal is `bytes`**: its UTF-8 bytes, with the methods of `bytes`.
+`const token: bytes = "MyToken"` is the same as `#4d79546f6b656e`. To get a `string` from one, use
+[`std.builtins.decodeUtf8`](./Standard%20Library/std.builtins.mdx).
 
 #### Common Operators
 - Equality: `==`, `!=`
-- Concatenation: `a + b`
-- Conversion: `"hello".toBytes()`
-- Hashing: `hash(bytesVal)`
+- Concatenation: `a + b` (`+=` adds whatever `+` adds)
+- Ordering: `<`, `<=`, `>`, `>=` (lexicographic)
 
 ### `string`
 
-UTF-8 encoded text.
+UTF-8 text. A `string` is not its bytes: it has one method, `encodeUtf8()`, and the methods of
+`bytes` are an error on it (ask them of `s.encodeUtf8()`).
 Primarily for logging and off-chain metadata.
 Avoid storing large strings on-chain due to cost.
 
 #### Example
 ```ts
-const msg: string = "Order filled";
+const msg: string = std.builtins.decodeUtf8( "Order filled" );
 trace(msg);
 ```
 
@@ -78,11 +86,13 @@ Derived from comparisons or logical expressions.
 
 #### Example
 ```ts
-const signed: bool = tx.requiredSigners.includes(ownerHash);
+function signed( tx: Tx, ownerHash: PubKeyHash ): bool {
+    const ok: bool = tx.requiredSigners.includes(ownerHash);
 
-if( signed && tx.outputs.length() > 0 ) {
-    trace("Valid transaction");
-} else {
+    if( ok && tx.outputs.length() > 0 ) {
+        trace("Valid transaction");
+        return true;
+    }
     fail "Unauthorized";
 }
 ```
@@ -90,6 +100,23 @@ if( signed && tx.outputs.length() > 0 ) {
 #### Operators
 - Logical: `&&`, `||`, `!`
 - Comparisons return `bool`
+
+#### On-chain encoding
+
+A `bool` converted to `data` is `Constr 0 []` for `false` and `Constr 1 []` for `true` — the
+encoding PlutusTx's `Bool` uses.
+
+| value   | `data`          | off-chain (`@harmoniclabs/plutus-data`) |
+|---------|-----------------|------------------------------------------|
+| `false` | `Constr 0 []`   | `new DataConstr( 0, [] )`                |
+| `true`  | `Constr 1 []`   | `new DataConstr( 1, [] )`                |
+
+:::caution breaking change in 0.6.0
+Up to 0.5.0 the two were the other way round. A contract with a `boolean` in a datum, a redeemer,
+or any value it serialises or compares as data has a **new hash**, and reads the booleans of UTxOs
+created for the old script inverted. Contracts with no boolean crossing data are unchanged, byte
+for byte. See [Datum & redeemer flow](./concepts/Datum%20and%20Redeemer%20Flow.md#building-these-in-buildooor).
+:::
 
 
 
@@ -102,29 +129,49 @@ Refer [stdScope.ts](https://github.com/HarmonicLabs/pebble/blob/302786a75c231648
 ## Optional / Sum Types
 
 
-### `Option<T>`
+### `Optional<T>`
 
-Use `Option<T>` to represent values that may or may not exist.
+Use `Optional<T>` to represent a value that may be absent. `Some{ value }` is a value, and
+`undefined` is the empty optional (it needs an `Optional` annotation).
 
-#### Example 
+#### Example
 ```ts
-const maybeDatum: Option<int> = Some{ value: 10 };
+const maybeDatum: Optional<int> = Some{ value: 10 };
+const nothing: Optional<int> = undefined;
 ```
+
+There is no `Option<T>`: the type is spelled `Optional<T>`.
 
 ### `case`/`match` used for destructuring
 
+A `match` arm starts with `when`:
 
 ```ts
-match maybeDatum {
-    Some{ value }: trace(value),
-    None{}       : fail "missing datum"
+function amountOf( maybeDatum: Optional<int> ): int {
+    match maybeDatum {
+        when Some{ value }: return value
+        when None{}: fail "missing datum"
+    }
 }
 ```
 
-Destructuring - 
+`case` is the expression form; it takes `is` arms and an optional `else`:
 
 ```ts
-const InlineDatum{ datum: { owner, token, minAmount } as Order } = spendingInput.datum;
+function amountOf( maybeDatum: Optional<int> ): int {
+    return case maybeDatum
+        is Some{ value } => value
+        else 0;
+}
+```
+
+Destructuring -
+
+```ts
+function owner( spendingInput: TxIn ): PubKeyHash {
+    const InlineDatum{ datum: { owner, token, minAmount } as Order } = spendingInput.resolved.datum;
+    return owner;
+}
 ```
 
 

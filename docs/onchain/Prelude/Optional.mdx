@@ -5,53 +5,125 @@ sidebar_label: Optional<T>
 
 # `Optional<T>`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 A value that may be absent. Two constructors:
 
-| Constructor   | Payload    | Meaning                |
-|---------------|------------|------------------------|
+| Constructor        | Payload    | Meaning                |
+|--------------------|------------|------------------------|
 | `Some{ value: T }` | `value: T` | The value is present.  |
 | `None{}`           | —          | The value is absent.   |
 
 ```ts
 const maybe: Optional<int> = Some{ value: 42 };
-
-match maybe {
-    Some{ value }: trace(value),
-    None{}: fail "missing"
-}
+const nothing: Optional<int> = undefined;
 ```
 
-`Optional` is returned by every "lookup-shaped" operation in the standard library: [`List.find`](./List.mdx), [`LinearMap.lookup`](./LinearMap.mdx), and so on.
+`Optional` is returned by every "lookup-shaped" operation in the standard library:
+[`List.find`](./List.mdx), [`LinearMap.lookup`](./LinearMap.mdx), and so on.
 
 ## Constructing
 
-```ts
-const absent: Optional<int> = undefined;
-```
-
-:::note optionals are produced, not constructed
-The only `Optional` literal is **`undefined`** — the empty optional (an
-explicit `Optional` type annotation is required). There is **no expression
-form for `Some`**: `Some{ … }` / `None{}` / `Optional.Some{ … }` do not
-resolve as expressions. `Some` values come from the standard library
-(`lookup`, `find`, …); `Some{ value }` and `None{}` exist only as
-*patterns* in `match` arms and destructuring.
-:::
-
-## Destructuring with `match`
-
-`match` is the canonical way to consume an `Optional`:
+`Some{ value: v }` is a **value**: it can be assigned, returned, passed and compared.
 
 ```ts
-match maybe {
-    Some{ value }: doSomething(value),
-    None{}:        defaultBehavior()
+function made(): Optional<int> {
+    return Some{ value: 42 };
 }
 ```
 
-Bind the inner value with `Some{ value }` (or any field-rename syntax).
+The empty optional is written `undefined` or `None{}`; the two are the same value.
+
+```ts
+const absent: Optional<int> = undefined;
+const alsoAbsent: Optional<int> = None{};
+assert absent == alsoAbsent;
+```
+
+`undefined` needs an `Optional` type annotation, since nothing else says what it is empty *of*.
+`None{}` needs one too when it is not in a position the compiler can infer from.
+
+## One type, two representations
+
+*Since 0.6.0* an `Optional<T>` is **one type**, wherever it comes from. An `Optional` read out of a
+datum and one made in a function are different values at run time — a data-encoded `Constr` and a
+sum-of-products tag — and the compiler converts between them where the value crosses from one to
+the other: `return`, an annotated `const` or `let`, an assignment, the arms of `?:` and `case`,
+struct fields, list elements, and the operands of `==`.
+
+Before 0.6.0 that conversion existed for call arguments only, so these were refused
+(`Type 'Optional<int>' is not assignable to type 'Optional<int>'`) or failed in the backend.
+
+## Encoding
+
+`.toData()` gives the encoding a struct field of this type has: `Constr 0 [ v ]` for
+`Some{ value: v }`, `Constr 1 []` for the empty optional.
+
+```ts
+function encoding(): bool {
+    using { constrData, iData } = std.builtins;
+    const some: Optional<int> = Some{ value: 7 };
+    const none: Optional<int> = undefined;
+    assert some.toData() == constrData( 0, [ iData( 7 ) ] );
+    assert none.toData() == constrData( 1, [] );
+    return true;
+}
+```
+
+## Equality
+
+`==` and `!=` work on any two `Optional`s of the same type, including one read from a datum and one
+made in a function, the result of `find` and of `lookup`, and against `undefined`:
+
+```ts
+function check( xs: List<int> ): bool {
+    assert xs.find(( x ) => x > 1 ) == Some{ value: 2 };
+    assert xs.find(( x ) => x > 9 ) == undefined;
+    return true;
+}
+```
+
+## Destructuring with `match`
+
+`match` is the canonical way to consume an `Optional`. Each arm starts with `when`:
+
+```ts
+function show( maybe: Optional<int> ): int {
+    match maybe {
+        when Some{ value }: return value
+        when None{}: return 0
+    }
+}
+```
+
+`Some{}` binding no field is a valid pattern: `when Some{}: …` matches any present value.
+
+## Destructuring with `case`
+
+`case` is the expression form. It takes `is` arms and an optional `else`:
+
+```ts
+function amountOf( maybe: Optional<int> ): int {
+    return case maybe
+        is Some{ value } => value
+        else 0;
+}
+```
+
+The `else` arm is type-checked like the others.
+
+## Narrowing by `is`
+
+A variable narrowed by `is` — `if( o is Some )`, a `case` arm, `o is Some ? … : …` — is still a
+value of its type: it can be passed to a function, compared, converted to data, and returned from
+the arm that narrowed it.
+
+```ts
+function keep( o: Optional<int> ): Optional<int> {
+    if( o is Some ) { return o; }
+    return Some{ value: 0 };
+}
+```
 
 ## Destructuring with `const`
 
@@ -61,9 +133,11 @@ When you know statically that an `Optional` is `Some`, you can destructure direc
 const Some{ value: x } = maybe;
 ```
 
-This compiles to an assertion: if `maybe` is `None{}` at runtime, the script fails.
+This compiles to an assertion: if `maybe` is `None{}` at runtime, the script fails. Prefer `match`
+or `case` when the value can be absent.
 
 ## See also
 
 - [`List<T>.find`](./List.mdx), [`LinearMap<K, V>.lookup`](./LinearMap.mdx) — produce `Optional`
+- [`data`](./Data.mdx) — `Optional<T>.toData()` and the raw constructors
 - [Builtin Values and Literals](../Builtin%20Values%20and%20Literals.md) — pattern-matching syntax

@@ -5,16 +5,18 @@ sidebar_label: LinearMap<K, V>
 
 # `LinearMap<K, V>`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
-An association list — Cardano's on-chain "map". Structurally a `List<LinearMapEntry<K, V>>` where each entry is a `(K, V)` pair. Lookups are O(n); choose it because the underlying Plutus representation is what the chain speaks, not because it's fast.
+An association list — Cardano's on-chain "map". Structurally a `List` of `(K, V)` entries. Lookups are O(n); choose it because the underlying Plutus representation is what the chain speaks, not because it's fast.
 
 ```ts
 const m: LinearMap<bytes, int> = { #01: 10, #02: 20 };
 
-match m.lookup(#01) {
-    Some{ value: amount }: trace(amount),
-    None{}: fail "missing"
+function first( m: LinearMap<bytes, int> ): int {
+    match m.lookup(#01) {
+        when Some{ value: amount }: return amount
+        when None{}: fail "missing"
+    }
 }
 ```
 
@@ -25,7 +27,19 @@ const empty: LinearMap<bytes, int> = {};
 const m: LinearMap<bytes, int> = { #01: 10, #02: 20 };
 ```
 
-The key/value types are inferred from context.
+- The key/value types come from the expected type, or — without one — from the **first entry**.
+- A key is any expression, **except a bare identifier**: `{ a: 1 }` is a struct's field, so a
+  variable used as a key is written `{ (a): 1 }` (error 30212 otherwise).
+- Entries keep their order, **duplicate keys included**.
+- A map literal where another type is expected is error 30211.
+
+```ts
+function keyed( a: bytes ): LinearMap<bytes, int> {
+    const m: LinearMap<bytes, int> = { #01: 10, (a): 20, #01: 30 };
+    assert m.length() == 3;      // three entries: #01 appears twice
+    return m;
+}
+```
 
 ## In type position
 
@@ -50,14 +64,24 @@ a `LinearMap<data, data>` obtained from
 
 ## Methods
 
-| Method                                                                                            | Description                                                                |
-|---------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| `length(): int`                                                                                   | Number of entries. O(n).                                                   |
-| `isEmpty(): bool`                                                                                 | True iff there are no entries.                                             |
-| `head(): LinearMapEntry<K, V>`                                                                    | First `(K, V)` pair. Fails on empty.                                       |
-| `tail(): LinearMap<K, V>`                                                                         | Map without its first entry. Fails on empty.                               |
-| `lookup(k: K): Optional<V>`                                                                       | First value bound to `k`, wrapped in `Some`, or `None`.                    |
-| `prepend(k: K, v: V): LinearMap<K, V>` (requires `K: ToData`, `V: ToData`)                        | Add `(k, v)` at the front. Both type parameters must implement `ToData`.   |
+| Method                                                                                     | Description                                                                |
+|--------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| `length(): int`                                                                            | Number of entries. O(n).                                                   |
+| `isEmpty(): bool`                                                                          | True iff there are no entries.                                             |
+| `head(): LinearMapEntry<K, V>`                                                             | First `(K, V)` pair. Fails on empty.                                       |
+| `tail(): LinearMap<K, V>`                                                                  | Map without its first entry. Fails on empty.                               |
+| `reverse(): LinearMap<K, V>`                                                               | The same entries, last first.                                              |
+| `lookup(k: K): Optional<V>`                                                                | First value bound to `k`, wrapped in `Some`, or `None`.                    |
+| `find(p: (entry) => bool): Optional<LinearMapEntry<K, V>>`                                 | First entry satisfying `p`.                                                |
+| `filter(p: (entry) => bool): LinearMap<K, V>`                                              | The entries satisfying `p`.                                                |
+| `map(f: (entry) => T): List<T>`                                                            | One value per entry.                                                       |
+| `every(p: (entry) => bool): bool`                                                          | True iff `p` holds for every entry.                                        |
+| `some(p: (entry) => bool): bool`                                                           | True iff `p` holds for at least one entry.                                 |
+| `includes(entry): bool`                                                                    | Whether this exact entry is in the map.                                    |
+| `prepend(k: K, v: V): LinearMap<K, V>` (requires `K: ToData`, `V: ToData`)                 | Add `(k, v)` at the front. Both type parameters must implement `ToData`.   |
+
+`reverse`, `find` and `includes` were accepted and had no backend before 0.6.0; `map.find( … )`
+failed in the backend.
 
 :::note Duplicate keys
 `LinearMap` allows duplicates. `lookup` returns the **first** match. To enforce uniqueness, do so at insertion or de-duplicate before lookup.
@@ -65,40 +89,58 @@ a `LinearMap<data, data>` obtained from
 
 ### Examples (one per method)
 ```ts
-const m: LinearMap<bytes, int> = { #01: 10, #02: 20 };
-
-const n:    int                          = m.length();        // 2
-const e:    bool                         = m.isEmpty();       // false
-const h:    LinearMapEntry<bytes, int>   = m.head();          // (#01, 10)
-const t:    LinearMap<bytes, int>        = m.tail();          // { #02: 20 }
-const got:  Optional<int>                = m.lookup(#02);     // Some{ value: 20 }
-const m2:   LinearMap<bytes, int>        = m.prepend(#03, 30); // { #03:30, #01:10, #02:20 }
+function methods( m: LinearMap<bytes, int> ): bool {
+    const n:   int                 = m.length();                    // 2
+    const e:   bool                = m.isEmpty();                   // false
+    const h                        = m.head();                      // (#01, 10)
+    const t:   LinearMap<bytes, int> = m.tail();                    // { #02: 20 }
+    const r:   LinearMap<bytes, int> = m.reverse();                 // { #02: 20, #01: 10 }
+    const got: Optional<int>       = m.lookup(#02);                 // Some{ value: 20 }
+    const f                        = m.find(( en ) => en.value == 20 );
+    const fl:  LinearMap<bytes, int> = m.filter(( en ) => en.value > 15 );
+    const vs:  List<int>           = m.map(( en ) => en.value );
+    const m2:  LinearMap<bytes, int> = m.prepend(#03, 30);          // { #03:30, #01:10, #02:20 }
+    assert m.includes( h );
+    return m.every(( en ) => en.value > 0 ) && m.some(( en ) => en.value == 20 );
+}
 ```
 
-## `LinearMapEntry<K, V>`
+## The entry type
 
-The entry returned by `head()`. Has two fields:
+`head()`, `find()` and a `for...of` loop give an entry: a value with two fields.
 
 | Field    | Type | Description       |
 |----------|------|-------------------|
 | `key`    | `K`  | The key.          |
 | `value`  | `V`  | The value.        |
 
-Access them by **destructuring**:
+Access them by field or by **destructuring**:
 
 ```ts
-const { key, value } = m.head();
+function keys( m: LinearMap<bytes, int> ): List<bytes> {
+    const { key, value } = m.head();
+    trace( key );
+    trace( value );
+    return m.map(( entry ) => entry.key );
+}
 ```
+
+The entry type has no name to write in an annotation: let it be inferred (`const h = m.head();`),
+or destructure it.
 
 ## Iteration
 
 `LinearMap<K, V>` is structurally a list, so anything that works on a list works here. To iterate, use `for...of` or list helpers:
 
 ```ts
-for( const entry of m ) {
-    const { key, value } = entry;
-    trace(key);
-    trace(value);
+function total( m: LinearMap<bytes, int> ): int {
+    let sum: int = 0;
+    for( const entry of m ) {
+        const { key, value } = entry;
+        trace(key);
+        sum += value;
+    }
+    return sum;
 }
 ```
 

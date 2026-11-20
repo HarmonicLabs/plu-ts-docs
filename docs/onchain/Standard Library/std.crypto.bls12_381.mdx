@@ -5,7 +5,7 @@ sidebar_label: std.crypto.bls12_381
 
 # `std.crypto.bls12_381`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 BLS12-381 pairing-friendly curve operations. Use this namespace for zero-knowledge proofs, BLS signatures, and any protocol that needs efficient bilinear pairings on-chain.
 
@@ -17,6 +17,17 @@ height="280px"
 />
 
 The three native types — `G1`, `G2`, `MlResult` — are exported **only** through this namespace. Either fully qualify them or pull them into scope with `using`.
+
+:::caution builtin numbers fixed in 0.6.0
+Up to 0.5.0 the compiler emitted each of `g1Compress`, `g1Uncompress`, `g1HashToGroup` — and the
+three G2 ones — as **another one's** builtin: on a node `uncompress` ran `hashToGroup`, `compress`
+ran `uncompress`, and `hashToGroup` ran `compress`. Plutus numbers them compress `58`, uncompress
+`59`, hashToGroup `60` (`65`, `66`, `67` for G2), which is what 0.6.0 emits, so these functions now
+do on a node what their source says.
+
+A contract that uses any of the six has a **new hash**; every other contract is unchanged, byte
+for byte. The fix needs `@harmoniclabs/uplc` 2.0.8.
+:::
 
 ## Types
 

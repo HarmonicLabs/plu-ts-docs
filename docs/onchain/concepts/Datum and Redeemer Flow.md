@@ -115,11 +115,11 @@ the rules are:
 2. **`int`**: `DataI(value)` where `value` is `bigint`.
 3. **`bytes`**: `DataB(uint8array)`.
 4. **`string`**: encode as UTF-8 bytes, then `DataB(...)`.
-5. **`bool`**: `DataConstr(0, [])` for `false`, `DataConstr(1, [])` for `true` (UPLC convention).
+5. **`bool`**: `DataConstr(0, [])` for `false`, `DataConstr(1, [])` for `true` — the encoding PlutusTx's `Bool` uses. Since 0.6.0 the compiler reads and writes exactly this; before 0.6.0 it had the two inverted, so a datum or redeemer built this way was read backwards.
 6. **`Optional<T>`**: `DataConstr(0, [DataT])` for `Some{ value }`, `DataConstr(1, [])` for `None{}`.
 7. **`List<T>` / `Array<T>`**: `DataList([t0, t1, ...])` using `DataList` from buildooor.
 8. **`LinearMap<K, V>`**: `DataMap([[k0, v0], [k1, v1], ...])` using `DataMap`.
-9. **`struct Foo { a, b, c }`**: `DataConstr(0, [a, b, c])` — one constructor, fields in declaration order.
+9. **A struct**: the form of its declaration picks the encoding (since 0.5.0). A **shortcut** struct — `struct Foo { a, b, c }` — is `DataList([a, b, c])`; an **explicit** single-constructor struct — `struct Foo { Foo { a, b, c } }` — is `DataConstr(0, [a, b, c])`. Multi-constructor structs are `DataConstr(index, [...])`, the index being the constructor's declaration order. See [Types](../Types.md#on-chain-encoding).
 10. **A `state` constructor**: `DataConstr(index, [field0, field1, ...])` where `index` is the state's position among the contract's `state` declarations.
 
 Failing to match these is the most common cause of "the script ran and rejected for no obvious reason". When in doubt, log the buildooor-computed CBOR and compare to what the validator pattern-matches.

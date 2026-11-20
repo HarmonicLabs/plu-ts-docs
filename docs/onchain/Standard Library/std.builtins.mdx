@@ -5,7 +5,7 @@ sidebar_label: std.builtins
 
 # `std.builtins`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 Direct exposure of Plutus Core builtins, plus a handful of polymorphic intrinsics. Prefer the per-type namespaces ([`std.int`](./std.int.mdx), [`std.bytes`](./std.bytes.mdx), etc.) or operator forms (`+`, `==`, ...) for everyday code — `std.builtins` is for when you need a Plutus-Core-shaped function as a value, or when only the raw builtin gives you the semantics you want (e.g. `quotientInteger` vs `divideInteger` rounding).
 
@@ -212,10 +212,11 @@ const dec: int   = byteStringToInteger(true, #04d2);       // 1234
 ```ts
 using { appendString, equalsString, encodeUtf8, decodeUtf8 } = std.builtins;
 
-const greet: string = appendString("Hello, ", "world");    // "Hello, world"
-const same:  bool   = equalsString("ok", "ok");            // true
-const u8:    bytes  = encodeUtf8("café");                  // UTF-8 bytes
-const back:  string = decodeUtf8(u8);                      // "café"
+const hello: string = decodeUtf8("Hello, ");
+const greet: string = appendString(hello, decodeUtf8("world"));  // "Hello, world"
+const same:  bool   = equalsString(hello, hello);                 // true
+const u8:    bytes  = encodeUtf8(hello);                          // #48656c6c6f2c20
+const back:  string = decodeUtf8(u8);                             // "Hello, "
 ```
 
 ### `data` constructors
@@ -227,7 +228,7 @@ const dB:    data            = bData(#cafe);
 const dL:    data            = listData([iData(1), iData(2)]);
 const dC:    data            = constrData(0, [dI, dB]);
 const nilD:  List<data>      = mkNilData();
-const dM:    data            = mapData({ dI: dB });
+const dM:    data            = mapData({ (dI): dB });   // a bare identifier key is error 30212
 ```
 
 ### `data` destructors

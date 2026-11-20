@@ -101,16 +101,16 @@ const Some{ value: x } = maybe;
 **Better**
 ```ts
 match maybe {
-    Some{ value: x }: useIt(x),
-    None{}: fallback()
+    when Some{ value: x }: useIt(x)
+    when None{}: fallback()
 }
 ```
 
 If you genuinely know it's `Some` and `None` is a programmer error, prefer an explicit assertion with a message:
 ```ts
 match maybe {
-    Some{ value: x }: useIt(x),
-    None{}: fail "maybe was None — invariant broken"
+    when Some{ value: x }: useIt(x)
+    when None{}: fail "maybe was None — invariant broken"
 }
 ```
 
@@ -129,14 +129,14 @@ const s = std.builtins.decodeUtf8(redeemer.payload);
 
 **Smell**
 ```ts
-const description: string = "a long human-readable explanation ...";
+const description: string = std.builtins.decodeUtf8( "a long human-readable explanation ..." );
 ```
 
 **Why** — every character costs CPU/memory in the script budget. `string` exists for `trace` messages and `fail` reasons, not for application data.
 
 **Better** — keep large blobs off-chain. On-chain, store a hash:
 ```ts
-const descriptionHash: bytes = #cafedead...;
+const descriptionHash: bytes = #cafedead;
 ```
 
 ## Forgetting that script `purpose` must be matched
@@ -184,8 +184,8 @@ spend fillOrder(/* ... */) {
 
 **Better** — require that exactly one input from the contract's script address is being spent:
 ```ts
-const ownHash = spendingInput.address.credential.hash();
-const ownInputs = tx.inputs.filter((i) => i.resolved.address.credential.hash() == ownHash);
+// `ownHash` is the script's own address hash (e.g. a contract `param`)
+const ownInputs = tx.inputs.filter((i) => i.resolved.address.payment.hash() == ownHash);
 assert ownInputs.length() == 1;
 ```
 
@@ -204,8 +204,8 @@ const myInput = tx.inputs[0];   // assume the first input is mine
 const { tx, spendingRef: purposeRef } = context;
 const myInput = tx.inputs.find((i) => i.ref == purposeRef);
 match myInput {
-    Some{ value: input }: useIt(input),
-    None{}: fail "purpose input not in tx.inputs"
+    when Some{ value: input }: useIt(input)
+    when None{}: fail "purpose input not in tx.inputs"
 }
 ```
 
@@ -245,7 +245,10 @@ assert got <= 200;
 
 **Smell**
 ```ts
-const totalForKey = m.foldl((acc, e) => { const { key, value } = e; return key == target ? acc + value : acc; }, 0);
+let totalForKey: int = 0;
+for( const e of m ) {
+    if( e.key == target ) { totalForKey += e.value; }
+}
 // ... then assert totalForKey == ...
 ```
 
@@ -253,9 +256,44 @@ const totalForKey = m.foldl((acc, e) => { const { key, value } = e; return key =
 
 **Better** — first check uniqueness, then read a single value:
 ```ts
-const matches = m.filter((e) => { const { key, value } = e; return key == target; });
+const matches = m.filter((e) => e.key == target);
 assert matches.length() == 1;
 const { key: _k, value } = matches.head();
+```
+
+## A check that is never computed
+
+**Smell**
+```ts
+const ok = checkSigned( tx, owner );   // WARNING 6133: 'ok' is never used
+assert amount > 0;
+```
+
+**Why** — a value that is not used is never computed, so the `assert`s inside `checkSigned` never
+run. The same happens, less obviously, when the value is read only in one branch (warning 6134):
+it is computed there, and not on the other ways.
+
+**Better** — use the value, or call a function whose result you need anyway:
+```ts
+assert checkSigned( tx, owner ) else "unsigned";
+assert amount > 0;
+```
+
+See [Diagnostics](./Diagnostics.md) for warnings 6133 and 6134.
+
+## Treating a quoted literal as a `string`
+
+**Smell**
+```ts
+const description: string = "a long human-readable explanation";
+```
+
+**Why** — a double-quoted literal is `bytes` (its UTF-8 bytes), so this is `Type 'bytes' is not
+assignable to type 'string'`.
+
+**Better** — decode it, or keep it as `bytes`:
+```ts
+const description: string = std.builtins.decodeUtf8( "a long human-readable explanation" );
 ```
 
 ## See also
