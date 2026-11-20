@@ -1,10 +1,21 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { PebbleEditor, PebbleEditorHandle } from 'react-pebble-editor';
-import { Parser } from '@harmoniclabs/pebble';
+import type { PebbleDiagnostic } from 'react-pebble-editor';
 
-const CONTENT = `
-contract OnlySpend {
-  spend allowSpending() {}
+const CONTENT = `// Hover a name to see its type, Ctrl/Cmd+click to go to its definition,
+// type \`tx.\` to list the fields of a transaction.
+
+function isSignedBy( tx: Tx, pkh: bytes ): boolean {
+    return tx.requiredSigners.includes( pkh );
+}
+
+contract OnlyOwner {
+    param owner: bytes;
+
+    spend unlock() {
+        const { tx } = context;
+        assert isSignedBy( tx, this.owner ) else "not signed by the owner";
+    }
 }
 `;
 
@@ -28,15 +39,21 @@ const getPositionFromOffset = (content: string, offset: number) => {
 
 interface DiagnosticProps {
   content: string;
-  message: string;
-  offset: number;
+  diagnostic: PebbleDiagnostic;
 }
 
-const Diagnostic: React.FC<DiagnosticProps> = (props) => {
-  const { line, column } = getPositionFromOffset(props.content, props.offset);
+const SEVERITY_STYLE = {
+  error: { color: '#b00020', backgroundColor: '#ffe6e6', label: 'error' },
+  warning: { color: '#7a5200', backgroundColor: '#fff4d6', label: 'warning' },
+  info: { color: '#0b4f8a', backgroundColor: '#e6f0ff', label: 'info' },
+};
+
+const Diagnostic: React.FC<DiagnosticProps> = ({ content, diagnostic }) => {
+  const { line, column } = getPositionFromOffset(content, diagnostic.start);
+  const style = SEVERITY_STYLE[diagnostic.severity];
   return (
-    <div style={{ color: 'red', backgroundColor: '#ffe6e6', padding: '0.5rem', borderRadius: '4px', marginBottom: '0.5rem', wordBreak: 'break-word', fontSize: '13px' }}>
-      {`(Line: ${line}, Column: ${column}) ${props.message}`}
+    <div style={{ color: style.color, backgroundColor: style.backgroundColor, padding: '0.5rem', borderRadius: '4px', marginBottom: '0.5rem', wordBreak: 'break-word', fontSize: '13px' }}>
+      {`${line}:${column} ${style.label}${diagnostic.code ? ` ${diagnostic.code}` : ''}: ${diagnostic.message}`}
     </div>
   )
 }
@@ -50,7 +67,7 @@ const Playground: React.FC<PlaygroundProps> = ({ fullPage }) => {
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const [content, setContent] = useState<string>(CONTENT);
   const contentRef = useRef<string>(CONTENT);
-  const [diagnostics, setDiagnostics] = useState<any[]>([]);
+  const [diagnostics, setDiagnostics] = useState<PebbleDiagnostic[]>([]);
   const [compileStatus, setCompileStatus] = useState<string>('');
   const [compiling, setCompiling] = useState(false);
 
@@ -70,13 +87,10 @@ const Playground: React.FC<PlaygroundProps> = ({ fullPage }) => {
     return () => window.removeEventListener('resize', onResize);
   }, [relayoutEditors]);
 
-  useEffect(() => handleChange(CONTENT), []);
-
+  // diagnostics come from the editor, which checks the text with the compiler as it changes
   const handleChange = (c: string) => {
     setContent(c);
     contentRef.current = c;
-    const [_, d] = Parser.parseFile('main.pebble', c);
-    setDiagnostics(d.filter(d => d.message));
   }
 
   const handleCompile = useCallback(() => {
@@ -190,6 +204,7 @@ const Playground: React.FC<PlaygroundProps> = ({ fullPage }) => {
           ref={editorRef}
           value={CONTENT}
           onChange={handleChange}
+          onDiagnostics={setDiagnostics}
         />
       </div>
 
@@ -202,7 +217,7 @@ const Playground: React.FC<PlaygroundProps> = ({ fullPage }) => {
         }}>
           <h3 style={{ margin: '0 0 0.5rem' }}>Diagnostics</h3>
           {diagnostics.map((d, index) => (
-            <Diagnostic key={index} content={content} message={d.message} offset={d.range.start} />
+            <Diagnostic key={index} content={content} diagnostic={d} />
           ))}
         </div>
       )}

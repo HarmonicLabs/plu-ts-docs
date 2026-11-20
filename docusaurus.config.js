@@ -67,6 +67,8 @@ const config = {
     ],
   ],
   themes: ['@docusaurus/theme-live-codeblock'],
+
+  clientModules: [require.resolve('./src/clientModules/processEnv.js')],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
