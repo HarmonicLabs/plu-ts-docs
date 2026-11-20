@@ -74,6 +74,37 @@ See [Pitfalls — Re-deriving the same value](./Pitfalls.md).
 
 For small constants the cost is negligible. For values that come from user input (redeemers), there's no implicit bound — `2^1000` and `1` look identical in source. Bound them explicitly when reading from data.
 
+### Division and modulo
+
+*Since 0.6.0* `/` and `%` (`divideInteger`, `modInteger`) cost what a node at **protocol version
+11** charges: the quadratic of the larger and the smaller operand's size, with no constant term
+for a first argument of a few words.
+
+The bundled machine used to charge them too little, so every budget `pebble test` and every
+off-chain evaluation reported was optimistic for these two builtins:
+
+- a script that reduces a **small number modulo a large one** costs **55,376 steps more per call**
+  than it was reported to;
+- a transaction that declares the old figure is refused by such a node as over its budget.
+
+Everything else costs what it did. The fix is in `@harmoniclabs/plutus-machine`; `pebble test`
+and every budget measured with the bundled machine use it.
+
+```ts
+const n: int = value % 1_000_000_007;   // quadratic in the size of both operands
+```
+
+## Asserts are checked one at a time
+
+*Output change in 0.6.0.* Consecutive asserts used to be merged into one condition that computed
+**every** condition, the last one first: `assert x > 10 else "a"; assert x > 20 else "b";` printed
+`"b"` for `x = 5`, and every run paid for every condition.
+
+Each assert is now checked in turn, in source order, and fails on its own: only the first false
+one's message prints, and the conditions after it are not computed. Scripts with consecutive
+asserts change — most of them get smaller and cheaper (bytes: escrow 814 → 794, vesting 907 →
+862, stewardship 5523 → 5313, masterpiece 4410 → 4313; the marketplace grows, 3029 → 3099).
+
 ## Indexed access: list vs array
 
 The intuition that "linked lists need O(n) walks for random access, arrays give you O(1)" is **misleading on-chain**, because the Plutus cost model bills `dropList` (which `xs[i]` lowers through) by the bit-width of the integer index, not by the number of cons cells walked. The interpreter still does O(i) work, but the script's exec budget is charged near-constant.

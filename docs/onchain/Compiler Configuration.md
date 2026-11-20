@@ -10,10 +10,11 @@ The Pebble compiler reads its options from a `pebble.config.json` file at the ro
 
 ```json
 {
-  "compilerVersion": "^0.3.1",
+  "compilerVersion": "^0.6.0",
   "entry": "./src/index.pebble",
   "outDir": "./out",
-  "removeTraces": true
+  "removeTraces": true,
+  "sourceMap": true
 }
 ```
 
@@ -28,7 +29,7 @@ The Pebble compiler reads its options from a `pebble.config.json` file at the ro
 The compiler validates this range against its own version at startup and throws if it does not satisfy it. A missing or empty value is treated as invalid.
 
 ```json
-{ "compilerVersion": "^0.3.1" }
+{ "compilerVersion": "^0.6.0" }
 ```
 
 See [Supported semver syntax](#supported-semver-syntax) below for the accepted range forms.
@@ -82,9 +83,47 @@ The UPLC version that gets encoded into the compiled script. Most users should l
 
 ### `removeTraces`
 
+Type: `boolean`. Default: `true` (the production options).
+
+When `true`, the compiled script has no `trace` statements and no messages of `assert` and
+`fail`: it is smaller and cheaper, and has a new hash. The failures stay — an `assert` that fails
+still fails, with the error of a script that had no message.
+
+The traces are removed **before** anything is optimized, so the program is byte for byte the one
+the source without them compiles to: a value computed only for a trace is not computed, and the
+optimizer is free to drop a branch that only failed with a message.
+
+The [source map](./Debugging.md#traces-are-removed-from-the-script-and-kept-in-the-map) keeps
+them, so `pebble test`, `pebble debug`, buildooor and `evaluateWithSourceMap` still print them
+where they would have run, in order with the traces the program kept. A message computed from
+values is computed on the side, from the values the program holds at that point.
+
+Set it to `false` to keep the traces inside the script — useful when the script is inspected by a
+node or a tool that does not read source maps.
+
+:::caution output change in 0.6.0
+Before 0.6.0 the option was never read, so every build kept its traces. A contract compiled with
+the default now gets smaller (UPLC-CAPE's `two_party_escrow`: 1354 → 853 bytes) and a **new
+hash** — recompile and compare hashes before relying on a script address.
+:::
+
+### `sourceMap`
+
 Type: `boolean`. Default: `true`.
 
-When `true`, strips `trace` statements from the compiled output. Set to `false` during debugging to keep them in the script.
+Writes a source map next to the compiled script: `out/out.flat.map` next to `out/out.flat`, and
+`<output>.map` with `-o`. The map never changes the script: maps on or off, the bytes are
+identical.
+
+`pebble test`, `pebble debug`, the language server and buildooor read it to report a failure at
+its line and column in the source. See [Debugging](./Debugging.md#source-maps).
+
+### `sourceMapContent`
+
+Type: `boolean`. Default: `false`.
+
+Includes the sources' texts in the map (`sourcesContent`), so a tool can print the failing line
+without access to the sources.
 
 ### `delayHoists`
 
@@ -142,7 +181,7 @@ spelling of `"legacy"`, is still accepted.
 
 ```json
 {
-  "compilerVersion": "^0.5.0",
+  "compilerVersion": "^0.6.0",
   "encodingStrategy": "legacy"
 }
 ```
@@ -175,7 +214,7 @@ error.
 
 ```json
 {
-  "compilerVersion": "^0.5.0",
+  "compilerVersion": "^0.6.0",
   "targetPlutusVersion": "experimental-v4"
 }
 ```
@@ -186,6 +225,24 @@ No public network runs Plutus V4 scripts yet, so nothing compiled with
 twice between upstream releases (1.68 to 1.69, then 1.71) and may change again
 before the hard fork.
 :::
+
+## Programmatic options
+
+The package exports the option templates it uses, so a tool embedding the compiler does not have
+to spell every field:
+
+| Export               | Contents                                                                 |
+|----------------------|--------------------------------------------------------------------------|
+| `productionOptions`  | `removeTraces: true`, `delayHoists: true`, production optimizations, marker on |
+| `defaultOptions`     | the same as `productionOptions`; the base of `completeCompilerOptions`     |
+| `testOptions`        | `productionOptions` with `silent: true` — what `pebble test` uses          |
+| `debugOptions`       | `removeTraces: false`, `delayHoists: false`, no inlining, marker off        |
+
+The CLI bases its own configuration on `productionOptions`.
+
+`completeCompilerOptions( partial )` fills the missing fields from `defaultOptions`. Note that
+none of the templates carries `compilerVersion`: every caller sets it, so a missing or
+unsatisfied range always surfaces as an error from the `Compiler` constructor.
 
 ## Supported semver syntax
 

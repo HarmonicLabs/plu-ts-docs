@@ -55,14 +55,35 @@ pebble test --testNamePattern "add" --property-runs 1000 --seed 42
 src/math.pebble
   PASS  addWorks  [cpu: 150000, mem: 1000]
   PASS  addIsCommutative  (1000 iterations, seed=42, total cpu=15000000, mem=10000)
-  FAIL  divNonZero  (failed at iteration 47, seed=42)
-        inputs: a=12345, b=0
-        error:  division by zero
+  FAIL  small_input  [cpu: 413390, mem: 2401]
+        trace: x must be greater than 10
+        error: explicit error from uplc
+        at check (src/index.pebble:2:5)
+        at entry (src/index.pebble:7:15)
+        at test small_input (src/index.test.pebble:4:15)
 
 Tests: 2 passed, 1 failed, 0 skipped, 3 total
 ```
 
 `trace` output from the test body is shown indented under each test.
+
+A failing test reports the **location** of the failure and the **open calls**, innermost first:
+the line of the assert or builtin that failed, then the call that made it, up to the test. The
+locations come from the [source map](./Debugging.md#source-maps) the compiler writes next to the
+script, and stay right where the optimizer rewrote the program: of two asserts merged into one
+`error`, the one whose condition was false is reported; an `if( x ) fail;` whose `error` branch is
+pruned is reported at the `if`.
+
+`trace` messages of a script compiled with `removeTraces` (the default) are printed too: they come
+back from the source map, in order with the traces the script kept.
+
+To see the same failure statement by statement, pass the test's name to `pebble debug`:
+
+```bash
+pebble debug --test small_input
+```
+
+See [Debugging](./Debugging.md) for the step-by-step view of the same failure.
 
 ## Property-based tests
 
@@ -139,5 +160,18 @@ strings, `data` and data-encoded structs); a fuzzer producing a runtime
 ### Machine-readable output
 
 - `--json` — emit the full results (per-test pass/fail, budgets, inputs,
-  traces) as JSON on stdout, for CI pipelines and reports.
+  traces) as JSON on stdout, for CI pipelines and reports. Each failure carries `location` and
+  `stack` next to `error` (since 0.6.0); `TestIterationResult.error` has the same two fields.
 - `--bail` — stop after the first failing test file.
+
+## Costs measured by the runner
+
+`pebble test` reports the `cpu` and `mem` each test spent, and they are the figures a node
+charges: the bundled machine costs `/` and `%` (`divideInteger`, `modInteger`) as a node at
+protocol version 11 does — quadratic in the larger and the smaller operand, with no constant for
+a first argument of a few words. A test that reduces a small number modulo a large one therefore
+costs 55,376 steps more per call than earlier releases reported. See
+[Cost and Complexity](./reference/Cost%20and%20Complexity.md#division-and-modulo).
+
+A project whose `pebble.config.json` has no `compilerVersion` is compiled with the running
+compiler, as `pebble compile` does.

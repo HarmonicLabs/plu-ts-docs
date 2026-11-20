@@ -89,10 +89,10 @@ pebble --version
 
 which should output something like
 
-```
-pebble-cli version:      0.3.1
-pebble language version: 0.3.1
-commit hash:             c991db9a357a7d214a7a17f867047ab7a3418e2f
+```text
+pebble-cli version:      0.6.0
+pebble language version: 0.6.0
+commit hash:             4374aea5e466396ce524dcf7dffa348adf7c75f9
 ```
 
 you can also run
@@ -101,4 +101,14 @@ you can also run
 pebble help
 ```
 
-for more info on the command
+for more info on the commands, or
+
+```bash
+pebble repl
+```
+
+to start an interactive session in the project of the working directory — see [CLI](./onchain/CLI.md#repl).
+
+:::info Node.js 22 or newer
+The CLI declares `"engines": { "node": ">=22", "bun": ">=1.2.0" }`.
+:::
