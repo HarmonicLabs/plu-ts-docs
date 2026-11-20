@@ -115,7 +115,7 @@ Writes a source map next to the compiled script: `out/out.flat.map` next to `out
 `<output>.map` with `-o`. The map never changes the script: maps on or off, the bytes are
 identical.
 
-`pebble test`, `pebble debug`, the language server and buildooor read it to report a failure at
+`pebble test`, `pebble debug` and buildooor read it to report a failure at
 its line and column in the source. See [Debugging](./Debugging.md#source-maps).
 
 ### `sourceMapContent`
