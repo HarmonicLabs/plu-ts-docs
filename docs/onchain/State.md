@@ -5,7 +5,7 @@ sidebar_label: State
 
 # `state`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 The `state` keyword introduces a **typed datum** inside a `contract` declaration. Each `state` block defines one variant of an on-chain sum type whose underlying CBOR encoding is what the contract's UTxOs carry as their datum. Inside a `spend` method declared on a state, `context.state` is destructured to a strongly-typed record of that state's fields — you never write `unConstrData` or `fromData` by hand.
 
@@ -55,7 +55,8 @@ contract HelloWorld {
 }
 ```
 
-The on-chain datum here is simply `B <owner-bytes>` (no constructor wrapper).
+The on-chain datum here is `Constr 0 [ B <owner-bytes> ]`: a single state is still wrapped in its
+constructor, exactly as the first state of a multi-state contract is (see the caution below).
 
 ## Multi-state contracts
 

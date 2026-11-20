@@ -5,7 +5,7 @@ sidebar_label: List<T>
 
 # `List<T>`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 A singly-linked list of elements of type `T`. Maps to Plutus Core's built-in list.
 
@@ -29,54 +29,59 @@ The element type is inferred from context (or from the first element if obvious)
 
 ## Methods
 
-| Method                                                                         | Description                                                                |
-|--------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| `length(): int`                                                                | Element count. Walks the spine; O(n) in actual work, charged O(n) by the cost model. |
-| `isEmpty(): bool`                                                              | True if the list has zero elements.                                       |
-| `head(): T`                                                                    | First element. Fails on empty.                                             |
-| `tail(): List<T>`                                                              | Everything after the head. Fails on empty.                                 |
-| `prepend(x: T): List<T>`                                                       | New list with `x` at the front.                                            |
-| `drop(n: int): List<T>`                                                        | List with the first `n` elements removed.                                  |
-| `map<A>(f: (T) -> A): List<A>`                                                 | Transform every element. Method-only — there's no `std.list.map`.          |
-| `filter(p: (T) -> bool): List<T>`                                              | Keep only elements satisfying `p`.                                         |
-| `foldr<A>(f: (T, A) -> A, init: A): A`                                         | Right fold.                                                                |
-| `foldl<A>(f: (A, T) -> A, init: A): A`                                         | Left fold. Tail-recursive; prefer for large lists.                         |
-| `some(p: (T) -> bool): bool`                                                   | True if any element satisfies `p`. Short-circuits.                        |
-| `every(p: (T) -> bool): bool`                                                  | True if all elements satisfy `p`. Short-circuits.                         |
-| `find(p: (T) -> bool): Optional<T>`                                            | First match wrapped in `Some`, or `None`.                                  |
-| `equals(eq: (T, T) -> bool, other: List<T>): bool`                             | Element-wise equality using `eq`.                                          |
+| Method                                                       | Description                                                                |
+|--------------------------------------------------------------|----------------------------------------------------------------------------|
+| `length(): int`                                              | Element count. Walks the spine; O(n) in actual work, charged O(n) by the cost model. |
+| `isEmpty(): bool`                                            | True if the list has zero elements.                                       |
+| `head(): T`                                                  | First element. Fails on empty.                                             |
+| `tail(): List<T>`                                            | Everything after the head. Fails on empty.                                 |
+| `reverse(): List<T>`                                         | The same elements, last first.                                             |
+| `prepend(x: T): List<T>`                                     | New list with `x` at the front.                                            |
+| `map<A>(f: (T) -> A): List<A>`                               | Transform every element. Method-only — there's no `std.list.map`.          |
+| `filter(p: (T) -> bool): List<T>`                            | Keep only elements satisfying `p`.                                         |
+| `some(p: (T) -> bool): bool`                                 | True if any element satisfies `p`. Short-circuits.                        |
+| `every(p: (T) -> bool): bool`                                | True if all elements satisfy `p`. Short-circuits.                         |
+| `includes(x: T): bool`                                       | True if `x` is an element of the list.                                     |
+| `find(p: (T) -> bool): Optional<T>`                          | First match wrapped in `Some`, or `None`.                                  |
+| `show(): bytes`                                              | The list as text.                                                          |
+
+`drop`, `foldl`, `foldr`, `at`, `concat` and `equals` are functions of
+[`std.list`](../Standard%20Library/std.list.mdx), not methods: `std.list.drop(2, xs)`,
+`std.list.foldl((acc, n) => acc + n, 0, xs)`. `reverse` was accepted and had no backend before
+0.6.0.
 
 ### Examples (one per method)
 ```ts
-const xs: List<int> = [1, 2, 3, 4, 5];
-
-const n:    int        = xs.length();                       // 5
-const e:    bool       = xs.isEmpty();                      // false
-const h:    int        = xs.head();                         // 1
-const t:    List<int>  = xs.tail();                         // [2,3,4,5]
-const ys:   List<int>  = xs.prepend(0);                     // [0,1,2,3,4,5]
-const dr:   List<int>  = xs.drop(2);                        // [3,4,5]
-const dbl:  List<int>  = xs.map((n) => n * 2);              // [2,4,6,8,10]
-const ev:   List<int>  = xs.filter((n) => n % 2 == 0);      // [2,4]
-const sumR: int        = xs.foldr((a, acc) => a + acc, 0);  // 15
-const sumL: int        = xs.foldl((acc, a) => acc + a, 0);  // 15
-const any:  bool       = xs.some((n) => n > 4);             // true
-const all:  bool       = xs.every((n) => n > 0);            // true
-const got:  Optional<int> = xs.find((n) => n == 3);         // Some{ value: 3 }
-const same: bool       = xs.equals(std.int.equals, xs);     // true
+function methods( xs: List<int> ): bool {
+    const n:    int           = xs.length();                       // 5
+    const e:    bool          = xs.isEmpty();                      // false
+    const h:    int           = xs.head();                         // 1
+    const t:    List<int>     = xs.tail();                         // [2,3,4,5]
+    const r:    List<int>     = xs.reverse();                      // [5,4,3,2,1]
+    const ys:   List<int>     = xs.prepend(0);                     // [0,1,2,3,4,5]
+    const dbl:  List<int>     = xs.map((n) => n * 2);              // [2,4,6,8,10]
+    const ev:   List<int>     = xs.filter((n) => n % 2 == 0);      // [2,4]
+    const any:  bool          = xs.some((n) => n > 4);             // true
+    const all:  bool          = xs.every((n) => n > 0);            // true
+    const has:  bool          = xs.includes(3);                    // true
+    const got:  Optional<int> = xs.find((n) => n == 3);            // Some{ value: 3 }
+    const sum:  int           = std.list.foldl((acc, a) => acc + a, 0, xs);  // 15
+    assert xs == xs;                                               // element-wise, when `T` has equality
+    return true;
+}
 ```
 
 ### Pipeline example
 ```ts
 struct Input { policy: bytes, name: bytes, amount: int }
 
-const inputs: List<Input> = [/* ... */];
-
-const total = inputs
-    .filter((i) => i.policy == myPolicy)
-    .foldl((acc, i) => acc + i.amount, 0);
-
-assert total > 0;
+function total( inputs: List<Input>, myPolicy: bytes ): int {
+    return std.list.foldl(
+        ( acc, i ) => acc + i.amount,
+        0,
+        inputs.filter((i) => i.policy == myPolicy)
+    );
+}
 ```
 
 ## Indexing
@@ -90,6 +95,20 @@ See [Cost and Complexity](../reference/Cost%20and%20Complexity.md) for the measu
 | Category | Operators                                            |
 |----------|------------------------------------------------------|
 | Equality | `==`, `!=` (when `T` implements equality)            |
+
+`List<T>` has no equality when `T` has none (a function, a BLS12-381 element, an `Array`, a runtime
+struct): `==` on such a list is error 2365 at the operator.
+
+## Element and list types
+
+- `List<Optional<T>>` is a valid type for a variable, a parameter, a literal, and for a list read
+  out of a datum and passed to a function. `prepend` works on it.
+- A `List<T>` whose `T` is a **runtime struct** is refused where it is written (error 30213): no
+  UPLC list holds a constructor term. Declare the struct `data`, or keep such values in a
+  recursive runtime struct.
+- A cast between two lists, `std.builtins.unListData( d ) as List<Asset>`, gives the elements of a
+  list read off some data their type; a list of data cast to a list of integers decodes each
+  element. A list of integers as a list of byte strings is refused by the checker.
 
 ## See also
 

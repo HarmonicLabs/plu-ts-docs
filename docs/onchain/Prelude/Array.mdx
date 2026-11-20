@@ -5,7 +5,7 @@ sidebar_label: Array<T>
 
 # `Array<T>`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 A fixed-size, indexed container. Built from a `List<T>` via [`std.array.fromList`](../Standard%20Library/std.array.mdx) and consumed via `at(i)` or the index operator.
 
@@ -26,22 +26,33 @@ height="240px"
 
 ## Methods
 
-| Method                                       | Description                                                                |
-|----------------------------------------------|----------------------------------------------------------------------------|
-| `length(): int`                              | Number of elements. O(1).                                                  |
-| `at(i: int): T`                              | Element at index `i`. Fails on out-of-bounds.                              |
+`Array<T>` has **no methods**: every operation is a function of
+[`std.array`](../Standard%20Library/std.array.mdx).
 
-### Examples (one per method)
+| Function                                   | Description                                                                |
+|--------------------------------------------|----------------------------------------------------------------------------|
+| `std.array.length(xs): int`                | Number of elements.                                                        |
+| `std.array.at(xs, i): int`                 | Element at index `i`. Fails on out-of-bounds.                              |
+| `std.array.fromList(xs): Array<T>`         | Build an array from a list. O(n).                                          |
+
+### Example
 ```ts
-const xs: Array<int> = std.array.fromList([10, 20, 30]);
+function at(): bool {
+    const xs: Array<int> = std.array.fromList([10, 20, 30]);
 
-const n: int = xs.length();   // 3
-const v: int = xs.at(1);      // 20
+    const n: int = std.array.length( xs );   // 3
+    const v: int = std.array.at( xs, 1 );    // 20
+    assert n == 3 && v == 20;
+    return true;
+}
 ```
+
+`xs.length()` and `xs.at(1)` are **not** methods of `Array<T>`: they are error 2339.
 
 ## Indexing
 
-`xs[i]` is sugar for `xs.at(i)`. Both are O(1).
+`xs[i]` is not available on an `Array<T>` (error 267, "This expression cannot be indexed"): index
+it with `std.array.at( xs, i )`. On a `List<T>`, `xs[i]` is the indexed read and is cheap.
 
 ## Constructing
 

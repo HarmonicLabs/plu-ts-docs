@@ -120,8 +120,8 @@ Worth knowing because they look like failures but aren't:
 **Guard before destructure**. Prefer
 ```ts
 match opt {
-    Some{ value: x }: useIt(x),
-    None{}: fallback()
+    when Some{ value: x }: useIt(x)
+    when None{}: fallback()
 }
 ```
 over

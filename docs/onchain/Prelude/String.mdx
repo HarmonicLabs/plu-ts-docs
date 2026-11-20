@@ -5,53 +5,77 @@ sidebar_label: string
 
 # `string`
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 UTF-8 text. Maps to Plutus Core `String`. Primarily for logging via `trace` and for `fail` messages. Avoid storing large strings on-chain — every character costs CPU/memory in the script budget.
 
 ```ts
-const msg: string = "Order filled";
+const msg: string = std.builtins.decodeUtf8( "Order filled" );
 trace(msg);
 ```
 
 ## Literals
 
-| Form          | Example         | Notes                                            |
-|---------------|-----------------|--------------------------------------------------|
-| Double-quoted | `"hello"`       | UTF-8.                                           |
-| Empty         | `""`            |                                                  |
+A **double-quoted literal is `bytes`**, not `string`: its UTF-8 bytes, with the methods of `bytes`.
+
+| Form          | Example   | Type    | Notes                                            |
+|---------------|-----------|---------|--------------------------------------------------|
+| Double-quoted | `"hello"` | `bytes` | UTF-8. Same as `#68656c6c6f`.                     |
+| Empty         | `""`      | `bytes` | Zero-length byte string.                          |
+
+`trace` and `fail` take either: a quoted literal is accepted where a `string` is expected. Every
+other use of a `string` value needs one to exist:
+
+```ts
+const s: string = std.builtins.decodeUtf8( "hello" );   // #68656c6c6f, read as text
+```
 
 ## Operators
 
-| Category    | Operators            |
-|-------------|----------------------|
-| Equality    | `==`, `!=`           |
-| Concatenation | `+`                |
+| Category      | Operators  |
+|---------------|------------|
+| Equality      | `==`, `!=` |
+| Concatenation | `+`        |
+
+`+` concatenates two `string`s, and `+=` adds whatever `+` adds.
 
 ## Methods
 
-| Method                       | Description                                                  |
-|------------------------------|--------------------------------------------------------------|
-| `toBytes(): bytes`           | UTF-8 encode. Equivalent to [`std.builtins.encodeUtf8`](../Standard%20Library/std.builtins.mdx). |
+A `string` has **one** method:
+
+| Method                  | Description                                                            |
+|-------------------------|-------------------------------------------------------------------------|
+| `encodeUtf8(): bytes`   | The UTF-8 bytes. Equivalent to [`std.builtins.encodeUtf8`](../Standard%20Library/std.builtins.mdx). |
+
+The methods of `bytes` (`length`, `slice`, `indexAt`, …) are **not** methods of `string`: they
+compile to byte-string builtins, which fail when the script runs, so they are error 2339. Ask them
+of `s.encodeUtf8()`.
 
 To go from `bytes` back to `string`, use [`std.builtins.decodeUtf8`](../Standard%20Library/std.builtins.mdx) (it fails on invalid UTF-8).
 
 ## Examples
 
 ```ts
-const greeting: string = "hello";
-const u8:       bytes  = greeting.toBytes();   // #68656c6c6f
+function roundTrip(): bool {
+    const greeting: string = std.builtins.decodeUtf8( "hello" );
+    const u8:       bytes  = greeting.encodeUtf8();          // #68656c6c6f
 
-// Round-trip:
-const back: string = std.builtins.decodeUtf8(u8);   // "hello"
+    const back: string = std.builtins.decodeUtf8( u8 );      // "hello"
+    assert back == greeting;
 
-// Concatenation and equality:
-const full: string = greeting + ", world";
-assert full == "hello, world";
+    const full: string = greeting + std.builtins.decodeUtf8( ", world" );
+    assert full == std.builtins.decodeUtf8( "hello, world" );
+
+    let acc: string = greeting;
+    acc += std.builtins.decodeUtf8( "!" );
+    assert acc.encodeUtf8().length() == 6;
+    return true;
+}
 ```
 
 ## See also
 
+- [`bytes`](./Bytes.mdx) — what a quoted literal is, and its methods
 - [`std.builtins`](../Standard%20Library/std.builtins.mdx) — `appendString`, `equalsString`, `encodeUtf8`, `decodeUtf8`
 - [`std.data`](../Standard%20Library/std.data.mdx) — `strToData` / `strFromData`
 - [`Show`](../Builtin%20Interfaces.md#show) — interface every type can implement to produce a `string` representation

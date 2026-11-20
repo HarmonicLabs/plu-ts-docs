@@ -5,14 +5,14 @@ sidebar_label: Builtin Interfaces
 
 # Builtin Interfaces
 
-*Pebble 0.3.1 · all symbols on this page are stable.*
+*Pebble 0.6.0 · all symbols on this page are stable.*
 
 Pebble's type-class machinery is exposed via **interfaces** — sets of methods a type can implement. Two are built into the prelude and auto-derived for every type that supports them. User-defined interfaces use the same dispatch mechanism but require explicit `implements` blocks.
 
 ```ts
 type Foo implements Show {
     show( self ): bytes {
-        return "Foo".toBytes();
+        return "Foo";
     }
 }
 ```
@@ -101,7 +101,7 @@ interface Show {
 | `int`    | Decimal digits (`42` → `#3432`)                              |
 | `bytes`  | Hex digits, lower-case, no `0x` prefix (`#deadbeef` → `#6465616462656566`) |
 | `bool`   | `#74727565` (`"true"`) or `#66616c7365` (`"false"`)          |
-| `string` | UTF-8 bytes (essentially `.toBytes()`)                       |
+| `string` | UTF-8 bytes (its `encodeUtf8()`)                             |
 
 ### Calling it
 
@@ -122,12 +122,12 @@ struct Account {
 
 type Account implements Show {
     show( self ): bytes {
-        return self.name.concat(": ").toBytes()
+        return self.name.concat( ": " )
             .concat(self.balance.show());
     }
 }
 
-const a = Account{ name: "alice".toBytes(), balance: 100 };
+const a = Account{ name: "alice", balance: 100 };
 trace(a.show());   // "alice: 100"
 ```
 
